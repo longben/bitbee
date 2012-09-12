@@ -3,12 +3,11 @@ class CaptchaComponent extends Component{
 
 	var $components = array('Session');
 
-	function initialize(&$controller){
-		$this->controller = $controller;
-	}
+	protected $controller = null;
 
-	function startup(&$controller){
-		//$this->controller = $controller;
+	public function startup(Controller $controller) {
+		$this->controller = $controller;
+		//$this->controller->helpers[] = "Captcha";
 	}
 
 	function render(){

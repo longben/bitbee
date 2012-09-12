@@ -14,7 +14,7 @@
         </style>
         <link type="text/css" rel="stylesheet" href="/css/validatorTidyMode.css" />
 
-        <script type="text/javascript" src="/js/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
         <script type="text/javascript" src="/js/formValidator.js"></script>
         <script type="text/javascript" src="/js/formValidatorRegex.js"></script>
         <script type="text/javascript">
@@ -77,7 +77,7 @@
                                         <td>验证码：</td>
                                         <td>
                                             <?php echo $this->Form->input('captcha', array('label' => '', 'div' => false ,'style' => 'background:#E8FDFF;border:1px solid #85A0BD;width:100px;height:28px;padding-top:6px;font-weight:bold', 'onFocus' => 'this.style.backgroundColor="#fff"', 'onBlur' => 'this.style.backgroundColor="#E8FDFF"', 'maxlength' => 4));?>
-                                            <a href="/login" title="看不清楚吗？请点击更换验证图片"><img src="<?php echo $this->Html->url('/users/captcha'); ?>" align="absmiddle" width="75px" height="38px" border="0" /></a>
+                                            <a href="/login" title="看不清楚吗？请点击更换验证图片"><img src="<?php echo $this->Html->url('/users/captcha'); ?>" align="top" width="75px" height="38px" border="0" /></a>
                                         </td>
                                         <td align="left"></td>
                                     </tr>
@@ -110,7 +110,7 @@
                                     </tr>
                                     <tr>
                                         <td align=center style="color:#ff0000">
-                                            <?php echo $this->Session->flash(); echo $session->flash('auth');?>
+                                            <?php echo $this->Session->flash(); echo $this->Session->flash('auth');?>
                                         </td>
                                     </tr>
                                 </table>

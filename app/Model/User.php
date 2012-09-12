@@ -1,9 +1,7 @@
 <?php
-/**
- * User Model
- *
- */
+
 class User extends AppModel {
+
 /**
  * Primary key field
  *
@@ -33,6 +31,12 @@ class User extends AppModel {
 								'order' => ''
 			)
         );
+
+    public function beforeSave($options = array()) {
+        $this->data['User']['user_pass'] = AuthComponent::password($this->data['User']['user_pass']);
+        return true;
+    }
+        
 }
 
 ?>
