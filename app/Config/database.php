@@ -7,7 +7,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'bitbee',
+		'database' => 'wczhs',
         'encoding' => 'utf8',
 	);
 }
