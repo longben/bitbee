@@ -55,7 +55,7 @@ class AppController extends Controller {
                 $this->Session->setFlash(__('登录失效，请重新登录!', true));
             }
         }else{
-            $this->Auth->allowedActions = array('*');
+            $this->Auth->allow('*');
         }
 
     }

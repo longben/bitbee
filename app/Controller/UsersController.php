@@ -11,9 +11,9 @@ class UsersController extends AppController {
     public function beforeFilter() {
         parent::beforeFilter();
 
-        $this->Auth->allow('*');
+        //$this->Auth->allow('*');
 
-        $this->Auth->allow('index');    //不需验证便可访问的页面
+        //$this->Auth->allow('login','captcha');    //不需验证便可访问的页面
         $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');    //登陆页面
         $this->Auth->loginRedirect = array('controller' => 'platforms', 'action' => 'index');    //登陆后默认转向
         $this->Auth->authenticate = array('Wordpress');
@@ -70,6 +70,18 @@ class UsersController extends AppController {
         $this->autoRender = false ;
         $this->render('/users/login');
     }
+
+    /**
+     * 后台登陆方法
+     *
+     * @return void
+     */
+
+    public function admin_logout() {
+        $this->Session->setFlash("你已经安全退出系统！");
+        $this->redirect($this->Auth->logout()); 
+    }
+
 
     /**
      * Admin login

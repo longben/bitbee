@@ -5,11 +5,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php echo Configure::read('Site.title');?></title>
         <link href="/css/default.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="/css/themes/default/easyui.css" />
-        <link rel="stylesheet" type="text/css" href="/css/themes/icon.css" />
-        <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="/js/jquery.easyui.min.js"></script>
-        <script type="text/javascript" src='/js/outlook2.js'> </script>
+        <link rel="stylesheet" type="text/css" href="/css/easyui/themes/default/easyui.css" />
+        <link rel="stylesheet" type="text/css" href="/css/easyui/themes/icon.css" />
+        <script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="/js/jquery/easyui/jquery.easyui.min.js"></script>
+        <script type="text/javascript" src="/js/jquery/easyui/locale/easyui-lang-zh_CN.js"></script>
+        <script type="text/javascript" src='/js/tree/outlook2.js'> </script>
 
         <script type="text/javascript">
             <?php echo $outlook;?>
@@ -85,7 +86,7 @@
                     $.messager.confirm('系统提示', '您确定要退出本次登录吗?', function(r) {
 
                         if (r) {
-                            location.href = '/logout';
+                            location.href = '/admin/users/logout';
                         }
                     });
                 })
@@ -97,10 +98,10 @@
     <body class="easyui-layout" style="overflow-y: hidden"  scroll="no">
         <noscript>
             <div style=" position:absolute; z-index:100000; height:2046px;top:0px;left:0px; width:100%; background:white; text-align:center;">
-                <img src="/images/noscript.gif" alt='抱歉，请开启脚本支持！' />
+                <img src="/img/platforms/noscript.gif" alt='抱歉，请开启脚本支持！' />
         </div></noscript>
         <div region="north" split="true" border="false" style="overflow: hidden; height: 30px;
-            background: url(/images/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
+            background: url(/img/platforms/layout-browser-hd-bg.gif) #7f99be repeat-x center 50%;
             line-height: 20px;color: #fff; font-family: Verdana, 微软雅黑,黑体">
             <span style="float:right; padding-right:20px;" class="head">欢迎 <?php echo $this->Session->read('Auth.User.User.user_nicename');?> <a href="#" id="editpass">修改密码</a> <a href="#" id="loginOut">安全退出</a></span>
             <span style="padding-left:10px; font-size: 16px; "><img src="/img/ico.png" width="22" height="22" align="absmiddle" /> <?php echo Configure::read('Site.title');?>后台管理</span>

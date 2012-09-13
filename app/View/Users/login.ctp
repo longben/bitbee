@@ -12,24 +12,29 @@
             a:Hover{color:#ff0000;text-decoration:none;}
             div.message {clear: both;color: #900;font-size: 140%;font-weight: bold;margin: 1em 0;}
         </style>
-        <link type="text/css" rel="stylesheet" href="/css/validatorTidyMode.css" />
 
-        <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
-        <script type="text/javascript" src="/js/formValidator.js"></script>
-        <script type="text/javascript" src="/js/formValidatorRegex.js"></script>
+        <script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js"></script>
+
+        <script type="text/javascript" src="/js/jquery/jquery.metadata.js"></script>
+        <script type="text/javascript" src="/js/jquery/validation/jquery.validate.min.js"></script>
+        <script type="text/javascript" src="/js/jquery/validation/localization/messages_cn.js"></script>
+
         <script type="text/javascript">
             $(document).ready(function(){
-                //$.formValidator.initConfig({onerror:function(){alert("校验没有通过，具体错误请看错误提示")}});
-                $.formValidator.initConfig({autotip:false,tidymode:true,onerror:function(msg){alert(msg)}});
-                $("#UserLoginName").formValidator({onshow:"请输入用户名",onfocus:"用户名不能为空",oncorrect:"用户名合法"}).inputValidator({min:1,onerror:"用户名不能为空,请确认"});
-                $("#UserPassword").formValidator({onshow:"请输入密码",onfocus:"密码不能为空",oncorrect:"密码合法"}).inputValidator({min:1,onerror:"密码不能为空,请确认"});
-                $("#UserCaptcha").formValidator({onshow:"请输入验证码",onfocus:"验证码不能为空",oncorrect:"验证码合法"}).inputValidator({min:1,onerror:"验证码不能为空,请确认"});
+                //$("#bbForm").validate();
+                $("#bbForm").validate({
+                    errorElement: "span",
+                    errorPlacement: function(error, element) {
+                        //error.appendTo(element.parent("div").children("label").children('em'));
+                        error.appendTo($('#err'));
+                    }      
+                });
             });
         </script>
     </head>
 
     <body>
-        <?php echo $this->Form->create('User', array('url' => $this->here, 'onSubmit' => "return $.formValidator.pageIsValid(1)"));?>
+        <?php echo $this->Form->create('User', array('url' => $this->here, 'id' => "bbForm"));?>
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td align="center">
@@ -56,7 +61,7 @@
                                     <tr>
                                         <td>用户名：</td>
                                         <td>
-                                            <?php echo $this->Form->input('user_login', array('label' => '','style' => 'background:#E8FDFF;border:1px solid #85A0BD;width:178px;height:28px;padding-top:6px;font-weight:bold', "onFocus" => 'this.style.backgroundColor=\'#fff\'', 'onBlur' => 'this.style.backgroundColor=\'#E8FDFF\''));?>
+                                            <?php echo $this->Form->input('user_login', array('class' => 'required', 'title' => '请输入你的帐号！<br/>','label' => '','style' => 'background:#E8FDFF;border:1px solid #85A0BD;width:178px;height:28px;padding-top:6px;font-weight:bold', "onFocus" => 'this.style.backgroundColor=\'#fff\'', 'onBlur' => 'this.style.backgroundColor=\'#E8FDFF\''));?>
                                         </td>
                                         <td></td>
                                     </tr>
@@ -66,7 +71,7 @@
                                     <tr>
                                         <td>密　码：</td>
                                         <td>
-                                            <?php echo $this->Form->password('user_pass', array('label' => '','style' => 'background:#E8FDFF;border:1px solid #85A0BD;width:178px;height:28px;padding-top:6px;font-weight:bold', 'onFocus' => 'this.style.backgroundColor=\'#fff\'', 'onBlur' => 'this.style.backgroundColor=\'#E8FDFF\''));?>
+                                            <?php echo $this->Form->password('user_pass', array('class' => 'required', 'title' => '请输入你的密码！','label' => '','style' => 'background:#E8FDFF;border:1px solid #85A0BD;width:178px;height:28px;padding-top:6px;font-weight:bold', 'onFocus' => 'this.style.backgroundColor=\'#fff\'', 'onBlur' => 'this.style.backgroundColor=\'#E8FDFF\''));?>
                                         </td>
                                         <td><!--&nbsp;忘记密码了？--></td>
                                     </tr>
@@ -76,7 +81,7 @@
                                     <tr>
                                         <td>验证码：</td>
                                         <td>
-                                            <?php echo $this->Form->input('captcha', array('label' => '', 'div' => false ,'style' => 'background:#E8FDFF;border:1px solid #85A0BD;width:100px;height:28px;padding-top:6px;font-weight:bold', 'onFocus' => 'this.style.backgroundColor="#fff"', 'onBlur' => 'this.style.backgroundColor="#E8FDFF"', 'maxlength' => 4));?>
+                                            <?php echo $this->Form->input('captcha', array('class' => 'required', 'title' => '请输入验证码！','label' => '', 'div' => false ,'style' => 'background:#E8FDFF;border:1px solid #85A0BD;width:100px;height:28px;padding-top:6px;font-weight:bold', 'onFocus' => 'this.style.backgroundColor="#fff"', 'onBlur' => 'this.style.backgroundColor="#E8FDFF"', 'maxlength' => 4));?>
                                             <a href="/login" title="看不清楚吗？请点击更换验证图片"><img src="<?php echo $this->Html->url('/users/captcha'); ?>" align="top" width="75px" height="38px" border="0" /></a>
                                         </td>
                                         <td align="left"></td>
@@ -92,6 +97,8 @@
                                     </tr>
                                     -->
                                 </table>
+
+                                            <em></em>
                                 <table border=0 cellpadding=0 celspacing=0 width=90% style="margin:5px">
                                     <tr>
                                         <td align="center">
@@ -110,6 +117,7 @@
                                     </tr>
                                     <tr>
                                         <td align=center style="color:#ff0000">
+                                            <div id='err'></div>
                                             <?php echo $this->Session->flash(); echo $this->Session->flash('auth');?>
                                         </td>
                                     </tr>
@@ -137,15 +145,5 @@
                 </td>
             </tr>
         </table>
-        <script type="text/javascript">
-            if (top!= self){
-                if (location){
-                    //top.location.replace("<?=$this->Html->url('/platforms/login')?>");
-                }else{
-                    //top.document.location.replace("<?=$this->Html->url('/platforms/login')?>");
-                }
-            }
-        </script>
-
     </body>
 </html>
