@@ -63,3 +63,20 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
+
+ //CakePlugin::load('Acl'); //Loads a single plugin named DebugKit
+/**
+ * Libraries
+ */
+	App::import('Vendor', 'Spyc/Spyc');
+
+/**
+ * Settings
+ */
+	if (file_exists(APP . 'Config' . DS . 'settings.yml')) {
+		$settings = Spyc::YAMLLoad(file_get_contents(APP . 'Config' . DS . 'settings.yml'));
+		foreach ($settings as $settingKey => $settingValue) {
+			Configure::write($settingKey, $settingValue);
+		}
+	}
+

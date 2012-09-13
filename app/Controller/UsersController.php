@@ -90,19 +90,25 @@ class UsersController extends AppController {
      * @access public
      */
     public function login() {
-        $this->layout = "blank";
+        $this->layout = 'blank';
+
         if($this->Auth->loggedIn()){
             $this->redirect($this->Auth->redirect());
         }
-        if ($this->request->is('post')) {
-            if ($this->Auth->login()) {
-                return $this->redirect('/admin/platforms/');
-            } else {
-                $this->Session->setFlash('ERROR!');
-                $this->redirect($this->Auth->loginAction);
+
+        if($this->request->is('post')){
+            if($this->Auth->login()){
+                if(isset($this->data['User']['captcha']) && $this->Session->read('captcha')!=$this->data['User']['captcha']){
+                    $this->Session->setFlash(__('输入的验证码不正确', true));
+                    $this->redirect($this->Auth->redirect());
+                }else{
+                    $this->Session->write('user', $this->Session->read('Auth.User'));
+                    $this->Session->write('id', $this->Session->read('Auth.User.ID'));
+                    $this->Session->write('role', $this->Session->read('Auth.User.role'));
+                    $this->redirect($this->Auth->redirect());
+                }
             }
         }
-
     }
 
     public function logout(){

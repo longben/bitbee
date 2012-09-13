@@ -49,7 +49,6 @@ class AppController extends Controller {
 
 
     public function beforeFilter() {
-
         if (isset($this->params['admin']) && $this->params['admin']) {
             if(!$this->Session->check('Auth')) {
                 $this->Session->setFlash(__('登录失效，请重新登录!', true));
