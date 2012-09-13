@@ -44,6 +44,8 @@ class AppController extends Controller {
         'Auth',
     );
 
+    //public $helpers = array('Js');
+
 
 
     public function beforeFilter() {

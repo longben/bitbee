@@ -29,7 +29,7 @@
     </head>
 
     <body>
-        <?php echo $this->Form->create('User', array('action' => 'login', 'onSubmit' => "return $.formValidator.pageIsValid(1)"));?>
+        <?php echo $this->Form->create('User', array('url' => $this->here, 'onSubmit' => "return $.formValidator.pageIsValid(1)"));?>
         <table border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr>
                 <td align="center">
