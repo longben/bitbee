@@ -1,5 +1,5 @@
 ﻿/**
- * jQuery EasyUI 1.3
+ * jQuery EasyUI 1.3.1
  * 
  * Licensed under the GPL terms
  * To use it on other terms please contact us
@@ -54,8 +54,8 @@ if(!_8.menu){
 return;
 }
 var _d=_9.offset().left;
-if(_d+$(_8.menu).outerWidth()+5>$(window).width()){
-_d=$(window).width()-$(_8.menu).outerWidth()-5;
+if(_d+$(_8.menu)._outerWidth()+5>$(window)._outerWidth()){
+_d=$(window)._outerWidth()-$(_8.menu)._outerWidth()-5;
 }
 $("body>div.menu-top").menu("hide");
 $(_8.menu).menu("show",{left:_d,top:_9.offset().top+_9.outerHeight()});

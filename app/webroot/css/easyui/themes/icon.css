@@ -62,3 +62,12 @@
 .icon-mini-refresh{
 	background:url('icons/mini_refresh.png') no-repeat 3px 2px;
 }
+
+
+.icon-user{
+	background:url('icons/user.png') no-repeat;
+}
+
+.icon-public{
+	background:url('icons/public.png') no-repeat;
+}

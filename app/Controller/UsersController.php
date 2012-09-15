@@ -7,7 +7,6 @@
 class UsersController extends AppController {
     public $components = array('Session', 'Captcha');
 
-
     public function beforeFilter() {
         parent::beforeFilter();
 
@@ -18,18 +17,17 @@ class UsersController extends AppController {
         $this->Auth->loginRedirect = array('controller' => 'platforms', 'action' => 'index');    //登陆后默认转向
         $this->Auth->authenticate = array('Wordpress');
 
-        /*
-        $this->Auth->authenticate = array(
-            AuthComponent::ALL => array('userModel' => 'User'),
-            'Wordpress'
-        );
-         */
-
-        if ($this->RequestHandler->ext === 'json') {
-            $this->RequestHandler->setContent('json');
-        }
-
     }
+
+    /**
+     * 更加条件查询用户JSON数据
+     *
+     * @return JSON
+     */
+    public function admin_json_data(){
+        $this->findJSON4Grid('ID', array('User.ID <>' => 1)); //不返回Admin用户
+    }
+    
 
     /**
      * 后台登陆方法
@@ -67,6 +65,7 @@ class UsersController extends AppController {
                 }
             }
         }
+
         $this->autoRender = false ;
         $this->render('/users/login');
     }
@@ -114,6 +113,10 @@ class UsersController extends AppController {
     public function logout(){
         $this->Session->setFlash("你已经安全退出系统！");
         $this->redirect($this->Auth->logout()); 
+    }
+
+
+    public function admin_index(){
     }
 
 }

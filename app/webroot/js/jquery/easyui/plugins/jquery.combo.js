@@ -1,5 +1,5 @@
 ﻿/**
- * jQuery EasyUI 1.3
+ * jQuery EasyUI 1.3.1
  * 
  * Licensed under the GPL terms
  * To use it on other terms please contact us
@@ -23,6 +23,7 @@ var _7=0;
 if(_4.hasDownArrow){
 _7=_5.find(".combo-arrow").outerWidth();
 }
+_5.find("input.combo-text").width(0);
 _5._outerWidth(_4.width);
 _5.find("input.combo-text").width(_5.width()-_7);
 _6.panel("resize",{width:(_4.panelWidth?_4.panelWidth:_5.outerWidth()),height:_4.panelHeight});
@@ -152,8 +153,8 @@ setTimeout(arguments.callee,200);
 })();
 function _24(){
 var _25=_21.offset().left;
-if(_25+_22.outerWidth()>$(window).width()+$(document).scrollLeft()){
-_25=$(window).width()+$(document).scrollLeft()-_22.outerWidth();
+if(_25+_22._outerWidth()>$(window)._outerWidth()+$(document).scrollLeft()){
+_25=$(window)._outerWidth()+$(document).scrollLeft()-_22._outerWidth();
 }
 if(_25<0){
 _25=0;
@@ -161,12 +162,12 @@ _25=0;
 return _25;
 };
 function _23(){
-var top=_21.offset().top+_21.outerHeight();
-if(top+_22.outerHeight()>$(window).height()+$(document).scrollTop()){
-top=_21.offset().top-_22.outerHeight();
+var top=_21.offset().top+_21._outerHeight();
+if(top+_22._outerHeight()>$(window)._outerHeight()+$(document).scrollTop()){
+top=_21.offset().top-_22._outerHeight();
 }
 if(top<$(document).scrollTop()){
-top=_21.offset().top+_21.outerHeight();
+top=_21.offset().top+_21._outerHeight();
 }
 return top;
 };
@@ -183,7 +184,6 @@ var _2e=$.data(_2b,"combo").combo.find("input.combo-text");
 _2e.validatebox(_2d);
 if(_2c){
 _2e.validatebox("validate");
-_2e.trigger("mouseleave");
 }
 };
 function _2f(_30,_31){

@@ -23,7 +23,7 @@
 
 /*允许你使用RequestHandler组件检测你的内容类型，主要用于XML文件解析
  */
-Router::parseExtensions('xml', 'json');
+Router::parseExtensions('json', 'rss', 'xml');
 
 /**
  * Here, we are connecting '/' (base path) to controller called 'Pages',

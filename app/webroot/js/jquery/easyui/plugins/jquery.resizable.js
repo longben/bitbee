@@ -1,5 +1,5 @@
 ﻿/**
- * jQuery EasyUI 1.3
+ * jQuery EasyUI 1.3.1
  * 
  * Licensed under the GPL terms
  * To use it on other terms please contact us
@@ -42,11 +42,8 @@ _5.top=_5.startTop+e.pageY-_5.startY;
 function _9(e){
 var _a=e.data;
 var _b=_a.target;
-if(!$.boxModel&&$.browser.msie){
-$(_b).css({width:_a.width,height:_a.height,left:_a.left,top:_a.top});
-}else{
-$(_b).css({width:_a.width-_a.deltaWidth,height:_a.height-_a.deltaHeight,left:_a.left,top:_a.top});
-}
+$(_b).css({left:_a.left,top:_a.top});
+$(_b)._outerWidth(_a.width)._outerHeight(_a.height);
 };
 function _c(e){
 _1=true;

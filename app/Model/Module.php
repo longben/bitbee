@@ -1,9 +1,9 @@
 <?php
 class Module extends AppModel {
 
-	var $name = 'Module';
+	public $name = 'Module';
 	
-	var $actsAs = array('Tree');
+    public $actsAs = array('Tree');
 
 	var $belongsTo = array(
 			'Parent' => array('className' => 'Module',

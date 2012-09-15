@@ -1,5 +1,5 @@
 ﻿/**
- * jQuery EasyUI 1.3
+ * jQuery EasyUI 1.3.1
  * 
  * Licensed under the GPL terms
  * To use it on other terms please contact us
@@ -86,8 +86,14 @@ $.parser.parse();
 }
 });
 $.fn._outerWidth=function(_e){
+if(_e==undefined){
+if(this[0]==window){
+return this.width()||document.body.clientWidth;
+}
+return this.outerWidth()||0;
+}
 return this.each(function(){
-if(!$.boxModel&&$.browser.msie){
+if(!$.support.boxModel&&$.browser.msie){
 $(this).width(_e);
 }else{
 $(this).width(_e-($(this).outerWidth()-$(this).width()));
@@ -95,13 +101,20 @@ $(this).width(_e-($(this).outerWidth()-$(this).width()));
 });
 };
 $.fn._outerHeight=function(_f){
+if(_f==undefined){
+if(this[0]==window){
+return this.height()||document.body.clientHeight;
+}
+return this.outerHeight()||0;
+}
 return this.each(function(){
-if(!$.boxModel&&$.browser.msie){
+if(!$.support.boxModel&&$.browser.msie){
 $(this).height(_f);
 }else{
 $(this).height(_f-($(this).outerHeight()-$(this).height()));
 }
 });
 };
+$.fn._propAttr=$.fn.prop||$.fn.attr;
 })(jQuery);
 
