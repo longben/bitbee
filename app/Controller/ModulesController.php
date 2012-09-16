@@ -13,7 +13,9 @@ class ModulesController extends AppController {
     }
 
     public function admin_index() {
-        $parents = $this->Module->generateTreeList(null, null, null, '--');
+
+        $parents = $this->Module->generateTreeList(array('Module.hierarchy' => 1), null, null, '--', null);
+        //$parents = $this->Module->generateTreeList(null, null, null, '--');
         $parents = array('' => '无上级栏目') + $parents;
 
         $moduleImages = array('icon-account'=>'icon-account','icon-agency'=>'icon-agency','icon-download'=>'icon-download',
@@ -71,60 +73,38 @@ class ModulesController extends AppController {
 
 
     public function admin_add() {
-        if (!empty($this->request->data)) {
-            $this->Module->create();
-            if ($this->Module->save($this->request->data)) {
-                $this->Session->setFlash(__('The Module has been saved'));
-                $this->redirect(array('action'=>'index'));
-            } else {
-                $this->Session->setFlash(__('The Module could not be saved. Please, try again.'));
+        if($this->request->is('post')){
+            if (!empty($this->data)) {    
+                if ($this->Module->save($this->data)) {
+                    return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+                } else {
+                    return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+                }
             }
         }
-        //$parents = $this->Module->generatetreelist(array('Module.hierarchy' => 1), null, null, '--', null);
-        $parents = $this->Module->generateTreeList(null, null, null, '--');
-        $parents = array('' => '无上级栏目') + $parents;
-
-        $moduleImages = array('icon-account'=>'icon-account','icon-agency'=>'icon-agency','icon-download'=>'icon-download',
-            'icon-nav'=>'icon-nav','icon-news'=>'icon-news','icon-product'=>'icon-product','icon-role'=>'icon-role',
-            'icon-service'=>'icon-service','icon-set'=>'icon-set','icon-sys'=>'icon-sys','icon-users'=>'icon-users');
-
-        $types = array('system' => '系统模块', 'website' => '网站模块');
-        $this->set(compact('parents', 'types', 'moduleImages'));
+        $this->autoRender = false;
     }
 
-    public function admin_edit($id = null) {
-        if (!$id && empty($this->request->data)) {
-            $this->Session->setFlash(__('Invalid Module'));
-            $this->redirect(array('action'=>'index'));
-        }
-        if (!empty($this->request->data)) {    
-            if ($this->Module->save($this->request->data)) {
-                $this->Session->setFlash(__('The Module has been saved'));
-                $this->redirect(array('action'=>'index'));
-            } else {
-                $this->Session->setFlash(__('The Module could not be saved. Please, try again.'));
+    public function admin_edit() {
+        if($this->request->is('post')){
+            if (!empty($this->request->data)) {    
+                if ($this->Module->save($this->request->data)) {
+                    return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+                } else {
+                    return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+                }
             }
         }
-        if (empty($this->request->data)) {
-            $this->request->data = $this->Module->read(null, $id);
-        }
-
-        $parents = $this->Module->generatetreelist( null, null, null, '--', null);
-        $parents = array('0' => '无上级栏目') + $parents;
-
-        $types = array('system' => '系统模块', 'website' => '网站模块');
-        $this->set(compact('parents', 'types'));
     }
 
-    public function admin_delete($id = null) {
-        if (!$id) {
-            $this->Session->setFlash(__('Invalid id for Module'));
-            $this->redirect(array('action'=>'index'));
-        }
-        $this->Module->id = $id;
-        if ($this->Module->delete()) {
-            $this->Session->setFlash(__('Module deleted'));
-            $this->redirect(array('action'=>'index'));
+    public function admin_delete() {
+        if($this->request->is('post')){
+            $this->Module->id = $this->data['id'];
+            if ($this->Module->delete()) {
+                return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+            }else{
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
         }
     }
 
