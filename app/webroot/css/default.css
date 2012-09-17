@@ -20,6 +20,27 @@ a:hover{ color:Red; text-decoration:underline;}
 .easyui-accordion ul li div.selected a{color:#416AA3; font-weight:bold;}
 
 
+    #fm{
+        margin:0;
+        padding:10px 30px;
+    }
+    .ftitle{
+        font-size:14px;
+        font-weight:bold;
+        color:#666;
+        padding:5px 0;
+        margin-bottom:10px;
+        border-bottom:1px solid #ccc;
+    }
+    .input{
+        margin-bottom:5px;
+    }
+    .input label{
+        display:inline-block;
+        width:80px;
+    }
+
+
 
 .icon{ background:url(/img/tabicons.png) no-repeat;width:18px; line-height:18px; display:inline-block;}
 .icon-sys{ background-position:0px -200px;}

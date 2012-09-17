@@ -61,7 +61,8 @@ class UsersController extends AppController {
                     $this->Session->write('user', $this->Session->read('Auth.User'));
                     $this->Session->write('id', $this->Session->read('Auth.User.ID'));
                     $this->Session->write('role', $this->Session->read('Auth.User.role'));
-                    $this->redirect($this->Auth->redirect());
+                    //$this->redirect($this->Auth->redirect());
+                    $this->redirect('/admin/platforms');
                 }
             }
         }
@@ -104,7 +105,8 @@ class UsersController extends AppController {
                     $this->Session->write('user', $this->Session->read('Auth.User'));
                     $this->Session->write('id', $this->Session->read('Auth.User.ID'));
                     $this->Session->write('role', $this->Session->read('Auth.User.role'));
-                    $this->redirect($this->Auth->redirect());
+                    //$this->redirect($this->Auth->redirect());
+                    $this->redirect('/admin/platforms/');
                 }
             }
         }

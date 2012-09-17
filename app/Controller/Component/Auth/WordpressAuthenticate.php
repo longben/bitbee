@@ -46,7 +46,7 @@ class WordpressAuthenticate extends BaseAuthenticate {
             return false;
         }
         
-        CakeLog::write('longben', $hasher->CheckPassword($request->data['User']['user_pass'], $user['User']['user_pass']));
+        //CakeLog::write('longben', $hasher->CheckPassword($request->data['User']['user_pass'], $user['User']['user_pass']));
         
         
         if($hasher->CheckPassword($request->data['User']['user_pass'], $user['User']['user_pass'])){

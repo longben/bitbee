@@ -8,7 +8,7 @@
 	<?php
 		echo $this->Html->meta('icon');
 		echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/easyui/jquery.easyui.min' , 'jquery/easyui/locale/easyui-lang-zh_CN', 'jquery/validation/jquery.validate.min'));
-		echo $this->Html->css(array('easyui/themes/default/easyui','easyui/themes/icon'));
+		echo $this->Html->css(array('default', 'easyui/themes/default/easyui', 'easyui/themes/icon'));
 		echo $scripts_for_layout;
 	?>
 	

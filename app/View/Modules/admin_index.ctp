@@ -1,27 +1,3 @@
-<style type="text/css">
-    #fm{
-        margin:0;
-        padding:10px 30px;
-    }
-    .ftitle{
-        font-size:14px;
-        font-weight:bold;
-        color:#666;
-        padding:5px 0;
-        margin-bottom:10px;
-        border-bottom:1px solid #ccc;
-    }
-    .input{
-        margin-bottom:5px;
-    }
-    .input label{
-        display:inline-block;
-        width:80px;
-    }
-</style>
-
-
-
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
     data-options="url:'/admin/modules/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
@@ -40,9 +16,9 @@
 </table>  
 
 <div id="toolbar">  
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newModule()">新增模块</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editModule()">编辑模块</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="removeModule()">删除模块</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增模块</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑模块</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="deleteItem()">删除模块</a>
     <span style="float:right;white-space:nowrap;clear: none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
@@ -66,7 +42,7 @@
     ?>
 </div>
 <div id="dlg-buttons">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveUser()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveItem()">保存</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
 </div>
 
@@ -75,35 +51,35 @@
 <script type="text/javascript">
     var url;
 
-    function newModule(){
+    function newItem(){
         $('#dlg').dialog('open').dialog('setTitle','新增模块');
         $('#fm').form('clear');
-        url = '/admin/modules/add';
+        url = '/admin/modules/add/';
     }
 
-    function editModule(){
+    function editItem(){
         var row = $('#dg').datagrid('getSelected');
 
         /**
         * 生成通用JSON格式
         *
         */ 
-        var _row = '{';
-            for(var key in row){
-                _row = _row + "'data[Module][" + key + "]':row." + key + ",";
-            }
-            _row = _row + 't:1}';
+        var _row = '';
+        for(var key in row){
+            _row = _row + "'data[Module][" + key + "]':row." + key + ",";
+        }
+        _row = '{' + _row + 't:1}';
 
-            var json = eval("("+ _row +")");
+        var json = eval("("+ _row +")");
 
-            if (row){
-                $('#dlg').dialog('open').dialog('setTitle','编辑模块');
-                $('#fm').form('load', json);
-                url = '/admin/modules/edit/'+row.id;
-            }
+        if (row){
+            $('#dlg').dialog('open').dialog('setTitle','编辑模块');
+            $('#fm').form('load', json);
+            url = '/admin/modules/edit/'+row.id;
+        }
     }
 
-    function saveUser(){
+    function saveItem(){
         $('#fm').form('submit',{
             url: url,
             onSubmit: function(){
@@ -124,10 +100,10 @@
         });
     }
 
-    function removeModule(){
+    function deleteItem(){
         var row = $('#dg').datagrid('getSelected');
         if (row){
-            $.messager.confirm('Confirm','Are you sure you want to remove this user?',function(r){
+            $.messager.confirm('请确认','你是否要删除这条数据？',function(r){
                 if (r){
                     $.post('<?=$this->Html->url('delete')?>',{id:row.id},function(result){
                         if (result.success){

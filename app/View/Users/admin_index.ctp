@@ -12,7 +12,8 @@
 </table>  
 
 <div id="toolbar">  
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:false"  onclick="new()">新增</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:false"  onclick="newItem()">新增用户</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:false"  onclick="editItem()">编辑用户</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:false"  onclick="reset()">重置密码</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
@@ -24,7 +25,63 @@
     </span>
 </div> 
 
+
+<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+    closed="true" buttons="#dlg-buttons">
+	<?php
+        echo $this->Form->create('User', array('action' => 'add', 'id' => 'fm'));
+		echo $this->Form->input('user_login', array('class' => 'required',  'title' =>__('请输入登录名', true)));
+		echo $this->Form->input('name', array('label' => '姓名', 'class' => 'required',  'title' =>__('请输入姓名', true)));
+		echo $this->Form->input('email', array('class' => 'required email',  'title' =>__('请输入邮箱地址', true)));
+		echo $this->Form->input('password', array('class' => 'required',  'title' =>__('请输入密码', true)));
+		echo $this->Form->input('gender', array('type' => 'select', 'options' => array('1' => '男', '0' => '女'), 'default' => '1'));
+		echo $this->Form->input('telphone_number');
+		echo $this->Form->input('cell_number');
+		//echo $this->Form->input('site', array('label' => '个人博客'));
+		//echo $this->Form->hidden('role_id', array('value' => ROLE_DEFAULT ));
+		echo $this->Form->input('role_id');
+		echo $this->Form->input('department_id');
+		echo $this->Form->end();
+	?>
+</div>
+
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveItem()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+</div>
+
+
 <script type="text/javascript">
+    var url;
+
+    function newItem(){
+        $('#dlg').dialog('open').dialog('setTitle','新增模块');
+        $('#fm').form('clear');
+        url = '/admin/modules/add/';
+    }
+
+    function editItem(){
+        var row = $('#dg').datagrid('getSelected');
+
+        /**
+        * 生成通用JSON格式
+        *
+        */ 
+        var _row = '';
+        for(var key in row){
+            _row = _row + "'data[User][" + key + "]':row." + key + ",";
+        }
+        _row = '{' + _row + 't:1}';
+
+        var json = eval("("+ _row +")");
+
+        if (row){
+            $('#dlg').dialog('open').dialog('setTitle','编辑模块');
+            $('#fm').form('load', json);
+            url = '/admin/modules/edit/'+row.id;
+        }
+    }
+
     function search(value, name){
         $('#dg').datagrid(
             'load',
