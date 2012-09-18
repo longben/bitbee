@@ -32,15 +32,15 @@
         echo $this->Form->create('User', array('action' => 'add', 'id' => 'fm'));
 		echo $this->Form->input('user_login', array('class' => 'required',  'title' =>__('请输入登录名', true)));
 		echo $this->Form->input('name', array('label' => '姓名', 'class' => 'required',  'title' =>__('请输入姓名', true)));
-		echo $this->Form->input('email', array('class' => 'required email',  'title' =>__('请输入邮箱地址', true)));
-		echo $this->Form->input('password', array('class' => 'required',  'title' =>__('请输入密码', true)));
-		echo $this->Form->input('gender', array('type' => 'select', 'options' => array('1' => '男', '0' => '女'), 'default' => '1'));
-		echo $this->Form->input('telphone_number');
-		echo $this->Form->input('cell_number');
+		echo $this->Form->input('user_email', array('class' => 'required email',  'title' =>__('请输入邮箱地址', true)));
+		echo $this->Form->input('user_pass', array('class' => 'required',  'title' =>__('请输入密码', true)));
+		echo $this->Form->input('Meta.gender', array('type' => 'select', 'options' => array('1' => '男', '0' => '女'), 'default' => '1'));
+		echo $this->Form->input('Meta.telphone_number');
+		echo $this->Form->input('Meta.cell_number');
 		//echo $this->Form->input('site', array('label' => '个人博客'));
 		//echo $this->Form->hidden('role_id', array('value' => ROLE_DEFAULT ));
-		echo $this->Form->input('role_id');
-		echo $this->Form->input('department_id');
+		echo $this->Form->input('Meta.role_id');
+		echo $this->Form->input('Meta.department_id');
 		echo $this->Form->end();
 	?>
 </div>
