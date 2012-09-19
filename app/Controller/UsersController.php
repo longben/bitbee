@@ -12,7 +12,7 @@ class UsersController extends AppController {
 
         //$this->Auth->allow('*');
 
-        //$this->Auth->allow('login','captcha');    //不需验证便可访问的页面
+        $this->Auth->allow('login','captcha');    //不需验证便可访问的页面
         $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');    //登陆页面
         $this->Auth->loginRedirect = array('controller' => 'platforms', 'action' => 'index');    //登陆后默认转向
         $this->Auth->authenticate = array('Wordpress');
