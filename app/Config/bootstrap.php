@@ -64,7 +64,6 @@ Cache::config('default', array('engine' => 'File'));
  *
  */
  
- CakePlugin::load('Projects'); // Loads all plugins at once
 
  //CakePlugin::load('Acl'); //Loads a single plugin named DebugKit
 /**

@@ -119,6 +119,46 @@ class UsersController extends AppController {
 
 
     public function admin_index(){
+		$roles = $this->User->Meta->Role->find('list');
+		$departments = $this->User->Meta->Department->find('list');
+
+        $genders = array('1' => '男', '0' => '女');
+
+		$this->set(compact('roles', 'departments', 'genders'));        
+    }
+
+    public function admin_add() {
+        $this->autoRender = false;
+        if (!empty($this->request->data)) {
+            $this->User->create();  
+            if ($this->User->save($this->request->data)) {
+                return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+            } else {
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
+    }
+
+    public function admin_edit() {
+        $this->autoRender = false;
+        if (!empty($this->request->data)) {    
+            if ($this->User->saveAll($this->request->data)) {
+                return new CakeResponse(array('body' => json_encode(array('success'=>true, 'msg' => 'OK'))));
+            } else {
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
+    }
+
+    public function admin_delete() {
+        if($this->request->is('post')){
+            $this->User->id = $this->data['id'];
+            if ($this->User->delete()) {
+                return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+            }else{
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
     }
 
 }

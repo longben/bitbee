@@ -5,7 +5,7 @@ class ModulesController extends AppController {
 
 
     /**
-     * 更加条件查询用户JSON数据
+     * 根据条件查询用户JSON数据
      *
      * @return JSON
      */

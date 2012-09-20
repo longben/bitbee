@@ -2,7 +2,7 @@
     data-options="url:'/admin/users/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
-            <th data-options="field:'ID'">编号</th>  
+            <th data-options="field:'id'">编号</th>  
             <th data-options="field:'user_login',formatter:function(value,row){return row.User.user_login;}">登录名</th>  
             <th data-options="field:'user_nicename',formatter:function(value,row){return row.User.user_nicename;}">姓名</th>  
             <th data-options="field:'user_activation_key',formatter:function(value,row){return row.User.user_activation_key;}, width:100">激活码</th>  
@@ -26,19 +26,22 @@
 </div> 
 
 
-<div id="dlg" class="easyui-dialog" style="width:400px;height:280px;padding:10px 20px"
+<div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
 	<?php
         echo $this->Form->create('User', array('action' => 'add', 'id' => 'fm'));
+		echo $this->Form->input('id');
 		echo $this->Form->input('user_login', array('class' => 'required',  'title' =>__('请输入登录名', true)));
 		echo $this->Form->input('user_nicename', array('label' => '姓名', 'class' => 'required',  'title' =>__('请输入姓名', true)));
 		echo $this->Form->input('user_email', array('class' => 'required email',  'title' =>__('请输入邮箱地址', true)));
 		echo $this->Form->input('user_pass', array('class' => 'required',  'title' =>__('请输入密码', true)));
-		echo $this->Form->input('Meta.gender', array('type' => 'select', 'options' => array('1' => '男', '0' => '女')));
+		echo $this->Form->input('Meta.gender');
 		echo $this->Form->input('Meta.telphone_number');
 		echo $this->Form->input('Meta.cell_number');
-		//echo $this->Form->input('site', array('label' => '个人博客'));
-		//echo $this->Form->hidden('role_id', array('value' => ROLE_DEFAULT ));
+		echo $this->Form->input('Meta.father');
+		echo $this->Form->input('Meta.father_phone');
+		echo $this->Form->input('Meta.mother');
+		echo $this->Form->input('Meta.mother_phone');
 		echo $this->Form->input('Meta.role_id');
 		echo $this->Form->input('Meta.department_id');
 		echo $this->Form->end();
@@ -54,10 +57,31 @@
 <script type="text/javascript">
     var url;
 
+    function saveItem(){
+        $('#fm').form('submit',{
+            url: url,
+            onSubmit: function(){
+                return $(this).form('validate');
+            },
+            success: function(result){
+                var result = eval('('+result+')');
+                if (result.success){
+                    $('#dlg').dialog('close');		// close the dialog
+                    $('#dg').datagrid('reload');	// reload the user data
+                } else {
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.msg
+                    });
+                }
+            }
+        });
+    }
+
     function newItem(){
         $('#dlg').dialog('open').dialog('setTitle','新增模块');
         $('#fm').form('clear');
-        url = '/admin/modules/add/';
+        url = '/admin/users/add/';
     }
 
     function editItem(){
@@ -82,7 +106,7 @@
         if (row){
             $('#dlg').dialog('open').dialog('setTitle','编辑模块');
             $('#fm').form('load', json);
-            url = '/admin/modules/edit/'+row.id;
+            url = '/admin/users/edit';
         }
     }
 

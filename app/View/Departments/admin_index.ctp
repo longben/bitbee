@@ -1,16 +1,9 @@
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
-    data-options="url:'/admin/modules/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
+    data-options="url:'/admin/departments/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
             <th data-options="field:'id'">编号</th>  
             <th data-options="field:'name'" width="50">名称</th>  
-            <th data-options="field:'type'" width="50">类型</th>  
-            <th data-options="field:'parent_id'" width="50">父系编号</th>  
-            <th data-options="field:'hierarchy'" width="50">级别</th>
-            <th data-options="field:'node'" width="50">NODE</th>
-            <th data-options="field:'module_image'" width="50">图标</th>
-            <th data-options="field:'url'">链接地址</th>
-            <th data-options="field:'flag'" width="50">标志</th>
         </tr>  
     </thead>  
 </table>  
