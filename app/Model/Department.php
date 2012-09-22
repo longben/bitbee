@@ -1,24 +1,11 @@
 <?php
 class Department extends AppModel {
-	var $name = 'Department';
-	
-	var $displayField = 'name';
-	
-	var $actsAs = array('Tree');
-	
-/* 	var $validate = array(
-		'name' => array(
-			'blank' => array(
-				'rule' => array('blank'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
-	); */
-	
+
+	public $name = 'Department';
+    
+    public $displayField = 'name';
+
+    public $actsAs = array('Tree');
 	
 	
 	var $belongsTo = array(
@@ -28,7 +15,13 @@ class Department extends AppModel {
 				'conditions' => '',
 				'fields' => '',
 				'order' => ''
-			)			
+            ),
+ 			'Parent' => array('className' => 'Department',
+								'foreignKey' => 'parent_id',
+								'conditions' => 'Parent.id <> Department.id',
+								'fields' => 'Department.id, Department.name',
+								'order' => ''
+			)
 	);
 }
 ?>

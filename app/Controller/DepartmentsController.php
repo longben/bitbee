@@ -1,6 +1,8 @@
 <?php
 class DepartmentsController extends AppController {
 
+    public $name = 'Departments';
+
     /**
      * 根据条件查询用户JSON数据
      *
@@ -12,8 +14,8 @@ class DepartmentsController extends AppController {
 
     public function admin_index() {
 
-        $parents = $this->Department->generateTreeList(array('Department.hierarchy' => 1), null, null, '--', null);
-        $parents = array('' => '无上级部门') + $parents;
+        $parents = $this->Department->generateTreeList(array('Department.id' => 1), null, null, '--', null);
+        //$parents = array('' => '无上级部门') + $parents;
 
         $this->set(compact('parents'));
 

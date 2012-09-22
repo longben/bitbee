@@ -1,30 +1,7 @@
 <?php
-/**
- * This file is loaded automatically by the app/webroot/index.php file after core.php
- *
- * This file should load/create any application wide configuration settings, such as 
- * Caching, Logging, loading additional configuration files.
- *
- * You should also use this file to include any files that provide global functions/constants
- * that your application uses.
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       app.Config
- * @since         CakePHP(tm) v 0.10.8.2117
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
+date_default_timezone_set("Asia/Chongqing");  //需要用到日期，强制设置时区
 
-// Setup a 'default' cache configuration for use in the application.
-Cache::config('default', array('engine' => 'File'));
+cache::config('default', array('engine' => 'File'));
 
 /**
  * The settings below can be used to set additional paths to models, views and controllers.
@@ -63,21 +40,24 @@ Cache::config('default', array('engine' => 'File'));
  * CakePlugin::load('DebugKit'); //Loads a single plugin named DebugKit
  *
  */
- 
 
- //CakePlugin::load('Acl'); //Loads a single plugin named DebugKit
+
+//CakePlugin::load('Acl'); //Loads a single plugin named DebugKit
 /**
  * Libraries
  */
-	App::import('Vendor', 'Spyc/Spyc');
+App::import('Vendor', 'Spyc/Spyc');
 
 /**
  * Settings
  */
-	if (file_exists(APP . 'Config' . DS . 'settings.yml')) {
-		$settings = Spyc::YAMLLoad(file_get_contents(APP . 'Config' . DS . 'settings.yml'));
-		foreach ($settings as $settingKey => $settingValue) {
-			Configure::write($settingKey, $settingValue);
-		}
-	}
+if (file_exists(APP . 'Config' . DS . 'settings.yml')) {
+    $settings = Spyc::YAMLLoad(file_get_contents(APP . 'Config' . DS . 'settings.yml'));
+    foreach ($settings as $settingKey => $settingValue) {
+        Configure::write($settingKey, $settingValue);
+    }
+}
+
+define('UPLOAD_PATH', APP.'webroot'.DS.'upload'.DS.'user'.DS); //用户上传目录
+define('UPLOAD_VIEW_PATH', '/upload/user/'); //用户上传WEB访问目录
 

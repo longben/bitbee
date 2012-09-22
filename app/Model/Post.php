@@ -64,13 +64,15 @@ class Post extends AppModel {
 
 			$this->Meta->create();
 			$data['Meta']['id'] = $post_id;
-			$data['Meta']['category'] = $this->data['Post']['category']; 
+			//$data['Meta']['category'] = $this->data['']['category']; 
 			if(!empty($this->data['Meta']['author'])) {
 				$data['Meta']['author'] = $this->data['Meta']['author'];
 			}			
 			if(!empty($this->data['Post']['type'])) {
 				$data['Meta']['type'] = $this->data['Post']['type']; 
-			}			
+            }
+            
+        /*    
 			
 			$reg = "/<img[^>]+src=(['\"])(.+)\\1/isU"; //过滤规则
 			preg_match_all($reg, $this->data['Post']['post_content'], $matches);
@@ -86,6 +88,7 @@ class Post extends AppModel {
 				$data_file['Post']['post_mime_type'] = getFileMime(getFileExtension($filename));
 				$this->save($data_file);
             }
+         */
             
             $this->Meta->save($data);
     

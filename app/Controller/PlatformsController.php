@@ -2,15 +2,73 @@
 class PlatformsController extends AppController {
     var $name = 'Platforms';
 
-    public $components = array('Session');
+    public $components = array('Session', 'PImage');
 
-    var $uses = array('Module', 'Memo', 'Role');
+    var $uses = array('Module', 'Memo', 'Role', 'TweetImage');
 
-    var $helpers = array('Ck');
+    public function upload(){ //保存图片
 
-    function captcha(){
-        $this->Captcha->render();
-    }
+        session_start();
+        if (isset($_POST["PHPSESSID"])) {
+            session_id($_POST["PHPSESSID"]);
+        } else if (isset($_GET["PHPSESSID"])) {
+            session_id($_GET["PHPSESSID"]);
+        }
+
+
+        App::import('Vendor', '/utils/file');
+
+        $user_id = '';
+
+
+        if( $this->Session->check('Auth.User.User.id') ){
+            $user_id = $this->Session->read('Auth.User.User.id');
+        }else{
+            $user_id = 1;
+        }
+
+        $user_name = '';
+
+        $upload_path = UPLOAD_PATH . $user_id . DS . 'default' . DS;
+        $view_path = UPLOAD_VIEW_PATH . $user_id .'/default/';
+
+        if(!file_exists(UPLOAD_PATH . $user_id)){
+            mkdir(UPLOAD_PATH.$user_id);
+        }
+
+        if(!file_exists($upload_path)){
+            mkdir($upload_path);
+        }
+
+        $_tmp_filename = $_FILES['imgFile']['name'];
+        $_new_filename = md5(time().$_tmp_filename).'.'.getFileExtension($_tmp_filename);
+        $uploadfile = $upload_path . $_new_filename;
+
+        if(move_uploaded_file($_FILES['imgFile']['tmp_name'], $uploadfile)){
+            list($width, $height, $type) = getimagesize($uploadfile);
+
+            $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 90);
+
+            $this->request->data['TweetImage']['name'] = 'TWEET_IMAGE';
+            $this->request->data['TweetImage']['tweet_id'] = 0; //表示临时存储
+            $this->request->data['TweetImage']['user_id'] = $user_id;
+            $this->request->data['TweetImage']['user_name'] = $user_name;
+            $this->request->data['TweetImage']['photo'] = "$user_id/default/" . $_new_filename;
+            $this->request->data['TweetImage']['image_url'] = '';
+            $this->request->data['TweetImage']['width'] = $width;
+            $this->request->data['TweetImage']['height'] = $height;
+            $this->request->data['TweetImage']['album_id'] = $this->Session->read('default_album_id');
+            $this->TweetImage->create();
+            $this->TweetImage->save($this->request->data);
+
+            $id = $this->TweetImage->getLastInsertID();
+
+            $file = $view_path.$_new_filename;
+            $micrograph = $view_path.'120x120_'.$_new_filename;
+        }
+
+        return new CakeResponse(array('body' => json_encode(array('error' => 0, 'url' => $file, 'id' => $id, 'file' => $micrograph))));
+    }    
 
     function index() {
         $this->admin_index();
@@ -93,7 +151,7 @@ class PlatformsController extends AppController {
     //elements维护——elements保存
     function admin_save_element($filename) {
         if ($fh = fopen(ELEMENT_PATH.$filename, "w")) {
-            fwrite($fh, $this->data['Platform']['content']);
+            fwrite($fh, $this->request->data['Platform']['content']);
             fclose($fh);
             $this->Session->setFlash('元素修改成功!');
             $this->redirect($this->referer());

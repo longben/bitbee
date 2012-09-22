@@ -13,6 +13,7 @@
 	?>
 	
 	<script type="text/javascript">
+        var WEB_SESSION_ID = '<?=session_id()?>';        
 		$(document).ready(function(){
 			
 			//表单校验

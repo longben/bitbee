@@ -1,7 +1,5 @@
 <?php
-  //$modules = Set::extract($data, '{n}.Module'); 
-  $modules = Set::extract($data, '{n}.Module'); 
-  //print_r($modules);
+  $departments = Set::extract($data, '{n}.Department'); 
    
-  echo json_encode(array('total' => $this->params['paging']['Module']['count'], 'rows' => $modules));
+  echo json_encode(array('total' => $this->params['paging']['Department']['count'], 'rows' => $departments));
 ?>

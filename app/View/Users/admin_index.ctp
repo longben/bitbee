@@ -28,24 +28,24 @@
 
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
-	<?php
-        echo $this->Form->create('User', array('action' => 'add', 'id' => 'fm'));
-		echo $this->Form->input('id');
-		echo $this->Form->input('user_login', array('class' => 'required',  'title' =>__('请输入登录名', true)));
-		echo $this->Form->input('user_nicename', array('label' => '姓名', 'class' => 'required',  'title' =>__('请输入姓名', true)));
-		echo $this->Form->input('user_email', array('class' => 'required email',  'title' =>__('请输入邮箱地址', true)));
-		echo $this->Form->input('user_pass', array('class' => 'required',  'title' =>__('请输入密码', true)));
-		echo $this->Form->input('Meta.gender');
-		echo $this->Form->input('Meta.telphone_number');
-		echo $this->Form->input('Meta.cell_number');
-		echo $this->Form->input('Meta.father');
-		echo $this->Form->input('Meta.father_phone');
-		echo $this->Form->input('Meta.mother');
-		echo $this->Form->input('Meta.mother_phone');
-		echo $this->Form->input('Meta.role_id');
-		echo $this->Form->input('Meta.department_id');
-		echo $this->Form->end();
-	?>
+    <?php
+    echo $this->Form->create('User', array('action' => 'add', 'id' => 'fm'));
+    echo $this->Form->input('id');
+    echo $this->Form->input('user_login', array('class' => 'required',  'title' =>__('请输入登录名', true)));
+    echo $this->Form->input('user_nicename', array('label' => '姓名', 'class' => 'required',  'title' =>__('请输入姓名', true)));
+    echo $this->Form->input('user_email', array('class' => 'required email',  'title' =>__('请输入邮箱地址', true)));
+    echo $this->Form->input('user_pass', array('class' => 'required',  'title' =>__('请输入密码', true)));
+    echo $this->Form->input('Meta.gender');
+    echo $this->Form->input('Meta.telphone_number');
+    echo $this->Form->input('Meta.cell_number');
+    echo $this->Form->input('Meta.father');
+    echo $this->Form->input('Meta.father_phone');
+    echo $this->Form->input('Meta.mother');
+    echo $this->Form->input('Meta.mother_phone');
+    echo $this->Form->input('Meta.role_id');
+    echo $this->Form->input('Meta.department_id');
+    echo $this->Form->end();
+    ?>
 </div>
 
 <div id="dlg-buttons">
@@ -80,7 +80,7 @@
 
     function newItem(){
         $('#dlg').dialog('open').dialog('setTitle','新增模块');
-        $('#fm').form('clear');
+        //$('#fm').form('clear');
         url = '/admin/users/add/';
     }
 
@@ -116,5 +116,11 @@
             {q:value, field:name}
         );
     }
+
+    $('#dg').datagrid({
+        onDblClickCell: function(index,field,value){
+            editItem();
+        }
+    });
 </script>
 
