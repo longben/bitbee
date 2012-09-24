@@ -5,6 +5,8 @@ App::uses('AppController', 'Controller');
 
 class PostsController extends AppController {
 
+    public $components = array('Session', 'BFile');
+
     /**
      * 根据条件查询用户JSON数据
      *
@@ -65,21 +67,28 @@ class PostsController extends AppController {
 		if (!empty($this->request->data)) {
 			$reg = "/<img[^>]+src=(['\"])(.+)\\1/isU"; //过滤规则
 			preg_match($reg, $this->request->data['Post']['post_content'], $matche);
-			if(!empty($matche)){
-				$this->request->data['Meta']['picture'] = $matche[2];
-			}
-			$this->Post->create();
-			$this->request->data['Post']['post_date'] = date("Y-m-d H:i:s");
-			$this->request->data['Meta']['category'] = $category_id;
-			$this->request->data['Post']['post_author'] = $this->Session->read('Auth.User.User.id');
 
-			if ($this->Post->saveAll($this->request->data)) {
+			if(!empty($matche)){
+                $url = get_headers($matche[2],1); //判断是否是网络资源
+                if(preg_match('/200/',$url[0])){
+                    $this->request->data['Meta']['picture'] = $this->BFile->grabImage($matche[2]);
+                }else{
+                    $this->request->data['Meta']['picture'] = $matche[2];
+                }                
+            }
+
+            $this->Post->create();
+            $this->request->data['Post']['post_date'] = date("Y-m-d H:i:s");
+            $this->request->data['Meta']['category'] = $category_id;
+            $this->request->data['Post']['post_author'] = $this->Session->read('id');
+
+            if ($this->Post->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
             }
-		}
-	}
+        }
+    }
 
 
     /**
@@ -93,8 +102,8 @@ class PostsController extends AppController {
         $this->autoRender = false;
         //$this->Post->id = $this->request->data['Post']['id'];
 
-		if (!empty($this->request->data)) {
-			if ($this->Post->save($this->request->data)) {
+        if (!empty($this->request->data)) {
+            if ($this->Post->save($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));

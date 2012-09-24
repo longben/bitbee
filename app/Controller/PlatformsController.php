@@ -21,8 +21,8 @@ class PlatformsController extends AppController {
         $user_id = '';
 
 
-        if( $this->Session->check('Auth.User.User.id') ){
-            $user_id = $this->Session->read('Auth.User.User.id');
+        if( $this->Session->check('id') ){
+            $user_id = $this->Session->read('id');
         }else{
             $user_id = 1;
         }
@@ -39,6 +39,7 @@ class PlatformsController extends AppController {
         if(!file_exists($upload_path)){
             mkdir($upload_path);
         }
+
 
         $_tmp_filename = $_FILES['imgFile']['name'];
         $_new_filename = md5(time().$_tmp_filename).'.'.getFileExtension($_tmp_filename);

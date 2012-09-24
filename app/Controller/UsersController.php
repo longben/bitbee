@@ -58,9 +58,9 @@ class UsersController extends AppController {
                     $this->Session->setFlash(__('输入的验证码不正确', true));
                     $this->redirect($this->Auth->redirect());
                 }else{
-                    $this->Session->write('user', $this->Session->read('Auth.User'));
-                    $this->Session->write('id', $this->Session->read('Auth.User.ID'));
-                    $this->Session->write('role', $this->Session->read('Auth.User.role'));
+                    $this->Session->write('id', $this->Session->read('Auth.User.User.id'));
+                    $this->Session->write('role', $this->Session->read('Auth.User.Meta.role_id'));
+ 
                     //$this->redirect($this->Auth->redirect());
                     $this->redirect('/admin/platforms');
                 }
@@ -102,9 +102,8 @@ class UsersController extends AppController {
                     $this->Session->setFlash(__('输入的验证码不正确', true));
                     $this->redirect($this->Auth->redirect());
                 }else{
-                    $this->Session->write('user', $this->Session->read('Auth.User'));
-                    $this->Session->write('id', $this->Session->read('Auth.User.ID'));
-                    $this->Session->write('role', $this->Session->read('Auth.User.role'));
+                    $this->Session->write('id', $this->Session->read('Auth.User.User.id'));
+                    $this->Session->write('role', $this->Session->read('Auth.User.Meta.role_id'));
                     //$this->redirect($this->Auth->redirect());
                     $this->redirect('/admin/platforms/');
                 }
