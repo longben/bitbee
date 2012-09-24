@@ -61,7 +61,7 @@
                                     <tr>
                                         <td>用户名：</td>
                                         <td>
-                                            <?php echo $this->Form->input('user_login', array('class' => 'required', 'title' => '请输入你的帐号！<br/>','label' => '','style' => 'background:#E8FDFF;border:1px solid #85A0BD;width:178px;height:28px;padding-top:6px;font-weight:bold', "onFocus" => 'this.style.backgroundColor=\'#fff\'', 'onBlur' => 'this.style.backgroundColor=\'#E8FDFF\''));?>
+                                            <?php echo $this->Form->input('user_login', array('class' => 'required', 'title' => '请输入你的帐号！','label' => '','style' => 'background:#E8FDFF;border:1px solid #85A0BD;width:178px;height:28px;padding-top:6px;font-weight:bold', "onFocus" => 'this.style.backgroundColor=\'#fff\'', 'onBlur' => 'this.style.backgroundColor=\'#E8FDFF\''));?>
                                         </td>
                                         <td></td>
                                     </tr>

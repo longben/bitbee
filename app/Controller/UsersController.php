@@ -25,7 +25,7 @@ class UsersController extends AppController {
      * @return JSON
      */
     public function admin_json_data(){
-        $this->findJSON4Grid('ID', array('User.ID <>' => 1)); //不返回Admin用户
+        $this->findJSON4Grid('id', array('User.id <>' => 1)); //不返回Admin用户
     }
     
 

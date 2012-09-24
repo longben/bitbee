@@ -68,10 +68,13 @@ class PostsController extends AppController {
 			$reg = "/<img[^>]+src=(['\"])(.+)\\1/isU"; //过滤规则
 			preg_match($reg, $this->request->data['Post']['post_content'], $matche);
 
-			if(!empty($matche)){
-                $url = get_headers($matche[2],1); //判断是否是网络资源
-                if(preg_match('/200/',$url[0])){
-                    $this->request->data['Meta']['picture'] = $this->BFile->grabImage($matche[2]);
+            if(!empty($matche)){
+                if( filter_var($matche[2], FILTER_VALIDATE_URL) ){ //判断是否是网址
+                //if (preg_match('/http:\/\/[\w.]+[\w\/]*[\w.]*\??[\w=&\+\%]*/is', $matche[2])){
+                    $url = get_headers($matche[2],1); //判断是否是网络资源
+                    if(preg_match('/200/',$url[0])){
+                        $this->request->data['Meta']['picture'] = $this->BFile->grabImage($matche[2]);
+                    }
                 }else{
                     $this->request->data['Meta']['picture'] = $matche[2];
                 }                

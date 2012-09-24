@@ -134,17 +134,10 @@ class PlatformsController extends AppController {
         $this->set('outlook', $this->Role->outlook());
     }
 
-    //elements维护--elements列表
-    function admin_element(){
-        $this->layout = "easyui";
-
-        $this->set('files', glob(ELEMENT_PATH.'*.ctp'));
-        //$this->set('files', scandir(APP));
-    }
 
     //elements维护——elements编辑
-    function admin_edit_element($file_name = null) {
-        $this->layout = "cake";
+    function admin_element($file_name = null) {
+        //$this->layout = "cake";
         $this->set('content', file_get_contents(ELEMENT_PATH.$file_name));
         $this->set('file_name', $file_name);
     }
