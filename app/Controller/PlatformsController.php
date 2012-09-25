@@ -143,12 +143,14 @@ class PlatformsController extends AppController {
     }
 
     //elements维护——elements保存
-    function admin_save_element($filename) {
-        if ($fh = fopen(ELEMENT_PATH.$filename, "w")) {
+    function admin_save_element() {
+        $this->autoRender = false;
+        if ($fh = fopen(ELEMENT_PATH. $this->request->data['Platform']['file_name'] , "w")) {
             fwrite($fh, $this->request->data['Platform']['content']);
             fclose($fh);
-            $this->Session->setFlash('元素修改成功!');
-            $this->redirect($this->referer());
+            return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+        }else{
+            return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
         }
     }
 
