@@ -22,15 +22,13 @@ class Attachment extends AppModel {
                 $_new_filename = md5(time().$name).'.'.getFileExtension($name);
                 $_tmp_filename = md5(md5(time().$name)).'.'.getFileExtension($name);
 
-                $uploadfile = UPLOAD_PATH . $_tmp_filename;
-
-                $this->log($uploadfile, 'longben');
+                $uploadfile = UPLOAD_PATH. 'images'. DS . $_tmp_filename;
 
                 move_uploaded_file($tmp_name, $uploadfile);
 
-                $this->data['Attachment']['file'] = $_new_filename;
+                $this->data['Attachment']['file_path'] = $_new_filename;
             }else{
-                //$this->data['Attachment']['file'] = '';
+
             }
         }
 

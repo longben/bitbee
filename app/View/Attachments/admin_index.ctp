@@ -4,21 +4,18 @@
         <tr>
             <th data-options="field:'id'">编号</th>  
             <th data-options="field:'name'" width="50">名称</th>  
-            <th data-options="field:'type_id'" width="50">类型</th>  
-            <th data-options="field:'parent_id'" width="50">父系编号</th>  
-            <th data-options="field:'hierarchy'" width="50">级别</th>
-            <th data-options="field:'node'" width="50">NODE</th>
-            <th data-options="field:'Attachment_image'" width="50">图标</th>
-            <th data-options="field:'url'">链接地址</th>
-            <th data-options="field:'flag'" width="50">标志</th>
+            <th data-options="field:'description'" width="50">描述</th>  
+            <th data-options="field:'file_path'" width="50">预览</th>  
+            <th data-options="field:'url'" width="50">链接地址</th>  
+            <th data-options="field:'created'">生成时间</th>
         </tr>  
     </thead>  
 </table>  
 
 <div id="toolbar">  
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增模块</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑模块</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="deleteItem()">删除模块</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="deleteItem()">删除</a>
     <span style="float:right;white-space:nowrap;clear: none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
@@ -32,11 +29,12 @@
     closed="true" buttons="#dlg-buttons">
     <?php 
     echo $this->Form->create('Attachment', array('action' => 'add', 'id' => 'fm', 'type' => 'file'));
-    echo $this->Form->input('id');
+    echo $this->Form->input('id', array('id' => 'id'));
     echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
     echo $this->Form->hidden('type_id', array('value' => $type_id));
-    echo $this->Form->input('url', array('value' => 'aaa'));
-    echo $msg . $this->Form->file('file', array('class' => 'required'));
+    echo $this->Form->input('url');
+    echo $this->Form->input('description');
+    echo $msg . $this->Form->file('file', array('id' => 'file', 'class' => 'required'));
     echo $this->Form->end();
     ?>
 </div>
@@ -51,12 +49,14 @@
     var url;
 
     function newItem(){
-        $('#dlg').dialog('open').dialog('setTitle','新增模块');
+        $('#dlg').dialog('open').dialog('setTitle','新增');
         clearForm('#fm');
         url = '/admin/attachments/add/';
     }
 
     function editItem(){
+
+        clearForm('#fm');
         var row = $('#dg').datagrid('getSelected');
 
         /**
@@ -72,7 +72,7 @@
         var json = eval("("+ _row +")");
 
         if (row){
-            $('#dlg').dialog('open').dialog('setTitle','编辑模块');
+            $('#dlg').dialog('open').dialog('setTitle','编辑');
             $('#fm').form('load', json);
             url = '/admin/attachments/edit/'+row.id;
         }

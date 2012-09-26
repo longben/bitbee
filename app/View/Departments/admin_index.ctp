@@ -47,12 +47,13 @@
 
     function newItem(){
         $('#dlg').dialog('open').dialog('setTitle','新增');
-        //$('#fm').form('clear');
+        clearForm('#fm');
         url = '/admin/departments/add/';
     }
 
     function editItem(){
         var row = $('#dg').datagrid('getSelected');
+        clearForm('#fm');
 
         /**
         * 生成通用JSON格式
