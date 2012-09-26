@@ -3,9 +3,9 @@
 
 <style>
 .ke-icon-save {
-        background-image: url(/img/save.png);
-        width: 48px;
-        height: 48px;
+        background-image: url(/img/save.jpg);
+        width: 90px;
+        height: 30px;
 }
 </style>
 

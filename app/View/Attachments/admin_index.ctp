@@ -1,14 +1,14 @@
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
-    data-options="url:'/admin/modules/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
+    data-options="url:'/admin/attachments/json_data.json?type=<?=$type_id?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
             <th data-options="field:'id'">编号</th>  
             <th data-options="field:'name'" width="50">名称</th>  
-            <th data-options="field:'type'" width="50">类型</th>  
+            <th data-options="field:'type_id'" width="50">类型</th>  
             <th data-options="field:'parent_id'" width="50">父系编号</th>  
             <th data-options="field:'hierarchy'" width="50">级别</th>
             <th data-options="field:'node'" width="50">NODE</th>
-            <th data-options="field:'module_image'" width="50">图标</th>
+            <th data-options="field:'Attachment_image'" width="50">图标</th>
             <th data-options="field:'url'">链接地址</th>
             <th data-options="field:'flag'" width="50">标志</th>
         </tr>  
@@ -31,13 +31,12 @@
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
     <?php 
-    echo $this->Form->create('Module', array('action' => 'add', 'id' => 'fm'));
+    echo $this->Form->create('Attachment', array('action' => 'add', 'id' => 'fm', 'type' => 'file'));
     echo $this->Form->input('id');
     echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
-    echo $this->Form->input('type');
-    echo $this->Form->input('parent_id');
-    echo $this->Form->input('module_image');
-    echo $this->Form->input('url');
+    echo $this->Form->hidden('type_id', array('value' => $type_id));
+    echo $this->Form->input('url', array('value' => 'aaa'));
+    echo '梦工厂封面图片(294 ×162)'. $this->Form->file('file', array('class' => 'required'));
     echo $this->Form->end();
     ?>
 </div>
@@ -54,7 +53,7 @@
     function newItem(){
         $('#dlg').dialog('open').dialog('setTitle','新增模块');
         clearForm('#fm');
-        url = '/admin/modules/add/';
+        url = '/admin/attachments/add/';
     }
 
     function editItem(){
@@ -66,7 +65,7 @@
         */ 
         var _row = '';
         for(var key in row){
-            _row = _row + "'data[Module][" + key + "]':row." + key + ",";
+            _row = _row + "'data[Attachment][" + key + "]':row." + key + ",";
         }
         _row = '{' + _row + 't:1}';
 
@@ -75,7 +74,7 @@
         if (row){
             $('#dlg').dialog('open').dialog('setTitle','编辑模块');
             $('#fm').form('load', json);
-            url = '/admin/modules/edit/'+row.id;
+            url = '/admin/attachments/edit/'+row.id;
         }
     }
 
@@ -128,4 +127,3 @@
         );
     }
 </script>
-

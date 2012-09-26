@@ -80,7 +80,7 @@
 
     function newItem(){
         $('#dlg').dialog('open').dialog('setTitle','新增模块');
-        //$('#fm').form('clear');
+        clearForm('#fm');
         url = '/admin/users/add/';
     }
 
