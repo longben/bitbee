@@ -16,7 +16,10 @@ class AttachmentsController extends AppController {
     }
 
     public function admin_index($type_id){
-        $this->set('type_id', $type_id);
+
+        $msg = '轮换大图图片(1004 ×329)';
+
+        $this->set(compact('msg', 'type_id'));
     }
 
     public function admin_add() {

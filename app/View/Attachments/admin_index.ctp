@@ -36,7 +36,7 @@
     echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
     echo $this->Form->hidden('type_id', array('value' => $type_id));
     echo $this->Form->input('url', array('value' => 'aaa'));
-    echo '梦工厂封面图片(294 ×162)'. $this->Form->file('file', array('class' => 'required'));
+    echo $msg . $this->Form->file('file', array('class' => 'required'));
     echo $this->Form->end();
     ?>
 </div>
