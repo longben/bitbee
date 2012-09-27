@@ -1,10 +1,9 @@
-<table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
-    data-options="url:'/admin/departments/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
+<table id="dg" class="easyui-treegrid" style="width:auto;height:auto"
+    data-options="url:'/admin/departments/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20,idField:'id',treeField:'name'">
     <thead>  
         <tr>
-            <th data-options="field:'id'">编号</th>  
             <th data-options="field:'name'" width="50">名称</th>  
-            <th data-options="field:'telphone'" width="50">电话</th>  
+            <th data-options="field:'telephone'" width="50">电话</th>  
             <th data-options="field:'linkman'" width="50">联系人</th>  
         </tr>  
     </thead>  
@@ -27,10 +26,10 @@
     closed="true" buttons="#dlg-buttons">
     <?php 
     echo $this->Form->create('Department', array('action' => 'add', 'id' => 'fm'));
-    echo $this->Form->input('id');
+    echo $this->Form->input('id', array('id' => 'id'));
     echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
     echo $this->Form->input('parent_id', array('default' => 1, 'required' => true));
-    echo $this->Form->input('telphone');
+    echo $this->Form->input('telephone');
     echo $this->Form->input('linkman');
     echo $this->Form->end();
     ?>
@@ -84,8 +83,7 @@
                 var result = eval('('+result+')');
                 if (result.success){
                     $('#dlg').dialog('close');		// close the dialog
-
-                    $('#dg').datagrid('reload');	// reload the user data
+                    $('#dg').treegrid('reload');
                 } else {
                     $.messager.show({
                         title: 'Error',
@@ -103,7 +101,7 @@
                 if (r){
                     $.post('<?=$this->Html->url('delete')?>',{id:row.id},function(result){
                         if (result.success){
-                            $('#dg').datagrid('reload');	// reload the user data
+                            $('#dg').treegrid('reload');	// reload the user data
                         } else {
                             $.messager.show({	// show error message
                                 title: 'Error',
@@ -118,7 +116,7 @@
 
 
     function search(value, name){
-        $('#dg').datagrid(
+        $('#dg').treegrid(
             'load',
             {q:value, field:name}
         );

@@ -9,7 +9,7 @@ class DepartmentsController extends AppController {
      * @return JSON
      */
     public function admin_json_data(){
-        $this->findJSON4Grid('lft'); //
+        $this->findJSON4Grid('id',null, 'asc'); //
     }
 
     public function admin_index() {

@@ -6,7 +6,8 @@ class Department extends AppModel {
     public $displayField = 'name';
 
     public $actsAs = array('Tree');
-	
+
+    public $virtualFields = array('_parentId' => 'Department.parent_id');    
 	
 	var $belongsTo = array(
 			'Region' => array(
