@@ -6,11 +6,11 @@ App::uses('WczhsAppController', 'Wczhs.Controller');
  */
 class CourseMembershipsController extends WczhsAppController {
 
-/**
- * Scaffold
- *
- * @var mixed
- */
-	public $scaffold;
+    public function admin_json_data(){
+        $this->findJSON4Grid('id',null, 'ASC'); //
+    }
 
+    public function admin_index(){
+
+    }
 }
