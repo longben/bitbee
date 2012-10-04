@@ -10,7 +10,7 @@ class ModulesController extends AppController {
      * @return JSON
      */
     public function admin_json_data(){
-        $this->findJSON4Grid('lft'); //
+        $this->findJSON4Grid('lft',NULL,'ASC'); //
     }
 
     public function admin_index() {

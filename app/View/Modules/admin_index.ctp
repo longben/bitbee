@@ -32,7 +32,7 @@
     closed="true" buttons="#dlg-buttons">
     <?php 
     echo $this->Form->create('Module', array('action' => 'add', 'id' => 'fm'));
-    echo $this->Form->input('id');
+    echo $this->Form->input('id', array('id' => 'id'));
     echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
     echo $this->Form->input('type');
     echo $this->Form->input('parent_id');
@@ -59,7 +59,7 @@
 
     function editItem(){
         var row = $('#dg').datagrid('getSelected');
-
+        clearForm('#fm');
         /**
         * 生成通用JSON格式
         *

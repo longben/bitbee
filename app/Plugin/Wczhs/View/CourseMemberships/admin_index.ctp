@@ -2,9 +2,10 @@
     data-options="url:'/admin/wczhs/course_memberships/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
-            <th data-options="field:'r2'">编号</th>  
-            <th data-options="field:'course_id'" width="50">名称</th>  
-            <th data-options="field:'date_of_filing'" width="50">填表时间</th>
+            <th data-options="field:'user_nicename',formatter:function(value,row){return row.User.user_nicename;}">宝宝</th>  
+            <th data-options="field:'course_name',formatter:function(value,row){return row.Course.name;}">课程</th>  
+            <th data-options="field:'patriarch',formatter:function(value,row){return row.CourseMembership.patriarch;}" width="50">家长</th>  
+            <th data-options="field:'date_of_filing',formatter:function(value,row){return row.CourseMembership.date_of_filing;}" width="50">填表时间</th>
         </tr>  
     </thead>  
 </table>  
@@ -27,8 +28,16 @@
     <?php 
     echo $this->Form->create('CourseMembership', array('action' => 'add', 'id' => 'fm'));
     echo $this->Form->input('id', array('id' => 'id'));
-    echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
     echo $this->Form->input('date_of_filing', array('type' => 'text', 'class' => 'easyui-datebox', 'required' => true));
+    echo $this->Form->input('user_id');
+    echo $this->Form->input('course_id');
+    echo $this->Form->input('patriarch');
+    echo $this->Form->input('interest');
+    echo $this->Form->input('different');
+    echo $this->Form->input('impression');
+    echo $this->Form->input('extend');
+    echo $this->Form->input('suggest');
+    echo $this->Form->input('expression',array('lable' => '表现'));
     echo $this->Form->end();
     ?>
 </div>
@@ -57,8 +66,8 @@
         *
         */ 
         var _row = '';
-        for(var key in row){
-            _row = _row + "'data[CourseMembership][" + key + "]':row." + key + ",";
+        for(var key in row.CourseMembership){
+            _row = _row + "'data[CourseMembership][" + key + "]':row.CourseMembership." + key + ",";
         }
         _row = '{' + _row + 't:1}';
 
