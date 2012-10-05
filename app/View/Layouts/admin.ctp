@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<?php echo $this->Html->charset(); ?>
@@ -7,9 +7,10 @@
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-		echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.metadata', 'public', 'jquery/easyui/jquery.easyui.min' , 'jquery/easyui/locale/easyui-lang-zh_CN', 'jquery/validation/jquery.validate.min'));
-		echo $this->Html->css(array('default', 'easyui/themes/default/easyui', 'easyui/themes/icon'));
-		echo $scripts_for_layout;
+		echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.metadata', 'public', 'jquery/easyui/jquery.easyui.min' , 'jquery/easyui/locale/easyui-lang-zh_CN', 'jquery/validation/jquery.validate.min', 'formee/formee'));
+        echo $scripts_for_layout;
+        
+		echo $this->Html->css(array('default', 'easyui/themes/default/easyui', 'easyui/themes/icon','formee/formee-style', 'formee/formee-structure'));
 	?>
 	
 	<script type="text/javascript">

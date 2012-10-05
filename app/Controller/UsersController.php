@@ -160,4 +160,19 @@ class UsersController extends AppController {
         }
     }
 
+
+    public function admin_json_department(){
+        $this->autoRender = false;
+        $k = $_GET['key'];
+        $data = $this->User->Meta->Department->find('list');
+
+        if($k != '0'){
+            $k = explode(',', $k);
+            $k = $k[1];
+            $data = $this->User->find('list', array('conditions' => array('Meta.department_id' => $k), 'recursive' => 0));
+        }
+
+        return new CakeResponse( array('body' => json_encode($data)) );
+    }
+
 }

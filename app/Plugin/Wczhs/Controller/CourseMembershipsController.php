@@ -1,5 +1,6 @@
 <?php
 App::uses('WczhsAppController', 'Wczhs.Controller');
+
 /**
  * CourseMemberships Controller
  *
