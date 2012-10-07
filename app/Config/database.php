@@ -2,7 +2,7 @@
 class DATABASE_CONFIG {
 
 	public $default = array(
-		'datasource' => 'Database/Mysql',
+		'datasource' => 'HpMysql',
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'wczhs',

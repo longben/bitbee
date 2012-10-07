@@ -3,15 +3,15 @@ App::uses('WczhsAppController', 'Wczhs.Controller');
 
 class AppsController extends WczhsAppController {
 
-    var $name = 'Apps';
+    public $name = 'Apps';
 
     //var $helpers = array('Html', 'Form', 'Javascript', 'Ajax','Ck');
 
-    var $components = array('RequestHandler', 'Email');
+    public $components = array('RequestHandler', 'Email');
 
-    var $uses = array('Post', 'Attachment', 'Guestbook', 'CourseMembership');
+    public $uses = array('Post', 'Attachment', 'Guestbook', 'CourseMembership');
 
-    function beforeFilter() {
+    public function beforeFilter() {
         parent::beforeFilter(); 
 
         $this->Auth->deny('member');
@@ -173,7 +173,7 @@ class AppsController extends WczhsAppController {
     }
 
     //学员天地
-    function student($page = 501, $title = '优秀学员'){
+    public function student($page = 501, $title = '优秀学员'){
         $this->layout="website";
         $this->set('title_for_layout', '学员天地');
 
