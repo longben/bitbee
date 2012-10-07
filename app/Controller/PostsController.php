@@ -13,8 +13,13 @@ class PostsController extends AppController {
      * @return JSON
      */
     public function admin_json_data(){
-        $this->findJSON4Grid('post_date', array('Meta.category' => $_GET['c'])); //
+        if(isset($_GET['u'])){
+            $this->findJSON4Grid('post_date', array('Meta.category' => $_GET['c'], 'Post.post_author' => $_GET['u'])); //
+        }else{
+            $this->findJSON4Grid('post_date', array('Meta.category' => $_GET['c'])); //
+        }
     }
+
 
     public function admin_manage($category_id){
         $this->set('category_id', $category_id);
@@ -25,9 +30,8 @@ class PostsController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
-        $this->Post->recursive = 0;
-        $this->set('posts', $this->paginate());
+    public function admin_index($category_id) {
+        $this->set('category_id', $category_id);
     }
 
     /**
@@ -130,6 +134,22 @@ class PostsController extends AppController {
             }else{
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
             }
+        }
+    }
+
+    public function admin_elite(){
+        $post = $this->Post->read(null, $this->data['id']);
+
+        if(1 == $post['Meta']['elite']){
+            $post['Meta']['elite'] = 0;
+        }else{
+            $post['Meta']['elite'] = 1;
+        }
+
+        if ($this->Post->Meta->save($post)) {
+            return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+        }else{
+            return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
         }
     }
 

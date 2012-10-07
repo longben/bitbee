@@ -8,7 +8,11 @@ App::uses('WczhsAppController', 'Wczhs.Controller');
 class CourseMembershipsController extends WczhsAppController {
 
     public function admin_json_data(){
-        $this->findJSON4Grid('id',null, 'ASC'); //
+        if(isset($_GET['u'])){
+            $this->findJSON4Grid('id',array('CourseMembership.user_id' => $_GET['u']), 'ASC'); //
+        }else{
+            $this->findJSON4Grid('id',null, 'ASC'); //
+        }
     }
 
     public function admin_index(){

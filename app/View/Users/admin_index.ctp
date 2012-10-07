@@ -2,7 +2,7 @@
     data-options="url:'/admin/users/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
-            <th data-options="field:'id'">编号</th>  
+            <th data-options="field:'id',formatter:function(value,row){return row.User.id;}">编号</th>  
             <th data-options="field:'user_login',formatter:function(value,row){return row.User.user_login;}">登录名</th>  
             <th data-options="field:'user_nicename',formatter:function(value,row){return row.User.user_nicename;}">姓名</th>  
             <th data-options="field:'user_activation_key',formatter:function(value,row){return row.User.user_activation_key;}, width:100">激活码</th>  
@@ -12,9 +12,9 @@
 </table>  
 
 <div id="toolbar">  
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:false"  onclick="newItem()">新增用户</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:false"  onclick="editItem()">编辑用户</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:false"  onclick="reset()">重置密码</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增用户</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑用户</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="reset()">重置密码</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
@@ -29,22 +29,11 @@
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
     <?php
-    echo $this->Form->create('User', array('action' => 'add', 'id' => 'fm'));
-    echo $this->Form->input('id');
-    echo $this->Form->input('user_login', array('class' => 'required',  'title' =>__('请输入登录名', true)));
-    echo $this->Form->input('user_nicename', array('label' => '姓名', 'class' => 'required',  'title' =>__('请输入姓名', true)));
-    echo $this->Form->input('user_email', array('class' => 'required email',  'title' =>__('请输入邮箱地址', true)));
-    echo $this->Form->input('user_pass', array('class' => 'required',  'title' =>__('请输入密码', true)));
-    echo $this->Form->input('Meta.gender');
-    echo $this->Form->input('Meta.telphone_number');
-    echo $this->Form->input('Meta.cell_number');
-    echo $this->Form->input('Meta.father');
-    echo $this->Form->input('Meta.father_phone');
-    echo $this->Form->input('Meta.mother');
-    echo $this->Form->input('Meta.mother_phone');
-    echo $this->Form->input('Meta.role_id');
-    echo $this->Form->input('Meta.department_id');
-    echo $this->Form->end();
+        if(empty($plugin)){
+            echo $this->element('user');
+        }else{
+            echo $this->element('user', array(), array('plugin' => $plugin));
+        }
     ?>
 </div>
 
@@ -86,6 +75,8 @@
 
     function editItem(){
         var row = $('#dg').datagrid('getSelected');
+
+        $('#pwd').empty();
 
         /**
         * 生成通用JSON格式

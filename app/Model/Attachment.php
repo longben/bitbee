@@ -22,7 +22,7 @@ class Attachment extends AppModel {
                 $_new_filename = md5(time().$name).'.'.getFileExtension($name);
                 $_tmp_filename = md5(md5(time().$name)).'.'.getFileExtension($name);
 
-                $uploadfile = UPLOAD_PATH. 'images'. DS . $_tmp_filename;
+                $uploadfile = UPLOAD_PATH. 'images'. DS . $_new_filename;
 
                 move_uploaded_file($tmp_name, $uploadfile);
 

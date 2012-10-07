@@ -48,7 +48,8 @@ class PlatformsController extends AppController {
         if(move_uploaded_file($_FILES['imgFile']['tmp_name'], $uploadfile)){
             list($width, $height, $type) = getimagesize($uploadfile);
 
-            $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 90);
+            $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 100);
+            $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '240x180_'.$_new_filename, 240, 180, 100);
 
             $this->request->data['TweetImage']['name'] = 'TWEET_IMAGE';
             $this->request->data['TweetImage']['tweet_id'] = 0; //表示临时存储

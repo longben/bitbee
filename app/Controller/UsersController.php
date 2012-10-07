@@ -92,8 +92,9 @@ class UsersController extends AppController {
     public function login() {
         $this->layout = 'blank';
 
+
         if($this->Auth->loggedIn()){
-            $this->redirect($this->Auth->redirect());
+            $this->redirect('/app/member/files');
         }
 
         if($this->request->is('post')){
@@ -117,13 +118,13 @@ class UsersController extends AppController {
     }
 
 
-    public function admin_index(){
+    public function admin_index($plugin = null){
 		$roles = $this->User->Meta->Role->find('list');
 		$departments = $this->User->Meta->Department->find('list');
 
         $genders = array('1' => '男', '0' => '女');
 
-		$this->set(compact('roles', 'departments', 'genders'));        
+		$this->set(compact('roles', 'departments', 'genders', 'plugin'));        
     }
 
     public function admin_add() {

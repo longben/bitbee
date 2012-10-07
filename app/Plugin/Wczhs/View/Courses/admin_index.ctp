@@ -9,14 +9,15 @@
     </thead>  
 </table>  
 
+
 <div id="toolbar">  
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增模块</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑模块</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="deleteItem()">删除模块</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="deleteItem()">删除</a>
     <span style="float:right;white-space:nowrap;clear: none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
-            <div data-options="name:'name',iconCls:'icon-user'">模块名称</div>
+            <div data-options="name:'name',iconCls:'icon-user'">课程名称</div>
             <div data-options="name:'parent_id',iconCls:'icon-public'">父系编码</div>
         </div>
     </span>
@@ -25,10 +26,10 @@
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
     <?php 
-    echo $this->Form->create('Course', array('action' => 'add', 'id' => 'fm'));
+    echo $this->Form->create('Course', array('action' => 'add', 'id' => 'fm', 'class' => 'formee'));
     echo $this->Form->input('id', array('id' => 'id'));
-    echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
-    echo $this->Form->input('remark');
+    echo $this->Form->input('name', array('label' => '课程名称', 'class' => 'easyui-validatebox' ,'required' => true));
+    echo $this->Form->input('remark',array('label' => '备注', 'type' => 'textarea') );
     echo $this->Form->end();
     ?>
 </div>
@@ -43,7 +44,7 @@
     var url;
 
     function newItem(){
-        $('#dlg').dialog('open').dialog('setTitle','新增模块');
+        $('#dlg').dialog('open').dialog('setTitle','新增');
         clearForm('#fm');
         url = '/admin/wczhs/courses/add/';
     }
@@ -65,7 +66,7 @@
         var json = eval("("+ _row +")");
 
         if (row){
-            $('#dlg').dialog('open').dialog('setTitle','编辑模块');
+            $('#dlg').dialog('open').dialog('setTitle','编辑');
             $('#fm').form('load', json);
             url = '/admin/wczhs/courses/edit/'+row.id;
         }

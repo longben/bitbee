@@ -153,6 +153,7 @@ class SettingsController extends AppController {
      * @access public
      */
     public function admin_prefix($prefix = null) {
+        $this->layout = 'default';
         $this->set('title_for_layout', __('Settings: %s', $prefix));
 
         if (!empty($this->request->data) && $this->Setting->saveAll($this->request->data['Setting'])) {

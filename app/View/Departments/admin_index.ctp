@@ -16,7 +16,7 @@
     <span style="float:right;white-space:nowrap;clear: none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
-            <div data-options="name:'name',iconCls:'icon-user'">模块名称</div>
+            <div data-options="name:'name',iconCls:'icon-user'">名称</div>
             <div data-options="name:'parent_id',iconCls:'icon-public'">父系编码</div>
         </div>
     </span>
@@ -25,12 +25,12 @@
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
     <?php 
-    echo $this->Form->create('Department', array('action' => 'add', 'id' => 'fm'));
+    echo $this->Form->create('Department', array('action' => 'add', 'id' => 'fm', 'class' => 'formee'));
     echo $this->Form->input('id', array('id' => 'id'));
-    echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
-    echo $this->Form->input('parent_id', array('default' => 1, 'required' => true));
-    echo $this->Form->input('telephone');
-    echo $this->Form->input('linkman');
+    echo $this->Form->input('name', array('label' =>  __('Name'), 'class' => 'easyui-validatebox' , 'required' => true));
+    echo $this->Form->input('parent_id', array('label' => __('Parent Id'),  'default' => 1, 'required' => true));
+    echo $this->Form->input('telephone', array('label' => __('Telephone')));
+    echo $this->Form->input('linkman', array('label' => __('Linkman')));
     echo $this->Form->end();
     ?>
 </div>
