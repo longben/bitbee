@@ -2,7 +2,7 @@
 <script charset="utf-8" src="/js/kindeditor/lang/zh_CN.js"></script>
 
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
-    data-options="url:'/admin/posts/json_data.json?p=1&c=<?=$category_id?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
+    data-options="url:'/admin/posts/json_set.json?p=1&c=<?=$category_id?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
             <th data-options="field:'post_title',formatter:function(value,row){return row.Post.post_title;} ">标题</th>  

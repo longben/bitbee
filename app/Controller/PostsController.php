@@ -30,6 +30,10 @@ class PostsController extends AppController {
         $this->findJSON4Grid('post_date', $_conditions); 
     }
 
+    public function admin_json_set(){
+        $this->admin_json_data();
+    }
+
 
     public function admin_manage($category_id){
         $this->set('category_id', $category_id);
