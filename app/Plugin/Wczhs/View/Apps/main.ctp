@@ -154,7 +154,7 @@ $this->Html->script(array('/wczhs/js/AutoChangePhoto', '/wczhs/js/MSClass', '/js
                     <!--宝宝作品-->
                     <?php foreach($works as $work):?>
                     <td>
-                        <a href="/app/content/<?=$work['Post']['id']?>">
+                        <a href="/app/content/<?=$work['Post']['id']?>" target="_blank">
                             <img src="<?=$work['Meta']['picture']?>" height="127" alt="<?=$work['Post']['post_title']?>" border="0" style="padding:2px;border:1px solid #ccc;" />
                         </a>
                     </td>
