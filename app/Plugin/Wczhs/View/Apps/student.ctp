@@ -60,3 +60,5 @@
         </div>
     </div>
 </div>
+
+<?=print_r($posts)?>
