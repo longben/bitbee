@@ -15,8 +15,8 @@ class AppsController extends WczhsAppController {
         parent::beforeFilter(); 
 
         $this->Auth->deny('member');
-        $this->Auth->loginAction = array('controller' => 'apps', 'action' => 'login');    //登陆页面
-        $this->Auth->loginRedirect = array('controller' => 'apps', 'action' => 'member');    //登陆后默认转向
+        $this->Auth->loginAction = array('plugin' => 'wczhs', 'controller' => 'apps', 'action' => 'login');    //登陆页面
+        $this->Auth->loginRedirect = array('plugin' => 'wczhs', 'controller' => 'apps', 'action' => 'member');    //登陆后默认转向
         $this->Auth->authenticate = array('Wordpress');
         $this->Auth->authError = __('Did you really think you are allowed to see that?');
     }

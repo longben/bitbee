@@ -1,7 +1,7 @@
 <?php
-    Router::connect('/app/:action/*', array('plugin' => 'Wczhs', 'controller' => 'Apps'));
-	Router::connect('/', array('plugin'=>'Wczhs' ,'controller' => 'Apps', 'action' => 'index'));
-	Router::connect('/main', array('plugin'=>'Wczhs' ,'controller' => 'Apps', 'action' => 'main'));
-	Router::connect('/education', array('plugin'=>'Wczhs' ,'controller' => 'Apps', 'action' => 'main'));
-	Router::connect('/english', array('plugin'=>'Wczhs' ,'controller' => 'Apps', 'action' => 'english'));
+    Router::connect('/app/:action/*', array('plugin' => 'wczhs', 'controller' => 'apps'));
+	Router::connect('/', array('plugin'=>'wczhs' ,'controller' => 'apps', 'action' => 'index'));
+	Router::connect('/main', array('plugin'=>'wczhs' ,'controller' => 'apps', 'action' => 'main'));
+	Router::connect('/education', array('plugin'=>'wczhs' ,'controller' => 'apps', 'action' => 'main'));
+	Router::connect('/english', array('plugin'=>'wczhs' ,'controller' => 'apps', 'action' => 'english'));
 ?>
