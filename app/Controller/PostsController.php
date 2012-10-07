@@ -13,11 +13,21 @@ class PostsController extends AppController {
      * @return JSON
      */
     public function admin_json_data(){
-        if(isset($_GET['u'])){
-            $this->findJSON4Grid('post_date', array('Meta.category' => $_GET['c'], 'Post.post_author' => $_GET['u'])); //
-        }else{
-            $this->findJSON4Grid('post_date', array('Meta.category' => $_GET['c'])); //
+        $_conditions = array('Post.post_status' => 'publish');
+
+        if(isset($_GET['c'])){
+            $_conditions = array_merge($_conditions, array('Meta.category' => $_GET['c']));
         }
+
+        if(isset($_GET['u'])){
+            $_conditions = array_merge($_conditions, array('Post.post_author' => $_GET['u']));
+        }
+
+        if(isset($_GET['p'])){
+            $_conditions = array_merge($_conditions, array('Meta.picture <>' => NULL));
+        }
+
+        $this->findJSON4Grid('post_date', $_conditions); 
     }
 
 
