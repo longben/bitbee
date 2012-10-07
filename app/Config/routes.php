@@ -31,12 +31,12 @@ Router::parseExtensions('json', 'rss', 'xml');
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
 //Router::connect('/', array('controller' => 'pages', 'action' => 'display', 'home'));
-Router::connect('/login', array('admin' => true, 'controller' => 'users', 'action' => 'login'));
-Router::connect('/logout', array('admin' => true,'controller' => 'users', 'action' => 'logout'));
+Router::connect('/login', array('admin' => true, 'controller' => 'Users', 'action' => 'login'));
+Router::connect('/logout', array('admin' => true,'controller' => 'Users', 'action' => 'logout'));
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
-Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+Router::connect('/pages/*', array('controller' => 'Pages', 'action' => 'display'));
 
 /**
  * Load all plugin routes.  See the CakePlugin documentation on 
