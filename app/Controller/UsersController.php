@@ -131,7 +131,7 @@ class UsersController extends AppController {
         $this->autoRender = false;
         if (!empty($this->request->data)) {
             $this->User->create();  
-            if ($this->User->save($this->request->data)) {
+            if ($this->User->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
