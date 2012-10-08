@@ -21,7 +21,7 @@
             </div>
             <div class="rightcon">
                 <div class="inpagetitle">
-                    <div class="left"><div class="right"><?=$title?></div></div>
+                    <div class="left"><div class="right"><?=urldecode($title)?></div></div>
                 </div>
                 <div class="inpagecontent">
                     <?php echo $this->element($page); ?>
