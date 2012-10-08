@@ -303,7 +303,7 @@ class AppsController extends WczhsAppController {
 
         if($this->request->is('post')){
             if($this->Auth->login()){
-                    $this->Session->write('user_id', $this->Session->read('Auth.User.User.id'));
+                    $this->Session->write('id', $this->Session->read('Auth.User.User.id'));
                     $this->Session->write('role', $this->Session->read('Auth.User.Meta.role_id'));
                     $this->redirect($this->Auth->redirect());
             }else{
