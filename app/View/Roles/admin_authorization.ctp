@@ -1,4 +1,4 @@
-<?php  echo $this->Html->script(array('tree/dtree'));?>
+<?php  echo $this->Html->script(array('tree/dtree'), array('inline' => false));?>
 
 <?php echo $this->Form->create('Role', array('url' => $this->here,'id' => 'bbForm'));?>
 <?php echo $this->Form->input('id', array('value' => $id));?>

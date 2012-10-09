@@ -910,7 +910,13 @@ dTree.prototype.setCheck=function(nodeIds){
   	for (n=0; n<len; n++) {
 	 	var nodeObj = document.getElementById(("c" + this.obj + n));
 	 	if(this.isInIds(nodeObj.getAttribute('value'),tempIds)){
-	 		nodeObj.click();
+        
+            if(document.all){
+                nodeObj.click();
+            }else{
+                $(("#c" + this.obj + n)).trigger('click');
+                $(("#c" + this.obj + n)).click();
+            }
 	 	}
   	}
 }
