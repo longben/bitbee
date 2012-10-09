@@ -13,7 +13,7 @@
             div.message {clear: both;color: #900;font-size: 140%;font-weight: bold;margin: 1em 0;}
         </style>
 
-        <script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="/js/jquery/jquery-1.8.0.min.js"></script>
 
         <script type="text/javascript" src="/js/jquery/jquery.metadata.js"></script>
         <script type="text/javascript" src="/js/jquery/validation/jquery.validate.min.js"></script>
