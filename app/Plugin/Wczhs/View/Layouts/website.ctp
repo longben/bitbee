@@ -3,6 +3,8 @@
     <head>
         <?php echo $this->Html->charset(); ?>
         <title>五彩智慧树 - <?php echo $title_for_layout; ?></title>
+        <meta name="keywords" content="华阳早教,华阳亲子园,成都亲子老师,亲子老师培训,蒙氏教师培训,华阳蒙氏教育,华阳奥尔夫音乐,华阳专注力培训,华阳右脑开发,成都华夏爱婴培训基地" />
+        <meta name="description" content="成都市五彩智慧树早教中心以早教为支撑，少儿外教英语为特色多元发展的少儿培训机构" />
         <?php //echo $this->element('google-analytics'); ?>
         <?php
         echo $this->Html->meta('icon', '/wczhs/img/favicon.ico');
@@ -18,7 +20,7 @@
                     new $.Zebra_Dialog($('#flashMessage').text(), {
                         'buttons':  false,
                         'modal': true,
-                        'auto_close': 1500
+                        'auto_close': 2000
                     });
                     $('#flashMessage').text("");
                 }
