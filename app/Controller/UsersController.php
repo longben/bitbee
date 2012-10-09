@@ -73,6 +73,10 @@ class UsersController extends AppController {
         }
     }
 
+    public function admin_login(){
+        $this->login();
+    }
+
     public function logout(){
         $this->Session->setFlash("你已经安全退出系统！");
         $this->redirect($this->Auth->logout()); 

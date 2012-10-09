@@ -2,7 +2,10 @@
 class RolesController extends AppController {
 
 	var $name = 'Roles';
-	var $helpers = array('Html', 'Form', 'Javascript');
+
+    public function admin_json_data(){
+        $this->findJSON4Grid('id',NULL,'ASC'); //
+    }
 
 	function admin_tree() {
 		$this->layout='platforms';
@@ -12,85 +15,71 @@ class RolesController extends AppController {
 		}
 		$this->Role->unbindModel( array('hasMany' => array('User')) );
 		if($this->Session->read('role') == ROLE_ADMIN && $this->Session->read('id') == MEMBER_ADMIN) {
-			$this->redirect(array('controller' => 'modules', 'action' => 'tree'));
+			$this->redirect(array('controller' => 'Roles', 'action' => 'tree'));
 		}else {
 			$this->set('role', $this->Role->read(null, $this->Session->read('role')));
 		}
 	}
 
+	public function admin_index() {
 
-	function admin_index() {
-		$this->Role->recursive = 0;
-		$this->set('roles', $this->paginate(array('Role.id <>' => 0)));
 	}
 
-	function admin_view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid Role.'));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->set('role', $this->Role->read(null, $id));
-	}
+    public function admin_add() {
+        $this->autoRender = false;
+        if (!empty($this->request->data)) {
+            $this->Role->create();  
+            if ($this->Role->save($this->request->data)) {
+                return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+            } else {
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
+    }
 
-	function admin_add() {
-		if (!empty($this->data)) {
-			$this->Role->create();
-			if ($this->Role->save($this->data)) {
-				$this->Session->setFlash(__('角色保存成功！'));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The Role could not be saved. Please, try again.'));
-			}
-		}
-	}
+    public function admin_edit() {
+        $this->autoRender = false;
+        if (!empty($this->request->data)) {    
+            if ($this->Role->save($this->request->data)) {
+                return new CakeResponse(array('body' => json_encode(array('success'=>true, 'msg' => 'OK'))));
+            } else {
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
+    }
 
-	function admin_edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(__('Invalid Role'));
-			$this->redirect(array('action'=>'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->Role->save($this->data)) {
-				$this->Session->setFlash(__('角色保存成功！'));
-				$this->redirect(array('action'=>'index'));
-			} else {
-				$this->Session->setFlash(__('The Role could not be saved. Please, try again.'));
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Role->read(null, $id);
-		}
-	}
-
-	function admin_delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(__('Invalid id for Role'));
-			$this->redirect(array('action'=>'index'));
-		}
-		if ($this->Role->del($id)) {
-			$this->Session->setFlash(__('Role deleted'));
-			$this->redirect(array('action'=>'index'));
-		}
-	}
+    public function admin_delete() {
+        if($this->request->is('post')){
+            $this->Role->id = $this->data['id'];
+            if ($this->Role->delete()) {
+                return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+            }else{
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
+    }
 
 	function admin_authorization($id = null) {
+        //$this->layout = 'blank';
 		//Configure::write('debug', 0);
-		if (!empty($this->data)) {
-			if ($this->Role->save($this->data)) {
-				$this->Session->setFlash(__('角色权限设置成功！'));
-				$this->set('close_colorbox','OK');
+		if (!empty($this->request->data)) {
+			if ($this->Role->save($this->request->data)) {
+                return new CakeResponse(array('body' => json_encode(array('success'=>true))));
 			} else {
-				$this->Session->setFlash(__('角色权限设置失败'));
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->Role->read(null, $id);
-		}
+
+        $this->set('role', $this->Role->read(null, $id));
+
+        $this->set('id', $id);
+
 		if (!empty($id)) {
 			$modules = $this->Role->Module->find('all');
 			$this->set(compact('modules'));
 		}
 	}
+
 	
     function admin_read($id){
 	    $role = $this->Role->read(null, $id);
