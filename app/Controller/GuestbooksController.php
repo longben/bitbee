@@ -7,11 +7,11 @@ App::uses('AppController', 'Controller');
  */
 class GuestbooksController extends AppController {
 
-	public function add($type = 1) {
+	public function add($type_id = 1) {
         if (!empty($this->data)) {
             $_msg = '';
             $_url = '';
-            switch ($type) {
+            switch ($type_id) {
             case 1:
                 $_msg = '您的留言已成功提交，我们将在1个工作日内进行回复。';
                 $_url = '/app/contact/guestbook';
@@ -20,9 +20,13 @@ class GuestbooksController extends AppController {
                 $_msg = '您的试听申请已提交，我们将在1-2个工作日内联系您！';
                 $_url = '/app/main';
                 break;
+             case 3:
+                $_msg = '您的加盟申请已提交，我们将在1-2个工作日内联系您！';
+                $_url = '/app/joinus';
+                break;
             }
             $this->Guestbook->create();
-            if ($this->Guestbook->save($this->data)) {
+            if ($this->Guestbook->save($this->request->data)) {
                 $this->Session->setFlash($_msg, true);
                 $this->redirect($_url);
             } else {
@@ -32,9 +36,8 @@ class GuestbooksController extends AppController {
     }
 
     public function admin_json_data(){
-        //$this->findJSON4Grid('id',null, 'asc'); //
-        $this->findJSON4Grid('id', array('Guestbook.type_id' => $_GET['type_id'])); //不返回Admin用户
-    }
+        $this->findJSON4Grid('id', array('Guestbook.type_id' => $_GET['type_id']), 'DESC'); 
+   }
 
     public function admin_index($type_id = 1) {
         $this->set('type_id', $type_id);

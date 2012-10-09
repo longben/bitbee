@@ -18,7 +18,7 @@
                     <a href="/app/joinus/701">项目介绍</a>
                     <a href="/app/joinus/702">加盟收益分析</a>
                     <a href="/app/joinus/703">支持保障</a>
-                    <a href="/app/contact/guestbook_write">索取资料</a>
+                    <a href="/app/joinus/704">索取资料</a>
                 </div>
             </div>
             <div class="rightcon">

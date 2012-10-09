@@ -61,6 +61,7 @@ class AppController extends Controller {
             $_conditions = array_merge($_conditions, array($this->modelClass. '.' . $_POST['field'] . ' LIKE' => '%'.$q.'%'));
         }
 
+
         $this->paginate = array(
             'conditions' => $_conditions,
             'recursive' => 0, //int
@@ -68,7 +69,9 @@ class AppController extends Controller {
             'page' => $page, //int
             'order' => $this->modelClass. '.' .  $sort . ' ' . $order
         );
-        $this->set('data', $this->paginate());
+
+        $this->set('data', $this->paginate($this->modelClass));
+
     }
 
 }

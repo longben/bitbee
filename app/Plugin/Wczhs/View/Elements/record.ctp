@@ -2,7 +2,7 @@
 <script charset="utf-8" src="/js/kindeditor/lang/zh_CN.js"></script>
 
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
-    data-options="url:'/admin/posts/json_data.json?c=201&u=<?=$this->Session->read('user_id')?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
+    data-options="url:'/admin/posts/json_data.json?c=201&u=<?=$this->Session->read('id')?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
             <th data-options="field:'id'">编号</th>  

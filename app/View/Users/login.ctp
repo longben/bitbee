@@ -117,8 +117,9 @@
                                     </tr>
                                     <tr>
                                         <td align=center style="color:#ff0000">
-                                            <div id='err'></div>
+                                            <div id='err'>
                                             <?php echo $this->Session->flash(); echo $this->Session->flash('auth');?>
+                                            </div>
                                         </td>
                                     </tr>
                                 </table>

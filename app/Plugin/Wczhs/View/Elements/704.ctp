@@ -11,8 +11,8 @@ echo $this->Html->script(array('formValidator', 'formValidatorRegex'), array('in
         $("#content").formValidator({onshow:"请输入验证码",onfocus:"验证码不能为空",oncorrect:"验证码合法"}).inputValidator({min:1,onerror:"申请内容不能为空,请确认"});
     });
 </script>
-<form name="form1" method="post" action="/guestbooks/add/2" onsubmit="return $.formValidator.pageIsValid(1);">
-    <input type="hidden" name="data[Guestbook][type_id]" value="2" />
+<form name="form1" method="post" action="/guestbooks/add/3" onsubmit="return $.formValidator.pageIsValid(1);">
+    <input type="hidden" name="data[Guestbook][type_id]" value="3" />
     <table class="contactInput" width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
         <tr height="15">
             <td width="30%"></td>
@@ -36,8 +36,8 @@ echo $this->Html->script(array('formValidator', 'formValidatorRegex'), array('in
             <td><input name="data[Guestbook][email]"  id="email" type="text" size="50" maxlength="50" class="input" /></td>
         </tr>
         <tr>
-            <td align="right">申请试听：&nbsp;</td>
-            <td style="padding-top:5px;"><textarea name="data[Guestbook][content]" id="content" cols="52" rows="5" class="input">宝宝爱称：</textarea></td>
+            <td align="right">申请加盟：&nbsp;</td>
+            <td style="padding-top:5px;"><textarea name="data[Guestbook][content]" id="content" cols="52" rows="5" class="input"></textarea></td>
         </tr>
         <tr>
             <td></td>

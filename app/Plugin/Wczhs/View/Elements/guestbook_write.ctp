@@ -19,7 +19,7 @@ echo $this->Html->script(array('formValidator', 'formValidatorRegex'), array('in
     <div>■ 相同的内容请不要重复发送。</div>
     <div>■ 请注意：新留言必须等待管理员的处理之后才会显示在主页上。</div>
     <form name="form1" method="post" action="/guestbooks/add" onsubmit="return $.formValidator.pageIsValid(1);">
-        <input type="hidden" name="data[Guestbook][message_type]" value="1" />
+        <input type="hidden" name="data[Guestbook][type_id]" value="1" />
         <table class="contactInput" width="90%" border="0" align="center" cellpadding="0" cellspacing="0">
             <tr height="15">
                 <td width="30%"></td>
