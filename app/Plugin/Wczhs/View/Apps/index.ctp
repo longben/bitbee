@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="keywords" content="<?=Configure::read('Meta.keywords')?>"/> 
+        <meta name="description" content="<?=Configure::read('Meta.description')?>"/> 
         <title>五彩智慧树早教机构</title>
         <link href="/wczhs/img/favicon.ico" type="image/x-icon" rel="icon" />
         <link href="/wczhs/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
