@@ -265,7 +265,7 @@ class AppsController extends WczhsAppController {
 
         if('guestbook' == $page){
             $this->paginate = array(
-                'conditions' => 'Guestbook.flag = 1', 
+                'conditions' => array('Guestbook.flag' => 1, 'Guestbook.type_id' => 1), 
                 'recursive' => 0, //int
                 'order' => 'Guestbook.created desc',
                 'limit' => 11

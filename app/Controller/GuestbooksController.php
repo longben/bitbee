@@ -57,7 +57,8 @@ class GuestbooksController extends AppController {
 
     public function admin_edit() {
         $this->autoRender = false;
-        if (!empty($this->request->data)) {    
+        if (!empty($this->request->data)) {
+            $this->request->data['Guestbook']['flag'] = 1;  
             if ($this->Guestbook->save($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true, 'msg' => 'OK'))));
             } else {
