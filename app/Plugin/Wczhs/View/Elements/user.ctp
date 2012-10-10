@@ -1,19 +1,20 @@
 <?php
+	unset($departments[1]);
     echo $this->Form->create('User', array('action' => 'add', 'id' => 'fm'));
     echo $this->Form->input('id');	
-    echo $this->Form->input('user_login', array('label' => __d('wczhs', 'User Login'), 'class' => 'required',  'title' =>__('请输入登录名', true)));
-    echo $this->Form->input('user_nicename', array('label' => __d('wczhs', 'Nice Name'), 'class' => 'required',  'title' =>__('请输入姓名', true)));
+    echo $this->Form->input('user_login', array('label' => '登录名', 'class' => 'required',  'title' =>__('请输入登录名', true)));
+	echo $this->Form->input('display_name', array('label' => '真实姓名', 'class' => 'required',  'title' =>__('请输入真实姓名', true)));	
+    echo $this->Form->input('user_nicename', array('label' => '昵称', 'class' => 'required',  'title' =>__('请输入昵称', true)));
     echo $this->Form->input('Meta.birthday', array('label' =>  '出生日期', 'type' => 'text', 'class' => 'easyui-datebox', 'required' => true));
     echo $this->Form->input('Meta.join_date', array('label' => '入园日期', 'type' => 'text','class' => 'easyui-datebox', 'required' => true)); 
-    echo $this->Form->input('user_email', array('label' => __d('wczhs', 'User Email'), 'class' => 'required email',  'title' =>__('请输入邮箱地址', true)));
-    echo $this->Form->input('user_pass', array('label' => __d('wczhs', 'User Pass'), 'div' => array('id' => 'pwd'),'class' => 'required',  'title' =>__('请输入密码', true)));
-    echo $this->Form->input('Meta.gender', array('label' => __d('wczhs', 'Gender')));
-    echo $this->Form->input('Meta.telphone_number', array('label' => __d('wczhs', 'Telphone Number')));
-    echo $this->Form->input('Meta.cell_number', array('label' => __d('wczhs', 'Cell Number')));
-    echo $this->Form->input('Meta.father', array('label' => __d('wczhs', 'Father')));
-    echo $this->Form->input('Meta.father_phone', array('label' => __d('wczhs', 'Father Phone')));
-    echo $this->Form->input('Meta.mother', array('label' => __d('wczhs', 'Mother')));
-    echo $this->Form->input('Meta.mother_phone', array('label' => __d('wczhs', 'Mother Phone')));
-    echo $this->Form->input('Meta.role_id', array('label' => __d('wczhs', 'Role Name')));
-    echo $this->Form->input('Meta.department_id',array('label' => __d('wczhs', 'Class Name')));
+    echo $this->Form->input('user_email', array('label' => '电子邮箱'));
+    echo $this->Form->input('user_pass', array('label' => '登录密码', 'div' => array('id' => 'pwd'),'class' => 'required',  'title' =>__('请输入登录密码', true)));
+    echo $this->Form->input('Meta.gender', array('label' => '性别'));
+    echo $this->Form->input('Meta.father', array('label' => '爸爸姓名'));
+    echo $this->Form->input('Meta.father_phone', array('label' => '爸爸手机'));
+    echo $this->Form->input('Meta.mother', array('label' => '妈妈姓名'));
+    echo $this->Form->input('Meta.mother_phone', array('label' => '妈妈手机'));
+    echo $this->Form->hidden('Meta.role_id', array('value' => '2'));
+    echo $this->Form->input('Meta.department_id',array('options' => $departments, 'label' => '所属班级'));
     echo $this->Form->end();
+?>	

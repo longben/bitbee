@@ -1,19 +1,18 @@
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
     data-options="url:'/admin/users/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
-        <tr>
-            <th data-options="field:'id',formatter:function(value,row){return row.User.id;}">编号</th>  
+        <tr>            
             <th data-options="field:'user_login',formatter:function(value,row){return row.User.user_login;}">登录名</th>  
-            <th data-options="field:'user_nicename',formatter:function(value,row){return row.User.user_nicename;}">姓名</th>  
-            <th data-options="field:'user_activation_key',formatter:function(value,row){return row.User.user_activation_key;}, width:100">激活码</th>  
+			 <th data-options="field:'display_name',formatter:function(value,row){return row.User.display_name;}">真实姓名</th>              			
+            <th data-options="field:'user_nicename',formatter:function(value,row){return row.User.user_nicename;}">昵称</th>               
             <th data-options="field:'user_registered',formatter:function(value,row){return row.User.user_registered;},sortable:true">注册时间</th>  
         </tr>  
     </thead>  
 </table>  
 
 <div id="toolbar">  
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增用户</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑用户</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增学员</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑学员</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="reset()">重置密码</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
@@ -68,7 +67,7 @@
     }
 
     function newItem(){
-        $('#dlg').dialog('open').dialog('setTitle','新增模块');
+        $('#dlg').dialog('open').dialog('setTitle','新增学员');
         clearForm('#fm');
         url = '/admin/users/add/';
     }
