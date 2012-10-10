@@ -2,10 +2,10 @@
     data-options="url:'/admin/users/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>            
-            <th data-options="field:'user_login',formatter:function(value,row){return row.User.user_login;}">登录名</th>  
-			 <th data-options="field:'display_name',formatter:function(value,row){return row.User.display_name;}">真实姓名</th>              			
-            <th data-options="field:'user_nicename',formatter:function(value,row){return row.User.user_nicename;}">昵称</th>               
-            <th data-options="field:'user_registered',formatter:function(value,row){return row.User.user_registered;},sortable:true">注册时间</th>  
+            <th width="50" data-options="field:'user_login',formatter:function(value,row){return row.User.user_login;}">登录名</th>  
+			 <th width="50" data-options="field:'display_name',formatter:function(value,row){return row.User.display_name;}">真实姓名</th>              			
+            <th width="50" data-options="field:'user_nicename',formatter:function(value,row){return row.User.user_nicename;}">昵称</th>               
+            <th width="50" data-options="field:'user_registered',formatter:function(value,row){return row.User.user_registered;},sortable:true">注册时间</th>  
         </tr>  
     </thead>  
 </table>  
@@ -69,13 +69,14 @@
     function newItem(){
         $('#dlg').dialog('open').dialog('setTitle','新增学员');
         clearForm('#fm');
+        $('#pwd').show();
         url = '/admin/users/add/';
     }
 
     function editItem(){
         var row = $('#dg').datagrid('getSelected');
 
-        $('#pwd').empty();
+        $('#pwd').hide();
 
         /**
         * 生成通用JSON格式
