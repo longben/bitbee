@@ -36,13 +36,13 @@
                         </div>
                         <?php endforeach;?>
                     </div>
-                    <div class="Pages">
-                        <div class="paging">
-                            <?php echo $this->Paginator->prev('<< ' . __('previous', true), array(), null, array('class'=>'disabled'));?>
-                            | 	<?php echo $this->Paginator->numbers();?>
-                            |   <?php echo $this->Paginator->next(__('next', true) . ' >>', array(), null, array('class' => 'disabled'));?>
-                        </div>
-                    </div>
+					<div class="paging">
+					<?php
+						echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+						echo $this->Paginator->numbers(array('separator' => ''));
+						echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+					?>
+					</div>
                 </div>
             </div>
         </div>

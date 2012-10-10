@@ -7,3 +7,9 @@ msgstr "所属学校"
 
 msgid "Username or password is incorrect"
 msgstr "用户名或者密码不匹配"
+
+msgid "previous"
+msgstr "上一页"
+
+msgid "next"
+msgstr "下一页"

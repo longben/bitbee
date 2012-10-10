@@ -156,10 +156,53 @@ a:hover{color:#ff0000;}
     background: none repeat scroll 0 0 #E5E5E5;
 }
 
-.Pages {
-    clear: both;
-    overflow: hidden;
-    padding: 10px 0;
-    text-align: right;
-    width: 618px;
+/** Paging **/
+.pages{width:auto;height:auto;clear:both;overflow:hidden;padding:10px;float:right;text-align:right;line-height:30px;}
+.pages a{padding:2px;border:1px solid #06C;background:#DFECF0;color:#06C;margin:0px 2px;}
+.pages a:hover{border:1px solid #C60;background:#F90;color:#fff;}
+.pages span{padding:3px;color:#f00;margin:0px 2px;}
+
+.paging {
+	background:#fff;
+	color: #ccc;
+	margin-top: 1em;
+	float:right;
+	text-align:right;
+	clear:both;
+}
+.paging .current,
+.paging .disabled,
+.paging a {
+	text-decoration: none;
+	padding: 5px 8px;
+	display: inline-block
+}
+.paging > span {
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-left: 0;
+}
+.paging > span:hover {
+	background: #efefef;
+}
+.paging .prev {
+	border-left: 1px solid #ccc;
+	-moz-border-radius: 4px 0 0 4px;
+	-webkit-border-radius: 4px 0 0 4px;
+	border-radius: 4px 0 0 4px;
+}
+.paging .next {
+	-moz-border-radius: 0 4px 4px 0;
+	-webkit-border-radius: 0 4px 4px 0;
+	border-radius: 0 4px 4px 0;
+}
+.paging .disabled {
+	color: #ddd;
+}
+.paging .disabled:hover {
+	background: transparent;
+}
+.paging .current {
+	background: #efefef;
+	color: #c73e14;
 }
