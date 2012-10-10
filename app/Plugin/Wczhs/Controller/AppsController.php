@@ -29,13 +29,13 @@ class AppsController extends WczhsAppController {
      ************************************************************************************************************/
     //新闻列表
     function _news($id){
-            $conditions = array(
+            $this->paginate = array(
                 'conditions' => "Meta.category = $id", 
                 'recursive' => 0, //int
                 'order' => 'Post.post_date desc',
                 'limit' => 12
             );
-            $this->set('news', $this->Post->find('all', $conditions));
+            $this->set('news', $this->paginate());
     }
 
     //内容显示
