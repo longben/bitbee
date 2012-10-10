@@ -20,5 +20,12 @@
             <td colspan="2"><font color="red"><b>管理员回复：</b></font><?=$g['Guestbook']['reply_content']?></td>
         </tr>
         <?php endforeach;?>
-    </table>           
+    </table> 
+    <div class="paging">
+        <?php
+        echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+        echo $this->Paginator->numbers(array('separator' => ''));
+        echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+        ?>
+    </div>
 </div> 

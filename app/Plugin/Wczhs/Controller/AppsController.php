@@ -161,13 +161,13 @@ class AppsController extends WczhsAppController {
         $this->layout="website";
         $this->set('title_for_layout', '培训课程');
 
-        $conditions = array(
+        $this->paginate = array(
             'conditions' => "Meta.category = $page", 
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 9
         );
-        $this->set('posts', $this->Post->find('all', $conditions));
+        $this->set('posts', $this->paginate());
 
         $this->set(compact('page', 'title'));
     }
@@ -177,13 +177,13 @@ class AppsController extends WczhsAppController {
         $this->layout="website";
         $this->set('title_for_layout', '学员天地');
 
-        $conditions = array(
+        $this->paginate = array(
             'conditions' => "Meta.category = $page", 
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 9
         );
-        $this->set('posts', $this->Post->find('all', $conditions));
+        $this->set('posts', $this->paginate());
 
         $this->set(compact('page', 'title'));
     }

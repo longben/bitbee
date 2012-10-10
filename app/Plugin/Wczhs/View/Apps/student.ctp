@@ -44,8 +44,13 @@
                             </div>
                         </div>
                         <?php endforeach;?>
-
-                        <div class="pages"><a href="">首页</a><a href="">1</a><span>2</span><a href="3">3</a><a href="">尾页</a></div>
+                        <div class="paging">
+                            <?php
+                            echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+                            echo $this->Paginator->numbers(array('separator' => ''));
+                            echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+                            ?>
+                        </div>
                         <!-- 内容E -->
                     </div>
                 </div>
