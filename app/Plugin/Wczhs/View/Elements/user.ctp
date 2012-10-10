@@ -3,6 +3,8 @@
     echo $this->Form->input('id');	
     echo $this->Form->input('user_login', array('label' => __d('wczhs', 'User Login'), 'class' => 'required',  'title' =>__('请输入登录名', true)));
     echo $this->Form->input('user_nicename', array('label' => __d('wczhs', 'Nice Name'), 'class' => 'required',  'title' =>__('请输入姓名', true)));
+    echo $this->Form->input('Meta.birthday', array('label' =>  '出生日期', 'type' => 'text', 'class' => 'easyui-datebox', 'required' => true));
+    echo $this->Form->input('Meta.join_date', array('label' => '入园日期', 'type' => 'text','class' => 'easyui-datebox', 'required' => true)); 
     echo $this->Form->input('user_email', array('label' => __d('wczhs', 'User Email'), 'class' => 'required email',  'title' =>__('请输入邮箱地址', true)));
     echo $this->Form->input('user_pass', array('label' => __d('wczhs', 'User Pass'), 'div' => array('id' => 'pwd'),'class' => 'required',  'title' =>__('请输入密码', true)));
     echo $this->Form->input('Meta.gender', array('label' => __d('wczhs', 'Gender')));
