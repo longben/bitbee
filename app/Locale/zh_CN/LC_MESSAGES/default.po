@@ -2,7 +2,7 @@ msgid "Name"
 msgstr "名称"
 
 msgid "Parent Id"
-msgstr "父系编号"
+msgstr "所属学校"
 
 
 msgid "Username or password is incorrect"
