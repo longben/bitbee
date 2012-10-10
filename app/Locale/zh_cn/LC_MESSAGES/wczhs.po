@@ -1,0 +1,3 @@
+msgid "Name2"
+msgstr "名稱33333333333"
+
