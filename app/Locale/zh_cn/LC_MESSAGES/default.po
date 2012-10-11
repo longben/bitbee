@@ -4,6 +4,11 @@ msgstr "名称"
 msgid "Parent Id"
 msgstr "所属学校"
 
+msgid "Telephone"
+msgstr "联系电话"
+
+msgid "Linkman"
+msgstr "班级老师"
 
 msgid "Username or password is incorrect"
 msgstr "用户名或者密码不匹配"
