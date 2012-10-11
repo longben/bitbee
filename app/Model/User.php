@@ -4,7 +4,7 @@ App::uses('WordpressAuthenticate', 'Controller/Component/Auth');
 
 class User extends AppModel {
 
-	public $displayField = 'user_nicename';
+	public $displayField = 'display_name';
     
 	var $hasOne = array(
 			'Meta' => array('className' => 'UserMeta',
