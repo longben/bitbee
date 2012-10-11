@@ -69,12 +69,23 @@
     function newItem(){
         $('#dlg').dialog('open').dialog('setTitle','新增学员');
         clearForm('#fm');
+
+        $('#user_login').removeAttr("disabled")
+        $('#user_login').validatebox({  
+            required: true,  
+            validType: "remote['/users/is_not_exists/user_login', 'user_login']",
+            invalidMessage: "登录名不能重复"
+        });
+
         $('#pwd').show();
         url = '/admin/users/add/';
     }
 
     function editItem(){
         var row = $('#dg').datagrid('getSelected');
+        
+        $('#user_login').attr("disabled","disabled");
+        $('#user_login').validatebox('destroy');  
 
         $('#pwd').hide();
 

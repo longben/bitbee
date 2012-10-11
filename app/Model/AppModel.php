@@ -32,4 +32,11 @@ App::uses('Model', 'Model');
  */
 class AppModel extends Model {
 
+    public function getCount($_modelName, $_fieldName, $_queryString){
+        $count = $this->find('count', array(
+            'conditions' => array($_modelName.'.'.$_fieldName => $_queryString)
+        ));
+        return $count;
+    }
+
 }

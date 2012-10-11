@@ -34,10 +34,7 @@
     ?>
 
     <script type="text/javascript">
-    $('#name').validatebox({  
-        required: true,  
-        validType: "remote['/admin/roles/isExists/" + row.id + "', 'name']"  
-    });  
+
     </script>
 </div>
 <div id="dlg-buttons">
@@ -94,15 +91,21 @@
         $('#dlg').dialog('open').dialog('setTitle','新增角色');
         clearForm('#fm');
         url = '/admin/roles/add/';
+        $('#name').validatebox({  
+            required: true,  
+            validType: "remote['/roles/is_not_exists/name', 'name']",
+            invalidMessage: "角色名称不能重复"
+        });  
     }
 
     function editItem(){
         var row = $('#dg').datagrid('getSelected');
-        clearForm('#fm');
+        clearForm('#fm'); 
+
         /**
-        * 生成通用JSON格式
-        *
-        */ 
+         * 生成通用JSON格式
+         *
+         */ 
         var _row = '';
         for(var key in row){
             _row = _row + "'data[Role][" + key + "]':row." + key + ",";
@@ -121,18 +124,18 @@
     function saveItem(){
         $('#fm').form('submit',{
             url: url,
-            onSubmit: function(){
-                return $(this).form('validate');
+                onSubmit: function(){
+                    return $(this).form('validate');
             },
-            success: function(result){
-                var result = eval('('+result+')');
-                if (result.success){
-                    $('#dlg').dialog('close');		// close the dialog
-                    $('#dg').datagrid('reload');	// reload the user data
+                success: function(result){
+                    var result = eval('('+result+')');
+                    if (result.success){
+                        $('#dlg').dialog('close');		// close the dialog
+                        $('#dg').datagrid('reload');	// reload the user data
                 } else {
                     $.messager.show({
                         title: 'Error',
-                        msg: result.msg
+                            msg: result.msg
                     });
                 }
             }
@@ -150,7 +153,7 @@
                         } else {
                             $.messager.show({	// show error message
                                 title: 'Error',
-                                msg: result.msg
+                                    msg: result.msg
                             });
                         }
                     },'json');
@@ -163,8 +166,8 @@
     function search(value, name){
         $('#dg').datagrid(
             'load',
-            {q:value, field:name}
-        );
+    {q:value, field:name}
+);
     }
 </script>
 

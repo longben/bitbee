@@ -74,4 +74,28 @@ class AppController extends Controller {
 
     }
 
+    /**
+     * 判断名称是否存在
+     * @param string $fieldName 检查字段名称
+     * @param int $type 检查方式
+     * @return String JSON 
+     * @access public
+     */
+    public function is_not_exists($fieldName, $type=0){
+        if(!empty($this->request->data)){
+
+            $count = $this->{$this->modelClass}->find('count', array(
+                'conditions' => array($this->modelClass.'.'.$fieldName => $_POST[$fieldName])
+            ));
+
+            if($count == 0){
+                return new CakeResponse(array('body' => 'true'));
+            }elseif($count == 1 && $type == 1){
+                return new CakeResponse(array('body' => 'true'));
+            }else{
+                return new CakeResponse(array('body' => 'false'));
+            }
+        }
+    }  
+
 }

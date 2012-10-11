@@ -2,7 +2,7 @@
 	unset($departments[1]);
     echo $this->Form->create('User', array('action' => 'add', 'id' => 'fm'));
     echo $this->Form->input('id', array('id' => 'id'));	
-    echo $this->Form->input('user_login', array('label' => '登 录 名', 'data-options' => 'required:true', 'class' => 'easyui-validatebox'));
+    echo $this->Form->input('user_login', array('label' => '登 录 名', 'id' => 'user_login', 'data-options' => 'required:true', 'class' => 'easyui-validatebox'));
     echo $this->Form->input('user_pass', array('label' => '登录密码', 'div' => array('id' => 'pwd'),'data-options' => 'required:true', 'class' => 'easyui-validatebox'));
 	echo $this->Form->input('display_name', array('label' => '真实姓名', 'data-options' => 'required:true', 'class' => 'easyui-validatebox'));	
     echo $this->Form->input('user_nicename', array('label' => '昵　　称', 'class' => 'required',  'title' =>__('请输入昵称', true)));
@@ -17,4 +17,3 @@
     echo $this->Form->hidden('Meta.role_id', array('value' => '2'));
     echo $this->Form->input('Meta.department_id',array('options' => $departments, 'label' => '所属班级'));
     echo $this->Form->end();
-?>	

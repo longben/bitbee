@@ -84,7 +84,7 @@ class RolesController extends AppController {
     function admin_read($id){
 	    $role = $this->Role->read(null, $id);
         return $role['Role']['name'];
-    }	
+    }
 
 }
 ?>
