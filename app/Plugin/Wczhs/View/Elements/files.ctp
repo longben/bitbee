@@ -1,5 +1,5 @@
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
-    data-options="url:'/admin/wczhs/course_memberships/json_data.json?u=<?=$this->Session->read('user_id')?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,pageSize:20">
+    data-options="url:'/admin/wczhs/course_memberships/json_data.json?u=<?=$this->Session->read('id')?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,pageSize:20">
     <thead>  
         <tr>
             <th data-options="field:'user_nicename',formatter:function(value,row){return row.User.user_nicename;}">宝宝</th>  
