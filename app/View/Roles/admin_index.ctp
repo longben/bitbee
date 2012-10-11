@@ -36,7 +36,7 @@
     <script type="text/javascript">
     $('#name').validatebox({  
         required: true,  
-        validType: "remote['/admin/roles/isExists', 'name']"  
+        validType: "remote['/admin/roles/isExists/" + row.id + "', 'name']"  
     });  
     </script>
 </div>
