@@ -85,7 +85,7 @@
         var row = $('#dg').datagrid('getSelected');
         
         $('#user_login').attr("disabled","disabled");
-        $('#user_login').validatebox('destroy');  
+        $("#user_login").validatebox('remove');
 
         $('#pwd').hide();
 

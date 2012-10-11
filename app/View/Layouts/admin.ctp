@@ -7,7 +7,7 @@
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-		echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.metadata', 'public', 'jquery/easyui/jquery.easyui.min' , 'jquery/easyui/locale/easyui-lang-zh_CN', 'jquery/validation/jquery.validate.min', 'formee/formee'));
+		echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.metadata',  'jquery/easyui/jquery.easyui.min' , 'jquery/easyui/locale/easyui-lang-zh_CN', 'jquery/validation/jquery.validate.min', 'formee/formee', 'public.js?version=1.0.1',));
         echo $scripts_for_layout;
         
 		echo $this->Html->css(array('default', 'easyui/themes/default/easyui', 'easyui/themes/icon','formee/formee-style', 'formee/formee-structure'));
