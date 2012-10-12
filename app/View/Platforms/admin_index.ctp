@@ -58,7 +58,7 @@
                     return false;
                 }
 
-                $.post('/admin/members/change_pwd/' + $oldpass.val() + '/' + $newpass.val(), function(msg) {
+                $.post('/admin/users/change_pwd/' + $oldpass.val() + '/' + $newpass.val(), function(msg) {
                     msgShow('系统提示', msg, 'info');
                     $oldpass.val('');
                     $newpass.val('');

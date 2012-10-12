@@ -126,6 +126,51 @@ class UsersController extends AppController {
             }
         }
     }
+    
+    //重置用户密码
+    public function admin_reset_pwd() {
+        if($this->request->is('post'))
+            $this->User->id = $_POST['id'];
+        if ( $this->User->saveField('user_pass', 'aaaaaa') ) { //密码初始化为 aaaaaa
+            return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+        }else{
+            return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+        }
+    }
+
+    //修改密码
+    public function admin_change_pwd($old_password, $new_password){
+
+        $this->User->id = $this->Session->read('id');
+
+        if($old_password == $new_password) {
+            $flag = 0; //新旧密码相同
+        }else{
+            App::import('Vendor', 'utils/class-phpass');
+            $hasher = new PasswordHash(8, TRUE);
+
+            if($hasher->CheckPassword( $old_password, $this->User->field('user_pass')) ){
+                if( $this->User->saveField('user_pass', $new_password) ){
+                    $flag = 1;
+                } 
+            }else{
+                $flag = -1; //旧密码不正确
+            }
+        }
+
+        switch($flag){
+        case 1:
+            $msg = '密码修改成功!';
+            break;
+        case -1:
+            $msg = '旧密码不正确!';
+            break;
+        case 0:
+            $msg = '新密码和旧密码相同!';
+            break;
+        }
+        return new CakeResponse(array('body' => $msg));
+    }
 
 
     public function admin_json_department(){

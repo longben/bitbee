@@ -13,7 +13,7 @@
 <div id="toolbar">  
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增学员</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑学员</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="reset()">重置密码</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="reset_pwd()">重置密码</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
@@ -117,6 +117,28 @@
             'load',
             {q:value, field:name}
         );
+    }
+
+    function reset_pwd(){
+        var row = $('#dg').datagrid('getSelected');
+        if(row){
+            $.messager.confirm('请确认','你是否要重置该用户密码？',function(r){
+                if (r){
+                    $.post("/admin/users/reset_pwd", {id:row.User.id},function(result){
+                        var result = eval('('+result+')');
+                        if (result.success){
+                            $.messager.alert('密码重置','密码重置成功！<br/>密码重置为 <font color="red"><b>aaaaaa</b></font>','info');
+                        } else {
+                            $.messager.show({
+                                title: 'Error',
+                                msg: result.msg
+                            });
+                        }
+                    });
+                }
+            });
+
+        }
     }
 
     $('#dg').datagrid({
