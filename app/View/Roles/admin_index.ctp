@@ -27,15 +27,11 @@
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
     <?php 
-    echo $this->Form->create('Role', array('action' => 'add', 'id' => 'fm'));
+    echo $this->Form->create('Role', array('id' => 'fm'));
     echo $this->Form->input('id', array('id' => 'id'));
     echo $this->Form->input('name', array('label' => '角色名称', 'class' => 'easyui-validatebox' ,  'id' => 'name'));
     echo $this->Form->end();
     ?>
-
-    <script type="text/javascript">
-
-    </script>
 </div>
 <div id="dlg-buttons">
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveItem()">保存</a>
@@ -166,9 +162,8 @@
 
     function search(value, name){
         $('#dg').datagrid(
-            'load',
-    {q:value, field:name}
-);
+            'load',{q:value, field:name}
+        );
     }
 </script>
 

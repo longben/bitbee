@@ -58,9 +58,12 @@ class AppController extends Controller {
         $order = isset($_POST['order'])?$_POST['order'] : $_order; //排序方式
 
         if(isset($_POST['q'])){
-            $_conditions = array_merge($_conditions, array($this->modelClass. '.' . $_POST['field'] . ' LIKE' => '%'.$q.'%'));
+            if( isset( $_conditions ) ){
+                $_conditions = array_merge( $_conditions, array( $this->modelClass. '.' . $_POST['field'] . ' LIKE' => '%'.$q.'%' ) );
+            }else{
+                $_conditions = array($this->modelClass. '.' . $_POST['field'] . ' LIKE' => '%'.$q.'%');
+            }
         }
-
 
         $this->paginate = array(
             'conditions' => $_conditions,

@@ -131,7 +131,7 @@ class UsersController extends AppController {
     public function admin_reset_pwd() {
         if($this->request->is('post'))
             $this->User->id = $_POST['id'];
-        if ( $this->User->saveField('user_pass', 'aaaaaa') ) { //密码初始化为 aaaaaa
+        if ( $this->User->saveField('user_pass', '123456') ) { //密码初始化为 aaaaaa
             return new CakeResponse(array('body' => json_encode(array('success'=>true))));
         }else{
             return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
