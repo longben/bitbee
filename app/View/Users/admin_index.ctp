@@ -18,7 +18,8 @@
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
-            <div data-options="name:'user_nicename',iconCls:'icon-user'">姓名</div>
+            <div data-options="name:'display_name',iconCls:'icon-user'">姓名</div>
+            <div data-options="name:'user_nicename',iconCls:'icon-user'">昵称</div>
             <div data-options="name:'user_login',iconCls:'icon-public'">登录名</div>
         </div>
     </span>
