@@ -75,7 +75,7 @@
                 var result = eval('('+result+')');
                 if (result.success){
                     $('#dlgAuth').dialog('close');		// close the dialog
-                    $.messager.alert('信息提示','<font color=blue>角色授权成功！</font>','info');
+                    $.messager.alert('信息提示','角色授权成功！','info');
                 } else {
                     $.messager.show({
                         title: 'Error',
@@ -101,6 +101,7 @@
     function editItem(){
         var row = $('#dg').datagrid('getSelected');
         clearForm('#fm'); 
+        $("#name").validatebox('remove');
 
         /**
          * 生成通用JSON格式

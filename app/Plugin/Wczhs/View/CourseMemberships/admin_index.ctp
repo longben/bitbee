@@ -128,7 +128,7 @@
         if (row){
             $.messager.confirm('请确认','你是否要删除这条数据？',function(r){
                 if (r){
-                    $.post('<?=$this->Html->url('delete')?>',{id:row.id},function(result){
+                    $.post('<?=$this->Html->url('delete')?>',{id:row.CourseMembership.id},function(result){
                         if (result.success){
                             $('#dg').datagrid('reload');	// reload the user data
                         } else {
