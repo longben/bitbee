@@ -34,7 +34,7 @@
                                         <tr>
                                             <td align="center" valign="middle">
                                                 <a href="/app/content/<?=$post['Post']['id']?>" target="_blank">
-                                                    <img src="<?php echo $post['Meta']['picture']?>" width="153" height="115" border="0">
+                                                    <img src="<?php echo dirname($post['Meta']['picture']).'/240x180_'.basename($post['Meta']['picture'])?>" width="153" height="115" border="0">
                                                 </a>
                                             </td>
                                         </tr>
