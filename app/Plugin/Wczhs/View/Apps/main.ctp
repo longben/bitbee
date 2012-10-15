@@ -1,6 +1,5 @@
 <?php
 $this->Html->script(array('/wczhs/js/AutoChangePhoto', '/wczhs/js/MSClass', '/js/jquery/jquery.KinSlideshow-1.2.1.min'), array('inline' => false));
-//$this->Html->css(array('/meise/css/user.css?ver=1.04', '/meise/css/wb/core', '/meise/css/wb/main', 'jquery.artZoom'), 'stylesheet', array('inline' => false));
 ?>
 <script type="text/javascript">
     var moveStyle
@@ -68,7 +67,7 @@ $this->Html->script(array('/wczhs/js/AutoChangePhoto', '/wczhs/js/MSClass', '/js
                     <tbody>
                         <?php foreach($images as $post):?>
                         <tr>
-                            <td><img src='<?php echo $post['Meta']['picture']?>'/></td>
+                            <td><img src='<?php echo dirname($post['Meta']['picture']).'/240x180_'.basename($post['Meta']['picture'])?>'/></td>
                             <td><?php echo $post['Post']['post_title']?></td>
                             <td><?php echo $this->Html->url('/app/content/'.$post['Post']['id'])?></td>
                         </tr>
