@@ -3,7 +3,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="keywords" content="<?=Configure::read('Meta.keywords')?>"/> 
-        <meta name="description" content="<?=Configure::read('Meta.description')?>"/> 
+        <meta name="description" content="<?=Configure::read('Meta.description')?>"/>
+		<meta name="baidu-site-verification" content="WiM2aaX1xFfLecCz" />
         <title>五彩智慧树早教机构</title>
         <link href="/wczhs/img/favicon.ico" type="image/x-icon" rel="icon" />
         <link href="/wczhs/img/favicon.ico" type="image/x-icon" rel="shortcut icon" />
