@@ -1,5 +1,5 @@
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
-    data-options="url:'/admin/users/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
+    data-options="url:'/admin/users/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20, onDblClickCell:editItem">
     <thead>  
         <tr>            
             <th width="50" data-options="field:'user_login',formatter:function(value,row){return row.User.user_login;}">登录名</th>  
@@ -142,10 +142,5 @@
         }
     }
 
-    $('#dg').datagrid({
-        onDblClickCell: function(index,field,value){
-            editItem();
-        }
-    });
 </script>
 
