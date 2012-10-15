@@ -4,12 +4,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Controller
  * @since         CakePHP(tm) v 1.2
@@ -18,7 +18,7 @@
 App::uses('ComponentCollection', 'Controller');
 
 /**
- * Base class for an individual Component.  Components provide reusable bits of
+ * Base class for an individual Component.  Components provide resuable bits of
  * controller logic that can be composed into a controller.  Components also
  * provide request life-cycle callbacks for injecting logic at specific points.
  *
@@ -35,7 +35,7 @@ App::uses('ComponentCollection', 'Controller');
  * - `beforeRedirect()` - Fired before a redirect() is done.
  *
  * @package       Cake.Controller
- * @link          http://book.cakephp.org/2.0/en/controllers/components.html
+ * @link          http://book.cakephp.org/view/993/Components
  * @see Controller::$components
  */
 class Component extends Object {
@@ -104,41 +104,35 @@ class Component extends Object {
  *
  * @param Controller $controller Controller with components to initialize
  * @return void
- * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::initialize
+ * @link http://book.cakephp.org/view/998/MVC-Class-Access-Within-Components
  */
-	public function initialize(Controller $controller) {
-	}
+	public function initialize($controller) { }
 
 /**
  * Called after the Controller::beforeFilter() and before the controller action
  *
  * @param Controller $controller Controller with components to startup
  * @return void
- * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::startup
+ * @link http://book.cakephp.org/view/998/MVC-Class-Access-Within-Components
  */
-	public function startup(Controller $controller) {
-	}
+	public function startup($controller) { }
 
 /**
- * Called before the Controller::beforeRender(), and before 
- * the view class is loaded, and before Controller::render()
+ * Called after the Controller::beforeRender(), after the view class is loaded, and before the
+ * Controller::render()
  *
  * @param Controller $controller Controller with components to beforeRender
  * @return void
- * @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::beforeRender
  */
-	public function beforeRender(Controller $controller) {
-	}
+	public function beforeRender($controller) { }
 
 /**
  * Called after Controller::render() and before the output is printed to the browser.
  *
  * @param Controller $controller Controller with components to shutdown
  * @return void
- * @link @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::shutdown
  */
-	public function shutdown(Controller $controller) {
-	}
+	public function shutdown($controller) { }
 
 /**
  * Called before Controller::redirect().  Allows you to replace the url that will
@@ -157,9 +151,7 @@ class Component extends Object {
  * @param integer $status The status code of the redirect
  * @param boolean $exit Will the script exit.
  * @return array|null Either an array or null.
- * @link @link http://book.cakephp.org/2.0/en/controllers/components.html#Component::beforeRedirect
  */
-	public function beforeRedirect(Controller $controller, $url, $status = null, $exit = true) {
-	}
+	public function beforeRedirect($controller, $url, $status = null, $exit = true) {}
 
 }

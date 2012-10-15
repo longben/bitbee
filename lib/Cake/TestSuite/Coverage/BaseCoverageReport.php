@@ -6,24 +6,20 @@
  * PHP5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.TestSuite.Coverage
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-/**
- * Abstract class for common CoverageReport methods.
- * Provides several template methods for custom output.
- *
- * @package       Cake.TestSuite.Coverage
- */
+PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'DEFAULT');
+
 abstract class BaseCoverageReport {
 
 /**
@@ -64,7 +60,7 @@ abstract class BaseCoverageReport {
  */
 	public function __construct($coverage, CakeBaseReporter $reporter) {
 		$this->_rawCoverage = $coverage;
-		$this->_setParams($reporter);
+		$this->setParams($reporter);
 	}
 
 /**
@@ -73,7 +69,7 @@ abstract class BaseCoverageReport {
  * @param CakeBaseReporter $reporter Reporter to suck params out of.
  * @return void
  */
-	protected function _setParams(CakeBaseReporter $reporter) {
+	protected function setParams(CakeBaseReporter $reporter) {
 		if ($reporter->params['app']) {
 			$this->appTest = true;
 		}
@@ -127,12 +123,7 @@ abstract class BaseCoverageReport {
 	}
 
 /**
- * Calculates how many lines are covered and what the total number of executable lines is.
- *
- * Handles both PHPUnit3.5 and 3.6 formats.
- *
- * 3.5 uses -1 for uncovered, and -2 for dead.
- * 3.6 uses array() for uncovered and null for dead.
+ * Calculates how many lines are covered and what the total number of executable lines is
  *
  * @param array $fileLines
  * @param array $coverageData
@@ -149,10 +140,10 @@ abstract class BaseCoverageReport {
 			if (!isset($coverageData[$lineno])) {
 				continue;
 			}
-			if (is_array($coverageData[$lineno]) && !empty($coverageData[$lineno])) {
+			if (is_array($coverageData[$lineno])) {
 				$covered++;
 				$total++;
-			} elseif ($coverageData[$lineno] === -1 || $coverageData[$lineno] === array()) {
+			} else if ($coverageData[$lineno] === -1) {
 				$total++;
 			}
 		}

@@ -1,1 +1,2 @@
-<?php echo $this->fetch('content'); ?>
+<?php echo $xml->header(); ?>
+<?php echo $content_for_layout; ?>

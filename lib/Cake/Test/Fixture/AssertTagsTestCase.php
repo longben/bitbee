@@ -1,4 +1,7 @@
 <?php
+
+PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'DEFAULT');
+
 /**
  * This class helpes in indirectly testing the functionaliteies of CakeTestCase::assertTags
  *
@@ -86,7 +89,7 @@ class AssertTagsTestCase extends CakeTestCase {
 		$this->assertTags($input, $pattern);
 	}
 
-/**
+ /**
  * testBadAssertTags
  *
  * @return void

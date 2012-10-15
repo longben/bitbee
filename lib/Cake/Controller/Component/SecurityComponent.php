@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Controller.Component
  * @since         CakePHP(tm) v 0.10.8.2156
@@ -19,21 +19,13 @@
 
 App::uses('Component', 'Controller');
 App::uses('String', 'Utility');
-App::uses('Hash', 'Utility');
 App::uses('Security', 'Utility');
 
 /**
- * The Security Component creates an easy way to integrate tighter security in 
- * your application. It provides methods for various tasks like:
- *
- * - Restricting which HTTP methods your application accepts.
- * - CSRF protection.
- * - Form tampering protection
- * - Requiring that SSL be used.
- * - Limiting cross controller communication.
+ * SecurityComponent
  *
  * @package       Cake.Controller.Component
- * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html
+ * @link http://book.cakephp.org/view/1296/Security-Component
  */
 class SecurityComponent extends Component {
 
@@ -166,19 +158,6 @@ class SecurityComponent extends Component {
 	public $csrfUseOnce = true;
 
 /**
- * Control the number of tokens a user can keep open.
- * This is most useful with one-time use tokens.  Since new tokens
- * are created on each request, having a hard limit on the number of open tokens
- * can be useful in controlling the size of the session file.
- *
- * When tokens are evicted, the oldest ones will be removed, as they are the most likely
- * to be dead/expired.
- *
- * @var integer
- */
-	public $csrfLimit = 100;
-
-/**
  * Other components used by the Security component
  *
  * @var array
@@ -205,7 +184,7 @@ class SecurityComponent extends Component {
  * @param Controller $controller Instantiating controller
  * @return void
  */
-	public function startup(Controller $controller) {
+	public function startup($controller) {
 		$this->request = $controller->request;
 		$this->_action = $this->request->params['action'];
 		$this->_methodsRequired($controller);
@@ -228,17 +207,14 @@ class SecurityComponent extends Component {
 				return $this->blackHole($controller, 'csrf');
 			}
 		}
-		$this->generateToken($controller->request);
-		if ($isPost && is_array($controller->request->data)) {
-			unset($controller->request->data['_Token']);
-		}
+		$this->_generateToken($controller);
 	}
 
 /**
  * Sets the actions that require a POST request, or empty for all actions
  *
  * @return void
- * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#SecurityComponent::requirePost
+ * @link http://book.cakephp.org/view/1299/requirePost
  */
 	public function requirePost() {
 		$args = func_get_args();
@@ -279,7 +255,7 @@ class SecurityComponent extends Component {
  * Sets the actions that require a request that is SSL-secured, or empty for all actions
  *
  * @return void
- * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#SecurityComponent::requireSecure
+ * @link http://book.cakephp.org/view/1300/requireSecure
  */
 	public function requireSecure() {
 		$args = func_get_args();
@@ -290,7 +266,7 @@ class SecurityComponent extends Component {
  * Sets the actions that require an authenticated request, or empty for all actions
  *
  * @return void
- * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#SecurityComponent::requireAuth
+ * @link http://book.cakephp.org/view/1301/requireAuth
  */
 	public function requireAuth() {
 		$args = func_get_args();
@@ -298,19 +274,23 @@ class SecurityComponent extends Component {
 	}
 
 /**
- * Black-hole an invalid request with a 400 error or custom callback. If SecurityComponent::$blackHoleCallback
+ * Black-hole an invalid request with a 404 error or custom callback. If SecurityComponent::$blackHoleCallback
  * is specified, it will use this callback by executing the method indicated in $error
  *
  * @param Controller $controller Instantiating controller
  * @param string $error Error method
  * @return mixed If specified, controller blackHoleCallback's response, or no return otherwise
  * @see SecurityComponent::$blackHoleCallback
- * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#handling-blackhole-callbacks
- * @throws BadRequestException
+ * @link http://book.cakephp.org/view/1307/blackHole-object-controller-string-error
  */
-	public function blackHole(Controller $controller, $error = '') {
+	public function blackHole($controller, $error = '') {
 		if ($this->blackHoleCallback == null) {
-			throw new BadRequestException(__d('cake_dev', 'The request has been black-holed'));
+			$code = 404;
+			if ($error == 'login') {
+				$code = 401;
+				$controller->header($this->loginRequest());
+			}
+			return $controller->redirect(null, $code, true);
 		} else {
 			return $this->_callback($controller, $this->blackHoleCallback, array($error));
 		}
@@ -336,7 +316,7 @@ class SecurityComponent extends Component {
  * @param Controller $controller Instantiating controller
  * @return boolean true if $method is required
  */
-	protected function _methodsRequired(Controller $controller) {
+	protected function _methodsRequired($controller) {
 		foreach (array('Post', 'Get', 'Put', 'Delete') as $method) {
 			$property = 'require' . $method;
 			if (is_array($this->$property) && !empty($this->$property)) {
@@ -359,7 +339,7 @@ class SecurityComponent extends Component {
  * @param Controller $controller Instantiating controller
  * @return boolean true if secure connection required
  */
-	protected function _secureRequired(Controller $controller) {
+	protected function _secureRequired($controller) {
 		if (is_array($this->requireSecure) && !empty($this->requireSecure)) {
 			$requireSecure = $this->requireSecure;
 
@@ -380,7 +360,7 @@ class SecurityComponent extends Component {
  * @param Controller $controller Instantiating controller
  * @return boolean true if authentication required
  */
-	protected function _authRequired(Controller $controller) {
+	protected function _authRequired($controller) {
 		if (is_array($this->requireAuth) && !empty($this->requireAuth) && !empty($this->request->data)) {
 			$requireAuth = $this->requireAuth;
 
@@ -394,12 +374,7 @@ class SecurityComponent extends Component {
 				if ($this->Session->check('_Token')) {
 					$tData = $this->Session->read('_Token');
 
-					if (
-						!empty($tData['allowedControllers']) &&
-						!in_array($this->request->params['controller'], $tData['allowedControllers']) ||
-						!empty($tData['allowedActions']) &&
-						!in_array($this->request->params['action'], $tData['allowedActions'])
-					) {
+					if (!empty($tData['allowedControllers']) && !in_array($this->request->params['controller'], $tData['allowedControllers']) || !empty($tData['allowedActions']) && !in_array($this->request->params['action'], $tData['allowedActions'])) {
 						if (!$this->blackHole($controller, 'auth')) {
 							return null;
 						}
@@ -420,7 +395,7 @@ class SecurityComponent extends Component {
  * @param Controller $controller Instantiating controller
  * @return boolean true if submitted form is valid
  */
-	protected function _validatePost(Controller $controller) {
+	protected function _validatePost($controller) {
 		if (empty($controller->request->data)) {
 			return true;
 		}
@@ -444,13 +419,13 @@ class SecurityComponent extends Component {
 		$unlocked = explode('|', $unlocked);
 
 		$lockedFields = array();
-		$fields = Hash::flatten($check);
+		$fields = Set::flatten($check);
 		$fieldList = array_keys($fields);
 		$multi = array();
 
 		foreach ($fieldList as $i => $key) {
-			if (preg_match('/(\.\d+)+$/', $key)) {
-				$multi[$i] = preg_replace('/(\.\d+)+$/', '', $key);
+			if (preg_match('/\.\d+$/', $key)) {
+				$multi[$i] = preg_replace('/\.\d+$/', '', $key);
 				unset($fieldList[$i]);
 			}
 		}
@@ -463,6 +438,7 @@ class SecurityComponent extends Component {
 		);
 
 		foreach ($fieldList as $i => $key) {
+			$isDisabled = false;
 			$isLocked = (is_array($locked) && in_array($key, $locked));
 
 			if (!empty($unlockedFields)) {
@@ -494,15 +470,16 @@ class SecurityComponent extends Component {
 	}
 
 /**
- * Manually add CSRF token information into the provided request object.
+ * Add authentication key for new form posts
  *
- * @param CakeRequest $request The request object to add into.
- * @return boolean
+ * @param Controller $controller Instantiating controller
+ * @return boolean Success
  */
-	public function generateToken(CakeRequest $request) {
-		if (isset($request->params['requested']) && $request->params['requested'] === 1) {
+	protected function _generateToken($controller) {
+		if (isset($controller->request->params['requested']) && $controller->request->params['requested'] === 1) {
 			if ($this->Session->check('_Token')) {
-				$request->params['_Token'] = $this->Session->read('_Token');
+				$tokenData = $this->Session->read('_Token');
+				$controller->request->params['_Token'] = $tokenData;
 			}
 			return false;
 		}
@@ -522,15 +499,15 @@ class SecurityComponent extends Component {
 				$token['csrfTokens'] = $this->_expireTokens($tokenData['csrfTokens']);
 			}
 		}
-		if ($this->csrfUseOnce || empty($token['csrfTokens'])) {
+		if ($this->csrfCheck && ($this->csrfUseOnce || empty($token['csrfTokens'])) ) {
 			$token['csrfTokens'][$authKey] = strtotime($this->csrfExpires);
 		}
-		if (!$this->csrfUseOnce) {
+		if ($this->csrfCheck && $this->csrfUseOnce == false) {
 			$csrfTokens = array_keys($token['csrfTokens']);
 			$token['key'] = $csrfTokens[0];
 		}
 		$this->Session->write('_Token', $token);
-		$request->params['_Token'] = array(
+		$controller->request->params['_Token'] = array(
 			'key' => $token['key'],
 			'unlockedFields' => $token['unlockedFields']
 		);
@@ -545,7 +522,7 @@ class SecurityComponent extends Component {
  * @param Controller $controller A controller to check
  * @return boolean Valid csrf token.
  */
-	protected function _validateCsrf(Controller $controller) {
+	protected function _validateCsrf($controller) {
 		$token = $this->Session->read('_Token');
 		$requestToken = $controller->request->data('_Token.key');
 		if (isset($token['csrfTokens'][$requestToken]) && $token['csrfTokens'][$requestToken] >= time()) {
@@ -571,10 +548,6 @@ class SecurityComponent extends Component {
 				unset($tokens[$nonce]);
 			}
 		}
-		$overflow = count($tokens) - $this->csrfLimit;
-		if ($overflow > 0) {
-			$tokens = array_slice($tokens, $overflow + 1, null, true);
-		}
 		return $tokens;
 	}
 
@@ -585,14 +558,12 @@ class SecurityComponent extends Component {
  * @param string $method Method to execute
  * @param array $params Parameters to send to method
  * @return mixed Controller callback method's response
- * @throws BadRequestException When a the blackholeCallback is not callable.
  */
-	protected function _callback(Controller $controller, $method, $params = array()) {
+	protected function _callback($controller, $method, $params = array()) {
 		if (is_callable(array($controller, $method))) {
 			return call_user_func_array(array(&$controller, $method), empty($params) ? null : $params);
 		} else {
-			throw new BadRequestException(__d('cake_dev', 'The request has been black-holed'));
+			return null;
 		}
 	}
-
 }

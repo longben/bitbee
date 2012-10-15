@@ -1,16 +1,13 @@
 <?php
 /**
- * FormAuthenticateTest file
- *
- * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Test.Case.Controller.Component.Auth
  * @since         CakePHP(tm) v 2.0
@@ -23,7 +20,7 @@ App::uses('AppModel', 'Model');
 App::uses('CakeRequest', 'Network');
 App::uses('CakeResponse', 'Network');
 
-require_once CAKE . 'Test' . DS . 'Case' . DS . 'Model' . DS . 'models.php';
+require_once  CAKE . 'Test' . DS . 'Case' . DS . 'Model' . DS . 'models.php';
 
 /**
  * Test case for FormAuthentication
@@ -115,7 +112,7 @@ class FormAuthenticateTest extends CakeTestCase {
 	}
 
 /**
- * test authenticate success
+ * test authenticate sucesss
  *
  * @return void
  */
@@ -159,8 +156,8 @@ class FormAuthenticateTest extends CakeTestCase {
 	public function testPluginModel() {
 		Cache::delete('object_map', '_cake_core_');
 		App::build(array(
-			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
-		), App::RESET);
+			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
+		), true);
 		CakePlugin::load('TestPlugin');
 
 		$PluginModel = ClassRegistry::init('TestPlugin.TestPluginAuthUser');
@@ -182,10 +179,9 @@ class FormAuthenticateTest extends CakeTestCase {
 		$expected = array(
 			'id' => 1,
 			'username' => 'gwoo',
-			'created' => '2007-03-17 01:16:23'
+			'created' => '2007-03-17 01:16:23',
+			'updated' => date('Y-m-d H:i:s')
 		);
-		$this->assertEquals(self::date(), $result['updated']);
-		unset($result['updated']);
 		$this->assertEquals($expected, $result);
 		CakePlugin::unload();
 	}

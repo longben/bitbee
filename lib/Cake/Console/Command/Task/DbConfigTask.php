@@ -5,25 +5,23 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         CakePHP(tm) v 1.2
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
-App::uses('AppShell', 'Console/Command');
 
 /**
  * Task class for creating and updating the database configuration file.
  *
  * @package       Cake.Console.Command.Task
  */
-class DbConfigTask extends AppShell {
+class DbConfigTask extends Shell {
 
 /**
  * path to CONFIG directory
@@ -39,14 +37,14 @@ class DbConfigTask extends AppShell {
  */
 	protected $_defaultConfig = array(
 		'name' => 'default',
-		'datasource' => 'Database/Mysql',
-		'persistent' => 'false',
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => 'password',
-		'database' => 'project_name',
-		'schema' => null,
-		'prefix' => null,
+		'datasource'=> 'Database/Mysql',
+		'persistent'=> 'false',
+		'host'=> 'localhost',
+		'login'=> 'root',
+		'password'=> 'password',
+		'database'=> 'project_name',
+		'schema'=> null,
+		'prefix'=> null,
 		'encoding' => null,
 		'port' => null
 	);
@@ -87,7 +85,7 @@ class DbConfigTask extends AppShell {
  */
 	protected function _interactive() {
 		$this->hr();
-		$this->out(__d('cake_console', 'Database Configuration:'));
+		$this->out('Database Configuration:');
 		$this->hr();
 		$done = false;
 		$dbConfigs = array();
@@ -100,13 +98,13 @@ class DbConfigTask extends AppShell {
 				if (preg_match('/[^a-z0-9_]/i', $name)) {
 					$name = '';
 					$this->out(__d('cake_console', 'The name may only contain unaccented latin characters, numbers or underscores'));
-				} elseif (preg_match('/^[^a-z_]/i', $name)) {
+				} else if (preg_match('/^[^a-z_]/i', $name)) {
 					$name = '';
 					$this->out(__d('cake_console', 'The name must start with an unaccented latin character or an underscore'));
 				}
 			}
 
-			$datasource = $this->in(__d('cake_console', 'Datasource:'), array('Mysql', 'Postgres', 'Sqlite', 'Sqlserver'), 'Mysql');
+			$driver = $this->in(__d('cake_console', 'Driver:'), array('Mysql', 'Postgres', 'Sqlite', 'Sqlserver'), 'Mysql');
 
 			$persistent = $this->in(__d('cake_console', 'Persistent Connection?'), array('y', 'n'), 'n');
 			if (strtolower($persistent) == 'n') {
@@ -169,7 +167,7 @@ class DbConfigTask extends AppShell {
 			}
 
 			$schema = '';
-			if ($datasource == 'postgres') {
+			if ($driver == 'postgres') {
 				while ($schema == '') {
 					$schema = $this->in(__d('cake_console', 'Table schema?'), null, 'n');
 				}
@@ -178,7 +176,7 @@ class DbConfigTask extends AppShell {
 				$schema = null;
 			}
 
-			$config = compact('name', 'datasource', 'persistent', 'host', 'login', 'password', 'database', 'prefix', 'encoding', 'port', 'schema');
+			$config = compact('name', 'driver', 'persistent', 'host', 'login', 'password', 'database', 'prefix', 'encoding', 'port', 'schema');
 
 			while ($this->_verify($config) == false) {
 				$this->_interactive();
@@ -211,7 +209,7 @@ class DbConfigTask extends AppShell {
 		$this->out(__d('cake_console', 'The following database configuration will be created:'));
 		$this->hr();
 		$this->out(__d('cake_console', "Name:         %s", $name));
-		$this->out(__d('cake_console', "Datasource:       %s", $datasource));
+		$this->out(__d('cake_console', "Driver:       %s", $driver));
 		$this->out(__d('cake_console', "Persistent:   %s", $persistent));
 		$this->out(__d('cake_console', "Host:         %s", $host));
 
@@ -285,7 +283,7 @@ class DbConfigTask extends AppShell {
 
 				$oldConfigs[] = array(
 					'name' => $configName,
-					'datasource' => $info['datasource'],
+					'driver' => $info['driver'],
 					'persistent' => $info['persistent'],
 					'host' => $info['host'],
 					'port' => $info['port'],
@@ -300,7 +298,7 @@ class DbConfigTask extends AppShell {
 		}
 
 		foreach ($oldConfigs as $key => $oldConfig) {
-			foreach ($configs as $k => $config) {
+			foreach ($configs as $key1 => $config) {
 				if ($oldConfig['name'] == $config['name']) {
 					unset($oldConfigs[$key]);
 				}
@@ -315,11 +313,8 @@ class DbConfigTask extends AppShell {
 			$config = array_merge($this->_defaultConfig, $config);
 			extract($config);
 
-			if (strpos($datasource, 'Database/') === false) {
-				$datasource = "Database/{$datasource}";
-			}
 			$out .= "\tpublic \${$name} = array(\n";
-			$out .= "\t\t'datasource' => '{$datasource}',\n";
+			$out .= "\t\t'datasource' => 'Database/{$driver}',\n";
 			$out .= "\t\t'persistent' => {$persistent},\n";
 			$out .= "\t\t'host' => '{$host}',\n";
 
@@ -358,16 +353,16 @@ class DbConfigTask extends AppShell {
  */
 	public function getConfig() {
 		App::uses('ConnectionManager', 'Model');
-		$configs = ConnectionManager::enumConnectionObjects();
 
-		$useDbConfig = key($configs);
-		if (!is_array($configs) || empty($configs)) {
+		$useDbConfig = 'default';
+		$configs = get_class_vars($this->databaseClassName);
+		if (!is_array($configs)) {
 			return $this->execute();
 		}
-		$connections = array_keys($configs);
 
+		$connections = array_keys($configs);
 		if (count($connections) > 1) {
-			$useDbConfig = $this->in(__d('cake_console', 'Use Database Config') . ':', $connections, $useDbConfig);
+			$useDbConfig = $this->in(__d('cake_console', 'Use Database Config') .':', $connections, 'default');
 		}
 		return $useDbConfig;
 	}
@@ -383,5 +378,4 @@ class DbConfigTask extends AppShell {
 				__d('cake_console', 'Bake new database configuration settings.')
 			);
 	}
-
 }

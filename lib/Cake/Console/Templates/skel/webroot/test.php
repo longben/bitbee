@@ -4,14 +4,14 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://book.cakephp.org/2.0/en/development/testing.html
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://book.cakephp.org/view/1196/Testing
  * @package       app.webroot
  * @since         CakePHP(tm) v 1.2.0.4433
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -21,10 +21,9 @@ ini_set('display_errors', 1);
 /**
  * Use the DS to separate the directories in other defines
  */
-if (!defined('DS')) {
-	define('DS', DIRECTORY_SEPARATOR);
-}
-
+	if (!defined('DS')) {
+		define('DS', DIRECTORY_SEPARATOR);
+	}
 /**
  * These defines should only be edited if you have cake installed in
  * a directory layout other than the way it is distributed.
@@ -35,17 +34,16 @@ if (!defined('DS')) {
  * The full path to the directory which holds "app", WITHOUT a trailing DS.
  *
  */
-if (!defined('ROOT')) {
-	define('ROOT', dirname(dirname(dirname(__FILE__))));
-}
-
+	if (!defined('ROOT')) {
+		define('ROOT', dirname(dirname(dirname(__FILE__))));
+	}
 /**
  * The actual directory name for the "app".
  *
  */
-if (!defined('APP_DIR')) {
-	define('APP_DIR', basename(dirname(dirname(__FILE__))));
-}
+	if (!defined('APP_DIR')) {
+		define('APP_DIR', basename(dirname(dirname(__FILE__))));
+	}
 
 /**
  * The absolute path to the "Cake" directory, WITHOUT a trailing DS.
@@ -55,7 +53,7 @@ if (!defined('APP_DIR')) {
  *
  * Leaving this constant undefined will result in it being defined in Cake/bootstrap.php
  */
-//define('CAKE_CORE_INCLUDE_PATH', __CAKE_PATH__);
+	//define('CAKE_CORE_INCLUDE_PATH', __CAKE_PATH__);
 
 /**
  * Editing below this line should not be necessary.
@@ -70,14 +68,11 @@ if (!defined('WWW_ROOT')) {
 }
 
 if (!defined('CAKE_CORE_INCLUDE_PATH')) {
-	if (function_exists('ini_set')) {
-		ini_set('include_path', ROOT . DS . 'lib' . PATH_SEPARATOR . ini_get('include_path'));
-	}
-	if (!include 'Cake' . DS . 'bootstrap.php') {
+	if (!include('Cake' . DS . 'bootstrap.php')) {
 		$failed = true;
 	}
 } else {
-	if (!include CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'bootstrap.php') {
+	if (!include(CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'bootstrap.php')) {
 		$failed = true;
 	}
 }
@@ -86,7 +81,7 @@ if (!empty($failed)) {
 }
 
 if (Configure::read('debug') < 1) {
-	die(__d('cake_dev', 'Debug setting does not allow access to this url.'));
+	die(__d('cake', 'Debug setting does not allow access to this url.'));
 }
 
 require_once CAKE . 'TestSuite' . DS . 'CakeTestSuiteDispatcher.php';

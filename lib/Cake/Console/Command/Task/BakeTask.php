@@ -5,25 +5,22 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         CakePHP(tm) v 1.3
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
-App::uses('AppShell', 'Console/Command');
-
 /**
  * Base class for Bake Tasks.
  *
  * @package       Cake.Console.Command.Task
  */
-class BakeTask extends AppShell {
+class BakeTask extends Shell {
 
 /**
  * Name of plugin
@@ -47,13 +44,12 @@ class BakeTask extends AppShell {
 	public $interactive = false;
 
 /**
- * Disable caching and enable debug for baking.
+ * Disable caching for baking.
  * This forces the most current database schema to be used.
  *
  * @return void
  */
-	public function startup() {
-		Configure::write('debug', 2);
+	function startup() {
 		Configure::write('Cache.disable', 1);
 		parent::startup();
 	}
@@ -79,7 +75,7 @@ class BakeTask extends AppShell {
  * @return void
  */
 	public function execute() {
-		foreach ($this->args as $i => $arg) {
+		foreach($this->args as $i => $arg) {
 			if (strpos($arg, '.')) {
 				list($this->params['plugin'], $this->args[$i]) = pluginSplit($arg);
 				break;

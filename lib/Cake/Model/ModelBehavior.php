@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Model
  * @since         CakePHP(tm) v 1.2.0.0
@@ -23,7 +23,7 @@
  * Model behavior base class.
  *
  * Defines the Behavior interface, and contains common model interaction functionality.  Behaviors
- * allow you to simulate mixins, and create reusable blocks of application logic, that can be reused across
+ * allow you to simulate mixins, and create resuable blocks of application logic, that can be reused across
  * several models.  Behaviors also provide a way to hook into model callbacks and augment their behavior.
  *
  * ### Mixin methods
@@ -32,7 +32,7 @@
  * the model instance to be shifted onto the parameter list.
  *
  * {{{
- * function doSomething(Model $model, $arg1, $arg2) {
+ * function doSomething($model, $arg1, $arg2) {
  *		//do something
  * }
  * }}}
@@ -49,7 +49,7 @@
  * {{{
  * public $mapMethods = array('/do(\w+)/' => 'doSomething');
  *
- * function doSomething(Model $model, $method, $arg1, $arg2) {
+ * function doSomething($model, $method, $arg1, $arg2) {
  *		//do something
  * }
  * }}}
@@ -92,8 +92,7 @@ class ModelBehavior extends Object {
  * @param array $config Configuration settings for $model
  * @return void
  */
-	public function setup(Model $model, $config = array()) {
-	}
+	public function setup($model, $config = array()) { }
 
 /**
  * Clean up any initialization this behavior has done on a model.  Called when a behavior is dynamically
@@ -103,7 +102,7 @@ class ModelBehavior extends Object {
  * @return void
  * @see BehaviorCollection::detach()
  */
-	public function cleanup(Model $model) {
+	public function cleanup($model) {
 		if (isset($this->settings[$model->alias])) {
 			unset($this->settings[$model->alias]);
 		}
@@ -119,7 +118,7 @@ class ModelBehavior extends Object {
  * @return boolean|array False or null will abort the operation. You can return an array to replace the
  *   $query that will be eventually run.
  */
-	public function beforeFind(Model $model, $query) {
+	public function beforeFind($model, $query) {
 		return true;
 	}
 
@@ -131,8 +130,7 @@ class ModelBehavior extends Object {
  * @param boolean $primary Whether this model is being queried directly (vs. being queried as an association)
  * @return mixed An array value will replace the value of $results - any other value will be ignored.
  */
-	public function afterFind(Model $model, $results, $primary) {
-	}
+	public function afterFind($model, $results, $primary) { }
 
 /**
  * beforeValidate is called before a model is validated, you can use this callback to
@@ -142,18 +140,7 @@ class ModelBehavior extends Object {
  * @param Model $model Model using this behavior
  * @return mixed False or null will abort the operation. Any other result will continue.
  */
-	public function beforeValidate(Model $model) {
-		return true;
-	}
-
-/**
- * afterValidate is called just after model data was validated, you can use this callback
- * to perform any data cleanup or preparation if needed
- *
- * @param Model $model Model using this behavior
- * @return mixed False will stop this event from being passed to other behaviors
- */
-	public function afterValidate(Model $model) {
+	public function beforeValidate($model) {
 		return true;
 	}
 
@@ -164,7 +151,7 @@ class ModelBehavior extends Object {
  * @param Model $model Model using this behavior
  * @return mixed False if the operation should abort. Any other result will continue.
  */
-	public function beforeSave(Model $model) {
+	public function beforeSave($model) {
 		return true;
 	}
 
@@ -175,7 +162,7 @@ class ModelBehavior extends Object {
  * @param boolean $created True if this save created a new record
  * @return boolean
  */
-	public function afterSave(Model $model, $created) {
+	public function afterSave($model, $created) {
 		return true;
 	}
 
@@ -187,7 +174,7 @@ class ModelBehavior extends Object {
  * @param boolean $cascade If true records that depend on this record will also be deleted
  * @return mixed False if the operation should abort. Any other result will continue.
  */
-	public function beforeDelete(Model $model, $cascade = true) {
+	public function beforeDelete($model, $cascade = true) {
 		return true;
 	}
 
@@ -197,8 +184,7 @@ class ModelBehavior extends Object {
  * @param Model $model Model using this behavior
  * @return void
  */
-	public function afterDelete(Model $model) {
-	}
+	public function afterDelete($model) { }
 
 /**
  * DataSource error callback
@@ -207,8 +193,7 @@ class ModelBehavior extends Object {
  * @param string $error Error generated in DataSource
  * @return void
  */
-	public function onError(Model $model, $error) {
-	}
+	public function onError($model, $error) { }
 
 /**
  * If $model's whitelist property is non-empty, $field will be added to it.
@@ -220,7 +205,7 @@ class ModelBehavior extends Object {
  * @param string $field Field to be added to $model's whitelist
  * @return void
  */
-	protected function _addToWhitelist(Model $model, $field) {
+	protected function _addToWhitelist($model, $field) {
 		if (is_array($field)) {
 			foreach ($field as $f) {
 				$this->_addToWhitelist($model, $f);
@@ -231,6 +216,5 @@ class ModelBehavior extends Object {
 			$model->whitelist[] = $field;
 		}
 	}
-
 }
 

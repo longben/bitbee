@@ -5,41 +5,23 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Model.Datasource.Session
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
-App::uses('CakeSessionHandlerInterface', 'Model/Datasource/Session');
-App::uses('ClassRegistry', 'Utility');
-
 /**
  * DatabaseSession provides methods to be used with CakeSession.
  *
  * @package       Cake.Model.Datasource.Session
  */
 class DatabaseSession implements CakeSessionHandlerInterface {
-
-/**
- * Reference to the model handling the session data
- *
- * @var Model
- */
-	protected $_model;
-
-/**
- * Number of seconds to mark the session as expired
- *
- * @var int
- */
-	protected $_timeout;
 
 /**
  * Constructor.  Looks at Session configuration information and
@@ -51,18 +33,17 @@ class DatabaseSession implements CakeSessionHandlerInterface {
 
 		if (empty($modelName)) {
 			$settings = array(
-				'class' => 'Session',
+				'class' =>'Session',
 				'alias' => 'Session',
 				'table' => 'cake_sessions',
 			);
 		} else {
 			$settings = array(
-				'class' => $modelName,
+				'class' =>$modelName,
 				'alias' => 'Session',
 			);
 		}
-		$this->_model = ClassRegistry::init($settings);
-		$this->_timeout = Configure::read('Session.timeout') * 60;
+		ClassRegistry::init($settings);
 	}
 
 /**
@@ -80,25 +61,31 @@ class DatabaseSession implements CakeSessionHandlerInterface {
  * @return boolean Success
  */
 	public function close() {
+		$probability = mt_rand(1, 150);
+		if ($probability <= 3) {
+			$this->gc();
+		}
 		return true;
 	}
 
 /**
  * Method used to read from a database session.
  *
- * @param integer|string $id The key of the value to read
+ * @param mixed $id The key of the value to read
  * @return mixed The value of the key or false if it does not exist
  */
 	public function read($id) {
-		$row = $this->_model->find('first', array(
-			'conditions' => array($this->_model->primaryKey => $id)
+		$model = ClassRegistry::getObject('Session');
+
+		$row = $model->find('first', array(
+			'conditions' => array($model->primaryKey => $id)
 		));
 
-		if (empty($row[$this->_model->alias]['data'])) {
+		if (empty($row[$model->alias]['data'])) {
 			return false;
 		}
 
-		return $row[$this->_model->alias]['data'];
+		return $row[$model->alias]['data'];
 	}
 
 /**
@@ -112,10 +99,11 @@ class DatabaseSession implements CakeSessionHandlerInterface {
 		if (!$id) {
 			return false;
 		}
-		$expires = time() + $this->_timeout;
+		$expires = time() + (Configure::read('Session.timeout') * 60);
+		$Session = ClassRegistry::getObject('Session');
 		$record = compact('id', 'data', 'expires');
-		$record[$this->_model->primaryKey] = $id;
-		return $this->_model->save($record);
+		$record[$Session->primaryKey] = $id;
+		return $Session->save($record);
 	}
 
 /**
@@ -125,7 +113,7 @@ class DatabaseSession implements CakeSessionHandlerInterface {
  * @return boolean True for successful delete, false otherwise.
  */
 	public function destroy($id) {
-		return $this->_model->delete($id);
+		return ClassRegistry::getObject('Session')->delete($id);
 	}
 
 /**
@@ -137,10 +125,8 @@ class DatabaseSession implements CakeSessionHandlerInterface {
 	public function gc($expires = null) {
 		if (!$expires) {
 			$expires = time();
-		} else {
-			$expires = time() - $expires;
 		}
-		return $this->_model->deleteAll(array($this->_model->alias . ".expires <" => $expires), false, false);
+		$model = ClassRegistry::getObject('Session');
+		return $model->deleteAll(array($model->alias . ".expires <" => $expires), false, false);
 	}
-
 }

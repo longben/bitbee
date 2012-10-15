@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Network.Email
  * @since         CakePHP(tm) v 2.0.0
@@ -18,7 +18,7 @@
  */
 
 /**
- * Send mail using mail() function
+ * Mail class
  *
  * @package       Cake.Network.Email
  */
@@ -29,7 +29,6 @@ class MailTransport extends AbstractTransport {
  *
  * @param CakeEmail $email CakeEmail
  * @return array
- * @throws SocketException When mail cannot be sent.
  */
 	public function send(CakeEmail $email) {
 		$eol = PHP_EOL;
@@ -41,31 +40,15 @@ class MailTransport extends AbstractTransport {
 		unset($headers['To']);
 		$headers = $this->_headersToString($headers, $eol);
 		$message = implode($eol, $email->message());
-
-		$params = null;
-		if (!ini_get('safe_mode')) {
-			$params = isset($this->_config['additionalParameters']) ? $this->_config['additionalParameters'] : null;
+		if (ini_get('safe_mode') || !isset($this->_config['additionalParameters'])) {
+			if (!@mail($to, $email->subject(), $message, $headers)) {
+				throw new SocketException(__d('cake', 'Could not send email.'));
+			}
 		}
-
-		$this->_mail($to, $email->subject(), $message, $headers, $params);
+		if(!@mail($to, $email->subject(), $message, $headers, $this->_config['additionalParameters'])) {
+			throw new SocketException(__d('cake', 'Could not send email.'));
+		}
 		return array('headers' => $headers, 'message' => $message);
-	}
-
-/**
- * Wraps internal function mail() and throws exception instead of errors if anything goes wrong
- *
- * @param string $to email's recipient
- * @param string $subject email's subject
- * @param string $message email's body
- * @param string $headers email's custom headers
- * @param string $params additional params for sending email
- * @throws SocketException if mail could not be sent
- * @return void
- */
-	protected function _mail($to, $subject, $message, $headers, $params = null) {
-		if (!@mail($to, $subject, $message, $headers, $params)) {
-			throw new SocketException(__d('cake_dev', 'Could not send email.'));
-		}
 	}
 
 }

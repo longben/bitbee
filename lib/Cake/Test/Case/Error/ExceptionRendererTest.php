@@ -4,14 +4,14 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       Cake.Test.Case.Error
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -64,10 +64,9 @@ class BlueberryComponent extends Component {
  *
  * @return void
  */
-	public function initialize(Controller $controller) {
+	public function initialize(&$controller) {
 		$this->testName = 'BlueberryComponent';
 	}
-
 }
 
 /**
@@ -109,7 +108,6 @@ class TestErrorController extends Controller {
 		$this->autoRender = false;
 		return 'what up';
 	}
-
 }
 
 /**
@@ -127,16 +125,13 @@ class MyCustomExceptionRenderer extends ExceptionRenderer {
 	public function missingWidgetThing() {
 		echo 'widget thing is missing';
 	}
-
 }
-
 /**
  * Exception class for testing app error handlers and custom errors.
  *
  * @package       Cake.Test.Case.Error
  */
-class MissingWidgetThingException extends NotFoundException {
-}
+class MissingWidgetThingException extends NotFoundException { }
 
 
 /**
@@ -146,35 +141,37 @@ class MissingWidgetThingException extends NotFoundException {
  */
 class ExceptionRendererTest extends CakeTestCase {
 
-	protected $_restoreError = false;
-
+	var $_restoreError = false;
 /**
  * setup create a request object to get out of router later.
  *
  * @return void
  */
 	public function setUp() {
-		parent::setUp();
 		App::build(array(
-			'View' => array(
-				CAKE . 'Test' . DS . 'test_app' . DS . 'View' . DS
+			'views' => array(
+				CAKE . 'Test' . DS . 'test_app' . DS . 'View'. DS
 			)
-		), App::RESET);
+		), true);
 		Router::reload();
 
 		$request = new CakeRequest(null, false);
 		$request->base = '';
 		Router::setRequestInfo($request);
+		$this->_debug = Configure::read('debug');
+		$this->_error = Configure::read('Error');
 		Configure::write('debug', 2);
 	}
 
 /**
- * tearDown
+ * teardown
  *
  * @return void
  */
-	public function tearDown() {
-		parent::tearDown();
+	public function teardown() {
+		Configure::write('debug', $this->_debug);
+		Configure::write('Error', $this->_error);
+		App::build();
 		if ($this->_restoreError) {
 			restore_error_handler();
 		}
@@ -206,7 +203,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertEquals('widget thing is missing', $result);
+		$this->assertEqual($result, 'widget thing is missing');
 	}
 
 /**
@@ -219,13 +216,13 @@ class ExceptionRendererTest extends CakeTestCase {
 		$exception = new MissingWidgetThingException('Widget not found');
 		$ExceptionRenderer = $this->_mockResponse(new MyCustomExceptionRenderer($exception));
 
-		$this->assertEquals('missingWidgetThing', $ExceptionRenderer->method);
+		$this->assertEqual('missingWidgetThing', $ExceptionRenderer->method);
 
 		ob_start();
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertEquals('widget thing is missing', $result, 'Method declared in subclass converted to error400');
+		$this->assertEqual($result, 'widget thing is missing', 'Method declared in subclass converted to error400');
 	}
 
 /**
@@ -239,13 +236,13 @@ class ExceptionRendererTest extends CakeTestCase {
 		$exception = new MissingControllerException('PostsController');
 		$ExceptionRenderer = $this->_mockResponse(new MyCustomExceptionRenderer($exception));
 
-		$this->assertEquals('error400', $ExceptionRenderer->method);
+		$this->assertEqual('error400', $ExceptionRenderer->method);
 
 		ob_start();
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertRegExp('/Not Found/', $result, 'Method declared in error handler not converted to error400. %s');
+		$this->assertPattern('/Not Found/', $result, 'Method declared in error handler not converted to error400. %s');
 	}
 
 /**
@@ -278,36 +275,6 @@ class ExceptionRendererTest extends CakeTestCase {
 	}
 
 /**
- * test that helpers in custom CakeErrorController are not lost
- */
-	public function testCakeErrorHelpersNotLost() {
-		$testApp = CAKE . 'Test' . DS . 'test_app' . DS;
-		App::build(array(
-			'Controller' => array(
-				$testApp . 'Controller' . DS
-			),
-			'View/Helper' => array(
-				$testApp . 'View' . DS . 'Helper' . DS
-			),
-			'View/Layouts' => array(
-				$testApp . 'View' . DS . 'Layouts' . DS
-			),
-			'Error' => array(
-				$testApp . 'Error' . DS
-			),
-		), App::RESET);
-
-		App::uses('TestAppsExceptionRenderer', 'Error');
-		$exception = new SocketException('socket exception');
-		$renderer = new TestAppsExceptionRenderer($exception);
-
-		ob_start();
-		$renderer->render();
-		$result = ob_get_clean();
-		$this->assertContains('<b>peeled</b>', $result);
-	}
-
-/**
  * test that unknown exception types with valid status codes are treated correctly.
  *
  * @return void
@@ -320,11 +287,10 @@ class ExceptionRendererTest extends CakeTestCase {
 
 		ob_start();
 		$ExceptionRenderer->render();
-		$result = ob_get_clean();
+		$results = ob_get_clean();
 
 		$this->assertFalse(method_exists($ExceptionRenderer, 'missingWidgetThing'), 'no method should exist.');
 		$this->assertEquals('error400', $ExceptionRenderer->method, 'incorrect method coercion.');
-		$this->assertContains('coding fail', $result, 'Text should show up.');
 	}
 
 /**
@@ -336,40 +302,13 @@ class ExceptionRendererTest extends CakeTestCase {
 		$exception = new OutOfBoundsException('foul ball.');
 		$ExceptionRenderer = new ExceptionRenderer($exception);
 		$ExceptionRenderer->controller->response = $this->getMock('CakeResponse', array('statusCode', '_sendHeader'));
-		$ExceptionRenderer->controller->response->expects($this->once())
-			->method('statusCode')
-			->with(500);
+		$ExceptionRenderer->controller->response->expects($this->once())->method('statusCode')->with(500);
 
 		ob_start();
 		$ExceptionRenderer->render();
-		$result = ob_get_clean();
+		$results = ob_get_clean();
 
 		$this->assertEquals('error500', $ExceptionRenderer->method, 'incorrect method coercion.');
-		$this->assertContains('foul ball.', $result, 'Text should show up as its debug mode.');
-	}
-
-/**
- * test that unknown exceptions have messages ignored.
- *
- * @return void
- */
-	public function testUnknownExceptionInProduction() {
-		Configure::write('debug', 0);
-
-		$exception = new OutOfBoundsException('foul ball.');
-		$ExceptionRenderer = new ExceptionRenderer($exception);
-		$ExceptionRenderer->controller->response = $this->getMock('CakeResponse', array('statusCode', '_sendHeader'));
-		$ExceptionRenderer->controller->response->expects($this->once())
-			->method('statusCode')
-			->with(500);
-
-		ob_start();
-		$ExceptionRenderer->render();
-		$result = ob_get_clean();
-
-		$this->assertEquals('error500', $ExceptionRenderer->method, 'incorrect method coercion.');
-		$this->assertNotContains('foul ball.', $result, 'Text should no show up.');
-		$this->assertContains('Internal Error', $result, 'Generic message only.');
 	}
 
 /**
@@ -385,10 +324,9 @@ class ExceptionRendererTest extends CakeTestCase {
 
 		ob_start();
 		$ExceptionRenderer->render();
-		$result = ob_get_clean();
+		$results = ob_get_clean();
 
 		$this->assertEquals('error500', $ExceptionRenderer->method, 'incorrect method coercion.');
-		$this->assertContains('foul ball.', $result, 'Text should show up as its debug mode.');
 	}
 
 /**
@@ -411,8 +349,8 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertRegExp('/<h2>Custom message<\/h2>/', $result);
-		$this->assertRegExp("/<strong>'.*?\/posts\/view\/1000'<\/strong>/", $result);
+		$this->assertPattern('/<h2>Custom message<\/h2>/', $result);
+		$this->assertPattern("/<strong>'.*?\/posts\/view\/1000'<\/strong>/", $result);
 	}
 
 /**
@@ -439,7 +377,6 @@ class ExceptionRendererTest extends CakeTestCase {
 		$result = ob_get_clean();
 		$this->assertContains('Not Found', $result);
 	}
-
 /**
  * test that error400 doesn't expose XSS
  *
@@ -458,8 +395,8 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertNotRegExp('#<script>document#', $result);
-		$this->assertNotRegExp('#alert\(t\);</script>#', $result);
+		$this->assertNoPattern('#<script>document#', $result);
+		$this->assertNoPattern('#alert\(t\);</script>#', $result);
 	}
 
 /**
@@ -477,7 +414,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertRegExp('/<h2>An Internal Error Has Occurred<\/h2>/', $result);
+		$this->assertPattern('/<h2>An Internal Error Has Occurred<\/h2>/', $result);
 	}
 
 /**
@@ -486,15 +423,15 @@ class ExceptionRendererTest extends CakeTestCase {
  * @return void
  */
 	public function testMissingController() {
-		$exception = new MissingControllerException(array('class' => 'PostsController'));
+		$exception = new MissingControllerException(array('controller' => 'PostsController'));
 		$ExceptionRenderer = $this->_mockResponse(new ExceptionRenderer($exception));
 
 		ob_start();
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertRegExp('/<h2>Missing Controller<\/h2>/', $result);
-		$this->assertRegExp('/<em>PostsController<\/em>/', $result);
+		$this->assertPattern('/<h2>Missing Controller<\/h2>/', $result);
+		$this->assertPattern('/<em>PostsController<\/em>/', $result);
 	}
 
 /**
@@ -521,10 +458,10 @@ class ExceptionRendererTest extends CakeTestCase {
 				404
 			),
 			array(
-				new MissingTableException(array('table' => 'articles', 'class' => 'Article', 'ds' => 'test')),
+				new MissingTableException(array('table' => 'articles', 'class' => 'Article')),
 				array(
 					'/<h2>Missing Database Table<\/h2>/',
-					'/Table <em>articles<\/em> for model <em>Article<\/em> was not found in datasource <em>test<\/em>/'
+					'/table <em>articles<\/em> for model <em>Article<\/em>/'
 				),
 				500
 			),
@@ -552,19 +489,10 @@ class ExceptionRendererTest extends CakeTestCase {
 				500
 			),
 			array(
-				new MissingConnectionException(array('class' => 'Mysql')),
+				new MissingConnectionException(array('class' => 'Article')),
 				array(
 					'/<h2>Missing Database Connection<\/h2>/',
-					'/A Database connection using "Mysql" was missing or unable to connect./',
-				),
-				500
-			),
-			array(
-				new MissingConnectionException(array('class' => 'Mysql', 'enabled' => false)),
-				array(
-					'/<h2>Missing Database Connection<\/h2>/',
-					'/A Database connection using "Mysql" was missing or unable to connect./',
-					'/Mysql driver is NOT enabled/'
+					'/Article requires a database connection/'
 				),
 				500
 			),
@@ -577,37 +505,62 @@ class ExceptionRendererTest extends CakeTestCase {
 				500
 			),
 			array(
-				new MissingDatasourceException(array('class' => 'MyDatasource', 'plugin' => 'MyPlugin')),
+				new MissingDatasourceFileException(array('class' => 'MyDatasource', 'plugin' => 'MyPlugin')),
 				array(
-					'/<h2>Missing Datasource<\/h2>/',
-					'/Datasource class <em>MyPlugin.MyDatasource<\/em> could not be found/'
+					'/<h2>Missing Datasource Class<\/h2>/',
+					'/Datasource class <em>MyDatasource<\/em> was not found/'
 				),
 				500
 			),
 			array(
-				new MissingHelperException(array('class' => 'MyCustomHelper')),
+				new MissingHelperFileException(array('file' => 'MyCustomHelper.php', 'class' => 'MyCustomHelper')),
 				array(
-					'/<h2>Missing Helper<\/h2>/',
-					'/<em>MyCustomHelper<\/em> could not be found./',
-					'/Create the class <em>MyCustomHelper<\/em> below in file:/',
+					'/<h2>Missing Helper File<\/h2>/',
+					'/Create the class below in file:/',
 					'/(\/|\\\)MyCustomHelper.php/'
 				),
 				500
 			),
 			array(
-				new MissingBehaviorException(array('class' => 'MyCustomBehavior')),
+				new MissingHelperClassException(array('file' => 'MyCustomHelper.php', 'class' => 'MyCustomHelper')),
 				array(
-					'/<h2>Missing Behavior<\/h2>/',
-					'/Create the class <em>MyCustomBehavior<\/em> below in file:/',
+					'/<h2>Missing Helper Class<\/h2>/',
+					'/The helper class <em>MyCustomHelper<\/em> can not be found or does not exist./',
+					'/(\/|\\\)MyCustomHelper.php/',
+				),
+				500
+			),
+			array(
+				new MissingBehaviorFileException(array('file' => 'MyCustomBehavior.php', 'class' => 'MyCustomBehavior')),
+				array(
+					'/<h2>Missing Behavior File<\/h2>/',
+					'/Create the class below in file:/',
+					'/(\/|\\\)MyCustomBehavior.php/',
+				),
+				500
+			),
+			array(
+				new MissingBehaviorClassException(array('file' => 'MyCustomBehavior.php', 'class' => 'MyCustomBehavior')),
+				array(
+					'/The behavior class <em>MyCustomBehavior<\/em> can not be found or does not exist./',
 					'/(\/|\\\)MyCustomBehavior.php/'
 				),
 				500
 			),
 			array(
-				new MissingComponentException(array('class' => 'SideboxComponent')),
+				new MissingComponentFileException(array('file' => 'SideboxComponent.php', 'class' => 'SideboxComponent')),
 				array(
-					'/<h2>Missing Component<\/h2>/',
-					'/Create the class <em>SideboxComponent<\/em> below in file:/',
+					'/<h2>Missing Component File<\/h2>/',
+					'/Create the class <em>SideboxComponent<\/em> in file:/',
+					'/(\/|\\\)SideboxComponent.php/'
+				),
+				500
+			),
+			array(
+				new MissingComponentClassException(array('file' => 'SideboxComponent.php', 'class' => 'SideboxComponent')),
+				array(
+					'/<h2>Missing Component Class<\/h2>/',
+					'/Create the class <em>SideboxComponent<\/em> in file:/',
 					'/(\/|\\\)SideboxComponent.php/'
 				),
 				500
@@ -657,7 +610,7 @@ class ExceptionRendererTest extends CakeTestCase {
 		$result = ob_get_clean();
 
 		foreach ($patterns as $pattern) {
-			$this->assertRegExp($pattern, $result);
+			$this->assertPattern($pattern, $result);
 		}
 	}
 
@@ -667,87 +620,26 @@ class ExceptionRendererTest extends CakeTestCase {
  * @return void
  */
 	public function testMissingRenderSafe() {
-		$exception = new MissingHelperException(array('class' => 'Fail'));
+		$exception = new MissingHelperFileException(array('class' => 'Fail'));
 		$ExceptionRenderer = new ExceptionRenderer($exception);
 
-		$ExceptionRenderer->controller = $this->getMock('Controller', array('render'));
+		$ExceptionRenderer->controller = $this->getMock('Controller');
 		$ExceptionRenderer->controller->helpers = array('Fail', 'Boom');
 		$ExceptionRenderer->controller->request = $this->getMock('CakeRequest');
-		$ExceptionRenderer->controller->expects($this->at(0))
+		$ExceptionRenderer->controller->expects($this->at(2))
 			->method('render')
-			->with('missingHelper')
+			->with('missingHelperFile')
 			->will($this->throwException($exception));
 
-		$response = $this->getMock('CakeResponse');
-		$response->expects($this->once())
-			->method('body')
-			->with($this->stringContains('Helper class Fail'));
+		$ExceptionRenderer->controller->expects($this->at(3))
+			->method('render')
+			->with('error500')
+			->will($this->returnValue(true));
 
-		$ExceptionRenderer->controller->response = $response;
+		$ExceptionRenderer->controller->response = $this->getMock('CakeResponse');
 		$ExceptionRenderer->render();
 		sort($ExceptionRenderer->controller->helpers);
 		$this->assertEquals(array('Form', 'Html', 'Session'), $ExceptionRenderer->controller->helpers);
-	}
-
-/**
- * Test that exceptions in beforeRender() are handled by outputMessageSafe
- *
- * @return void
- */
-	public function testRenderExceptionInBeforeRender() {
-		$exception = new NotFoundException('Not there, sorry');
-		$ExceptionRenderer = new ExceptionRenderer($exception);
-
-		$ExceptionRenderer->controller = $this->getMock('Controller', array('beforeRender'));
-		$ExceptionRenderer->controller->request = $this->getMock('CakeRequest');
-		$ExceptionRenderer->controller->expects($this->any())
-			->method('beforeRender')
-			->will($this->throwException($exception));
-
-		$response = $this->getMock('CakeResponse');
-		$response->expects($this->once())
-			->method('body')
-			->with($this->stringContains('Not there, sorry'));
-
-		$ExceptionRenderer->controller->response = $response;
-		$ExceptionRenderer->render();
-	}
-
-/**
- * Test that missing subDir/layoutPath don't cause other fatal errors.
- *
- * @return void
- */
-	public function testMissingSubdirRenderSafe() {
-		$exception = new NotFoundException();
-		$ExceptionRenderer = new ExceptionRenderer($exception);
-
-		$ExceptionRenderer->controller = $this->getMock('Controller', array('render'));
-		$ExceptionRenderer->controller->helpers = array('Fail', 'Boom');
-		$ExceptionRenderer->controller->layoutPath = 'json';
-		$ExceptionRenderer->controller->subDir = 'json';
-		$ExceptionRenderer->controller->viewClass = 'Json';
-		$ExceptionRenderer->controller->request = $this->getMock('CakeRequest');
-
-		$ExceptionRenderer->controller->expects($this->once())
-			->method('render')
-			->with('error400')
-			->will($this->throwException($exception));
-
-		$response = $this->getMock('CakeResponse');
-		$response->expects($this->once())
-			->method('body')
-			->with($this->stringContains('Not Found'));
-		$response->expects($this->once())
-			->method('type')
-			->with('html');
-
-		$ExceptionRenderer->controller->response = $response;
-
-		$ExceptionRenderer->render();
-		$this->assertEquals('', $ExceptionRenderer->controller->layoutPath);
-		$this->assertEquals('', $ExceptionRenderer->controller->subDir);
-		$this->assertEquals('Errors/', $ExceptionRenderer->controller->viewPath);
 	}
 
 /**
@@ -791,9 +683,9 @@ class ExceptionRendererTest extends CakeTestCase {
 		$ExceptionRenderer->render();
 		$result = ob_get_clean();
 
-		$this->assertContains('<h2>Database Error</h2>', $result);
-		$this->assertContains('There was an error in the SQL query', $result);
-		$this->assertContains('SELECT * from poo_query < 5 and :seven', $result);
-		$this->assertContains("'seven' => (int) 7", $result);
+		$this->assertPattern('/<h2>Database Error<\/h2>/', $result);
+		$this->assertPattern('/There was an error in the SQL query/', $result);
+		$this->assertPattern('/SELECT \* from poo_query < 5 and :seven/', $result);
+		$this->assertPattern('/"seven" => 7/', $result);
 	}
 }

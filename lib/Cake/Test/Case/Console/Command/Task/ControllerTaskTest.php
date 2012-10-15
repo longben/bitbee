@@ -5,20 +5,18 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Test.Case.Console.Command.Task
  * @since         CakePHP(tm) v 1.3
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::uses('ConsoleOutput', 'Console');
-App::uses('ConsoleInput', 'Console');
 App::uses('ShellDispatcher', 'Console');
 App::uses('Shell', 'Console');
 App::uses('CakeSchema', 'Model');
@@ -40,13 +38,9 @@ if (!$imported) {
 	define('ARTICLE_MODEL_CREATED', true);
 
 	class BakeArticle extends Model {
-
 		public $name = 'BakeArticle';
-
 		public $hasMany = array('BakeComment');
-
 		public $hasAndBelongsToMany = array('BakeTag');
-
 	}
 }
 
@@ -70,7 +64,6 @@ class ControllerTaskTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
-		parent::setUp();
 		$out = $this->getMock('ConsoleOutput', array(), array(), '', false);
 		$in = $this->getMock('ConsoleInput', array(), array(), '', false);
 		$this->Task = $this->getMock('ControllerTask',
@@ -93,15 +86,14 @@ class ControllerTaskTest extends CakeTestCase {
 	}
 
 /**
- * tearDown method
+ * teardown method
  *
  * @return void
  */
-	public function tearDown() {
+	public function teardown() {
 		unset($this->Task);
 		ClassRegistry::flush();
 		App::build();
-		parent::tearDown();
 	}
 
 /**
@@ -117,20 +109,20 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$this->Task->connection = 'test';
 		$this->Task->interactive = true;
-		$this->Task->expects($this->at(2))->method('out')->with(' 1. BakeArticles');
-		$this->Task->expects($this->at(3))->method('out')->with(' 2. BakeArticlesBakeTags');
-		$this->Task->expects($this->at(4))->method('out')->with(' 3. BakeComments');
-		$this->Task->expects($this->at(5))->method('out')->with(' 4. BakeTags');
+		$this->Task->expects($this->at(1))->method('out')->with('1. BakeArticles');
+		$this->Task->expects($this->at(2))->method('out')->with('2. BakeArticlesBakeTags');
+		$this->Task->expects($this->at(3))->method('out')->with('3. BakeComments');
+		$this->Task->expects($this->at(4))->method('out')->with('4. BakeTags');
 
 		$expected = array('BakeArticles', 'BakeArticlesBakeTags', 'BakeComments', 'BakeTags');
 		$result = $this->Task->listAll('test');
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 
 		$this->Task->interactive = false;
 		$result = $this->Task->listAll();
 
 		$expected = array('bake_articles', 'bake_articles_bake_tags', 'bake_comments', 'bake_tags');
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -150,11 +142,11 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$result = $this->Task->getName('test');
 		$expected = 'BakeComments';
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 
 		$result = $this->Task->getName('test');
 		$expected = 'BakeArticles';
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -181,7 +173,7 @@ class ControllerTaskTest extends CakeTestCase {
 	public function testDoHelpersNo() {
 		$this->Task->expects($this->any())->method('in')->will($this->returnValue('n'));
 		$result = $this->Task->doHelpers();
-		$this->assertEquals(array(), $result);
+		$this->assertEqual($result, array());
 	}
 
 /**
@@ -194,7 +186,7 @@ class ControllerTaskTest extends CakeTestCase {
 		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' Javascript, Ajax, CustomOne  '));
 		$result = $this->Task->doHelpers();
 		$expected = array('Javascript', 'Ajax', 'CustomOne');
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -207,7 +199,7 @@ class ControllerTaskTest extends CakeTestCase {
 		$this->Task->expects($this->at(1))->method('in')->will($this->returnValue(' Javascript, Ajax, CustomOne, , '));
 		$result = $this->Task->doHelpers();
 		$expected = array('Javascript', 'Ajax', 'CustomOne');
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -218,7 +210,7 @@ class ControllerTaskTest extends CakeTestCase {
 	public function testDoComponentsNo() {
 		$this->Task->expects($this->any())->method('in')->will($this->returnValue('n'));
 		$result = $this->Task->doComponents();
-		$this->assertEquals(array(), $result);
+		$this->assertEqual($result, array());
 	}
 
 /**
@@ -232,7 +224,7 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$result = $this->Task->doComponents();
 		$expected = array('RequestHandler', 'Security');
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -246,7 +238,7 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$result = $this->Task->doComponents();
 		$expected = array('RequestHandler', 'Security');
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 	}
 
 /**
@@ -259,6 +251,7 @@ class ControllerTaskTest extends CakeTestCase {
 		$scaffold = false;
 		$helpers = array('Ajax', 'Time');
 		$components = array('Acl', 'Auth');
+		$uses = array('Comment', 'User');
 
 		$this->Task->expects($this->at(4))->method('out')->with("Controller Name:\n\t$controller");
 		$this->Task->expects($this->at(5))->method('out')->with("Helpers:\n\tAjax, Time");
@@ -281,8 +274,8 @@ class ControllerTaskTest extends CakeTestCase {
 		$this->assertContains(' * @property AclComponent $Acl', $result);
 		$this->assertContains(' * @property AuthComponent $Auth', $result);
 		$this->assertContains('class ArticlesController extends AppController', $result);
-		$this->assertContains("public \$components = array('Acl', 'Auth')", $result);
-		$this->assertContains("public \$helpers = array('Ajax', 'Time')", $result);
+		$this->assertContains("\$components = array('Acl', 'Auth')", $result);
+		$this->assertContains("\$helpers = array('Ajax', 'Time')", $result);
 		$this->assertContains("--actions--", $result);
 
 		$result = $this->Task->bake('Articles', 'scaffold', $helpers, $components);
@@ -294,7 +287,7 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$result = $this->Task->bake('Articles', '--actions--', array(), array());
 		$this->assertContains('class ArticlesController extends AppController', $result);
-		$this->assertSame(substr_count($result, '@property'), 1);
+		$this->assertIdentical(substr_count($result, '@property'), 1);
 		$this->assertNotContains('components', $result);
 		$this->assertNotContains('helpers', $result);
 		$this->assertContains('--actions--', $result);
@@ -307,9 +300,12 @@ class ControllerTaskTest extends CakeTestCase {
  */
 	public function testBakeWithPlugin() {
 		$this->Task->plugin = 'ControllerTest';
+		$helpers = array('Ajax', 'Time');
+		$components = array('Acl', 'Auth');
+		$uses = array('Comment', 'User');
 
 		//fake plugin path
-		CakePlugin::load('ControllerTest', array('path' => APP . 'Plugin' . DS . 'ControllerTest' . DS));
+		CakePlugin::load('ControllerTest', array('path' =>  APP . 'Plugin' . DS . 'ControllerTest' . DS));
 		$path = APP . 'Plugin' . DS . 'ControllerTest' . DS . 'Controller' . DS . 'ArticlesController.php';
 
 		$this->Task->expects($this->at(1))->method('createFile')->with(
@@ -318,19 +314,16 @@ class ControllerTaskTest extends CakeTestCase {
 		);
 		$this->Task->expects($this->at(3))->method('createFile')->with(
 			$path,
-			$this->stringContains('ArticlesController extends ControllerTestAppController')
-		)->will($this->returnValue(true));
+			new PHPUnit_Framework_Constraint_PCREMatch('/ArticlesController extends ControllerTestAppController/')
+		);
 
 		$this->Task->bake('Articles', '--actions--', array(), array(), array());
 
 		$this->Task->plugin = 'ControllerTest';
 		$path = APP . 'Plugin' . DS . 'ControllerTest' . DS . 'Controller' . DS . 'ArticlesController.php';
-		$result = $this->Task->bake('Articles', '--actions--', array(), array(), array());
+		$this->Task->bake('Articles', '--actions--', array(), array(), array());
 
-		$this->assertContains("App::uses('ControllerTestAppController', 'ControllerTest.Controller');", $result);
-		$this->assertEquals('ControllerTest', $this->Task->Template->templateVars['plugin']);
-		$this->assertEquals('ControllerTest.', $this->Task->Template->templateVars['pluginPath']);
-
+		$this->assertEqual($this->Task->Template->templateVars['plugin'], 'ControllerTest');
 		CakePlugin::unload();
 	}
 
@@ -419,9 +412,9 @@ class ControllerTaskTest extends CakeTestCase {
 		$this->Task->Test->expects($this->once())->method('bake')->with('Controller', 'BakeArticles');
 		$this->Task->bakeTest('BakeArticles');
 
-		$this->assertEquals($this->Task->plugin, $this->Task->Test->plugin);
-		$this->assertEquals($this->Task->connection, $this->Task->Test->connection);
-		$this->assertEquals($this->Task->interactive, $this->Task->Test->interactive);
+		$this->assertEqual($this->Task->plugin, $this->Task->Test->plugin);
+		$this->assertEqual($this->Task->connection, $this->Task->Test->connection);
+		$this->assertEqual($this->Task->interactive, $this->Task->Test->interactive);
 	}
 
 /**
@@ -454,7 +447,7 @@ class ControllerTaskTest extends CakeTestCase {
 		$filename = '/my/path/BakeArticlesController.php';
 		$this->Task->expects($this->once())->method('createFile')->with(
 			$filename,
-			$this->stringContains('class BakeArticlesController')
+			new PHPUnit_Framework_Constraint_PCREMatch('/class BakeArticlesController/')
 		);
 		$this->Task->execute();
 	}
@@ -494,11 +487,11 @@ class ControllerTaskTest extends CakeTestCase {
 		$filename = '/my/path/BakeArticlesController.php';
 		$this->Task->expects($this->once())->method('createFile')->with(
 			$filename,
-			$this->stringContains('class BakeArticlesController')
+			new PHPUnit_Framework_Constraint_PCREMatch('/class BakeArticlesController/')
 		)->will($this->returnValue(true));
 
 		$result = $this->Task->execute();
-		$this->assertRegExp('/admin_index/', $result);
+		$this->assertPattern('/admin_index/', $result);
 	}
 
 /**
@@ -524,7 +517,7 @@ class ControllerTaskTest extends CakeTestCase {
 		$filename = '/my/path/BakeArticlesController.php';
 		$this->Task->expects($this->once())->method('createFile')->with(
 			$filename,
-			$this->stringContains('class BakeArticlesController')
+			new PHPUnit_Framework_Constraint_PCREMatch('/class BakeArticlesController/')
 		)->will($this->returnValue(true));
 
 		$this->Task->execute();
@@ -546,7 +539,7 @@ class ControllerTaskTest extends CakeTestCase {
 		$filename = '/my/path/BakeArticlesController.php';
 		$this->Task->expects($this->once())->method('createFile')->with(
 			$filename,
-			$this->stringContains('$scaffold')
+			new PHPUnit_Framework_Constraint_PCREMatch('/\$scaffold/')
 		);
 
 		$this->Task->execute();
@@ -557,7 +550,7 @@ class ControllerTaskTest extends CakeTestCase {
  *
  * @return void
  */
-	public static function nameVariations() {
+	static function nameVariations() {
 		return array(
 			array('BakeArticles'), array('BakeArticle'), array('bake_article'), array('bake_articles')
 		);
@@ -579,7 +572,7 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$filename = '/my/path/BakeArticlesController.php';
 		$this->Task->expects($this->once())->method('createFile')->with(
-			$filename, $this->stringContains('$scaffold')
+			$filename, new PHPUnit_Framework_Constraint_PCREMatch('/\$scaffold/')
 		);
 		$this->Task->execute();
 	}
@@ -599,7 +592,7 @@ class ControllerTaskTest extends CakeTestCase {
 		$this->Task->params = array('public' => true);
 
 		$filename = '/my/path/BakeArticlesController.php';
-		$expected = new PHPUnit_Framework_Constraint_Not($this->stringContains('$scaffold'));
+		$expected = new PHPUnit_Framework_Constraint_Not(new PHPUnit_Framework_Constraint_PCREMatch('/\$scaffold/'));
 		$this->Task->expects($this->once())->method('createFile')->with(
 			$filename, $expected
 		);
@@ -623,7 +616,7 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$filename = '/my/path/BakeArticlesController.php';
 		$this->Task->expects($this->once())->method('createFile')->with(
-			$filename, $this->stringContains('admin_index')
+			$filename, new PHPUnit_Framework_Constraint_PCREMatch('/admin_index/')
 		);
 		$this->Task->execute();
 	}
@@ -645,7 +638,7 @@ class ControllerTaskTest extends CakeTestCase {
 
 		$filename = '/my/path/BakeArticlesController.php';
 		$this->Task->expects($this->once())->method('createFile')->with(
-			$filename, $this->stringContains('admin_index')
+			$filename, new PHPUnit_Framework_Constraint_PCREMatch('/admin_index/')
 		);
 		$this->Task->execute();
 	}

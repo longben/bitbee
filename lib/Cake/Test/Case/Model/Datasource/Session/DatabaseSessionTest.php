@@ -4,13 +4,13 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Test.Case.Model.Datasource.Session
  * @since         CakePHP(tm) v 2.0
@@ -23,11 +23,8 @@ App::uses('DatabaseSession', 'Model/Datasource/Session');
 class_exists('CakeSession');
 
 class SessionTestModel extends Model {
-
 	public $name = 'SessionTestModel';
-
 	public $useTable = 'sessions';
-
 }
 
 /**
@@ -69,24 +66,22 @@ class DatabaseSessionTest extends CakeTestCase {
 	}
 
 /**
- * setUp
+ * setup
  *
  * @return void
  */
-	public function setUp() {
-		parent::setUp();
+	public function setup() {
 		$this->storage = new DatabaseSession();
 	}
 
 /**
- * tearDown
+ * teardown
  *
  * @return void
  */
-	public function tearDown() {
+	public function teardown() {
 		unset($this->storage);
 		ClassRegistry::flush();
-		parent::tearDown();
 	}
 
 /**
@@ -125,14 +120,10 @@ class DatabaseSessionTest extends CakeTestCase {
 			'Session' => array(
 				'id' => 'foo',
 				'data' => 'Some value',
+				'expires' => time() + (Configure::read('Session.timeout') * 60)
 			)
 		);
-		$expires = $result['Session']['expires'];
-		unset($result['Session']['expires']);
 		$this->assertEquals($expected, $result);
-
-		$expected = time() + (Configure::read('Session.timeout') * 60);
-		$this->assertWithinMargin($expires, $expected, 1);
 	}
 
 /**
@@ -144,7 +135,6 @@ class DatabaseSessionTest extends CakeTestCase {
 		$result = $this->storage->write('', 'This is a Test');
 		$this->assertFalse($result);
 	}
-
 /**
  * test read()
  *
@@ -156,7 +146,7 @@ class DatabaseSessionTest extends CakeTestCase {
 		$result = $this->storage->read('foo');
 		$expected = 'Some value';
 		$this->assertEquals($expected, $result);
-
+		
 		$result = $this->storage->read('made up value');
 		$this->assertFalse($result);
 	}
@@ -168,7 +158,7 @@ class DatabaseSessionTest extends CakeTestCase {
  */
 	public function testDestroy() {
 		$this->storage->write('foo', 'Some value');
-
+		
 		$this->assertTrue($this->storage->destroy('foo'), 'Destroy failed');
 		$this->assertFalse($this->storage->read('foo'), 'Value still present.');
 	}
@@ -179,14 +169,11 @@ class DatabaseSessionTest extends CakeTestCase {
  * @return void
  */
 	public function testGc() {
-		ClassRegistry::flush();
 		Configure::write('Session.timeout', 0);
-
-		$storage = new DatabaseSession();
-		$storage->write('foo', 'Some value');
+		$this->storage->write('foo', 'Some value');
 
 		sleep(1);
-		$storage->gc();
-		$this->assertFalse($storage->read('foo'));
+		$this->storage->gc();
+		$this->assertFalse($this->storage->read('foo'));
 	}
 }

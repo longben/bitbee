@@ -5,18 +5,18 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       Cake.Test.Case.Controller
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-App::uses('CakeResponse', 'Network');
+
 App::uses('CookieComponent', 'Controller/Component');
 App::uses('SecurityComponent', 'Controller/Component');
 App::uses('ComponentCollection', 'Controller');
@@ -28,24 +28,21 @@ class CookieAliasComponent extends CookieComponent {
 }
 
 class ComponentCollectionTest extends CakeTestCase {
-
 /**
- * setUp
+ * setup
  *
  * @return void
  */
-	public function setUp() {
-		parent::setUp();
+	public function setup() {
 		$this->Components = new ComponentCollection();
 	}
 
 /**
- * tearDown
+ * teardown
  *
  * @return void
  */
-	public function tearDown() {
-		parent::tearDown();
+	public function teardown() {
 		unset($this->Components);
 	}
 
@@ -87,11 +84,11 @@ class ComponentCollectionTest extends CakeTestCase {
 		$result = $this->Components->load('Cookie');
 		$this->assertInstanceOf('CookieAliasComponent', $result);
 
-		App::build(array('Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)));
+		App::build(array('plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)));
 		CakePlugin::load('TestPlugin');
-		$result = $this->Components->load('SomeOther', array('className' => 'TestPlugin.Other'));
-		$this->assertInstanceOf('OtherComponent', $result);
-		$this->assertInstanceOf('OtherComponent', $this->Components->SomeOther);
+		$result = $this->Components->load('SomeOther', array('className' => 'TestPlugin.OtherComponent'));
+		$this->assertInstanceOf('OtherComponentComponent', $result);
+		$this->assertInstanceOf('OtherComponentComponent', $this->Components->SomeOther);
 
 		$result = $this->Components->attached();
 		$this->assertEquals(array('Cookie', 'SomeOther'), $result, 'attached() results are wrong.');
@@ -111,14 +108,13 @@ class ComponentCollectionTest extends CakeTestCase {
 
 		$this->assertFalse($this->Components->enabled('Cookie'), 'Cookie should be disabled');
 	}
-
 /**
  * test missingcomponent exception
  *
- * @expectedException MissingComponentException
+ * @expectedException MissingComponentClassException
  * @return void
  */
-	public function testLoadMissingComponent() {
+	public function testLoadMissingComponentFile() {
 		$this->Components->load('ThisComponentShouldAlwaysBeMissing');
 	}
 
@@ -129,12 +125,12 @@ class ComponentCollectionTest extends CakeTestCase {
  */
 	public function testLoadPluginComponent() {
 		App::build(array(
-			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
+			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS),
 		));
 		CakePlugin::load('TestPlugin');
-		$result = $this->Components->load('TestPlugin.Other');
-		$this->assertInstanceOf('OtherComponent', $result, 'Component class is wrong.');
-		$this->assertInstanceOf('OtherComponent', $this->Components->Other, 'Class is wrong');
+		$result = $this->Components->load('TestPlugin.OtherComponent');
+		$this->assertInstanceOf('OtherComponentComponent', $result, 'Component class is wrong.');
+		$this->assertInstanceOf('OtherComponentComponent', $this->Components->OtherComponent, 'Class is wrong');
 		App::build();
 		CakePlugin::unload();
 	}

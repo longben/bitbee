@@ -1,32 +1,12 @@
 <?php
-/**
- * CakeRequest Test case file.
- *
- * PHP 5
- *
- * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- *
- * Licensed under The MIT License
- * Redistributions of files must retain the above copyright notice.
- *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.Test.Case.Routing.Route
- * @since         CakePHP(tm) v 2.0
- * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
- */
-
 App::uses('PluginShortRoute', 'Routing/Route');
 App::uses('Router', 'Routing');
-
 /**
  * test case for PluginShortRoute
  *
  * @package       Cake.Test.Case.Routing.Route
  */
-class PluginShortRouteTest extends  CakeTestCase {
-
+class PluginShortRouteTestCase extends  CakeTestCase {
 /**
  * setUp method
  *
@@ -47,9 +27,9 @@ class PluginShortRouteTest extends  CakeTestCase {
 		$route = new PluginShortRoute('/:plugin', array('action' => 'index'), array('plugin' => 'foo|bar'));
 
 		$result = $route->parse('/foo');
-		$this->assertEquals('foo', $result['plugin']);
-		$this->assertEquals('foo', $result['controller']);
-		$this->assertEquals('index', $result['action']);
+		$this->assertEqual($result['plugin'], 'foo');
+		$this->assertEqual($result['controller'], 'foo');
+		$this->assertEqual($result['action'], 'index');
 
 		$result = $route->parse('/wrong');
 		$this->assertFalse($result, 'Wrong plugin name matched %s');
@@ -67,6 +47,6 @@ class PluginShortRouteTest extends  CakeTestCase {
 		$this->assertFalse($result, 'plugin controller mismatch was converted. %s');
 
 		$result = $route->match(array('plugin' => 'foo', 'controller' => 'foo', 'action' => 'index'));
-		$this->assertEquals('/foo', $result);
+		$this->assertEqual($result, '/foo');
 	}
 }
