@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc.
+ * Copyright 2005-2012, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc.
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc.
  * @link          http://cakephp.org CakePHP Project
  * @package       Cake.Test.test_app.Plugin.TestPlugin.Model
  * @since         CakePHP v 1.2.0.4487
@@ -53,11 +53,10 @@ class TestPluginPost extends TestPluginAppModel {
 				'required' => false,
 				'message' => 'Post body is required'
 			),
-			'second_rule' => array(
+			'Post body is super required' => array(
 				'rule' => array('custom', '.*'),
 				'allowEmpty' => true,
 				'required' => false,
-				'message' => 'Post body is super required'
 			)
 		),
 	);

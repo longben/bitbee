@@ -5,21 +5,22 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Network.Email
  * @since         CakePHP(tm) v 2.0.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
 App::uses('CakeSocket', 'Network');
 
 /**
- * SendEmail class
+ * Send mail using SMTP protocol
  *
  * @package       Cake.Network.Email
  */
@@ -92,7 +93,7 @@ class SmtpTransport extends AbstractTransport {
 	protected function _connect() {
 		$this->_generateSocket();
 		if (!$this->_socket->connect()) {
-			throw new SocketException(__d('cake', 'Unable to connect in SMTP server.'));
+			throw new SocketException(__d('cake_dev', 'Unable to connect to SMTP server.'));
 		}
 		$this->_smtpSend(null, '220');
 
@@ -110,7 +111,7 @@ class SmtpTransport extends AbstractTransport {
 			try {
 				$this->_smtpSend("HELO {$host}", '250');
 			} catch (SocketException $e2) {
-				throw new SocketException(__d('cake', 'SMTP server not accepted the connection.'));
+				throw new SocketException(__d('cake_dev', 'SMTP server did not accept the connection.'));
 			}
 		}
 	}
@@ -126,13 +127,13 @@ class SmtpTransport extends AbstractTransport {
 			$authRequired = $this->_smtpSend('AUTH LOGIN', '334|503');
 			if ($authRequired == '334') {
 				if (!$this->_smtpSend(base64_encode($this->_config['username']), '334')) {
-					throw new SocketException(__d('cake', 'SMTP server not accepted the username.'));
+					throw new SocketException(__d('cake_dev', 'SMTP server did not accept the username.'));
 				}
 				if (!$this->_smtpSend(base64_encode($this->_config['password']), '235')) {
-					throw new SocketException(__d('cake', 'SMTP server not accepted the password.'));
+					throw new SocketException(__d('cake_dev', 'SMTP server did not accept the password.'));
 				}
 			} elseif ($authRequired != '503') {
-				throw new SocketException(__d('cake', 'SMTP do not require authentication.'));
+				throw new SocketException(__d('cake_dev', 'SMTP does not require authentication.'));
 			}
 		}
 	}
@@ -165,9 +166,18 @@ class SmtpTransport extends AbstractTransport {
 	protected function _sendData() {
 		$this->_smtpSend('DATA', '354');
 
-		$headers = $this->_cakeEmail->getHeaders(array('from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'bcc', 'subject'));
+		$headers = $this->_cakeEmail->getHeaders(array('from', 'sender', 'replyTo', 'readReceipt', 'returnPath', 'to', 'cc', 'subject'));
 		$headers = $this->_headersToString($headers);
-		$message = implode("\r\n", $this->_cakeEmail->message());
+		$lines = $this->_cakeEmail->message();
+		$messages = array();
+		foreach ($lines as $line) {
+			if ((!empty($line)) && ($line[0] === '.')) {
+				$messages[] = '.' . $line;
+			} else {
+				$messages[] = $line;
+			}
+		}
+		$message = implode("\r\n", $messages);
 		$this->_smtpSend($headers . "\r\n\r\n" . $message . "\r\n\r\n\r\n.");
 		$this->_content = array('headers' => $headers, 'message' => $message);
 	}
@@ -197,7 +207,7 @@ class SmtpTransport extends AbstractTransport {
  * Protected method for sending data to SMTP connection
  *
  * @param string $data data to be sent to SMTP server
- * @param mixed $checkCode code to check for in server response, false to skip
+ * @param string|boolean $checkCode code to check for in server response, false to skip
  * @return void
  * @throws SocketException
  */
@@ -212,9 +222,10 @@ class SmtpTransport extends AbstractTransport {
 				$response .= $this->_socket->read();
 			}
 			if (substr($response, -2) !== "\r\n") {
-				throw new SocketException(__d('cake', 'SMTP timeout.'));
+				throw new SocketException(__d('cake_dev', 'SMTP timeout.'));
 			}
-			$response = end(explode("\r\n", rtrim($response, "\r\n")));
+			$responseLines = explode("\r\n", rtrim($response, "\r\n"));
+			$response = end($responseLines);
 
 			if (preg_match('/^(' . $checkCode . ')(.)/', $response, $code)) {
 				if ($code[2] === '-') {
@@ -222,7 +233,7 @@ class SmtpTransport extends AbstractTransport {
 				}
 				return $code[1];
 			}
-			throw new SocketException(__d('cake', 'SMTP Error: %s', $response));
+			throw new SocketException(__d('cake_dev', 'SMTP Error: %s', $response));
 		}
 	}
 

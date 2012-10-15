@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Model.Datasource
  * @since         CakePHP(tm) v 0.10.5.1790
@@ -197,9 +197,10 @@ class DataSource extends Object {
  *
  * @param Model $model The model being read.
  * @param array $queryData An array of query data used to find the data you want
+ * @param integer $recursive Number of levels of association
  * @return mixed
  */
-	public function read(Model $model, $queryData = array()) {
+	public function read(Model $model, $queryData = array(), $recursive = null) {
 		return false;
 	}
 
@@ -211,9 +212,10 @@ class DataSource extends Object {
  * @param Model $model Instance of the model class being updated
  * @param array $fields Array of fields to be updated
  * @param array $values Array of values to be update $fields to.
+ * @param mixed $conditions
  * @return boolean Success
  */
-	public function update(Model $model, $fields = null, $values = null) {
+	public function update(Model $model, $fields = null, $values = null, $conditions = null) {
 		return false;
 	}
 
@@ -223,13 +225,11 @@ class DataSource extends Object {
  * To-be-overridden in subclasses.
  *
  * @param Model $model The model class having record(s) deleted
- * @param mixed $id Primary key of the model
+ * @param mixed $conditions The conditions to use for deleting.
  * @return void
  */
 	public function delete(Model $model, $id = null) {
-		if ($id == null) {
-			$id = $model->id;
-		}
+		return false;
 	}
 
 /**
@@ -409,6 +409,26 @@ class DataSource extends Object {
 	}
 
 /**
+ * Returns the schema name. Override this in subclasses.
+ *
+ * @return string schema name
+ * @access public
+ */
+	public function getSchemaName() {
+		return null;
+	}
+
+/**
+ * Closes a connection. Override in subclasses
+ * 
+ * @return boolean
+ * @access public
+ */
+	public function close() {
+		return $this->connected = false;
+	}
+
+/**
  * Closes the current datasource.
  *
  */
@@ -420,4 +440,5 @@ class DataSource extends Object {
 			$this->close();
 		}
 	}
+
 }

@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -134,15 +134,40 @@ class ShellDispatcher {
 			include_once CAKE_CORE_INCLUDE_PATH . DS . 'Cake' . DS . 'Console' . DS . 'Templates' . DS . 'skel' . DS . 'Config' . DS . 'core.php';
 			App::build();
 		}
-		require_once CAKE . 'Console' . DS . 'ConsoleErrorHandler.php';
-		set_exception_handler(array('ConsoleErrorHandler', 'handleException'));
-		set_error_handler(array('ConsoleErrorHandler', 'handleError'), Configure::read('Error.level'));
+
+		$this->setErrorHandlers();
 
 		if (!defined('FULL_BASE_URL')) {
 			define('FULL_BASE_URL', 'http://localhost');
 		}
 
 		return true;
+	}
+
+/**
+ * Set the error/exception handlers for the console
+ * based on the `Error.consoleHandler`, and `Exception.consoleHandler` values
+ * if they are set. If they are not set, the default ConsoleErrorHandler will be
+ * used.
+ *
+ * @return void
+ */
+	public function setErrorHandlers() {
+		App::uses('ConsoleErrorHandler', 'Console');
+		$error = Configure::read('Error');
+		$exception = Configure::read('Exception');
+
+		$errorHandler = new ConsoleErrorHandler();
+		if (empty($error['consoleHandler'])) {
+			$error['consoleHandler'] = array($errorHandler, 'handleError');
+			Configure::write('Error', $error);
+		}
+		if (empty($exception['consoleHandler'])) {
+			$exception['consoleHandler'] = array($errorHandler, 'handleException');
+			Configure::write('Exception', $exception);
+		}
+		set_exception_handler($exception['consoleHandler']);
+		set_error_handler($error['consoleHandler'], Configure::read('Error.level'));
 	}
 
 /**
@@ -190,7 +215,8 @@ class ShellDispatcher {
 				return $Shell->main();
 			}
 		}
-		throw new MissingShellMethodException(array('shell' => $shell, 'method' => $arg));
+		
+		throw new MissingShellMethodException(array('shell' => $shell, 'method' => $command));
 	}
 
 /**
@@ -200,22 +226,25 @@ class ShellDispatcher {
  *
  * @param string $shell Optionally the name of a plugin
  * @return mixed An object
- * @throws MissingShellFileException when errors are encountered.
+ * @throws MissingShellException when errors are encountered.
  */
 	protected function _getShell($shell) {
 		list($plugin, $shell) = pluginSplit($shell, true);
 
-
+		$plugin = Inflector::camelize($plugin);
 		$class = Inflector::camelize($shell) . 'Shell';
 
 		App::uses('Shell', 'Console');
-		App::uses('AppShell', 'Console');
+		App::uses('AppShell', 'Console/Command');
 		App::uses($class, $plugin . 'Console/Command');
 
 		if (!class_exists($class)) {
-			throw new MissingShellFileException(array('shell' => $shell));
+			throw new MissingShellException(array(
+				'class' => $class
+			));
 		}
 		$Shell = new $class();
+		$Shell->plugin = trim($plugin, '.');
 		return $Shell;
 	}
 
@@ -285,8 +314,7 @@ class ShellDispatcher {
 		$parsed = array();
 		$keys = array('-working', '--working', '-app', '--app', '-root', '--root');
 		foreach ($keys as $key) {
-			$index = array_search($key, $args);
-			if ($index !== false) {
+			while (($index = array_search($key, $args)) !== false) {
 				$keyname = str_replace('-', '', $key);
 				$valueIndex = $index + 1;
 				$parsed[$keyname] = $args[$valueIndex];
@@ -325,4 +353,5 @@ class ShellDispatcher {
 	protected function _stop($status = 0) {
 		exit($status);
 	}
+
 }
