@@ -5,25 +5,22 @@
  * PHP5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.TestSuite.Coverage
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'DEFAULT');
+
 App::uses('BaseCoverageReport', 'TestSuite/Coverage');
 
-/**
- * Generates code coverage reports in HTML from data obtained from PHPUnit
- *
- * @package       Cake.TestSuite.Coverage
- */
 class HtmlCoverageReport extends BaseCoverageReport {
 
 /**
@@ -53,11 +50,6 @@ HTML;
 /**
  * Generates an HTML diff for $file based on $coverageData.
  *
- * Handles both PHPUnit3.5 and 3.6 formats.
- *
- * 3.5 uses -1 for uncovered, and -2 for dead.
- * 3.6 uses array() for uncovered and null for dead.
- *
  * @param string $filename Name of the file having coverage generated
  * @param array $fileLines File data as an array. See file() for how to get one of these.
  * @param array $coverageData Array of coverage data to use to generate HTML diffs with
@@ -76,18 +68,17 @@ HTML;
 		foreach ($fileLines as $lineno => $line) {
 			$class = 'ignored';
 			$coveringTests = array();
-			if (!empty($coverageData[$lineno]) && is_array($coverageData[$lineno])) {
+			if (isset($coverageData[$lineno]) && is_array($coverageData[$lineno])) {
 				$coveringTests = array();
 				foreach ($coverageData[$lineno] as $test) {
-					$class = (is_array($test) && isset($test['id'])) ? $test['id'] : $test;
-					$testReflection = new ReflectionClass(current(explode('::', $class)));
+					$testReflection = new ReflectionClass(current(explode('::', $test['id'])));
 					$this->_testNames[] = $this->_guessSubjectName($testReflection);
-					$coveringTests[] = $class;
+					$coveringTests[] = $test['id'];
 				}
 				$class = 'covered';
-			} elseif (isset($coverageData[$lineno]) && ($coverageData[$lineno] === -1 || $coverageData[$lineno] === array())) {
+			} elseif (isset($coverageData[$lineno]) && $coverageData[$lineno] === -1) {
 				$class = 'uncovered';
-			} elseif (array_key_exists($lineno, $coverageData) && ($coverageData[$lineno] === -2 || $coverageData[$lineno] === null)) {
+			} elseif (isset($coverageData[$lineno]) && $coverageData[$lineno] === -2) {
 				$class .= ' dead';
 			}
 			$diff[] = $this->_paintLine($line, $lineno, $class, $coveringTests);
@@ -154,7 +145,7 @@ HTML;
 			var element = document.getElementById(selector);
 			element.style.display = (element.style.display == 'none') ? '' : 'none';
 		}
-		function coverage_toggle_all() {
+		function coverage_toggle_all () {
 			var divs = document.querySelectorAll('div.coverage-container');
 			var i = divs.length;
 			while (i--) {
@@ -197,5 +188,4 @@ HTML;
 	public function coverageFooter() {
 		return "</pre></div></div>";
 	}
-
 }

@@ -1,12 +1,16 @@
 <?php
 /**
+ * JsEngineBaseClass
+ *
+ * PHP 5
+ *
  * CakePHP :  Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc.
+ * Copyright 2005-2011, Cake Software Foundation, Inc.
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.View.Helper
  * @since         CakePHP(tm) v 2.0
@@ -56,6 +60,16 @@ abstract class JsBaseEngineHelper extends AppHelper {
 	protected $_callbackArguments = array();
 
 /**
+ * Constructor.
+ *
+ * @param View $View
+ * @param array $settings
+ */
+	public function __construct($View, $settings = array()) {
+		parent::__construct($View, $settings);
+	}
+
+/**
  * Create an `alert()` message in Javascript
  *
  * @param string $message Message you want to alter.
@@ -69,7 +83,7 @@ abstract class JsBaseEngineHelper extends AppHelper {
  * Redirects to a URL.  Creates a window.location modification snippet
  * that can be used to trigger 'redirects' from Javascript.
  *
- * @param string|array $url
+ * @param mixed $url
  * @param array  $options
  * @return string completed redirect in javascript
  */
@@ -140,10 +154,7 @@ abstract class JsBaseEngineHelper extends AppHelper {
  * @param boolean $quoteString If false, leaves string values unquoted
  * @return string a JavaScript-safe/JSON representation of $val
  */
-	public function value($val = array(), $quoteString = null, $key = 'value') {
-		if ($quoteString === null) {
-			$quoteString = true;
-		}
+	public function value($val, $quoteString = true) {
 		switch (true) {
 			case (is_array($val) || is_object($val)):
 				$val = $this->object($val);
@@ -245,9 +256,9 @@ abstract class JsBaseEngineHelper extends AppHelper {
 					break;
 				case (($ord & 0xF8) == 0xF0):
 					if ($i + 3 >= $length) {
-						$i += 3;
-						$return .= '?';
-						break;
+					   $i += 3;
+					   $return .= '?';
+					   break;
 					}
 					$charbits = $string{$i} . $string{$i + 1} . $string{$i + 2} . $string{$i + 3};
 					$char = Multibyte::utf8($charbits);
@@ -256,9 +267,9 @@ abstract class JsBaseEngineHelper extends AppHelper {
 					break;
 				case (($ord & 0xFC) == 0xF8):
 					if ($i + 4 >= $length) {
-						$i += 4;
-						$return .= '?';
-						break;
+					   $i += 4;
+					   $return .= '?';
+					   break;
 					}
 					$charbits = $string{$i} . $string{$i + 1} . $string{$i + 2} . $string{$i + 3} . $string{$i + 4};
 					$char = Multibyte::utf8($charbits);
@@ -267,9 +278,9 @@ abstract class JsBaseEngineHelper extends AppHelper {
 					break;
 				case (($ord & 0xFE) == 0xFC):
 					if ($i + 5 >= $length) {
-						$i += 5;
-						$return .= '?';
-						break;
+					   $i += 5;
+					   $return .= '?';
+					   break;
 					}
 					$charbits = $string{$i} . $string{$i + 1} . $string{$i + 2} . $string{$i + 3} . $string{$i + 4} . $string{$i + 5};
 					$char = Multibyte::utf8($charbits);
@@ -366,7 +377,7 @@ abstract class JsBaseEngineHelper extends AppHelper {
  * - `dataExpression` - Should the `data` key be treated as a callback.  Useful for supplying `$options['data']` as
  *    another Javascript expression.
  *
- * @param string|array $url Array or String URL to target with the request.
+ * @param mixed $url Array or String URL to target with the request.
  * @param array $options Array of options. See above for cross library supported options
  * @return string XHR request.
  */
@@ -458,7 +469,6 @@ abstract class JsBaseEngineHelper extends AppHelper {
  * @return string Completed slider script
  */
 	abstract public function slider($options = array());
-
 /**
  * Serialize the form attached to $selector.
  * Pass `true` for $isForm if the current selection is a form element.
@@ -524,7 +534,7 @@ abstract class JsBaseEngineHelper extends AppHelper {
  *
  * @param string $method Name of the method you are preparing callbacks for.
  * @param array $options Array of options being parsed
- * @param array $callbacks Additional Keys that contain callbacks
+ * @param string $callbacks Additional Keys that contain callbacks
  * @return array Array of options with callbacks added.
  */
 	protected function _prepareCallbacks($method, $options, $callbacks = array()) {
@@ -556,7 +566,7 @@ abstract class JsBaseEngineHelper extends AppHelper {
 	}
 
 /**
- * Convenience wrapper method for all common option processing steps.
+ * Conveinence wrapper method for all common option processing steps.
  * Runs _mapOptions, _prepareCallbacks, and _parseOptions in order.
  *
  * @param string $method Name of method processing options for.
@@ -588,5 +598,4 @@ abstract class JsBaseEngineHelper extends AppHelper {
 		}
 		return $out;
 	}
-
 }

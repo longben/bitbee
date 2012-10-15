@@ -6,14 +6,14 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       Cake.Test.Case.Core
  * @since         CakePHP(tm) v 1.2.0.5432
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -33,7 +33,9 @@ class ConfigureTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
-		parent::setUp();
+		$this->_cacheDisable = Configure::read('Cache.disable');
+		$this->_debug = Configure::read('debug');
+
 		Configure::write('Cache.disable', true);
 		App::build();
 		App::objects('plugin', null, true);
@@ -45,7 +47,6 @@ class ConfigureTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
-		parent::tearDown();
 		if (file_exists(TMP . 'cache' . DS . 'persistent' . DS . 'cake_core_core_paths')) {
 			unlink(TMP . 'cache' . DS . 'persistent' . DS . 'cake_core_core_paths');
 		}
@@ -64,6 +65,8 @@ class ConfigureTest extends CakeTestCase {
 		if (file_exists(TMP . 'cache' . DS . 'persistent' . DS . 'test.php')) {
 			unlink(TMP . 'cache' . DS . 'persistent' . DS . 'test.php');
 		}
+		Configure::write('debug', $this->_debug);
+		Configure::write('Cache.disable', $this->_cacheDisable);
 		Configure::drop('test');
 	}
 
@@ -77,10 +80,10 @@ class ConfigureTest extends CakeTestCase {
 		Configure::write('level1.level2.level3_1', $expected);
 		Configure::write('level1.level2.level3_2', 'something_else');
 		$result = Configure::read('level1.level2.level3_1');
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 
 		$result = Configure::read('level1.level2.level3_2');
-		$this->assertEquals('something_else', $result);
+		$this->assertEqual($result, 'something_else');
 
 		$result = Configure::read('debug');
 		$this->assertTrue($result >= 0);
@@ -103,28 +106,28 @@ class ConfigureTest extends CakeTestCase {
 		$writeResult = Configure::write('SomeName.someKey', 'myvalue');
 		$this->assertTrue($writeResult);
 		$result = Configure::read('SomeName.someKey');
-		$this->assertEquals('myvalue', $result);
+		$this->assertEqual($result, 'myvalue');
 
 		$writeResult = Configure::write('SomeName.someKey', null);
 		$this->assertTrue($writeResult);
 		$result = Configure::read('SomeName.someKey');
-		$this->assertEquals(null, $result);
+		$this->assertEqual($result, null);
 
 		$expected = array('One' => array('Two' => array('Three' => array('Four' => array('Five' => 'cool')))));
 		$writeResult = Configure::write('Key', $expected);
 		$this->assertTrue($writeResult);
 
 		$result = Configure::read('Key');
-		$this->assertEquals($expected, $result);
+		$this->assertEqual($expected, $result);
 
 		$result = Configure::read('Key.One');
-		$this->assertEquals($expected['One'], $result);
+		$this->assertEqual($expected['One'], $result);
 
 		$result = Configure::read('Key.One.Two');
-		$this->assertEquals($expected['One']['Two'], $result);
+		$this->assertEqual($expected['One']['Two'], $result);
 
 		$result = Configure::read('Key.One.Two.Three.Four.Five');
-		$this->assertEquals('cool', $result);
+		$this->assertEqual('cool', $result);
 
 		Configure::write('one.two.three.four', '4');
 		$result = Configure::read('one.two.three.four');
@@ -139,11 +142,11 @@ class ConfigureTest extends CakeTestCase {
 	public function testDebugSettingDisplayErrors() {
 		Configure::write('debug', 0);
 		$result = ini_get('display_errors');
-		$this->assertEquals(0, $result);
+		$this->assertEqual($result, 0);
 
 		Configure::write('debug', 2);
 		$result = ini_get('display_errors');
-		$this->assertEquals(1, $result);
+		$this->assertEqual($result, 1);
 	}
 
 /**
@@ -154,7 +157,7 @@ class ConfigureTest extends CakeTestCase {
 	public function testDelete() {
 		Configure::write('SomeName.someKey', 'myvalue');
 		$result = Configure::read('SomeName.someKey');
-		$this->assertEquals('myvalue', $result);
+		$this->assertEqual($result, 'myvalue');
 
 		Configure::delete('SomeName.someKey');
 		$result = Configure::read('SomeName.someKey');
@@ -163,10 +166,10 @@ class ConfigureTest extends CakeTestCase {
 		Configure::write('SomeName', array('someKey' => 'myvalue', 'otherKey' => 'otherValue'));
 
 		$result = Configure::read('SomeName.someKey');
-		$this->assertEquals('myvalue', $result);
+		$this->assertEqual($result, 'myvalue');
 
 		$result = Configure::read('SomeName.otherKey');
-		$this->assertEquals('otherValue', $result);
+		$this->assertEqual($result, 'otherValue');
 
 		Configure::delete('SomeName');
 
@@ -189,20 +192,6 @@ class ConfigureTest extends CakeTestCase {
 	}
 
 /**
- * test load method for default config creation
- *
- * @return void
- */
-	public function testLoadDefaultConfig() {
-		try {
-			Configure::load('non_existing_configuration_file');
-		} catch (Exception $e) {
-			$result = Configure::configured('default');
-			$this->assertTrue($result);
-		}
-	}
-
-/**
  * test load with merging
  *
  * @return void
@@ -221,8 +210,6 @@ class ConfigureTest extends CakeTestCase {
 		$this->assertEquals('value2', Configure::read('Read'));
 		$this->assertEquals('buried2', Configure::read('Deep.Second.SecondDeepest'));
 		$this->assertEquals('buried', Configure::read('Deep.Deeper.Deepest'));
-		$this->assertEquals('Overwrite', Configure::read('TestAcl.classname'));
-		$this->assertEquals('one', Configure::read('TestAcl.custom'));
 	}
 
 /**
@@ -252,22 +239,20 @@ class ConfigureTest extends CakeTestCase {
  * @return void
  */
 	public function testLoadPlugin() {
-		App::build(array(
-			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
-		), App::RESET);
+		App::build(array('plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)), true);
 		Configure::config('test', new PhpReader());
 		CakePlugin::load('TestPlugin');
 		$result = Configure::load('TestPlugin.load', 'test');
 		$this->assertTrue($result);
 		$expected = '/test_app/plugins/test_plugin/config/load.php';
 		$config = Configure::read('plugin_load');
-		$this->assertEquals($expected, $config);
+		$this->assertEqual($config, $expected);
 
 		$result = Configure::load('TestPlugin.more.load', 'test');
 		$this->assertTrue($result);
 		$expected = '/test_app/plugins/test_plugin/config/more.load.php';
 		$config = Configure::read('plugin_more_load');
-		$this->assertEquals($expected, $config);
+		$this->assertEqual($config, $expected);
 		CakePlugin::unload();
 	}
 
@@ -302,7 +287,7 @@ class ConfigureTest extends CakeTestCase {
 		Configure::write('testing', 'value');
 		Configure::store('store_test', 'default', array('store_test' => 'one'));
 		Configure::delete('testing');
-		$this->assertNull(Configure::read('store_test'), 'Calling store with data shouldn\'t modify runtime.');
+		$this->assertNull(Configure::read('store_test'), 'Calling store with data shouldnt modify runtime.');
 
 		Configure::restore('store_test', 'default');
 		$this->assertEquals('one', Configure::read('store_test'));
@@ -343,66 +328,12 @@ class ConfigureTest extends CakeTestCase {
 /**
  * test reader() throwing exceptions on missing interface.
  *
- * @expectedException PHPUnit_Framework_Error
+ * @expectedException Exception
  * @return void
  */
 	public function testReaderExceptionOnIncorrectClass() {
 		$reader = new StdClass();
 		Configure::config('test', $reader);
 	}
-
-/**
- * Test that clear wipes all values.
- *
- * @return void
- */
-	public function testClear() {
-		Configure::write('test', 'value');
-		$this->assertTrue(Configure::clear());
-		$this->assertNull(Configure::read('debug'));
-		$this->assertNull(Configure::read('test'));
-	}
-
-/**
- * @expectedException ConfigureException
- */
-	public function testDumpNoAdapter() {
-		Configure::dump(TMP . 'test.php', 'does_not_exist');
-	}
-
-/**
- * test dump integrated with the PhpReader.
- *
- * @return void
- */
-	public function testDump() {
-		Configure::config('test_reader', new PhpReader(TMP));
-
-		$result = Configure::dump('config_test.php', 'test_reader');
-		$this->assertTrue($result > 0);
-		$result = file_get_contents(TMP . 'config_test.php');
-		$this->assertContains('<?php', $result);
-		$this->assertContains('$config = ', $result);
-		@unlink(TMP . 'config_test.php');
-	}
-
-/**
- * Test dumping only some of the data.
- *
- * @return
- */
-	public function testDumpPartial() {
-		Configure::config('test_reader', new PhpReader(TMP));
-
-		$result = Configure::dump('config_test.php', 'test_reader', array('Error'));
-		$this->assertTrue($result > 0);
-		$result = file_get_contents(TMP . 'config_test.php');
-		$this->assertContains('<?php', $result);
-		$this->assertContains('$config = ', $result);
-		$this->assertContains('Error', $result);
-		$this->assertNotContains('debug', $result);
-
-		@unlink(TMP . 'config_test.php');
-	}
-
 }
+

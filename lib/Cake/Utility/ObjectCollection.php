@@ -1,16 +1,15 @@
 <?php
 /**
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
 /**
  * Deals with Collections of objects.  Keeping registries of those objects,
  * loading and constructing new objects and triggering callbacks. Each subclass needs
@@ -41,16 +40,9 @@ abstract class ObjectCollection {
 	protected $_loaded = array();
 
 /**
- * Default object priority. A non zero integer.
- *
- * @var int
- */
-	public $defaultPriority = 10;
-
-/**
  * Loads a new object onto the collection. Can throw a variety of exceptions
  *
- * Implementations of this class support a `$options['enabled']` flag which enables/disables
+ * Implementations of this class support a `$options['callbacks']` flag which enables/disables
  * a loaded object.
  *
  * @param string $name Name of object to load.
@@ -76,16 +68,17 @@ abstract class ObjectCollection {
  * - `collectReturn` Set to true to collect the return of each object into an array.
  *    This array of return values will be returned from the trigger() call. Defaults to `false`.
  *
+ * - `triggerDisabled` Will trigger the callback on all objects in the collection even the non-enabled
+ *    objects. Defaults to false.
+ *
  * - `modParams` Allows each object the callback gets called on to modify the parameters to the next object.
  *    Setting modParams to an integer value will allow you to modify the parameter with that index.
  *    Any non-null value will modify the parameter index indicated.
  *    Defaults to false.
  *
  *
- * @param string $callback|CakeEvent Method to fire on all the objects. Its assumed all the objects implement
- *   the method you are calling. If an instance of CakeEvent is provided, then then Event name will parsed to
- *   get the callback name. This is done by getting the last word after any dot in the event name
- *   (eg. `Model.afterSave` event will trigger the `afterSave` callback)
+ * @param string $callback Method to fire on all the objects. Its assumed all the objects implement
+ *   the method you are calling.
  * @param array $params Array of parameters for the triggered callback.
  * @param array $options Array of options.
  * @return mixed Either the last result or all results if collectReturn is on.
@@ -95,39 +88,26 @@ abstract class ObjectCollection {
 		if (empty($this->_enabled)) {
 			return true;
 		}
-		if ($callback instanceof CakeEvent) {
-			$event = $callback;
-			if (is_array($event->data)) {
-				$params =& $event->data;
-			}
-			if (empty($event->omitSubject)) {
-				$subject = $event->subject();
-			}
-			//TODO: Temporary BC check, while we move all the triggers system into the CakeEventManager
-			foreach (array('break', 'breakOn', 'collectReturn', 'modParams') as $opt) {
-				if (isset($event->{$opt})) {
-					$options[$opt] = $event->{$opt};
-				}
-			}
-			$parts = explode('.', $event->name());
-			$callback = array_pop($parts);
-		}
 		$options = array_merge(
 			array(
 				'break' => false,
 				'breakOn' => false,
 				'collectReturn' => false,
+				'triggerDisabled' => false,
 				'modParams' => false
 			),
 			$options
 		);
 		$collected = array();
-		$list = array_keys($this->_enabled);
+		$list = $this->_enabled;
+		if ($options['triggerDisabled'] === true) {
+			$list = array_keys($this->_loaded);
+		}
 		if ($options['modParams'] !== false && !isset($params[$options['modParams']])) {
 			throw new CakeException(__d('cake_dev', 'Cannot use modParams with indexes that do not exist.'));
 		}
 		foreach ($list as $name) {
-			$result = call_user_func_array(array($this->_loaded[$name], $callback), compact('subject') + $params);
+			$result = call_user_func_array(array($this->_loaded[$name], $callback), $params);
 			if ($options['collectReturn'] === true) {
 				$collected[] = $result;
 			}
@@ -136,7 +116,7 @@ abstract class ObjectCollection {
 				(is_array($options['breakOn']) && in_array($result, $options['breakOn'], true)))
 			) {
 				return $result;
-			} elseif ($options['modParams'] !== false && !in_array($result, array(true, false, null), true)) {
+			} elseif ($options['modParams'] !== false && is_array($result)) {
 				$params[$options['modParams']] = $result;
 			}
 		}
@@ -172,77 +152,30 @@ abstract class ObjectCollection {
 /**
  * Enables callbacks on an object or array of objects
  *
- * @param string|array $name CamelCased name of the object(s) to enable (string or array)
- * @param boolean Prioritize enabled list after enabling object(s)
+ * @param mixed $name CamelCased name of the object(s) to enable (string or array)
  * @return void
  */
-	public function enable($name, $prioritize = true) {
-		$enabled = false;
+	public function enable($name) {
 		foreach ((array)$name as $object) {
-			if (isset($this->_loaded[$object]) && !isset($this->_enabled[$object])) {
-				$priority = isset($this->_loaded[$object]->settings['priority']) ? $this->_loaded[$object]->settings['priority'] : $this->defaultPriority;
-				$this->_enabled[$object] = array($priority);
-				$enabled = true;
+			if (isset($this->_loaded[$object]) && array_search($object, $this->_enabled) === false) {
+				$this->_enabled[] = $object;
 			}
 		}
-		if ($prioritize && $enabled) {
-			$this->prioritize();
-		}
-	}
-
-/**
- * Prioritize list of enabled object
- *
- * @return array Prioritized list of object
- */
-	public function prioritize() {
-		$i = 1;
-		foreach ($this->_enabled as $name => $priority) {
-			$priority[1] = $i++;
-			$this->_enabled[$name] = $priority;
-		}
-		asort($this->_enabled);
-		return $this->_enabled;
-	}
-
-/**
- * Set priority for an object or array of objects
- *
- * @param string|array $name CamelCased name of the object(s) to enable (string or array)
- * 	If string the second param $priority is used else it should be an associative array
- * 	with keys as object names and values as priorities to set.
- * @param integer|null Integer priority to set or null for default
- * @return void
- */
-	public function setPriority($name, $priority = null) {
-		if (is_string($name)) {
-			$name = array($name => $priority);
-		}
-		foreach ($name as $obj => $prio) {
-			if (isset($this->_loaded[$obj])) {
-				if (is_null($prio)) {
-					$prio = $this->defaultPriority;
-				}
-				$this->_loaded[$obj]->settings['priority'] = $prio;
-				if (isset($this->_enabled[$obj])) {
-					$this->_enabled[$obj] = array($prio);
-				}
-			}
-		}
-		$this->prioritize();
 	}
 
 /**
  * Disables callbacks on a object or array of objects.  Public object methods are still
  * callable as normal.
  *
- * @param string|array $name CamelCased name of the objects(s) to disable (string or array)
+ * @param mixed $name CamelCased name of the objects(s) to disable (string or array)
  * @return void
  */
 	public function disable($name) {
 		foreach ((array)$name as $object) {
-			unset($this->_enabled[$object]);
+			$index = array_search($object, $this->_enabled);
+			unset($this->_enabled[$index]);
 		}
+		$this->_enabled = array_values($this->_enabled);
 	}
 
 /**
@@ -255,13 +188,13 @@ abstract class ObjectCollection {
  */
 	public function enabled($name = null) {
 		if (!empty($name)) {
-			return isset($this->_enabled[$name]);
+			return in_array($name, $this->_enabled);
 		}
-		return array_keys($this->_enabled);
+		return $this->_enabled;
 	}
 
 /**
- * Gets the list of attached objects, or, whether the given object is attached
+ * Gets the list of attached behaviors, or, whether the given behavior is attached
  *
  * @param string $name Optional.  The name of the behavior to check the status of.  If omitted,
  *   returns an array of currently-attached behaviors
@@ -284,7 +217,7 @@ abstract class ObjectCollection {
 	public function unload($name) {
 		list($plugin, $name) = pluginSplit($name);
 		unset($this->_loaded[$name]);
-		unset($this->_enabled[$name]);
+		$this->_enabled = array_values(array_diff($this->_enabled, (array)$name));
 	}
 
 /**
@@ -314,13 +247,11 @@ abstract class ObjectCollection {
 		foreach ($objects as $i => $objectName) {
 			$options = array();
 			if (!is_int($i)) {
-				$options = (array)$objectName;
-				$objectName = $i;
+				list($options, $objectName) = array($objectName, $i);
 			}
 			list($plugin, $name) = pluginSplit($objectName);
 			$normal[$name] = array('class' => $objectName, 'settings' => $options);
 		}
 		return $normal;
 	}
-
 }

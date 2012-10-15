@@ -1,19 +1,22 @@
 <?php
 /**
+ * CommandListTest file
+ *
+ * PHP 5
+ *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP Project
  * @package       Cake.Console.Command
  * @since         CakePHP v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::uses('AppShell', 'Console/Command');
 App::uses('Inflector', 'Utility');
 
 /**
@@ -21,7 +24,7 @@ App::uses('Inflector', 'Utility');
  *
  * @package       Cake.Console.Command
  */
-class CommandListShell extends AppShell {
+class CommandListShell extends Shell {
 
 /**
  * startup
@@ -42,7 +45,7 @@ class CommandListShell extends AppShell {
 	public function main() {
 		if (empty($this->params['xml'])) {
 			$this->out(__d('cake_console', "<info>Current Paths:</info>"), 2);
-			$this->out(" -app: " . APP_DIR);
+			$this->out(" -app: ". APP_DIR);
 			$this->out(" -working: " . rtrim(APP, DS));
 			$this->out(" -root: " . rtrim(ROOT, DS));
 			$this->out(" -core: " . rtrim(CORE_PATH, DS));
@@ -55,14 +58,18 @@ class CommandListShell extends AppShell {
 		}
 
 		$shellList = $this->_getShellList();
-		if (empty($shellList)) {
-			return;
-		}
 
-		if (empty($this->params['xml'])) {
-			$this->_asText($shellList);
-		} else {
-			$this->_asXml($shellList);
+		if ($shellList) {
+			ksort($shellList);
+			if (empty($this->params['xml'])) {
+				if (!empty($this->params['sort'])) {
+					$this->_asSorted($shellList);
+				} else {
+					$this->_asText($shellList);
+				}
+			} else {
+				$this->_asXml($shellList);
+			}
 		}
 	}
 
@@ -72,26 +79,21 @@ class CommandListShell extends AppShell {
  * @return array
  */
 	protected function _getShellList() {
-		$skipFiles = array('AppShell');
+		$shellList = array();
 
-		$plugins = CakePlugin::loaded();
-		$shellList = array_fill_keys($plugins, null) + array('CORE' => null, 'app' => null);
-
-		$corePath = App::core('Console/Command');
-		$shells = App::objects('file', $corePath[0]);
-		$shells = array_diff($shells, $skipFiles);
-		$this->_appendShells('CORE', $shells, $shellList);
+		$shells = App::objects('file', App::core('Console/Command'));
+		$shellList = $this->_appendShells('CORE', $shells, $shellList);
 
 		$appShells = App::objects('Console/Command', null, false);
-		$appShells = array_diff($appShells, $shells, $skipFiles);
-		$this->_appendShells('app', $appShells, $shellList);
+		$shellList = $this->_appendShells('app', $appShells, $shellList);
 
+		$plugins = CakePlugin::loaded();
 		foreach ($plugins as $plugin) {
 			$pluginShells = App::objects($plugin . '.Console/Command');
-			$this->_appendShells($plugin, $pluginShells, $shellList);
+			$shellList = $this->_appendShells($plugin, $pluginShells, $shellList);
 		}
 
-		return array_filter($shellList);
+		return $shellList;
 	}
 
 /**
@@ -102,10 +104,12 @@ class CommandListShell extends AppShell {
  * @param array $shellList
  * @return array
  */
-	protected function _appendShells($type, $shells, &$shellList) {
+	protected function _appendShells($type, $shells, $shellList) {
 		foreach ($shells as $shell) {
-			$shellList[$type][] = Inflector::underscore(str_replace('Shell', '', $shell));
+			$shell = Inflector::underscore(str_replace('Shell', '', $shell));
+			$shellList[$shell][$type] = $type;
 		}
+		return $shellList;
 	}
 
 /**
@@ -115,15 +119,72 @@ class CommandListShell extends AppShell {
  * @return void
  */
 	protected function _asText($shellList) {
-		foreach ($shellList as $plugin => $commands) {
-			sort($commands);
-			$this->out(sprintf('[<info>%s</info>] %s', $plugin, implode(', ', $commands)));
-			$this->out();
+		if (DS === '/') {
+			$width = exec('tput cols') - 2;
 		}
+		if (empty($width)) {
+			$width = 80;
+		}
+		$columns = max(1, floor($width / 30));
+		$rows = ceil(count($shellList) / $columns);
 
-		$this->out(__d('cake_console', "To run an app or core command, type <info>cake shell_name [args]</info>"));
-		$this->out(__d('cake_console', "To run a plugin command, type <info>cake Plugin.shell_name [args]</info>"));
+		foreach ($shellList as $shell => $types) {
+			sort($types);
+			$shellList[$shell] = str_pad($shell . ' [' . implode ($types, ', ') . ']', $width / $columns);
+		}
+		$out = array_chunk($shellList, $rows);
+		for ($i = 0; $i < $rows; $i++) {
+			$row = '';
+			for ($j = 0; $j < $columns; $j++) {
+				if (!isset($out[$j][$i])) {
+					continue;
+				}
+				$row .= $out[$j][$i];
+			}
+			$this->out(" " . $row);
+		}
+		$this->out();
+		$this->out(__d('cake_console', "To run a command, type <info>cake shell_name [args]</info>"));
 		$this->out(__d('cake_console', "To get help on a specific command, type <info>cake shell_name --help</info>"), 2);
+	}
+
+/**
+ * Generates the shell list sorted by where the shells are found.
+ *
+ * @param array $shellList
+ * @return void
+ */
+	protected function _asSorted($shellList) {
+		$grouped = array();
+		foreach ($shellList as $shell => $types) {
+			foreach ($types as $type) {
+				$type = Inflector::camelize($type);
+				if (empty($grouped[$type])) {
+					$grouped[$type] = array();
+				}
+				$grouped[$type][] = $shell;
+			}
+		}
+		if (!empty($grouped['App'])) {
+			sort($grouped['App'], SORT_STRING);
+			$this->out('[ App ]');
+			$this->out('  ' . implode(', ', $grouped['App']), 2);
+			unset($grouped['App']);
+		}
+		foreach ($grouped as $section => $shells) {
+			if ($section == 'CORE') {
+				continue;
+			}
+			sort($shells, SORT_STRING);
+			$this->out('[ ' . $section . ' ]');
+			$this->out('  ' . implode(', ', $shells), 2);
+		}
+		if (!empty($grouped['CORE'])) {
+			sort($grouped['CORE'], SORT_STRING);
+			$this->out('[ Core ]');
+			$this->out('  ' . implode(', ', $grouped['CORE']), 2);
+		}
+		$this->out();
 	}
 
 /**
@@ -135,19 +196,17 @@ class CommandListShell extends AppShell {
 	protected function _asXml($shellList) {
 		$plugins = CakePlugin::loaded();
 		$shells = new SimpleXmlElement('<shells></shells>');
-		foreach ($shellList as $plugin => $commands) {
-			foreach ($commands as $command) {
-				$callable = $command;
-				if (in_array($plugin, $plugins)) {
-					$callable = Inflector::camelize($plugin) . '.' . $command;
-				}
-
-				$shell = $shells->addChild('shell');
-				$shell->addAttribute('name', $command);
-				$shell->addAttribute('call_as', $callable);
-				$shell->addAttribute('provider', $plugin);
-				$shell->addAttribute('help', $callable . ' -h');
+		foreach ($shellList as $name => $location) {
+			$source = current($location);
+			$callable = $name;
+			if (in_array($source, $plugins)) {
+				$callable = Inflector::camelize($source) . '.' . $name;
 			}
+			$shell = $shells->addChild('shell');
+			$shell->addAttribute('name', $name);
+			$shell->addAttribute('call_as', $callable);
+			$shell->addAttribute('provider', $source);
+			$shell->addAttribute('help', $callable . ' -h');
 		}
 		$this->stdout->outputAs(ConsoleOutput::RAW);
 		$this->out($shells->saveXml());
@@ -161,14 +220,12 @@ class CommandListShell extends AppShell {
 	public function getOptionParser() {
 		$parser = parent::getOptionParser();
 		return $parser->description(__d('cake_console', 'Get the list of available shells for this CakePHP application.'))
-			->addOption('sort', array(
-				'help' => __d('cake_console', 'Does nothing (deprecated)'),
-				'boolean' => true
-			))
 			->addOption('xml', array(
 				'help' => __d('cake_console', 'Get the listing as XML.'),
 				'boolean' => true
+			))->addOption('sort', array(
+				'help' => __d('cake_console', 'Sorts the commands by where they are located.'),
+				'boolean' => true
 			));
 	}
-
 }

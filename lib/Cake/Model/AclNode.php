@@ -4,26 +4,30 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Model
  * @since         CakePHP(tm) v 0.2.9
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-App::uses('Model', 'Model');
+/**
+ * Load Model and AppModel
+ */
+App::uses('AppModel', 'Model');
 
 /**
  * ACL Node
  *
+ *
  * @package       Cake.Model
  */
-class AclNode extends Model {
+class AclNode extends AppModel {
 
 /**
  * Explicitly disable in-memory query caching for ACL models
@@ -37,7 +41,7 @@ class AclNode extends Model {
  *
  * @var array
  */
-	public $actsAs = array('Tree' => array('type' => 'nested'));
+	public $actsAs = array('Tree' => array('nested'));
 
 /**
  * Constructor
@@ -54,9 +58,8 @@ class AclNode extends Model {
 /**
  * Retrieves the Aro/Aco node for this model
  *
- * @param string|array|Model $ref Array with 'model' and 'foreign_key', model object, or string value
+ * @param mixed $ref Array with 'model' and 'foreign_key', model object, or string value
  * @return array Node found in database
- * @throws CakeException when binding to a model that doesn't exist.
  */
 	public function node($ref = null) {
 		$db = $this->getDataSource();
@@ -82,7 +85,7 @@ class AclNode extends Model {
 					$db->name("{$type}.rght") . ' >= ' . $db->name("{$type}0.rght")),
 				'fields' => array('id', 'parent_id', 'model', 'foreign_key', 'alias'),
 				'joins' => array(array(
-					'table' => $table,
+					'table' => $db->fullTableName($this),
 					'alias' => "{$type}0",
 					'type' => 'LEFT',
 					'conditions' => array("{$type}0.alias" => $start)
@@ -94,9 +97,9 @@ class AclNode extends Model {
 				$j = $i - 1;
 
 				$queryData['joins'][] = array(
-					'table' => $table,
+					'table' => $db->fullTableName($this),
 					'alias' => "{$type}{$i}",
-					'type' => 'LEFT',
+					'type'  => 'LEFT',
 					'conditions' => array(
 						$db->name("{$type}{$i}.lft") . ' > ' . $db->name("{$type}{$j}.lft"),
 						$db->name("{$type}{$i}.rght") . ' < ' . $db->name("{$type}{$j}.rght"),
@@ -121,15 +124,15 @@ class AclNode extends Model {
 				return false;
 			}
 		} elseif (is_object($ref) && is_a($ref, 'Model')) {
-			$ref = array('model' => $ref->name, 'foreign_key' => $ref->id);
+			$ref = array('model' => $ref->alias, 'foreign_key' => $ref->id);
 		} elseif (is_array($ref) && !(isset($ref['model']) && isset($ref['foreign_key']))) {
 			$name = key($ref);
-			list($plugin, $alias) = pluginSplit($name);
 
-			$model = ClassRegistry::init(array('class' => $name, 'alias' => $alias));
+			$model = ClassRegistry::init(array('class' => $name, 'alias' => $name));
 
 			if (empty($model)) {
-				throw new CakeException('cake_dev', "Model class '%s' not found in AclNode::node() when trying to bind %s object", $type, $this->alias);
+				trigger_error(__d('cake_dev', "Model class '%s' not found in AclNode::node() when trying to bind %s object", $type, $this->alias), E_USER_WARNING);
+				return null;
 			}
 
 			$tmpRef = null;
@@ -137,7 +140,7 @@ class AclNode extends Model {
 				$tmpRef = $model->bindNode($ref);
 			}
 			if (empty($tmpRef)) {
-				$ref = array('model' => $alias, 'foreign_key' => $ref[$name][$model->primaryKey]);
+				$ref = array('model' => $name, 'foreign_key' => $ref[$name][$model->primaryKey]);
 			} else {
 				if (is_string($tmpRef)) {
 					return $this->node($tmpRef);
@@ -160,7 +163,7 @@ class AclNode extends Model {
 				'conditions' => $ref,
 				'fields' => array('id', 'parent_id', 'model', 'foreign_key', 'alias'),
 				'joins' => array(array(
-					'table' => $table,
+					'table' => $db->fullTableName($this),
 					'alias' => "{$type}0",
 					'type' => 'LEFT',
 					'conditions' => array(
@@ -173,10 +176,9 @@ class AclNode extends Model {
 			$result = $db->read($this, $queryData, -1);
 
 			if (!$result) {
-				throw new CakeException(__d('cake_dev', "AclNode::node() - Couldn't find %s node identified by \"%s\"", $type, print_r($ref, true)));
+				trigger_error(__d('cake_dev', "AclNode::node() - Couldn't find %s node identified by \"%s\"", $type, print_r($ref, true)), E_USER_WARNING);
 			}
 		}
 		return $result;
 	}
-
 }

@@ -1,18 +1,23 @@
 <?php
 /**
+ * Command-line database management utility to automate programmer chores.
+ *
+ * Schema is CakePHP's database management utility. This helps you maintain versions of
+ * of your database.
+ *
+ * PHP 5
+ *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         CakePHP(tm) v 1.2.0.5550
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-
-App::uses('AppShell', 'Console/Command');
 App::uses('File', 'Utility');
 App::uses('Folder', 'Utility');
 App::uses('CakeSchema', 'Model');
@@ -20,13 +25,10 @@ App::uses('CakeSchema', 'Model');
 /**
  * Schema is a command-line database management utility for automating programmer chores.
  *
- * Schema is CakePHP's database management utility. This helps you maintain versions of
- * of your database.
- *
  * @package       Cake.Console.Command
- * @link          http://book.cakephp.org/2.0/en/console-and-shells/schema-management-and-migrations.html
+ * @link          http://book.cakephp.org/view/1523/Schema-management-and-migrations
  */
-class SchemaShell extends AppShell {
+class SchemaShell extends Shell {
 
 /**
  * Schema class being used.
@@ -43,19 +45,26 @@ class SchemaShell extends AppShell {
 	protected $_dry = null;
 
 /**
+ * Override initialize
+ *
+ * @return string
+ */
+	public function initialize() {
+		$this->_welcome();
+		$this->out('Cake Schema Shell');
+		$this->hr();
+	}
+
+/**
  * Override startup
  *
  * @return void
  */
 	public function startup() {
-		$this->_welcome();
-		$this->out('Cake Schema Shell');
-		$this->hr();
-
 		$name = $path = $connection = $plugin = null;
 		if (!empty($this->params['name'])) {
 			$name = $this->params['name'];
-		} elseif (!empty($this->args[0]) && $this->args[0] !== 'snapshot') {
+		} elseif (!empty($this->args[0])) {
 			$name = $this->params['name'] = $this->args[0];
 		}
 
@@ -149,7 +158,6 @@ class SchemaShell extends AppShell {
 		Configure::write('Cache.disable', $cacheDisable);
 
 		if ($snapshot === true) {
-			$fileName = rtrim($this->params['file'], '.php');
 			$Folder = new Folder($this->Schema->path);
 			$result = $Folder->read();
 
@@ -161,7 +169,7 @@ class SchemaShell extends AppShell {
 			$count = 0;
 			if (!empty($result[1])) {
 				foreach ($result[1] as $file) {
-					if (preg_match('/' . preg_quote($fileName) . '(?:[_\d]*)?\.php$/', $file)) {
+					if (preg_match('/schema(?:[_\d]*)?\.php$/', $file)) {
 						$count++;
 					}
 				}
@@ -173,6 +181,7 @@ class SchemaShell extends AppShell {
 				}
 			}
 
+			$fileName = rtrim($this->params['file'], '.php');
 			$content['file'] = $fileName . '_' . $count . '.php';
 		}
 
@@ -209,7 +218,8 @@ class SchemaShell extends AppShell {
 			}
 		}
 		$db = ConnectionManager::getDataSource($this->Schema->connection);
-		$contents = "\n\n" . $db->dropSchema($Schema) . "\n\n" . $db->createSchema($Schema);
+		$contents = "#" . $Schema->name . " sql generated on: " . date('Y-m-d H:i:s') . " : " . time() . "\n\n";
+		$contents .= $db->dropSchema($Schema) . "\n\n". $db->createSchema($Schema);
 
 		if ($write) {
 			if (strpos($write, '.sql') === false) {
@@ -281,9 +291,7 @@ class SchemaShell extends AppShell {
 		$Schema = $this->Schema->load($options);
 
 		if (!$Schema) {
-			$this->err(__d('cake_console', 'The chosen schema could not be loaded. Attempted to load:'));
-			$this->err(__d('cake_console', 'File: %s', $this->Schema->path . DS . $this->Schema->file));
-			$this->err(__d('cake_console', 'Name: %s', $this->Schema->name));
+			$this->err(__d('cake_console', '%s could not be loaded', $this->Schema->path . DS . $this->Schema->file));
 			$this->_stop();
 		}
 		$table = null;
@@ -414,13 +422,13 @@ class SchemaShell extends AppShell {
 					try {
 						$db->execute($sql);
 					} catch (PDOException $e) {
-						$error = $table . ': ' . $e->getMessage();
+						$error = $table . ': '  . $e->getMessage();
 					}
 
 					$Schema->after(array($event => $table, 'errors' => $error));
 
 					if (!empty($error)) {
-						$this->err($error);
+						$this->out($error);
 					} else {
 						$this->out(__d('cake_console', '%s updated.', $table));
 					}
@@ -436,11 +444,9 @@ class SchemaShell extends AppShell {
  */
 	public function getOptionParser() {
 		$plugin = array(
-			'short' => 'p',
 			'help' => __d('cake_console', 'The plugin to use.'),
 		);
 		$connection = array(
-			'short' => 'c',
 			'help' => __d('cake_console', 'Set the db config to use.'),
 			'default' => 'default'
 		);
@@ -492,7 +498,7 @@ class SchemaShell extends AppShell {
 		))->addSubcommand('dump', array(
 			'help' => __d('cake_console', 'Dump database SQL based on a schema file to stdout.'),
 			'parser' => array(
-				'options' => compact('plugin', 'path', 'file', 'name', 'connection', 'write'),
+				'options' => compact('plugin', 'path', 'file', 'name', 'connection'),
 				'arguments' => compact('name')
 			)
 		))->addSubcommand('create', array(
@@ -511,7 +517,7 @@ class SchemaShell extends AppShell {
 		))->addSubcommand('update', array(
 			'help' => __d('cake_console', 'Alter the tables based on the schema file.'),
 			'parser' => array(
-				'options' => compact('plugin', 'path', 'file', 'name', 'connection', 'dry', 'snapshot', 'force'),
+				'options' => compact('plugin', 'path', 'file', 'name', 'connection', 'dry', 'snapshot'),
 				'args' => array(
 					'name' => array(
 						'help' => __d('cake_console', 'Name of schema to use.')
@@ -524,5 +530,4 @@ class SchemaShell extends AppShell {
 		));
 		return $parser;
 	}
-
 }

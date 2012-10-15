@@ -5,12 +5,12 @@
  * PHP5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Test.Case.TestSuite
  * @since         CakePHP(tm) v 2.0
@@ -21,18 +21,17 @@ App::uses('HtmlCoverageReport', 'TestSuite/Coverage');
 App::uses('CakeBaseReporter', 'TestSuite/Reporter');
 
 class HtmlCoverageReportTest extends CakeTestCase {
-
 /**
- * setUp
+ * setup
  *
  * @return void
  */
 	public function setUp() {
 		parent::setUp();
 		App::build(array(
-			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
+			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
 		), App::RESET);
-		CakePlugin::load(array('TestPlugin'));
+		CakePlugin::loadAll();
 		$reporter = new CakeBaseReporter();
 		$reporter->params = array('app' => false, 'plugin' => false, 'group' => false);
 		$coverage = array();
@@ -129,54 +128,6 @@ class HtmlCoverageReportTest extends CakeTestCase {
 	}
 
 /**
- * Test that coverage works with phpunit 3.6 as the data formats from coverage are totally different.
- *
- * @return void
- */
-	public function testPhpunit36Compatibility() {
-		$file = array(
-			'line 1',
-			'line 2',
-			'line 3',
-			'line 4',
-			'line 5',
-			'line 6',
-			'line 7',
-			'line 8',
-			'line 9',
-			'line 10',
-		);
-		$coverage = array(
-			1 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			2 => null,
-			3 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			4 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			5 => array(),
-			6 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			7 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			8 => array('HtmlCoverageReportTest::testGenerateDiff'),
-			9 => array(),
-			10 => array('HtmlCoverageReportTest::testSomething', 'HtmlCoverageReportTest::testGenerateDiff')
-		);
-
-		$result = $this->Coverage->generateDiff('myfile.php', $file, $coverage);
-		$this->assertRegExp('/myfile\.php Code coverage\: \d+\.?\d*\%/', $result);
-		$this->assertRegExp('/<div class="code-coverage-results" id\="coverage\-myfile\.php"/', $result);
-		$this->assertRegExp('/<pre>/', $result);
-		foreach ($file as $i => $line) {
-			$this->assertTrue(strpos($line, $result) !== 0, 'Content is missing ' . $i);
-			$class = 'covered';
-			if (in_array($i + 1, array(5, 9, 2))) {
-				$class = 'uncovered';
-			}
-			if ($i + 1 == 2) {
-				$class .= ' dead';
-			}
-			$this->assertTrue(strpos($class, $result) !== 0, 'Class name is wrong ' . $i);
-		}
-	}
-
-/**
  * test that covering methods show up as title attributes for lines.
  *
  * @return void
@@ -197,6 +148,7 @@ class HtmlCoverageReportTest extends CakeTestCase {
 			4 => array(array('id' => 'HtmlCoverageReportTest::testOther')),
 			5 => -1
 		);
+
 
 		$result = $this->Coverage->generateDiff('myfile.php', $file, $coverage);
 
@@ -219,13 +171,12 @@ class HtmlCoverageReportTest extends CakeTestCase {
 	}
 
 /**
- * tearDown
+ * teardown
  *
  * @return void
  */
 	public function tearDown() {
 		CakePlugin::unload();
 		unset($this->Coverage);
-		parent::tearDown();
 	}
 }

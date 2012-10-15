@@ -4,13 +4,14 @@
  *
  * PHP 5
  *
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://book.cakephp.org/2.0/en/development/configuration.html#loading-configuration-files CakePHP(tm) Configuration
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       Cake.Configure
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -26,7 +27,6 @@
  * @package       Cake.Configure
  */
 class PhpReader implements ConfigReaderInterface {
-
 /**
  * The path this reader finds files on.
  *
@@ -66,42 +66,24 @@ class PhpReader implements ConfigReaderInterface {
 			$key = substr($key, 0, -4);
 		}
 		list($plugin, $key) = pluginSplit($key);
-		$key .= '.php';
 
 		if ($plugin) {
 			$file = App::pluginPath($plugin) . 'Config' . DS . $key;
 		} else {
 			$file = $this->_path . $key;
 		}
-		if (!is_file($file)) {
-			throw new ConfigureException(__d('cake_dev', 'Could not load configuration file: %s', $file));
+		if (!file_exists($file)) {
+			$file .= '.php';
+			if (!file_exists($file)) {
+				throw new ConfigureException(__d('cake_dev', 'Could not load configuration files: %s or %s', substr($file, 0, -4), $file));
+			}
 		}
-
 		include $file;
 		if (!isset($config)) {
 			throw new ConfigureException(
-				sprintf(__d('cake_dev', 'No variable $config found in %s'), $file)
+				sprintf(__d('cake_dev', 'No variable $config found in %s.php'), $file)
 			);
 		}
 		return $config;
 	}
-
-/**
- * Converts the provided $data into a string of PHP code that can
- * be used saved into a file and loaded later.
- *
- * @param string $filename The filename to create on $this->_path.
- * 	Extension ".php" will be automatically appended if not included in filename.
- * @param array $data Data to dump.
- * @return int Bytes saved.
- */
-	public function dump($filename, $data) {
-		$contents = '<?php' . "\n" . '$config = ' . var_export($data, true) . ';';
-
-		if (substr($filename, -4) !== '.php') {
-			$filename .= '.php';
-		}
-		return file_put_contents($this->_path . $filename, $contents);
-	}
-
 }

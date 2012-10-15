@@ -5,12 +5,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Model.Datasource.Database
  * @since         CakePHP(tm) v 0.10.5.1790
@@ -78,6 +78,17 @@ class Mysql extends DboSource {
 	protected $_useAlias = true;
 
 /**
+ * Index of basic SQL commands
+ *
+ * @var array
+ */
+	protected $_commands = array(
+		'begin'    => 'START TRANSACTION',
+		'commit'   => 'COMMIT',
+		'rollback' => 'ROLLBACK'
+	);
+
+/**
  * List of engine specific additional field parameters used on table creating
  *
  * @var array
@@ -136,23 +147,15 @@ class Mysql extends DboSource {
 			if (!empty($config['encoding'])) {
 				$flags[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES ' . $config['encoding'];
 			}
-			if (empty($config['unix_socket'])) {
-				$dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['database']}";
-			} else {
-				$dsn = "mysql:unix_socket={$config['unix_socket']};dbname={$config['database']}";
-			}
 			$this->_connection = new PDO(
-				$dsn,
+				"mysql:host={$config['host']};port={$config['port']};dbname={$config['database']}",
 				$config['login'],
 				$config['password'],
 				$flags
 			);
 			$this->connected = true;
 		} catch (PDOException $e) {
-			throw new MissingConnectionException(array(
-				'class' => get_class($this),
-				'message' => $e->getMessage()
-			));
+			throw new MissingConnectionException(array('class' => $e->getMessage()));
 		}
 
 		$this->_useAlias = (bool)version_compare($this->getVersion(), "4.1", ">=");
@@ -173,7 +176,7 @@ class Mysql extends DboSource {
  * Returns an array of sources (tables) in the database.
  *
  * @param mixed $data
- * @return array Array of table names in the database
+ * @return array Array of tablenames in the database
  */
 	public function listSources($data = null) {
 		$cache = parent::listSources();
@@ -188,7 +191,7 @@ class Mysql extends DboSource {
 		} else {
 			$tables = array();
 
-			while ($line = $result->fetch(PDO::FETCH_NUM)) {
+			while ($line = $result->fetch()) {
 				$tables[] = $line[0];
 			}
 
@@ -230,7 +233,7 @@ class Mysql extends DboSource {
  * @return mixed array with results fetched and mapped to column names or false if there is no results left to fetch
  */
 	public function fetchResult() {
-		if ($row = $this->_result->fetch(PDO::FETCH_NUM)) {
+		if ($row = $this->_result->fetch()) {
 			$resultRow = array();
 			foreach ($this->map as $col => $meta) {
 				list($table, $column, $type) = $meta;
@@ -255,6 +258,15 @@ class Mysql extends DboSource {
 	}
 
 /**
+ * Gets the version string of the database server
+ *
+ * @return string The database encoding
+ */
+	public function getVersion() {
+		return $this->_connection->getAttribute(PDO::ATTR_SERVER_VERSION);
+	}
+
+/**
  * Query charset by collation
  *
  * @param string $name Collation name
@@ -263,7 +275,7 @@ class Mysql extends DboSource {
 	public function getCharsetName($name) {
 		if ((bool)version_compare($this->getVersion(), "5", ">=")) {
 			$r = $this->_execute('SELECT CHARACTER_SET_NAME FROM INFORMATION_SCHEMA.COLLATIONS WHERE COLLATION_NAME = ?', array($name));
-			$cols = $r->fetch(PDO::FETCH_ASSOC);
+			$cols = $r->fetch();
 
 			if (isset($cols['CHARACTER_SET_NAME'])) {
 				return $cols['CHARACTER_SET_NAME'];
@@ -275,25 +287,22 @@ class Mysql extends DboSource {
 /**
  * Returns an array of the fields in given table name.
  *
- * @param Model|string $model Name of database table to inspect or model instance
+ * @param Model $model Name of database table to inspect or model instance
  * @return array Fields in table. Keys are name and type
  * @throws CakeException
  */
-	public function describe($model) {
-		$key = $this->fullTableName($model, false);
-		$cache = parent::describe($key);
+	public function describe(Model $model) {
+		$cache = parent::describe($model);
 		if ($cache != null) {
 			return $cache;
 		}
-		$table = $this->fullTableName($model);
-
 		$fields = false;
-		$cols = $this->_execute('SHOW FULL COLUMNS FROM ' . $table);
+		$cols = $this->_execute('SHOW FULL COLUMNS FROM ' . $this->fullTableName($model));
 		if (!$cols) {
-			throw new CakeException(__d('cake_dev', 'Could not describe table for %s', $table));
+			throw new CakeException(__d('cake_dev', 'Could not describe table for %s', $model->name));
 		}
 
-		while ($column = $cols->fetch(PDO::FETCH_OBJ)) {
+		foreach ($cols as $column) {
 			$fields[$column->Field] = array(
 				'type' => $this->column($column->Type),
 				'null' => ($column->Null === 'YES' ? true : false),
@@ -315,7 +324,7 @@ class Mysql extends DboSource {
 				}
 			}
 		}
-		$this->_cacheDescription($key, $fields);
+		$this->_cacheDescription($this->fullTableName($model, false), $fields);
 		$cols->closeCursor();
 		return $fields;
 	}
@@ -426,11 +435,9 @@ class Mysql extends DboSource {
 		$old = version_compare($this->getVersion(), '4.1', '<=');
 		if ($table) {
 			$indices = $this->_execute('SHOW INDEX FROM ' . $table);
-			// @codingStandardsIgnoreStart
-			// MySQL columns don't match the cakephp conventions.
-			while ($idx = $indices->fetch(PDO::FETCH_OBJ)) {
+			while ($idx = $indices->fetch()) {
 				if ($old) {
-					$idx = (object)current((array)$idx);
+					$idx = (object) current((array)$idx);
 				}
 				if (!isset($index[$idx->Key_name]['column'])) {
 					$col = array();
@@ -444,7 +451,6 @@ class Mysql extends DboSource {
 					$index[$idx->Key_name]['column'] = $col;
 				}
 			}
-			// @codingStandardsIgnoreEnd
 			$indices->closeCursor();
 		}
 		return $index;
@@ -530,11 +536,12 @@ class Mysql extends DboSource {
 	}
 
 /**
- * Generate MySQL table parameter alteration statements for a table.
+ * Generate MySQL table parameter alteration statementes for a table.
  *
  * @param string $table Table to alter parameters for.
  * @param array $parameters Parameters to add & drop.
- * @return array Array of table property alteration statements.
+ * @return array Array of table property alteration statementes.
+ * @todo Implement this method.
  */
 	protected function _alterTableParameters($table, $parameters) {
 		if (isset($parameters['change'])) {
@@ -553,7 +560,7 @@ class Mysql extends DboSource {
 	protected function _alterIndexes($table, $indexes) {
 		$alter = array();
 		if (isset($indexes['drop'])) {
-			foreach ($indexes['drop'] as $name => $value) {
+			foreach($indexes['drop'] as $name => $value) {
 				$out = 'DROP ';
 				if ($name == 'PRIMARY') {
 					$out .= 'PRIMARY KEY';
@@ -575,9 +582,9 @@ class Mysql extends DboSource {
 					}
 				}
 				if (is_array($value['column'])) {
-					$out .= 'KEY ' . $name . ' (' . implode(', ', array_map(array(&$this, 'name'), $value['column'])) . ')';
+					$out .= 'KEY '. $name .' (' . implode(', ', array_map(array(&$this, 'name'), $value['column'])) . ')';
 				} else {
-					$out .= 'KEY ' . $name . ' (' . $this->name($value['column']) . ')';
+					$out .= 'KEY '. $name .' (' . $this->name($value['column']) . ')';
 				}
 				$alter[] = $out;
 			}
@@ -589,27 +596,29 @@ class Mysql extends DboSource {
  * Returns an detailed array of sources (tables) in the database.
  *
  * @param string $name Table name to get parameters
- * @return array Array of table names in the database
+ * @return array Array of tablenames in the database
  */
 	public function listDetailedSources($name = null) {
 		$condition = '';
+		$params = array();
 		if (is_string($name)) {
-			$condition = ' WHERE name = ' . $this->value($name);
+			$condition = ' WHERE name = ?' ;
+			$params = array($name);
 		}
-		$result = $this->_connection->query('SHOW TABLE STATUS ' . $condition, PDO::FETCH_ASSOC);
+		$result = $this->_execute('SHOW TABLE STATUS ' . $condition, $params);
 
 		if (!$result) {
 			$result->closeCursor();
 			return array();
 		} else {
 			$tables = array();
-			foreach ($result as $row) {
-				$tables[$row['Name']] = (array)$row;
-				unset($tables[$row['Name']]['queryString']);
-				if (!empty($row['Collation'])) {
-					$charset = $this->getCharsetName($row['Collation']);
+			while ($row = $result->fetch()) {
+				$tables[$row->Name] = (array) $row;
+				unset($tables[$row->Name]['queryString']);
+				if (!empty($row->Collation)) {
+					$charset = $this->getCharsetName($row->Collation);
 					if ($charset) {
-						$tables[$row['Name']]['charset'] = $charset;
+						$tables[$row->Name]['charset'] = $charset;
 					}
 				}
 			}
@@ -668,23 +677,4 @@ class Mysql extends DboSource {
 		}
 		return 'text';
 	}
-
-/**
- * Gets the schema name
- *
- * @return string The schema name
- */
-	public function getSchemaName() {
-		return $this->config['database'];
-	}
-
-/**
- * Check if the server support nested transactions
- *
- * @return boolean
- */
-	public function nestedTransactionSupported() {
-		return $this->useNestedTransactions && version_compare($this->getVersion(), '4.1', '>=');
-	}
-
 }

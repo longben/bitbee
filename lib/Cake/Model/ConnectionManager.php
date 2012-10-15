@@ -7,12 +7,12 @@
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Model
  * @since         CakePHP(tm) v 0.10.x.1402
@@ -23,9 +23,6 @@ App::uses('DataSource', 'Model/Datasource');
 
 /**
  * Manages loaded instances of DataSource objects
- *
- * Provides an interface for loading and enumerating connections defined in 
- * app/Config/database.php
  *
  * @package       Cake.Model
  */
@@ -69,6 +66,7 @@ class ConnectionManager {
 		if (class_exists('DATABASE_CONFIG')) {
 			self::$config = new DATABASE_CONFIG();
 		}
+		register_shutdown_function('ConnectionManager::shutdown');
 		self::$_init = true;
 	}
 
@@ -78,7 +76,7 @@ class ConnectionManager {
  * @param string $name The name of the DataSource, as defined in app/Config/database.php
  * @return DataSource Instance
  * @throws MissingDatasourceConfigException
- * @throws MissingDatasourceException
+ * @throws MissingDatasourceFileException
  */
 	public static function getDataSource($name) {
 		if (empty(self::$_init)) {
@@ -140,11 +138,11 @@ class ConnectionManager {
 /**
  * Loads the DataSource class for the given connection name
  *
- * @param string|array $connName A string name of the connection, as defined in app/Config/database.php,
+ * @param mixed $connName A string name of the connection, as defined in app/Config/database.php,
  *                        or an array containing the filename (without extension) and class name of the object,
  *                        to be found in app/Model/Datasource/ or lib/Cake/Model/Datasource/.
  * @return boolean True on success, null on failure or false if the class is already loaded
- * @throws MissingDatasourceException
+ * @throws MissingDatasourceFileException
  */
 	public static function loadDataSource($connName) {
 		if (empty(self::$_init)) {
@@ -171,10 +169,7 @@ class ConnectionManager {
 
 		App::uses($conn['classname'], $plugin . 'Model/Datasource' . $package);
 		if (!class_exists($conn['classname'])) {
-			throw new MissingDatasourceException(array(
-				'class' => $conn['classname'],
-				'plugin' => substr($plugin, 0, -1)
-			));
+			throw new MissingDatasourceFileException(array('class' => $conn['classname'], 'plugin' => $plugin));
 		}
 		return true;
 	}
@@ -189,7 +184,7 @@ class ConnectionManager {
 		if (empty(self::$_init)) {
 			self::_init();
 		}
-		return (array)self::$config;
+		return (array) self::$config;
 	}
 
 /**
@@ -263,4 +258,14 @@ class ConnectionManager {
 		return compact('package', 'classname', 'plugin');
 	}
 
+/**
+ * Destructor.
+ *
+ * @return void
+ */
+	public static function shutdown() {
+		if (Configure::read('Session.defaults') == 'database' && function_exists('session_write_close')) {
+			session_write_close();
+		}
+	}
 }

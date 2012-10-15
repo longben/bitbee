@@ -2,17 +2,17 @@
 /**
  * BehaviorCollection
  *
- * Provides management and interface for interacting with collections of behaviors.
+ * Provides managment and interface for interacting with collections of behaviors.
  *
  * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Model
  * @since         CakePHP(tm) v 1.2.0.0
@@ -20,7 +20,6 @@
  */
 
 App::uses('ObjectCollection', 'Utility');
-App::uses('CakeEventListener', 'Event');
 
 /**
  * Model behavior collection class.
@@ -29,7 +28,7 @@ App::uses('CakeEventListener', 'Event');
  *
  * @package       Cake.Model
  */
-class BehaviorCollection extends ObjectCollection implements CakeEventListener {
+class BehaviorCollection extends ObjectCollection {
 
 /**
  * Stores a reference to the attached name
@@ -100,16 +99,13 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
  * @param string $behavior CamelCased name of the behavior to load
  * @param array $config Behavior configuration parameters
  * @return boolean True on success, false on failure
- * @throws MissingBehaviorException when a behavior could not be found.
+ * @throws MissingBehaviorClassException when a behavior could not be found.
  */
 	public function load($behavior, $config = array()) {
 		if (is_array($config) && isset($config['className'])) {
 			$alias = $behavior;
 			$behavior = $config['className'];
 		}
-		$configDisabled = isset($config['enabled']) && $config['enabled'] === false;
-		unset($config['enabled'], $config['className']);
-
 		list($plugin, $name) = pluginSplit($behavior, true);
 		if (!isset($alias)) {
 			$alias = $name;
@@ -119,9 +115,9 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
 
 		App::uses($class, $plugin . 'Model/Behavior');
 		if (!class_exists($class)) {
-			throw new MissingBehaviorException(array(
-				'class' => $class,
-				'plugin' => substr($plugin, 0, -1)
+			throw new MissingBehaviorClassException(array(
+				'file' => Inflector::underscore($behavior) . '.php',
+				'class' => $class
 			));
 		}
 
@@ -169,9 +165,10 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
 			}
 		}
 
+		$configDisabled = isset($config['enabled']) && $config['enabled'] === false;
 		if (!in_array($alias, $this->_enabled) && !$configDisabled) {
 			$this->enable($alias);
-		} else {
+		} elseif ($configDisabled) {
 			$this->disable($alias);
 		}
 		return true;
@@ -187,13 +184,14 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
 		list($plugin, $name) = pluginSplit($name);
 		if (isset($this->_loaded[$name])) {
 			$this->_loaded[$name]->cleanup(ClassRegistry::getObject($this->modelName));
-			parent::unload($name);
+			unset($this->_loaded[$name]);
 		}
 		foreach ($this->_methods as $m => $callback) {
 			if (is_array($callback) && $callback[0] == $name) {
 				unset($this->_methods[$m]);
 			}
 		}
+		$this->_enabled = array_values(array_diff($this->_enabled, (array)$name));
 	}
 
 /**
@@ -210,7 +208,7 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
 /**
  * Dispatches a behavior method.  Will call either normal methods or mapped methods.
  *
- * If a method is not handled by the BehaviorCollection, and $strict is false, a
+ * If a method is not handeled by the BehaviorCollection, and $strict is false, a
  * special return of `array('unhandled')` will be returned to signal the method was not found.
  *
  * @param Model $model The model the method was originally called on.
@@ -255,8 +253,8 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
  *
  * @param string $method The method to find.
  * @param boolean $callback Return the callback for the method.
- * @return mixed If $callback is false, a boolean will be returned, if its true, an array
- *   containing callback information will be returned.  For mapped methods the array will have 3 elements.
+ * @return mixed If $callback is false, a boolean will be returnned, if its true, an array
+ *   containing callback information will be returnned.  For mapped methods the array will have 3 elements.
  */
 	public function hasMethod($method, $callback = false) {
 		if (isset($this->_methods[$method])) {
@@ -272,25 +270,6 @@ class BehaviorCollection extends ObjectCollection implements CakeEventListener {
 			}
 		}
 		return false;
-	}
-
-/**
- * Returns the implemented events that will get routed to the trigger function
- * in order to dispatch them separately on each behavior
- *
- * @return array
- */
-	public function implementedEvents() {
-		return array(
-			'Model.beforeFind' => 'trigger',
-			'Model.afterFind' => 'trigger',
-			'Model.beforeValidate' => 'trigger',
-			'Model.afterValidate' => 'trigger',
-			'Model.beforeSave' => 'trigger',
-			'Model.afterSave' => 'trigger',
-			'Model.beforeDelete' => 'trigger',
-			'Model.afterDelete' => 'trigger'
-		);
 	}
 
 }

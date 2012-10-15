@@ -4,14 +4,14 @@
  *
  * PHP 5
  *
- * CakePHP(tm) Tests <http://book.cakephp.org/2.0/en/development/testing.html>
- * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * CakePHP(tm) Tests <http://book.cakephp.org/view/1196/Testing>
+ * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
- * @link          http://book.cakephp.org/2.0/en/development/testing.html CakePHP(tm) Tests
+ * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://book.cakephp.org/view/1196/Testing CakePHP(tm) Tests
  * @package       Cake.Test.Fixture
  * @since         CakePHP(tm) v 1.2.0.6700
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
@@ -25,14 +25,14 @@
 class DataTestFixture extends CakeTestFixture {
 
 /**
- * Name property
+ * name property
  *
  * @var string 'DataTest'
  */
-	public $name = 'DataTest';
+	var $name = 'DataTest';
 
 /**
- * Fields property
+ * fields property
  *
  * @var array
  */
@@ -40,16 +40,17 @@ class DataTestFixture extends CakeTestFixture {
 		'id' => array('type' => 'integer', 'key' => 'primary'),
 		'count' => array('type' => 'integer', 'default' => 0),
 		'float' => array('type' => 'float', 'default' => 0),
+		//'timestamp' => array('type' => 'timestamp', 'default' => null, 'null' => true),
 		'created' => array('type' => 'datetime', 'default' => null),
 		'updated' => array('type' => 'datetime', 'default' => null)
 	);
 
 /**
- * Records property
+ * records property
  *
  * @var array
  */
-	public $records = array(
+	var $records = array(
 		array(
 			'count' => 2,
 			'float' => 2.4,
