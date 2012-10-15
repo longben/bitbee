@@ -28,8 +28,6 @@ class AppController extends Controller {
         'Auth',
     );
 
-    //public $helpers = array('Js');
-
     public function beforeFilter() {
         if (isset($this->params['admin']) && $this->params['admin']) {
             $this->layout = "admin";
@@ -38,7 +36,7 @@ class AppController extends Controller {
                 $this->Session->setFlash(__('登录失效，请重新登录!', true));
             }
         }else{
-            $this->Auth->allow('*');
+            $this->Auth->allow();
         }
 
     }

@@ -1,5 +1,4 @@
 <?php
-App::uses( 'WczhsAppController', 'Wczhs.Controller' );
 /**
  * Courses Controller
  *

@@ -1,5 +1,4 @@
 <?php
-App::uses('AppController', 'Controller');
 /**
  * Guestbooks Controller
  *

@@ -1,6 +1,4 @@
 <?php
-App::uses('AppController', 'Controller');
-
 //TT
 
 class PostsController extends AppController {

@@ -1,13 +1,8 @@
 <?php
-App::uses('WczhsAppController', 'Wczhs.Controller');
 
 class AppsController extends WczhsAppController {
 
     public $name = 'Apps';
-
-    //var $helpers = array('Html', 'Form', 'Javascript', 'Ajax','Ck');
-
-    public $components = array('RequestHandler', 'Email');
 
     public $uses = array('Post', 'Attachment', 'Guestbook', 'CourseMembership');
 
@@ -28,24 +23,24 @@ class AppsController extends WczhsAppController {
      *
      ************************************************************************************************************/
     //新闻列表
-    function _news($id){
-            $this->paginate = array(
-                'conditions' => "Meta.category = $id", 
-                'recursive' => 0, //int
-                'order' => 'Post.post_date desc',
-                'limit' => 12
-            );
-            $this->set('news', $this->paginate());
+    private function _news($id){
+        $this->paginate = array(
+            'conditions' => "Meta.category = $id", 
+            'recursive' => 0, //int
+            'order' => 'Post.post_date desc',
+            'limit' => 12
+        );
+        $this->set('news', $this->paginate());
     }
 
     //内容显示
-	function content($id){
-	    $this->layout = "website";
-		$post = $this->Post->read(null, $id);
+    function content($id){
+        $this->layout = "website";
+        $post = $this->Post->read(null, $id);
 
         $this->set('title_for_layout', $post['Post']['post_title']);
-		$this->set('post', $post);		
-	}
+        $this->set('post', $post);		
+    }
 
     /*
      ************************************************************************************************************
@@ -69,38 +64,38 @@ class AppsController extends WczhsAppController {
 
         //课程介绍(1001)
         $conditions = array(
-			'conditions' => 'Meta.category = 1001', 
-			'recursive' => 0, //int
-			'order' => 'Meta.elite, Post.post_date desc',
-			'limit' => 6
+            'conditions' => 'Meta.category = 1001', 
+            'recursive' => 0, //int
+            'order' => 'Meta.elite, Post.post_date desc',
+            'limit' => 6
         );
         $this->set('courses', $this->Post->find('all', $conditions));
 
         //最新活动(图片显示)
         $conditions = array(
-			'conditions' => 'Meta.elite = 1', 
-			'recursive' => 0, //int
-			'order' => 'Post.post_date desc',
-			'limit' => 6
+            'conditions' => 'Meta.elite = 1', 
+            'recursive' => 0, //int
+            'order' => 'Post.post_date desc',
+            'limit' => 6
         );
         $this->set('images', $this->Post->find('all', $conditions));
 
         //新闻资讯
         $conditions = array(
-			'conditions' => 'Meta.category IN(401,402,403)', 
-			'recursive' => 0, //int
-			'order' => 'Post.post_date desc',
-			'limit' => 10
+            'conditions' => 'Meta.category IN(401,402,403)', 
+            'recursive' => 0, //int
+            'order' => 'Post.post_date desc',
+            'limit' => 10
         );
         $this->set('news', $this->Post->find('all', $conditions));
 
 
         //宝宝作品(502)
         $conditions = array(
-			'conditions' => 'Meta.category = 502', 
-			'recursive' => 0, //int
-			'order' => 'Meta.elite, Post.post_date desc',
-			'limit' => 6
+            'conditions' => 'Meta.category = 502', 
+            'recursive' => 0, //int
+            'order' => 'Meta.elite, Post.post_date desc',
+            'limit' => 6
         );
         $this->set('works', $this->Post->find('all', $conditions));
 
@@ -114,24 +109,24 @@ class AppsController extends WczhsAppController {
     //关于我们
     function aboutus($page = '301'){
         $this->layout="website";
-		
-		switch ($page) {
-			case 301:
-				$show_title = "文化背景";
-				break;
-			case 302:
-				$show_title = "教学理念";
-				break;
-			case 303:
-				$show_title = "园所介绍";
-				break;
-			case 304:
-				$show_title = "教师风采";
-				break;
-		}		
-		
+
+        switch ($page) {
+        case 301:
+            $show_title = "文化背景";
+            break;
+        case 302:
+            $show_title = "教学理念";
+            break;
+        case 303:
+            $show_title = "园所介绍";
+            break;
+        case 304:
+            $show_title = "教师风采";
+            break;
+        }		
+
         $this->set('title_for_layout', '关于我们');
-		$this->set('aboutus_title_show', $show_title);
+        $this->set('aboutus_title_show', $show_title);
 
         if($page == 304){
             $conditions = array(
@@ -192,34 +187,34 @@ class AppsController extends WczhsAppController {
     function english($page = '601'){
         $this->layout="website";
 
-		switch ($page) {
-			case 601:
-				$show_title = "关于我们";
-				break;
-			case 602:
-				$show_title = "课程与服务";
-				break;
-			case 603:
-				$show_title = "教学方法";
-				break;
-			case 604:
-				$show_title = "活动现场";
-				break;
-			case 605:
-				$show_title = "QQ群";
-				break;
-			case 606:
-				$show_title = "节日文化小专题";
-				break;				
-		}
-		
+        switch ($page) {
+        case 601:
+            $show_title = "关于我们";
+            break;
+        case 602:
+            $show_title = "课程与服务";
+            break;
+        case 603:
+            $show_title = "教学方法";
+            break;
+        case 604:
+            $show_title = "活动现场";
+            break;
+        case 605:
+            $show_title = "QQ群";
+            break;
+        case 606:
+            $show_title = "节日文化小专题";
+            break;				
+        }
+
         $this->set('title_for_layout', "英语外教");
-		$this->set('english_title_show', $show_title);
+        $this->set('english_title_show', $show_title);
 
         if(604 == $page){
             $this->_news(604);
         }
-		
+
 
         $this->set('page', $page);
     }
@@ -227,22 +222,22 @@ class AppsController extends WczhsAppController {
     //加盟五彩智慧树
     function joinus($page = '701'){
         $this->layout="website";
-		switch ($page) {
-			case 701:
-				$show_title = "项目介绍";
-				break;
-			case 702:
-				$show_title = "加盟收益分析";
-				break;
-			case 703:
-				$show_title = "支持保障";
-				break;
-			case 704:
-				$show_title = "索取资料";
-				break;
-		}		
+        switch ($page) {
+        case 701:
+            $show_title = "项目介绍";
+            break;
+        case 702:
+            $show_title = "加盟收益分析";
+            break;
+        case 703:
+            $show_title = "支持保障";
+            break;
+        case 704:
+            $show_title = "索取资料";
+            break;
+        }		
         $this->set('title_for_layout', '加盟五彩智慧树');
-		$this->set('joinus_title_show', $show_title);
+        $this->set('joinus_title_show', $show_title);
 
         $this->set('page', $page);
     }
@@ -253,13 +248,13 @@ class AppsController extends WczhsAppController {
         $this->set('title_for_layout', '联系我们');
 
         $show_title = '在线留言';
-		switch ($page) {
-			case '802':
-				$show_title = "联系方式";
-				break;
-			case 'application':
-				$show_title = "申请免费试听";
-				break;
+        switch ($page) {
+        case '802':
+            $show_title = "联系方式";
+            break;
+        case 'application':
+            $show_title = "申请免费试听";
+            break;
         }
         $this->set('show_title', $show_title);    
 
@@ -303,9 +298,9 @@ class AppsController extends WczhsAppController {
 
         if($this->request->is('post')){
             if($this->Auth->login()){
-                    $this->Session->write('id', $this->Session->read('Auth.User.User.id'));
-                    $this->Session->write('role', $this->Session->read('Auth.User.Meta.role_id'));
-                    $this->redirect($this->Auth->redirect());
+                $this->Session->write('id', $this->Session->read('Auth.User.User.id'));
+                $this->Session->write('role', $this->Session->read('Auth.User.Meta.role_id'));
+                $this->redirect($this->Auth->redirect());
             }else{
                 $this->Session->setFlash(__('Username or password is incorrect'), 'default', array(), 'auth');
             }
