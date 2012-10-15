@@ -154,7 +154,7 @@ $this->Html->script(array('/wczhs/js/AutoChangePhoto', '/wczhs/js/MSClass', '/js
                     <?php foreach($works as $work):?>
                     <td>
                         <a href="/app/content/<?=$work['Post']['id']?>" target="_blank">
-                            <img src="<?php echo dirname($post['Meta']['picture']).'/240x180_'.basename($post['Meta']['picture'])?>" height="127" alt="<?=$work['Post']['post_title']?>" border="0" style="padding:2px;border:1px solid #ccc;" />
+                            <img src="<?php echo dirname($work['Meta']['picture']).'/240x180_'.basename($work['Meta']['picture'])?>" height="127" alt="<?=$work['Post']['post_title']?>" border="0" style="padding:2px;border:1px solid #ccc;" />
                         </a>
                     </td>
                     <td>&nbsp;</td>
