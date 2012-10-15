@@ -1,5 +1,21 @@
 <?php
-
+/**
+ * CakePluginTest file.
+ *
+ * PHP 5
+ *
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       Cake.Test.Case.Core
+ * @since         CakePHP(tm) v 2.0
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
 
 App::uses('CakePlugin', 'Core');
 
@@ -15,9 +31,10 @@ class CakePluginTest extends CakeTestCase {
  * @return void
  */
 	public function setUp() {
+		parent::setUp();
 		App::build(array(
-			'plugins' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
-		), true);
+			'Plugin' => array(CAKE . 'Test' . DS . 'test_app' . DS . 'Plugin' . DS)
+		), App::RESET);
 		App::objects('plugins', null, false);
 	}
 
@@ -27,9 +44,8 @@ class CakePluginTest extends CakeTestCase {
  * @return void
  */
 	public function tearDown() {
-		App::build();
+		parent::tearDown();
 		CakePlugin::unload();
-		Configure::delete('CakePluginTest');
 	}
 
 /**
@@ -141,7 +157,6 @@ class CakePluginTest extends CakeTestCase {
 		$this->assertEquals('loaded plugin bootstrap', Configure::read('CakePluginTest.test_plugin.bootstrap'));
 	}
 
-
 /**
  * Tests that it is possible to load plugin bootstrap by calling a callback function
  *
@@ -174,7 +189,6 @@ class CakePluginTest extends CakeTestCase {
 		CakePlugin::load('MissingPlugin');
 	}
 
-
 /**
  * Tests that CakePlugin::path() returns the correct path for the loaded plugins
  *
@@ -200,7 +214,7 @@ class CakePluginTest extends CakeTestCase {
 	}
 
 /**
- * Tests that CakePlugin::loadAll() will load all plgins in the configured folder
+ * Tests that CakePlugin::loadAll() will load all plugins in the configured folder
  *
  * @return void
  */
@@ -211,7 +225,7 @@ class CakePluginTest extends CakeTestCase {
 	}
 
 /**
- * Tests that CakePlugin::loadAll() will load all plgins in the configured folder with bootstrap loading
+ * Tests that CakePlugin::loadAll() will load all plugins in the configured folder with bootstrap loading
  *
  * @return void
  */
@@ -226,7 +240,7 @@ class CakePluginTest extends CakeTestCase {
 	}
 
 /**
- * Tests that CakePlugin::loadAll() will load all plgins in the configured folder wit defaults
+ * Tests that CakePlugin::loadAll() will load all plugins in the configured folder wit defaults
  * and overrides for a plugin
  *
  * @return void

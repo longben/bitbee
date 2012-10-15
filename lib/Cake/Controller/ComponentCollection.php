@@ -4,12 +4,12 @@
  * and constructing component class objects.
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2012, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
  * @package       Cake.Controller
  * @since         CakePHP(tm) v 2.0
@@ -18,8 +18,15 @@
 
 App::uses('ObjectCollection', 'Utility');
 App::uses('Component', 'Controller');
+App::uses('CakeEventListener', 'Event');
 
-class ComponentCollection extends ObjectCollection {
+/**
+ * Components collection is used as a registry for loaded components and handles loading
+ * and constructing component class objects.
+ *
+ * @package       Cake.Controller
+ */
+class ComponentCollection extends ObjectCollection implements CakeEventListener {
 
 /**
  * The controller that this collection was initialized with.
@@ -73,7 +80,7 @@ class ComponentCollection extends ObjectCollection {
  * @param string $component Component name to load
  * @param array $settings Settings for the component.
  * @return Component A component object, Either the existing loaded component or a new one.
- * @throws MissingComponentFileException, MissingComponentClassException when the component could not be found
+ * @throws MissingComponentException when the component could not be found
  */
 	public function load($component, $settings = array()) {
 		if (is_array($settings) && isset($settings['className'])) {
@@ -90,17 +97,33 @@ class ComponentCollection extends ObjectCollection {
 		$componentClass = $name . 'Component';
 		App::uses($componentClass, $plugin . 'Controller/Component');
 		if (!class_exists($componentClass)) {
-			throw new MissingComponentClassException(array(
-				'file' => Inflector::underscore($componentClass) . '.php',
-				'class' => $componentClass
+			throw new MissingComponentException(array(
+				'class' => $componentClass,
+				'plugin' => substr($plugin, 0, -1)
 			));
 		}
 		$this->_loaded[$alias] = new $componentClass($this, $settings);
 		$enable = isset($settings['enabled']) ? $settings['enabled'] : true;
-		if ($enable === true) {
-			$this->_enabled[] = $alias;
+		if ($enable) {
+			$this->enable($alias);
 		}
 		return $this->_loaded[$alias];
+	}
+
+/**
+ * Returns the implemented events that will get routed to the trigger function
+ * in order to dispatch them separately on each component
+ *
+ * @return array
+ */
+	public function implementedEvents() {
+		return array(
+			'Controller.initialize' => array('callable' => 'trigger'),
+			'Controller.startup' => array('callable' => 'trigger'),
+			'Controller.beforeRender' => array('callable' => 'trigger'),
+			'Controller.beforeRedirect' => array('callable' => 'trigger'),
+			'Controller.shutdown' => array('callable' => 'trigger'),
+		);
 	}
 
 }
