@@ -19,8 +19,8 @@
     <span style="float:right;white-space:nowrap;clear: none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
-            <div data-options="name:'name',iconCls:'icon-user'">宝宝名称</div>
-            <div data-options="name:'parent_id',iconCls:'icon-public'">家长名称</div>
+            <div data-options="name:'User.display_name',iconCls:'icon-user'">宝宝名称</div>
+            <div data-options="name:'CourseMembership.patriarch',iconCls:'icon-public'">家长名称</div>
         </div>
     </span>
 </div> 
@@ -48,7 +48,7 @@
     echo $this->Form->input('extend', array('options' => $extends, 'default' => '1','div' => array('class' => 'grid-4-12'),'label'=> '家庭延伸情况'));
     echo $this->Form->input('suggest', array('div' => array('class' => 'grid-8-12'),'label'=>'您的意见和建议'));
 
-    echo $this->Form->input('expression', array('class' => 'easyui-validatebox', 'div' => array('class' => 'grid-12-12'), 'label' => '宝宝在活动中的具体表现','type'=>'textarea','required' => true));
+    echo $this->Form->input('expression', array('class' => 'easyui-validatebox', 'div' => array('class' => 'grid-12-12'), 'label' => '宝宝在活动中的具体表现','type'=>'textarea','required' => true, 'style' => 'height:90px'));
     echo $this->Form->end();
     ?>
 </div>

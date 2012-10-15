@@ -61,7 +61,7 @@ class AppController extends Controller {
             if( isset( $_conditions ) ){
                 $_conditions = array_merge( $_conditions, array( $this->modelClass. '.' . $_POST['field'] . ' LIKE' => '%'.$q.'%' ) );
             }else{
-                $_conditions = array($this->modelClass. '.' . $_POST['field'] . ' LIKE' => '%'.$q.'%');
+                $_conditions = array($_POST['field'] . ' LIKE' => '%'.$q.'%');
             }
         }
 

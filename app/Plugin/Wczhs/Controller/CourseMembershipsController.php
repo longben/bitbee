@@ -9,9 +9,9 @@ class CourseMembershipsController extends WczhsAppController {
 
     public function admin_json_data(){
         if(isset($_GET['u'])){
-            $this->findJSON4Grid('id',array('CourseMembership.user_id' => $_GET['u']), 'ASC'); //
+            $this->findJSON4Grid('date_of_filing',array('CourseMembership.user_id' => $_GET['u']), 'DESC'); //
         }else{
-            $this->findJSON4Grid('id',null, 'ASC'); //
+            $this->findJSON4Grid('date_of_filing',null, 'DESC'); //
         }
     }
 
