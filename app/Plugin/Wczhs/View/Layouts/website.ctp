@@ -10,7 +10,7 @@
         <?php
         echo $this->Html->meta('icon', '/wczhs/img/favicon.ico');
         echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'zebra_dialog/zebra_dialog'));
-        echo $this->Html->css(array('/wczhs/css/style', 'zebra_dialog/zebra_dialog'));
+        echo $this->Html->css(array('/wczhs/css/style.css?ver=1.0.1', 'zebra_dialog/zebra_dialog'));
         echo $scripts_for_layout;
         ?>
 

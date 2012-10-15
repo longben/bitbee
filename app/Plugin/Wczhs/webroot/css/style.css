@@ -73,7 +73,7 @@ a:hover{color:#ff0000;}
 .div_jimg #a_jimg {DISPLAY: block; WIDTH: 231px; HEIGHT: 187px}
 .div_jimg #bigimg {	 PADDING-RIGHT: 0px; BORDER: #666 1px solid; PADDING-LEFT: 0px; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 231px; PADDING-TOP: 0px; HEIGHT: 187px}
 .div_jimg .ul_jimg {PADDING-RIGHT: 0px; DISPLAY: block; PADDING-LEFT: 0px; RIGHT: 0px; BACKGROUND: url(../img/bg_j04.jpg) repeat-y right top; PADDING-BOTTOM: 0px; MARGIN: 0px; WIDTH: 225px; PADDING-TOP: 0px; LIST-STYLE-TYPE: none; POSITION: absolute; TOP: 0px; HEIGHT: 187px}
-.div_jimg .ul_jimg LI {DISPLAY: inline; FLOAT: right; OVERFLOW: hidden; WIDTH: 242px; CURSOR: pointer; WORD-BREAK: break-all; TEXT-INDENT: 30px; PADDING-TOP: 10px; WHITE-SPACE: nowrap; HEIGHT: 25px; TEXT-OVERFLOW: ellipsis;overflow:hidden;}
+.div_jimg .ul_jimg LI {DISPLAY: inline; FLOAT: right; OVERFLOW: hidden; WIDTH: 242px; CURSOR: pointer; WORD-BREAK: break-all; TEXT-INDENT: 30px; PADDING-TOP: 10px; WHITE-SPACE: nowrap; HEIGHT: 22px; TEXT-OVERFLOW: ellipsis;overflow:hidden;}
 .div_jimg .ul_jimg A {POSITION: relative;color:#fff;text-decoration:none;}
 .div_jimg .ul_jimg .on {background:url(/wczhs/img/orangebg.gif) no-repeat; FILTER: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/wczhs/img/orangebg.gif',sizingMethod='scale'); WIDTH: 242px; COLOR: #fff;  POSITION: static}
 .div_jimg .ul_jimg .on A {FONT-WEIGHT: bold; COLOR: #fff}
