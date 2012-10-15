@@ -28,7 +28,8 @@ App::uses('CakeEmail', 'Network/Email');
  * based on the standard outlined in http://www.rfc-editor.org/rfc/rfc2822.txt
  *
  * @package       Cake.Controller.Component
- * @link http://book.cakephp.org/view/1283/Email
+ * @link http://book.cakephp.org/2.0/en/core-libraries/components/email.html
+ * @link http://book.cakephp.org/2.0/en/core-utility-libraries/email.html
  * @deprecated Use Network/CakeEmail
  */
 class EmailComponent extends Component {
@@ -92,8 +93,8 @@ class EmailComponent extends Component {
 	public $bcc = array();
 
 /**
- * The date to put in the Date: header.  This should be a date
- * conformant with the RFC2822 standard.  Leave null, to have
+ * The date to put in the Date: header. This should be a date
+ * conforming with the RFC2822 standard. Leave null, to have
  * today's date generated.
  *
  * @var string
@@ -197,7 +198,7 @@ class EmailComponent extends Component {
 	public $xMailer = 'CakePHP Email Component';
 
 /**
- * The list of paths to search if an attachment isnt absolute
+ * The list of paths to search if an attachment isn't absolute
  *
  * @var array
  */
@@ -215,7 +216,6 @@ class EmailComponent extends Component {
  * - client
  *
  * @var array
- * @link http://book.cakephp.org/view/1290/Sending-A-Message-Using-SMTP
  */
 	public $smtpOptions = array();
 
@@ -363,7 +363,6 @@ class EmailComponent extends Component {
  * Reset all EmailComponent internal variables to be able to send out a new email.
  *
  * @return void
- * @link http://book.cakephp.org/view/1285/Sending-Multiple-Emails-in-a-loop
  */
 	public function reset() {
 		$this->template = null;
@@ -380,6 +379,7 @@ class EmailComponent extends Component {
 		$this->htmlMessage = null;
 		$this->textMessage = null;
 		$this->messageId = true;
+		$this->delivery = 'mail';
 	}
 
 /**
@@ -466,7 +466,7 @@ class EmailComponent extends Component {
 
 /**
  * Remove certain elements (such as bcc:, to:, %0a) from given value.
- * Helps prevent header injection / mainipulation on user content.
+ * Helps prevent header injection / manipulation on user content.
  *
  * @param string $value Value to strip
  * @param boolean $message Set to true to indicate main message content

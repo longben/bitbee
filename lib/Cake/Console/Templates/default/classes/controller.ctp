@@ -14,12 +14,13 @@
  *
  * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.Console.Templates.default.actions
+ * @package       Cake.Console.Templates.default.classes
  * @since         CakePHP(tm) v 1.3
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
 echo "<?php\n";
+echo "App::uses('{$plugin}AppController', '{$pluginPath}Controller');\n";
 ?>
 /**
  * <?php echo $controllerName; ?> Controller
@@ -49,7 +50,7 @@ class <?php echo $controllerName; ?>Controller extends <?php echo $plugin; ?>App
 <?php
 if (count($helpers)):
 	echo "/**\n * Helpers\n *\n * @var array\n */\n";
-	echo "\tvar \$helpers = array(";
+	echo "\tpublic \$helpers = array(";
 	for ($i = 0, $len = count($helpers); $i < $len; $i++):
 		if ($i != $len - 1):
 			echo "'" . Inflector::camelize($helpers[$i]) . "', ";

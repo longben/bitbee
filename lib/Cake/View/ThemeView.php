@@ -16,6 +16,7 @@
  * @since         CakePHP(tm) v 0.10.0.1076
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
 App::uses('View', 'View');
 
 /**
@@ -26,7 +27,7 @@ App::uses('View', 'View');
  * the default app view files will be used. You can set `$this->theme` and `$this->viewClass = 'Theme'`
  * in your Controller to use the ThemeView.
  *
- * Example of theme path with `$this->theme = 'super_hot';` Would be `app/View/Themed/SuperHot/Posts`
+ * Example of theme path with `$this->theme = 'SuperHot';` Would be `app/View/Themed/SuperHot/Posts`
  *
  * @package       Cake.View
  */
@@ -38,7 +39,9 @@ class ThemeView extends View {
  */
 	public function __construct($controller) {
 		parent::__construct($controller);
-		$this->theme = $controller->theme;
+		if ($controller) {
+			$this->theme = $controller->theme;
+		}
 	}
 
 /**
@@ -54,14 +57,13 @@ class ThemeView extends View {
 		$themePaths = array();
 
 		if (!empty($this->theme)) {
-			$count = count($paths);
-			for ($i = 0; $i < $count; $i++) {
-				if (strpos($paths[$i], DS . 'Plugins' . DS) === false
-					&& strpos($paths[$i], DS . 'Cake' . DS . 'View') === false) {
+			foreach ($paths as $path) {
+				if (strpos($path, DS . 'Plugin' . DS) === false
+					&& strpos($path, DS . 'Cake' . DS . 'View') === false) {
 						if ($plugin) {
-							$themePaths[] = $paths[$i] . 'Themed'. DS . $this->theme . DS . 'Plugins' . DS . $plugin . DS;
+							$themePaths[] = $path . 'Themed'. DS . $this->theme . DS . 'Plugin' . DS . $plugin . DS;
 						}
-						$themePaths[] = $paths[$i] . 'Themed'. DS . $this->theme . DS;
+						$themePaths[] = $path . 'Themed'. DS . $this->theme . DS;
 					}
 			}
 			$paths = array_merge($themePaths, $paths);

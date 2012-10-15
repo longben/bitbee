@@ -73,7 +73,7 @@ abstract class BaseAuthenticate {
 
 		$conditions = array(
 			$model . '.' . $fields['username'] => $username,
-			$model . '.' . $fields['password'] => AuthComponent::password($password),
+			$model . '.' . $fields['password'] => $this->_password($password),
 		);
 		if (!empty($this->settings['scope'])) {
 			$conditions = array_merge($conditions, $this->settings['scope']);
@@ -90,6 +90,17 @@ abstract class BaseAuthenticate {
 	}
 
 /**
+ * Hash the plain text password so that it matches the hashed/encrypted password
+ * in the datasource.
+ *
+ * @param string $password The plain text password.
+ * @return string The hashed form of the password.
+ */
+	protected function _password($password) {
+		return Security::hash($password, null, true);
+	}
+
+/**
  * Authenticate a user based on the request information.
  *
  * @param CakeRequest $request Request to get authentication information from.
@@ -100,7 +111,7 @@ abstract class BaseAuthenticate {
 
 /**
  * Allows you to hook into AuthComponent::logout(),
- * and implement specialized logout behaviour.
+ * and implement specialized logout behavior.
  *
  * All attached authentication objects will have this method
  * called when a user logs out.

@@ -21,7 +21,11 @@
  */
 
 /**
- * File Storage engine for cache
+ * File Storage engine for cache.  Filestorage is the slowest cache storage
+ * to read and write.  However, it is good for servers that don't have other storage
+ * engine available, or have content which is not performance sensitive.
+ *
+ * You can configure a FileEngine cache, using Cache::config()
  *
  * @package       Cake.Cache.Engine
  */
@@ -66,8 +70,8 @@ class FileEngine extends CacheEngine {
 	public function init($settings = array()) {
 		parent::init(array_merge(
 			array(
-				'engine' => 'File', 'path' => CACHE, 'prefix'=> 'cake_', 'lock'=> false,
-				'serialize'=> true, 'isWindows' => false
+				'engine' => 'File', 'path' => CACHE, 'prefix' => 'cake_', 'lock' => true,
+				'serialize' => true, 'isWindows' => false, 'mask' => 0664
 			),
 			$settings
 		));
@@ -84,7 +88,7 @@ class FileEngine extends CacheEngine {
 /**
  * Garbage collection. Permanently remove all expired and deleted data
  *
- * @return boolean True if garbage collection was succesful, false on failure
+ * @return boolean True if garbage collection was successful, false on failure
  */
 	public function gc() {
 		return $this->clear(true);
@@ -124,21 +128,17 @@ class FileEngine extends CacheEngine {
 		$expires = time() + $duration;
 		$contents = $expires . $lineBreak . $data . $lineBreak;
 
-		if (!$handle = fopen($this->_File->getPathName(), 'c')) {
-		    return false;
+		if ($this->settings['lock']) {
+			$this->_File->flock(LOCK_EX);
 		}
+
+		$this->_File->rewind();
+		$success = $this->_File->ftruncate(0) && $this->_File->fwrite($contents) && $this->_File->fflush();
 
 		if ($this->settings['lock']) {
-		    flock($handle, LOCK_EX);
+			$this->_File->flock(LOCK_UN);
 		}
 
-		$success = ftruncate($handle, 0) && fwrite($handle, $contents) && fflush($handle);
-
-		if ($this->settings['lock']) {
-		    flock($handle, LOCK_UN);
-		}
-
-		fclose($handle);
 		return $success;
 	}
 
@@ -162,6 +162,9 @@ class FileEngine extends CacheEngine {
 		$cachetime = intval($this->_File->current());
 
 		if ($cachetime !== false && ($cachetime < $time || ($time + $this->settings['duration']) < $cachetime)) {
+			if ($this->settings['lock']) {
+				$this->_File->flock(LOCK_UN);
+			}
 			return false;
 		}
 
@@ -273,7 +276,8 @@ class FileEngine extends CacheEngine {
 	}
 
 /**
- * Sets the current cache key this class is managing
+ * Sets the current cache key this class is managing, and creates a writable SplFileObject
+ * for the cache file the key is referring to.
  *
  * @param string $key The key
  * @param boolean $createKey Whether the key should be created if it doesn't exists, or not
@@ -285,12 +289,22 @@ class FileEngine extends CacheEngine {
 		if (!$createKey && !$path->isFile()) {
 			return false;
 		}
-		$old = umask(0);
 		if (empty($this->_File) || $this->_File->getBaseName() !== $key) {
-			$this->_File = $path->openFile('a+');
-		}
-		umask($old);
+			$exists = file_exists($path->getPathname());
+			try {
+				$this->_File = $path->openFile('c+');
+			} catch (Exception $e) {
+				trigger_error($e->getMessage(), E_USER_WARNING);
+				return false;
+			}
+			unset($path);
 
+			if (!$exists && !chmod($this->_File->getPathname(), (int) $this->settings['mask'])) {
+				trigger_error(__d(
+					'cake_dev', 'Could not apply permission mask "%s" on cache file "%s"',
+					array($this->_File->getPathname(), $this->settings['mask'])), E_USER_WARNING);
+			}
+		}
 		return true;
 	}
 

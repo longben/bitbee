@@ -19,8 +19,6 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'DEFAULT');
-
 /**
  * Test class
  *
@@ -48,12 +46,12 @@ class Test extends CakeTestModel {
  * @var array
  */
 	protected $_schema = array(
-		'id'=> array('type' => 'integer', 'null' => '', 'default' => '1', 'length' => '8', 'key'=>'primary'),
-		'name'=> array('type' => 'string', 'null' => '', 'default' => '', 'length' => '255'),
-		'email'=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
-		'notes'=> array('type' => 'text', 'null' => '1', 'default' => 'write some notes here', 'length' => ''),
-		'created'=> array('type' => 'date', 'null' => '1', 'default' => '', 'length' => ''),
-		'updated'=> array('type' => 'datetime', 'null' => '1', 'default' => '', 'length' => null)
+		'id' => array('type' => 'integer', 'null' => '', 'default' => '1', 'length' => '8', 'key' => 'primary'),
+		'name' => array('type' => 'string', 'null' => '', 'default' => '', 'length' => '255'),
+		'email' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
+		'notes' => array('type' => 'text', 'null' => '1', 'default' => 'write some notes here', 'length' => ''),
+		'created' => array('type' => 'date', 'null' => '1', 'default' => '', 'length' => ''),
+		'updated' => array('type' => 'datetime', 'null' => '1', 'default' => '', 'length' => null)
 	);
 }
 
@@ -91,12 +89,12 @@ class TestAlias extends CakeTestModel {
  * @var array
  */
 	protected $_schema = array(
-		'id'=> array('type' => 'integer', 'null' => '', 'default' => '1', 'length' => '8', 'key'=>'primary'),
-		'name'=> array('type' => 'string', 'null' => '', 'default' => '', 'length' => '255'),
-		'email'=> array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
-		'notes'=> array('type' => 'text', 'null' => '1', 'default' => 'write some notes here', 'length' => ''),
-		'created'=> array('type' => 'date', 'null' => '1', 'default' => '', 'length' => ''),
-		'updated'=> array('type' => 'datetime', 'null' => '1', 'default' => '', 'length' => null)
+		'id' => array('type' => 'integer', 'null' => '', 'default' => '1', 'length' => '8', 'key' => 'primary'),
+		'name' => array('type' => 'string', 'null' => '', 'default' => '', 'length' => '255'),
+		'email' => array('type' => 'string', 'null' => '1', 'default' => '', 'length' => '155'),
+		'notes' => array('type' => 'text', 'null' => '1', 'default' => 'write some notes here', 'length' => ''),
+		'created' => array('type' => 'date', 'null' => '1', 'default' => '', 'length' => ''),
+		'updated' => array('type' => 'datetime', 'null' => '1', 'default' => '', 'length' => null)
 	);
 }
 
@@ -179,6 +177,20 @@ class User extends CakeTestModel {
  * @var array
  */
 	public $validate = array('user' => 'notEmpty', 'password' => 'notEmpty');
+
+/**
+ * beforeFind() callback used to run ContainableBehaviorTest::testLazyLoad()
+ *
+ * @return bool
+*/
+	public function beforeFind ($queryData) {
+		if (!empty($queryData['lazyLoad'])) {
+			if (!isset($this->Article, $this->Comment, $this->ArticleFeatured)) {
+				throw new Exception('Unavailable associations');
+			}
+		}
+		return true;
+	}
 }
 
 /**
@@ -260,9 +272,9 @@ class Article extends CakeTestModel {
  * @package       Cake.Test.Case.Model
  */
 class BeforeDeleteComment extends CakeTestModel {
-	var $name = 'BeforeDeleteComment';
+	public $name = 'BeforeDeleteComment';
 
-	var $useTable = 'comments';
+	public $useTable = 'comments';
 
 	public function beforeDelete($cascade = true) {
 		$db = $this->getDataSource();
@@ -887,7 +899,7 @@ class ModifiedAuthor extends Author {
  * @return void
  */
 	public function afterFind($results, $primary = false) {
-		foreach($results as $index => $result) {
+		foreach ($results as $index => $result) {
 			$results[$index]['Author']['user'] .= ' (CakePHP)';
 		}
 		return $results;
@@ -987,6 +999,69 @@ class Bid extends CakeTestModel {
  * @var array
  */
 	public $belongsTo = array('Message');
+}
+
+/**
+ * BiddingMessage class
+ *
+ * @package       Cake.Test.Case.Model
+ */
+class BiddingMessage extends CakeTestModel {
+
+/**
+ * name property
+ *
+ * @var string 'BiddingMessage'
+ */
+	public $name = 'BiddingMessage';
+
+/**
+ * primaryKey property
+ *
+ * @var string 'bidding'
+ */
+	public $primaryKey = 'bidding';
+
+
+/**
+ * belongsTo property
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'Bidding' => array(
+			'foreignKey' => false,
+			'conditions' => array('BiddingMessage.bidding = Bidding.bid')
+		)
+	);
+}
+
+/**
+ * Bidding class
+ *
+ * @package       Cake.Test.Case.Model
+ */
+class Bidding extends CakeTestModel {
+
+/**
+ * name property
+ *
+ * @var string 'Bidding'
+ */
+	public $name = 'Bidding';
+
+/**
+ * hasOne property
+ *
+ * @var array
+ */
+	public $hasOne = array(
+		'BiddingMessage' => array(
+			'foreignKey' => false,
+			'conditions' => array('BiddingMessage.bidding = Bidding.bid'),
+			'dependent' => true
+		)
+	);
 }
 
 /**
@@ -1819,6 +1894,7 @@ class AssociationTest2 extends CakeTestModel {
 class Callback extends CakeTestModel {
 
 }
+
 /**
  * CallbackPostTestModel class
  *
@@ -2428,7 +2504,7 @@ class UnconventionalTree extends NumberTree {
 	public $actsAs = array(
 		'Tree' => array(
 			'parent' => 'join',
-			'left'  => 'left',
+			'left' => 'left',
 			'right' => 'right'
 		)
 	);
@@ -2468,7 +2544,7 @@ class Campaign extends CakeTestModel {
  *
  * @var array
  */
-	public $hasMany = array('Ad' => array('fields' => array('id','campaign_id','name')));
+	public $hasMany = array('Ad' => array('fields' => array('id', 'campaign_id', 'name')));
 }
 
 /**
@@ -2709,7 +2785,7 @@ class TestPluginComment extends CakeTestModel {
 			'className' => 'TestPlugin.TestPluginArticle',
 			'foreignKey' => 'article_id',
 		),
-		'User'
+		'TestPlugin.User'
 	);
 }
 
@@ -3055,7 +3131,7 @@ class CounterCachePost extends CakeTestModel {
 class CounterCacheUserNonstandardPrimaryKey extends CakeTestModel {
 	public $name = 'CounterCacheUserNonstandardPrimaryKey';
 	public $alias = 'User';
-    public $primaryKey = 'uid';
+	public $primaryKey = 'uid';
 
 	public $hasMany = array('Post' => array(
 		'className' => 'CounterCachePostNonstandardPrimaryKey',
@@ -3066,7 +3142,7 @@ class CounterCacheUserNonstandardPrimaryKey extends CakeTestModel {
 class CounterCachePostNonstandardPrimaryKey extends CakeTestModel {
 	public $name = 'CounterCachePostNonstandardPrimaryKey';
 	public $alias = 'Post';
-    public $primaryKey = 'pid';
+	public $primaryKey = 'pid';
 
 	public $belongsTo = array('User' => array(
 		'className' => 'CounterCacheUserNonstandardPrimaryKey',
@@ -3180,8 +3256,8 @@ class GroupUpdateAll extends CakeTestModel {
 }
 
 class TransactionTestModel extends CakeTestModel {
-	var $name = 'TransactionTestModel';
-	var $useTable = 'samples';
+	public $name = 'TransactionTestModel';
+	public $useTable = 'samples';
 
 	public function afterSave($created) {
 		$data = array(
@@ -3192,8 +3268,8 @@ class TransactionTestModel extends CakeTestModel {
 }
 
 class TransactionManyTestModel extends CakeTestModel {
-	var $name = 'TransactionManyTestModel';
-	var $useTable = 'samples';
+	public $name = 'TransactionManyTestModel';
+	public $useTable = 'samples';
 
 	public function afterSave($created) {
 		$data = array(
@@ -3770,7 +3846,7 @@ class Level extends CakeTestModel {
  * @var array
  */
 	public $hasMany = array(
-		'Group'=> array(
+		'Group' => array(
 			'className' => 'Group'
 		),
 		'User2' => array(
@@ -3981,9 +4057,9 @@ class Category2 extends CakeTestModel {
 		),
 		'Article2' => array(
 			'className' => 'Article2',
-			'order'=>'Article2.published_date DESC',
+			'order' => 'Article2.published_date DESC',
 			'foreignKey' => 'category_id',
-			'limit'=>'3')
+			'limit' => '3')
 	);
 
 /**
@@ -4288,7 +4364,7 @@ class ArticleFeatured2 extends CakeTestModel {
  * @var array
  */
 	public $hasMany = array(
-		'Comment2' => array('className'=>'Comment2', 'dependent' => true)
+		'Comment2' => array('className' => 'Comment2', 'dependent' => true)
 	);
 
 /**
@@ -4397,7 +4473,126 @@ class MysqlTestModel extends Model {
 class PrefixTestModel extends CakeTestModel {
 }
 class PrefixTestUseTableModel extends CakeTestModel {
-       var $name = 'PrefixTest';
-       var $useTable = 'prefix_tests';
+	public $name = 'PrefixTest';
+	public $useTable = 'prefix_tests';
 }
 
+/**
+ * ScaffoldMock class
+ *
+ * @package       Cake.Test.Case.Controller
+ */
+class ScaffoldMock extends CakeTestModel {
+
+/**
+ * useTable property
+ *
+ * @var string 'posts'
+ */
+	public $useTable = 'articles';
+
+/**
+ * belongsTo property
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'User' => array(
+			'className' => 'ScaffoldUser',
+			'foreignKey' => 'user_id',
+		)
+	);
+
+/**
+ * hasMany property
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Comment' => array(
+			'className' => 'ScaffoldComment',
+			'foreignKey' => 'article_id',
+		)
+	);
+/**
+ * hasAndBelongsToMany property
+ *
+ * @var string
+ */
+	public $hasAndBelongsToMany = array(
+		'ScaffoldTag' => array(
+			'className' => 'ScaffoldTag',
+			'foreignKey' => 'something_id',
+			'associationForeignKey' => 'something_else_id',
+			'joinTable' => 'join_things'
+		)
+	);
+}
+
+/**
+ * ScaffoldUser class
+ *
+ * @package       Cake.Test.Case.Controller
+ */
+class ScaffoldUser extends CakeTestModel {
+
+/**
+ * useTable property
+ *
+ * @var string 'posts'
+ */
+	public $useTable = 'users';
+
+/**
+ * hasMany property
+ *
+ * @var array
+ */
+	public $hasMany = array(
+		'Article' => array(
+			'className' => 'ScaffoldMock',
+			'foreignKey' => 'article_id',
+		)
+	);
+}
+
+/**
+ * ScaffoldComment class
+ *
+ * @package       Cake.Test.Case.Controller
+ */
+class ScaffoldComment extends CakeTestModel {
+
+/**
+ * useTable property
+ *
+ * @var string 'posts'
+ */
+	public $useTable = 'comments';
+
+/**
+ * belongsTo property
+ *
+ * @var array
+ */
+	public $belongsTo = array(
+		'Article' => array(
+			'className' => 'ScaffoldMock',
+			'foreignKey' => 'article_id',
+		)
+	);
+}
+
+/**
+ * ScaffoldTag class
+ *
+ * @package       Cake.Test.Case.Controller
+ */
+class ScaffoldTag extends CakeTestModel {
+/**
+ * useTable property
+ *
+ * @var string 'posts'
+ */
+	public $useTable = 'tags';
+}

@@ -214,8 +214,8 @@ class CakeTestCaseTest extends CakeTestCase {
 		$manager->expects($this->once())->method('unload');
 		$result = $test->run();
 		$this->assertEquals(1, $result->errorCount());
-
 	}
+
 /**
  * testSkipIf
  *
@@ -238,6 +238,6 @@ class CakeTestCaseTest extends CakeTestCase {
  */
 	public function testSetupBackUpValues() {
 		$this->assertArrayHasKey('debug', $this->_configure);
-		$this->assertArrayHasKey('plugins', $this->_pathRestore);
+		$this->assertArrayHasKey('Plugin', $this->_pathRestore);
 	}
 }

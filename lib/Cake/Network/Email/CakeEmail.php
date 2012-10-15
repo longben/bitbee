@@ -16,6 +16,7 @@
  * @since         CakePHP(tm) v 2.0.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+
 App::uses('Validation', 'Utility');
 App::uses('Multibyte', 'I18n');
 App::uses('AbstractTransport', 'Network/Email');
@@ -187,7 +188,7 @@ class CakeEmail {
  *
  * @var array
  */
-	protected $_helpers = array();
+	protected $_helpers = array('Html');
 
 /**
  * Text message
@@ -239,11 +240,25 @@ class CakeEmail {
 	protected $_transportClass = null;
 
 /**
- * charset the email is sent in
+ * Charset the email body is sent in
+ *
  *
  * @var string
  */
 	public $charset = 'utf-8';
+
+/**
+ * Charset the email header is sent in
+ * If null, the $charset property will be used as default
+ * @var string
+ */
+	public $headerCharset = null;
+
+/**
+ * The application wide charset, used to encode headers and body
+ * @var string
+ */
+	public $_appCharset = null;
 
 /**
  * List of files that should be attached to the email.
@@ -269,17 +284,27 @@ class CakeEmail {
 	protected $_config = array();
 
 /**
+ * 8Bit character sets
+ *
+ * @var array
+ */
+	protected $_charset8bit = array('UTF-8', 'SHIFT_JIS');
+
+/**
  * Constructor
  * @param mixed $config Array of configs, or string to load configs from email.php
  *
  */
 	public function __construct($config = null) {
-		$charset = Configure::read('App.encoding');
-		if ($charset !== null) {
-			$this->charset = $charset;
+		$this->_appCharset = Configure::read('App.encoding');
+		if ($this->_appCharset !== null) {
+			$this->charset = $this->_appCharset;
 		}
 		if ($config) {
 			$this->config($config);
+		}
+		if (empty($this->headerCharset)) {
+			$this->headerCharset = $this->charset;
 		}
 	}
 
@@ -295,7 +320,7 @@ class CakeEmail {
 		if ($email === null) {
 			return $this->_from;
 		}
-		return $this->_setEmailSingle('_from', $email, $name, __d('cake', 'From requires only 1 email address.'));
+		return $this->_setEmailSingle('_from', $email, $name, __d('cake_dev', 'From requires only 1 email address.'));
 	}
 
 /**
@@ -310,7 +335,7 @@ class CakeEmail {
 		if ($email === null) {
 			return $this->_sender;
 		}
-		return $this->_setEmailSingle('_sender', $email, $name, __d('cake', 'Sender requires only 1 email address.'));
+		return $this->_setEmailSingle('_sender', $email, $name, __d('cake_dev', 'Sender requires only 1 email address.'));
 	}
 
 /**
@@ -325,7 +350,7 @@ class CakeEmail {
 		if ($email === null) {
 			return $this->_replyTo;
 		}
-		return $this->_setEmailSingle('_replyTo', $email, $name, __d('cake', 'Reply-To requires only 1 email address.'));
+		return $this->_setEmailSingle('_replyTo', $email, $name, __d('cake_dev', 'Reply-To requires only 1 email address.'));
 	}
 
 /**
@@ -340,7 +365,7 @@ class CakeEmail {
 		if ($email === null) {
 			return $this->_readReceipt;
 		}
-		return $this->_setEmailSingle('_readReceipt', $email, $name, __d('cake', 'Disposition-Notification-To requires only 1 email address.'));
+		return $this->_setEmailSingle('_readReceipt', $email, $name, __d('cake_dev', 'Disposition-Notification-To requires only 1 email address.'));
 	}
 
 /**
@@ -355,7 +380,7 @@ class CakeEmail {
 		if ($email === null) {
 			return $this->_returnPath;
 		}
-		return $this->_setEmailSingle('_returnPath', $email, $name, __d('cake', 'Return-Path requires only 1 email address.'));
+		return $this->_setEmailSingle('_returnPath', $email, $name, __d('cake_dev', 'Return-Path requires only 1 email address.'));
 	}
 
 /**
@@ -445,7 +470,7 @@ class CakeEmail {
 	protected function _setEmail($varName, $email, $name) {
 		if (!is_array($email)) {
 			if (!Validation::email($email)) {
-				throw new SocketException(__d('cake', 'Invalid email: "%s"', $email));
+				throw new SocketException(__d('cake_dev', 'Invalid email: "%s"', $email));
 			}
 			if ($name === null) {
 				$name = $email;
@@ -459,7 +484,7 @@ class CakeEmail {
 				$key = $value;
 			}
 			if (!Validation::email($key)) {
-				throw new SocketException(__d('cake', 'Invalid email: "%s"', $key));
+				throw new SocketException(__d('cake_dev', 'Invalid email: "%s"', $key));
 			}
 			$list[$key] = $value;
 		}
@@ -499,7 +524,7 @@ class CakeEmail {
 	protected function _addEmail($varName, $email, $name) {
 		if (!is_array($email)) {
 			if (!Validation::email($email)) {
-				throw new SocketException(__d('cake', 'Invalid email: "%s"', $email));
+				throw new SocketException(__d('cake_dev', 'Invalid email: "%s"', $email));
 			}
 			if ($name === null) {
 				$name = $email;
@@ -513,7 +538,7 @@ class CakeEmail {
 				$key = $value;
 			}
 			if (!Validation::email($key)) {
-				throw new SocketException(__d('cake', 'Invalid email: "%s"', $key));
+				throw new SocketException(__d('cake_dev', 'Invalid email: "%s"', $key));
 			}
 			$list[$key] = $value;
 		}
@@ -522,9 +547,9 @@ class CakeEmail {
 	}
 
 /**
- * Set Subject
+ * Get/Set Subject.
  *
- * @param string $subject
+ * @param null|string $subject
  * @return mixed
  */
 	public function subject($subject = null) {
@@ -544,7 +569,7 @@ class CakeEmail {
  */
 	public function setHeaders($headers) {
 		if (!is_array($headers)) {
-			throw new SocketException(__d('cake', '$headers should be an array.'));
+			throw new SocketException(__d('cake_dev', '$headers should be an array.'));
 		}
 		$this->_headers = $headers;
 		return $this;
@@ -559,7 +584,7 @@ class CakeEmail {
  */
 	public function addHeaders($headers) {
 		if (!is_array($headers)) {
-			throw new SocketException(__d('cake', '$headers should be an array.'));
+			throw new SocketException(__d('cake_dev', '$headers should be an array.'));
 		}
 		$this->_headers = array_merge($this->_headers, $headers);
 		return $this;
@@ -626,7 +651,7 @@ class CakeEmail {
 		}
 		if ($this->_messageId !== false) {
 			if ($this->_messageId === true) {
-				$headers['Message-ID'] = '<' . String::UUID() . '@' . env('HTTP_HOST') . '>';
+				$headers['Message-ID'] = '<' . str_replace('-', '', String::UUID()) . '@' . env('HTTP_HOST') . '>';
 			} else {
 				$headers['Message-ID'] = $this->_messageId;
 			}
@@ -637,19 +662,14 @@ class CakeEmail {
 		}
 
 		$headers['MIME-Version'] = '1.0';
-		if (!empty($this->_attachments)) {
+		if (!empty($this->_attachments) || $this->_emailFormat === 'both') {
 			$headers['Content-Type'] = 'multipart/mixed; boundary="' . $this->_boundary . '"';
-			$headers[] = 'This part of the E-mail should never be seen. If';
-			$headers[] = 'you are reading this, consider upgrading your e-mail';
-			$headers[] = 'client to a MIME-compatible client.';
 		} elseif ($this->_emailFormat === 'text') {
 			$headers['Content-Type'] = 'text/plain; charset=' . $this->charset;
 		} elseif ($this->_emailFormat === 'html') {
 			$headers['Content-Type'] = 'text/html; charset=' . $this->charset;
-		} elseif ($this->_emailFormat === 'both') {
-			$headers['Content-Type'] = 'multipart/alternative; boundary="alt-' . $this->_boundary . '"';
 		}
-		$headers['Content-Transfer-Encoding'] = '7bit';
+		$headers['Content-Transfer-Encoding'] = $this->_getContentTransferEncoding();
 
 		return $headers;
 	}
@@ -747,7 +767,7 @@ class CakeEmail {
 			return $this->_emailFormat;
 		}
 		if (!in_array($format, $this->_emailFormatAvailable)) {
-			throw new SocketException(__d('cake', 'Format not available.'));
+			throw new SocketException(__d('cake_dev', 'Format not available.'));
 		}
 		$this->_emailFormat = $format;
 		return $this;
@@ -782,9 +802,9 @@ class CakeEmail {
 		$transportClassname .= 'Transport';
 		App::uses($transportClassname, $plugin . 'Network/Email');
 		if (!class_exists($transportClassname)) {
-			throw new SocketException(__d('cake', 'Class "%s" not found.', $transportClassname));
+			throw new SocketException(__d('cake_dev', 'Class "%s" not found.', $transportClassname));
 		} elseif (!method_exists($transportClassname, 'send')) {
-			throw new SocketException(__d('cake', 'The "%s" do not have send method.', $transportClassname));
+			throw new SocketException(__d('cake_dev', 'The "%s" do not have send method.', $transportClassname));
 		}
 
 		return $this->_transportClass = new $transportClassname();
@@ -805,7 +825,7 @@ class CakeEmail {
 			$this->_messageId = $message;
 		} else {
 			if (!preg_match('/^\<.+@.+\>$/', $message)) {
-				throw new SocketException(__d('cake', 'Invalid format to Message-ID. The text should be something like "<uuid@server.com>"'));
+				throw new SocketException(__d('cake_dev', 'Invalid format to Message-ID. The text should be something like "<uuid@server.com>"'));
 			}
 			$this->_messageId = $message;
 		}
@@ -813,10 +833,37 @@ class CakeEmail {
 	}
 
 /**
- * Attachments
+ * Add attachments to the email message
+ *
+ * Attachments can be defined in a few forms depending on how much control you need:
+ *
+ * Attach a single file:
+ *
+ * {{{
+ * $email->attachments('path/to/file');
+ * }}}
+ *
+ * Attach a file with a different filename:
+ *
+ * {{{
+ * $email->attachments(array('custom_name.txt' => 'path/to/file.txt'));
+ * }}}
+ *
+ * Attach a file and specify additional properties:
+ *
+ * {{{
+ * $email->attachments(array('custom_name.png' => array(
+ *		'file' => 'path/to/file',
+ *		'mimetype' => 'image/png',
+ *		'contentId' => 'abc123'
+ * ));
+ * }}}
+ *
+ * The `contentId` key allows you to specify an inline attachment. In your email text, you
+ * can use `<img src="cid:abc123" />` to display the image inline.
  *
  * @param mixed $attachments String with the filename or array with filenames
- * @return mixed
+ * @return mixed Either the array of attachments when getting or $this when setting.
  * @throws SocketException
  */
 	public function attachments($attachments = null) {
@@ -829,11 +876,11 @@ class CakeEmail {
 				$fileInfo = array('file' => $fileInfo);
 			}
 			if (!isset($fileInfo['file'])) {
-				throw new SocketException(__d('cake', 'File not specified.'));
+				throw new SocketException(__d('cake_dev', 'File not specified.'));
 			}
 			$fileInfo['file'] = realpath($fileInfo['file']);
 			if ($fileInfo['file'] === false || !file_exists($fileInfo['file'])) {
-				throw new SocketException(__d('cake', 'File not found: "%s"', $fileInfo['file']));
+				throw new SocketException(__d('cake_dev', 'File not found: "%s"', $fileInfo['file']));
 			}
 			if (is_int($name)) {
 				$name = basename($fileInfo['file']);
@@ -903,10 +950,10 @@ class CakeEmail {
  */
 	public function send($content = null) {
 		if (empty($this->_from)) {
-			throw new SocketException(__d('cake', 'From is not specified.'));
+			throw new SocketException(__d('cake_dev', 'From is not specified.'));
 		}
 		if (empty($this->_to) && empty($this->_cc) && empty($this->_bcc)) {
-			throw new SocketException(__d('cake', 'You need specify one destination on to, cc or bcc.'));
+			throw new SocketException(__d('cake_dev', 'You need specify one destination on to, cc or bcc.'));
 		}
 
 		if (is_array($content)) {
@@ -914,34 +961,9 @@ class CakeEmail {
 		}
 
 		$this->_textMessage = $this->_htmlMessage = '';
-		if ($content !== null) {
-			if ($this->_emailFormat === 'text') {
-				$this->_textMessage = $content;
-			} elseif ($this->_emailFormat === 'html') {
-				$this->_htmlMessage = $content;
-			} elseif ($this->_emailFormat === 'both') {
-				$this->_textMessage = $this->_htmlMessage = $content;
-			}
-		}
-
 		$this->_createBoundary();
+		$this->_message = $this->_render($this->_wrap($content));
 
-		$message = $this->_wrap($content);
-		if (empty($this->_template)) {
-			$message = $this->_formatMessage($message);
-		} else {
-			$message = $this->_render($message);
-		}
-		$message[] = '';
-		$this->_message = $message;
-
-		if (!empty($this->_attachments)) {
-			$this->_attachFiles();
-
-			$this->_message[] = '';
-			$this->_message[] = '--' . $this->_boundary . '--';
-			$this->_message[] = '';
-		}
 		$contents = $this->transportClass()->send($this);
 		if (!empty($this->_config['log'])) {
 			$level = LOG_DEBUG;
@@ -997,15 +1019,24 @@ class CakeEmail {
 	protected function _applyConfig($config) {
 		if (is_string($config)) {
 			if (!class_exists('EmailConfig') && !config('email')) {
-				throw new SocketException(__d('cake', '%s not found.', APP . 'Config' . DS . 'email.php'));
+				throw new ConfigureException(__d('cake_dev', '%s not found.', APP . 'Config' . DS . 'email.php'));
 			}
 			$configs = new EmailConfig();
 			if (!isset($configs->{$config})) {
-				throw new SocketException(__d('cake', 'Unknown email configuration "%s".', $config));
+				throw new ConfigureException(__d('cake_dev', 'Unknown email configuration "%s".', $config));
 			}
 			$config = $configs->{$config};
 		}
 		$this->_config += $config;
+		if (!empty($config['charset'])) {
+			$this->charset = $config['charset'];
+		}
+		if (!empty($config['headerCharset'])) {
+			$this->headerCharset = $config['headerCharset'];
+		}
+		if (empty($this->headerCharset)) {
+			$this->headerCharset = $this->charset;
+		}
 		$simpleMethods = array(
 			'from', 'sender', 'to', 'replyTo', 'readReceipt', 'returnPath', 'cc', 'bcc',
 			'messageId', 'subject', 'viewRender', 'viewVars', 'attachments',
@@ -1054,7 +1085,7 @@ class CakeEmail {
 		$this->_template = '';
 		$this->_viewRender = 'View';
 		$this->_viewVars = array();
-		$this->_helpers = array();
+		$this->_helpers = array('Html');
 		$this->_textMessage = '';
 		$this->_htmlMessage = '';
 		$this->_message = '';
@@ -1076,13 +1107,31 @@ class CakeEmail {
 		$internalEncoding = function_exists('mb_internal_encoding');
 		if ($internalEncoding) {
 			$restore = mb_internal_encoding();
-			mb_internal_encoding($this->charset);
+			mb_internal_encoding($this->_appCharset);
 		}
-		$return = mb_encode_mimeheader($text, $this->charset, 'B');
+		if (strpos($text, ',') !== false) {
+			$text = '"' . $text . '"';
+		}
+		$return = mb_encode_mimeheader($text, $this->headerCharset, 'B');
 		if ($internalEncoding) {
 			mb_internal_encoding($restore);
 		}
 		return $return;
+	}
+
+/**
+ * Translates a string for one charset to another if the App.encoding value
+ * differs and the mb_convert_encoding function exists
+ *
+ * @param string $text The text to be converted
+ * @param string $charset the target encoding
+ * @return string
+ */
+	protected function _encodeString($text, $charset) {
+		if ($this->_appCharset === $charset || !function_exists('mb_convert_encoding')) {
+			return $text;
+		}
+		return mb_convert_encoding($text, $charset, $this->_appCharset);
 	}
 
 /**
@@ -1167,6 +1216,7 @@ class CakeEmail {
 						}
 						$formatted[] = trim(substr($tmpLine, 0, $lastSpace));
 						$tmpLine = substr($tmpLine, $lastSpace + 1);
+
 						$tmpLineLength = strlen($tmpLine);
 					}
 				}
@@ -1191,64 +1241,193 @@ class CakeEmail {
 	}
 
 /**
- * Attach files by adding file contents inside boundaries.
+ * Attach non-embedded files by adding file contents inside boundaries.
  *
- * @return void
+ * @param string $boundary Boundary to use. If null, will default to $this->_boundary 
+ * @return array An array of lines to add to the message
  */
-	protected function _attachFiles() {
+	protected function _attachFiles($boundary = null) {
+		if ($boundary === null) {
+			$boundary = $this->_boundary;
+		}
+
+		$msg = array();
 		foreach ($this->_attachments as $filename => $fileInfo) {
-			$handle = fopen($fileInfo['file'], 'rb');
-			$data = fread($handle, filesize($fileInfo['file']));
-			$data = chunk_split(base64_encode($data)) ;
-			fclose($handle);
-
-			$this->_message[] = '--' . $this->_boundary;
-			$this->_message[] = 'Content-Type: ' . $fileInfo['mimetype'];
-			$this->_message[] = 'Content-Transfer-Encoding: base64';
-			if (empty($fileInfo['contentId'])) {
-				$this->_message[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
-			} else {
-				$this->_message[] = 'Content-ID: <' . $fileInfo['contentId'] . '>';
-				$this->_message[] = 'Content-Disposition: inline; filename="' . $filename . '"';
+			if (!empty($fileInfo['contentId'])) {
+				continue;
 			}
-			$this->_message[] = '';
-			$this->_message[] = $data;
-			$this->_message[] = '';
+			$data = $this->_readFile($fileInfo['file']);
+
+			$msg[] = '--' . $boundary;
+			$msg[] = 'Content-Type: ' . $fileInfo['mimetype'];
+			$msg[] = 'Content-Transfer-Encoding: base64';
+			$msg[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
+			$msg[] = '';
+			$msg[] = $data;
+			$msg[] = '';
 		}
+		return $msg;
 	}
 
 /**
- * Format the message by seeing if it has attachments.
+ * Read the file contents and return a base64 version of the file contents.
  *
- * @param array $message Message to format
- * @return array
+ * @param string $file The file to read.
+ * @return string File contents in base64 encoding
  */
-	protected function _formatMessage($message) {
-		if (!empty($this->_attachments)) {
-			$prefix = array('--' . $this->_boundary);
-			if ($this->_emailFormat === 'text') {
-				$prefix[] = 'Content-Type: text/plain; charset=' . $this->charset;
-			} elseif ($this->_emailFormat === 'html') {
-				$prefix[] = 'Content-Type: text/html; charset=' . $this->charset;
-			} elseif ($this->_emailFormat === 'both') {
-				$prefix[] = 'Content-Type: multipart/alternative; boundary="alt-' . $this->_boundary . '"';
-			}
-			$prefix[] = 'Content-Transfer-Encoding: 7bit';
-			$prefix[] = '';
-			$message = array_merge($prefix, $message);
-		}
-		return $message;
+	protected function _readFile($file) {
+		$handle = fopen($file, 'rb');
+		$data = fread($handle, filesize($file));
+		$data = chunk_split(base64_encode($data)) ;
+		fclose($handle);
+		return $data;
 	}
 
 /**
- * Render the contents using the current layout and template.
+ * Attach inline/embedded files to the message.
+ *
+ * @param string $boundary Boundary to use. If null, will default to $this->_boundary 
+ * @return array An array of lines to add to the message
+ */
+	protected function _attachInlineFiles($boundary = null) {
+		if ($boundary === null) {
+			$boundary = $this->_boundary;
+		}
+
+		$msg = array();
+		foreach ($this->_attachments as $filename => $fileInfo) {
+			if (empty($fileInfo['contentId'])) {
+				continue;
+			}
+			$data = $this->_readFile($fileInfo['file']);
+
+			$msg[] = '--' . $boundary;
+			$msg[] = 'Content-Type: ' . $fileInfo['mimetype'];
+			$msg[] = 'Content-Transfer-Encoding: base64';
+			$msg[] = 'Content-ID: <' . $fileInfo['contentId'] . '>';
+			$msg[] = 'Content-Disposition: inline; filename="' . $filename . '"';
+			$msg[] = '';
+			$msg[] = $data;
+			$msg[] = '';
+		}
+		return $msg;
+	}
+
+/**
+ * Render the body of the email.
  *
  * @param string $content Content to render
- * @return array Email ready to be sent
+ * @return array Email body ready to be sent
  */
 	protected function _render($content) {
-		$viewClass = $this->_viewRender;
+		$content = implode("\n", $content);
+		$rendered = $this->_renderTemplates($content);
 
+		$msg = array();
+
+		$contentIds = array_filter((array)Set::classicExtract($this->_attachments, '{s}.contentId'));
+		$hasInlineAttachments = count($contentIds) > 0;
+		$hasAttachments = !empty($this->_attachments);
+		$hasMultipleTypes = count($rendered) > 1;
+
+		$boundary = $relBoundary = $textBoundary = $this->_boundary;
+
+		if ($hasInlineAttachments) {
+			$msg[] = '--' . $boundary;
+			$msg[] = 'Content-Type: multipart/related; boundary="rel-' . $boundary . '"';
+			$msg[] = '';
+			$relBoundary = $textBoundary = 'rel-' . $boundary;
+		}
+
+		if ($hasMultipleTypes) {
+			$msg[] = '--' . $relBoundary;
+			$msg[] = 'Content-Type: multipart/alternative; boundary="alt-' . $boundary . '"';
+			$msg[] = '';
+			$textBoundary = 'alt-' . $boundary;
+		}
+
+		if (isset($rendered['text'])) {
+			if ($textBoundary !== $boundary || $hasAttachments) {
+				$msg[] = '--' . $textBoundary;
+				$msg[] = 'Content-Type: text/plain; charset=' . $this->charset;
+				$msg[] = 'Content-Transfer-Encoding: ' . $this->_getContentTransferEncoding();
+				$msg[] = '';
+			}
+			$this->_textMessage = $rendered['text'];
+			$content = explode("\n", $this->_textMessage);
+			$msg = array_merge($msg, $content);
+			$msg[] = '';
+		}
+	
+		if (isset($rendered['html'])) {
+			if ($textBoundary !== $boundary || $hasAttachments) {
+				$msg[] = '--' . $textBoundary;
+				$msg[] = 'Content-Type: text/html; charset=' . $this->charset;
+				$msg[] = 'Content-Transfer-Encoding: ' . $this->_getContentTransferEncoding();
+				$msg[] = '';
+			}
+			$this->_htmlMessage = $rendered['html'];
+			$content = explode("\n", $this->_htmlMessage);
+			$msg = array_merge($msg, $content);
+			$msg[] = '';
+		}
+
+		if ($hasMultipleTypes) {
+			$msg[] = '--' . $textBoundary . '--';
+			$msg[] = '';
+		}
+
+		if ($hasInlineAttachments) {
+			$attachments = $this->_attachInlineFiles($relBoundary);
+			$msg = array_merge($msg, $attachments);
+			$msg[] = '';
+			$msg[] = '--' . $relBoundary . '--';
+			$msg[] = '';
+		}
+
+		if ($hasAttachments) {
+			$attachments = $this->_attachFiles($boundary);
+			$msg = array_merge($msg, $attachments);
+		}
+		if ($hasAttachments || $hasMultipleTypes) {
+			$msg[] = '';
+			$msg[] = '--' . $boundary . '--';
+			$msg[] = '';
+		}
+		return $msg;
+	}
+
+/**
+ * Gets the text body types that are in this email message
+ *
+ * @return array Array of types.  Valid types are 'text' and 'html'
+ */
+	protected function _getTypes() {
+		$types = array($this->_emailFormat);
+		if ($this->_emailFormat == 'both') {
+			$types = array('html', 'text');
+		}
+		return $types;
+	}
+
+/**
+ * Build and set all the view properties needed to render the templated emails.
+ * If there is no template set, the $content will be returned in a hash
+ * of the text content types for the email.
+ *
+ * @param string $content The content passed in from send() in most cases.
+ * @return array The rendered content with html and text keys.
+ */
+	protected function _renderTemplates($content) {
+		$types = $this->_getTypes();
+		$rendered = array();
+		if (empty($this->_template)) {
+			foreach ($types as $type) {
+				$rendered[$type] = $this->_encodeString($content, $this->charset);
+			}
+			return $rendered;
+		}
+		$viewClass = $this->_viewRender;
 		if ($viewClass !== 'View') {
 			list($plugin, $viewClass) = pluginSplit($viewClass, true);
 			$viewClass .= 'View';
@@ -1258,7 +1437,6 @@ class CakeEmail {
 		$View = new $viewClass(null);
 		$View->viewVars = $this->_viewVars;
 		$View->helpers = $this->_helpers;
-		$msg = array();
 
 		list($templatePlugin, $template) = pluginSplit($this->_template);
 		list($layoutPlugin, $layout) = pluginSplit($this->_layout);
@@ -1268,73 +1446,28 @@ class CakeEmail {
 			$View->plugin = $layoutPlugin;
 		}
 
-		$content = implode("\n", $content);
-
-		if ($this->_emailFormat === 'both') {
-			$originalContent = $content;
-			if (!empty($this->_attachments)) {
-				$msg[] = '--' . $this->_boundary;
-				$msg[] = 'Content-Type: multipart/alternative; boundary="alt-' . $this->_boundary . '"';
-				$msg[] = '';
-			}
-			$msg[] = '--alt-' . $this->_boundary;
-			$msg[] = 'Content-Type: text/plain; charset=' . $this->charset;
-			$msg[] = 'Content-Transfer-Encoding: 7bit';
-			$msg[] = '';
-
-			$View->viewPath = $View->layoutPath = 'Emails' . DS . 'text';
-			$View->viewVars['content'] = $originalContent;
-			$this->_textMessage = str_replace(array("\r\n", "\r"), "\n", $View->render($template, $layout));
-			$content = explode("\n", $this->_textMessage);
-			$msg = array_merge($msg, $content);
-
-			$msg[] = '';
-			$msg[] = '--alt-' . $this->_boundary;
-			$msg[] = 'Content-Type: text/html; charset=' . $this->charset;
-			$msg[] = 'Content-Transfer-Encoding: 7bit';
-			$msg[] = '';
-
-			$View->viewPath = $View->layoutPath = 'Emails' . DS . 'html';
-			$View->viewVars['content'] = $originalContent;
+		foreach ($types as $type) {
+			$View->set('content', $content);
 			$View->hasRendered = false;
-			$this->_htmlMessage = str_replace(array("\r\n", "\r"), "\n", $View->render($template, $layout));
-			$content = explode("\n", $this->_htmlMessage);
-			$msg = array_merge($msg, $content);
-
-			$msg[] = '';
-			$msg[] = '--alt-' . $this->_boundary . '--';
-			$msg[] = '';
-
-			return $msg;
+			$View->viewPath = $View->layoutPath = 'Emails' . DS . $type;
+	
+			$render = $View->render($template, $layout);
+			$render = str_replace(array("\r\n", "\r"), "\n", $render);
+			$rendered[$type] = $this->_encodeString($render, $this->charset);
 		}
-
-		if (!empty($this->_attachments)) {
-			if ($this->_emailFormat === 'html') {
-				$msg[] = '';
-				$msg[] = '--' . $this->_boundary;
-				$msg[] = 'Content-Type: text/html; charset=' . $this->charset;
-				$msg[] = 'Content-Transfer-Encoding: 7bit';
-				$msg[] = '';
-			} else {
-				$msg[] = '--' . $this->_boundary;
-				$msg[] = 'Content-Type: text/plain; charset=' . $this->charset;
-				$msg[] = 'Content-Transfer-Encoding: 7bit';
-				$msg[] = '';
-			}
-		}
-
-		$View->viewPath = $View->layoutPath = 'Emails' . DS . $this->_emailFormat;
-		$View->viewVars['content'] = $content;
-		$rendered = $View->render($template, $layout);
-		$content = explode("\n", $rendered);
-
-		if ($this->_emailFormat === 'html') {
-			$this->_htmlMessage = $rendered;
-		} else {
-			$this->_textMessage = $rendered;
-		}
-
-		return array_merge($msg, $content);
+		return $rendered;
 	}
 
+/**
+ * Return the Content-Transfer Encoding value based on the set charset
+ *
+ * @return void
+ */
+	protected function _getContentTransferEncoding() {
+		$charset = strtoupper($this->charset);
+		if (in_array($charset, $this->_charset8bit)) {
+			return '8bit';
+		}
+		return '7bit';
+	}
 }

@@ -20,15 +20,20 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+App::uses('AppShell', 'Console/Command');
 App::uses('Model', 'Model');
 
 /**
- * Bake is a command-line code generation utility for automating programmer chores.
+ * Command-line code generation utility to automate programmer chores.
+ *
+ * Bake is CakePHP's code generation script, which can help you kickstart
+ * application development by writing fully functional skeleton controllers,
+ * models, and views. Going further, Bake can also write Unit Tests for you.
  *
  * @package       Cake.Console.Command
- * @link          http://book.cakephp.org/view/1522/Code-Generation-with-Bake
+ * @link          http://book.cakephp.org/2.0/en/console-and-shells/code-generation-with-bake.html
  */
-class BakeShell extends Shell {
+class BakeShell extends AppShell {
 
 /**
  * Contains tasks to load and instantiate
@@ -51,6 +56,9 @@ class BakeShell extends Shell {
  */
 	public function startup() {
 		parent::startup();
+		Configure::write('debug', 2);
+		Configure::write('Cache.disable', 1);
+
 		$task = Inflector::classify($this->command);
 		if (isset($this->{$task}) && !in_array($task, array('Project', 'DbConfig'))) {
 			if (isset($this->params['connection'])) {
@@ -65,8 +73,6 @@ class BakeShell extends Shell {
  * @return mixed
  */
 	public function main() {
-		Configure::write('Cache.disable', 1);
-
 		if (!is_dir($this->DbConfig->path)) {
 			$path = $this->Project->execute();
 			if (!empty($path)) {
@@ -183,7 +189,7 @@ class BakeShell extends Shell {
 			}
 			App::uses($controller . 'Controller', 'Controller');
 			if (class_exists($controller . 'Controller')) {
-				$this->View->args = array($controller);
+				$this->View->args = array($name);
 				$this->View->execute();
 			}
 			$this->out('', 1, Shell::QUIET);

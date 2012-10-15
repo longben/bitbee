@@ -24,6 +24,7 @@
 	if (!defined('DS')) {
 		define('DS', DIRECTORY_SEPARATOR);
 	}
+
 /**
  * These defines should only be edited if you have cake installed in
  * a directory layout other than the way it is distributed.
@@ -37,6 +38,7 @@
 	if (!defined('ROOT')) {
 		define('ROOT', dirname(dirname(dirname(__FILE__))));
 	}
+
 /**
  * The actual directory name for the "app".
  *
@@ -49,10 +51,10 @@
  * The absolute path to the "cake" directory, WITHOUT a trailing DS.
  *
  * Un-comment this line to specify a fixed path to CakePHP.
- * This should point at the directory containg `Cake`.
+ * This should point at the directory containing `Cake`.
  *
  * For ease of development CakePHP uses PHP's include_path.  If you
- * need to squeeze a bit more performance you can set this path.
+ * cannot modify your include_path set this value.
  *
  * Leaving this constant undefined will result in it being defined in Cake/bootstrap.php
  */
@@ -71,6 +73,9 @@
 	}
 
 	if (!defined('CAKE_CORE_INCLUDE_PATH')) {
+		if (function_exists('ini_set')) {
+			ini_set('include_path', ROOT . DS . 'lib' . PATH_SEPARATOR . ini_get('include_path'));
+		}
 		if (!include('Cake' . DS . 'bootstrap.php')) {
 			$failed = true;
 		}

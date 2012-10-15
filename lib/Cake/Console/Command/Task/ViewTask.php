@@ -16,6 +16,7 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+App::uses('AppShell', 'Console/Command');
 App::uses('Controller', 'Controller');
 App::uses('BakeTask', 'Console/Command/Task');
 
@@ -143,7 +144,7 @@ class ViewTask extends BakeTask {
 		}
 		$adminRoute = $this->Project->getPrefix();
 		foreach ($methods as $i => $method) {
-			if ($adminRoute && isset($this->params['admin'])) {
+			if ($adminRoute && !empty($this->params['admin'])) {
 				if ($scaffoldActions) {
 					$methods[$i] = $adminRoute . $method;
 					continue;
@@ -194,7 +195,7 @@ class ViewTask extends BakeTask {
  */
 	protected function _interactive() {
 		$this->hr();
-		$this->out(sprintf("Bake View\nPath: %s", $this->path));
+		$this->out(sprintf("Bake View\nPath: %s", $this->getPath()));
 		$this->hr();
 
 		$this->DbConfig->interactive = $this->Controller->interactive = $this->interactive = true;
@@ -214,9 +215,9 @@ class ViewTask extends BakeTask {
 		}
 
 		$prompt = __d('cake_console', "Would you like to create some CRUD views\n(index, add, view, edit) for this controller?\nNOTE: Before doing so, you'll need to create your controller\nand model classes (including associated models).");
-		$wannaDoScaffold = $this->in($prompt, array('y','n'), 'y');
+		$wannaDoScaffold = $this->in($prompt, array('y', 'n'), 'y');
 
-		$wannaDoAdmin = $this->in(__d('cake_console', "Would you like to create the views for admin routing?"), array('y','n'), 'n');
+		$wannaDoAdmin = $this->in(__d('cake_console', "Would you like to create the views for admin routing?"), array('y', 'n'), 'n');
 
 		if (strtolower($wannaDoScaffold) == 'y' || strtolower($wannaDoAdmin) == 'y') {
 			$vars = $this->_loadController();
@@ -291,7 +292,7 @@ class ViewTask extends BakeTask {
 		$pluralHumanName = $this->_pluralHumanName($this->controllerName);
 
 		return compact('modelClass', 'schema', 'primaryKey', 'displayField', 'singularVar', 'pluralVar',
-				'singularHumanName', 'pluralHumanName', 'fields','associations');
+				'singularHumanName', 'pluralHumanName', 'fields', 'associations');
 	}
 
 /**
@@ -327,9 +328,9 @@ class ViewTask extends BakeTask {
 		$this->hr();
 		$this->out(__d('cake_console', 'Controller Name: %s', $this->controllerName));
 		$this->out(__d('cake_console', 'Action Name:     %s', $action));
-		$this->out(__d('cake_console', 'Path:            %s', $this->params['app'] . DS . $this->controllerName . DS . Inflector::underscore($action) . ".ctp"));
+		$this->out(__d('cake_console', 'Path:            %s', $this->getPath() . $this->controllerName . DS . Inflector::underscore($action) . ".ctp"));
 		$this->hr();
-		$looksGood = $this->in(__d('cake_console', 'Look okay?'), array('y','n'), 'y');
+		$looksGood = $this->in(__d('cake_console', 'Look okay?'), array('y', 'n'), 'y');
 		if (strtolower($looksGood) == 'y') {
 			$this->bake($action, ' ');
 			$this->_stop();
@@ -393,6 +394,10 @@ class ViewTask extends BakeTask {
 		if (!empty($this->template) && $action != $this->template) {
 			return $this->template;
 		}
+		$themePath = $this->Template->getThemePath();
+		if (file_exists($themePath . 'views' . DS . $action . '.ctp')) {
+			return $action;
+		}
 		$template = $action;
 		$prefixes = Configure::read('Routing.prefixes');
 		foreach ((array)$prefixes as $prefix) {
@@ -449,10 +454,11 @@ class ViewTask extends BakeTask {
 
 		foreach ($keys as $key => $type) {
 			foreach ($model->{$type} as $assocKey => $assocData) {
+				list($plugin, $modelClass) = pluginSplit($assocData['className']);
 				$associations[$type][$assocKey]['primaryKey'] = $model->{$assocKey}->primaryKey;
 				$associations[$type][$assocKey]['displayField'] = $model->{$assocKey}->displayField;
 				$associations[$type][$assocKey]['foreignKey'] = $assocData['foreignKey'];
-				$associations[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($assocData['className']));
+				$associations[$type][$assocKey]['controller'] = Inflector::pluralize(Inflector::underscore($modelClass));
 				$associations[$type][$assocKey]['fields'] =  array_keys($model->{$assocKey}->schema(true));
 			}
 		}

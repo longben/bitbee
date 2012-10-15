@@ -1,6 +1,5 @@
 <?php
 /**
- * AppShell file
  *
  * PHP 5
  *
@@ -12,19 +11,12 @@
  *
  * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @since         CakePHP(tm) v 2.0
+ * @package       cake.libs.view.templates.layouts.email.text
+ * @since         CakePHP(tm) v 0.10.0.1076
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+?>
 
-/**
- * This is a placeholder class.
- * Create the same file in app/Console/Command/AppShell.php
- *
- * Add your application-wide methods in the class below, your shells
- * will inherit them.
- *
- * @package       Cake.Console
- */
-class AppShell extends Shell {
+<?php echo $content_for_layout;?>
 
-}
+CakePHP Framework を使って送信したメールです。 http://cakephp.org.

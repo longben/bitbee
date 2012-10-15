@@ -1,13 +1,5 @@
 <?php
 /**
- * A single Route used by the Router to connect requests to
- * parameter maps.
- *
- * Not normally created as a standalone.  Use Router::connect() to create
- * Routes for your application.
- *
- * PHP5
- *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
@@ -16,9 +8,20 @@
  *
  * @copyright     Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org CakePHP(tm) Project
- * @package       Cake.Routing.Route
  * @since         CakePHP(tm) v 1.3
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+
+App::uses('Set', 'Utility');
+
+/**
+ * A single Route used by the Router to connect requests to
+ * parameter maps.
+ *
+ * Not normally created as a standalone.  Use Router::connect() to create
+ * Routes for your application.
+ *
+ * @package Cake.Routing.Route
  */
 class CakeRoute {
 
@@ -60,7 +63,7 @@ class CakeRoute {
 	protected $_greedy = false;
 
 /**
- * The compiled route regular expresssion
+ * The compiled route regular expression
  *
  * @var string
  */
@@ -229,7 +232,7 @@ class CakeRoute {
 		// restructure 'pass' key route params
 		if (isset($this->options['pass'])) {
 			$j = count($this->options['pass']);
-			while($j--) {
+			while ($j--) {
 				if (isset($route[$this->options['pass'][$j]])) {
 					array_unshift($route['pass'], $route[$this->options['pass'][$j]]);
 				}
@@ -272,10 +275,12 @@ class CakeRoute {
 			$separatorIsPresent = strpos($param, $namedConfig['separator']) !== false;
 			if ((!isset($this->options['named']) || !empty($this->options['named'])) && $separatorIsPresent) {
 				list($key, $val) = explode($namedConfig['separator'], $param, 2);
+				$key = rawurldecode($key);
+				$val = rawurldecode($val);
 				$hasRule = isset($rules[$key]);
 				$passIt = (!$hasRule && !$greedy) || ($hasRule && !$this->_matchNamed($val, $rules[$key], $context));
 				if ($passIt) {
-					$pass[] = $param;
+					$pass[] = rawurldecode($param);
 				} else {
 					if (preg_match_all('/\[([A-Za-z0-9_-]+)?\]/', $key, $matches, PREG_SET_ORDER)) {
 						$matches = array_reverse($matches);
@@ -296,7 +301,7 @@ class CakeRoute {
 					$named = array_merge_recursive($named, array($key => $val));
 				}
 			} else {
-				$pass[] = $param;
+				$pass[] = rawurldecode($param);
 			}
 		}
 		return array($pass, $named);
@@ -340,7 +345,7 @@ class CakeRoute {
 	}
 
 /**
- * Apply persistent parameters to a url array. Persistant parameters are a special
+ * Apply persistent parameters to a url array. Persistent parameters are a special
  * key used during route creation to force route parameters to persist when omitted from
  * a url array.
  *
@@ -387,6 +392,7 @@ class CakeRoute {
 		}
 
 		$namedConfig = Router::namedConfig();
+		$prefixes = Router::prefixes();
 		$greedyNamed = $namedConfig['greedyNamed'];
 		$allowedNamedParams = $namedConfig['rules'];
 
@@ -420,7 +426,8 @@ class CakeRoute {
 			// pull out named params if named params are greedy or a rule exists.
 			if (
 				($greedyNamed || isset($allowedNamedParams[$key])) &&
-				($value !== false && $value !== null)
+				($value !== false && $value !== null) &&
+				(!in_array($key, $prefixes))
 			) {
 				$named[$key] = $value;
 				continue;
@@ -462,7 +469,7 @@ class CakeRoute {
 		}
 
 		if (is_array($params['pass'])) {
-			$params['pass'] = implode('/', $params['pass']);
+			$params['pass'] = implode('/', array_map('rawurlencode', $params['pass']));
 		}
 
 		$namedConfig = Router::namedConfig();
@@ -472,11 +479,12 @@ class CakeRoute {
 			$named = array();
 			foreach ($params['named'] as $key => $value) {
 				if (is_array($value)) {
-					foreach ($value as $namedKey => $namedValue) {
-						$named[] = $key . "[$namedKey]" . $separator . $namedValue;
+					$flat = Set::flatten($value, '][');
+					foreach ($flat as $namedKey => $namedValue) {
+						$named[] = $key . "[$namedKey]" . $separator . rawurlencode($namedValue);
 					}
 				} else {
-					$named[] = $key . $separator . $value;
+					$named[] = $key . $separator . rawurlencode($value);
 				}
 			}
 			$params['pass'] = $params['pass'] . '/' . implode('/', $named);

@@ -16,6 +16,15 @@
  * @link          http://cakephp.org CakePHP(tm) Project
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ * @package Cake.TestSuite
+ */
+
+/**
+ * TestLoader for CakePHP Test suite.
+ *
+ * Turns partial paths used on the testsuite console and web UI into full file paths.
+ *
+ * @package Cake.TestSuite
  */
 class CakeTestLoader extends PHPUnit_Runner_StandardTestSuiteLoader {
 

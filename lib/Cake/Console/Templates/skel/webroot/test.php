@@ -24,6 +24,7 @@ ini_set('display_errors', 1);
 	if (!defined('DS')) {
 		define('DS', DIRECTORY_SEPARATOR);
 	}
+
 /**
  * These defines should only be edited if you have cake installed in
  * a directory layout other than the way it is distributed.
@@ -37,6 +38,7 @@ ini_set('display_errors', 1);
 	if (!defined('ROOT')) {
 		define('ROOT', dirname(dirname(dirname(__FILE__))));
 	}
+
 /**
  * The actual directory name for the "app".
  *
@@ -68,6 +70,9 @@ if (!defined('WWW_ROOT')) {
 }
 
 if (!defined('CAKE_CORE_INCLUDE_PATH')) {
+	if (function_exists('ini_set')) {
+		ini_set('include_path', ROOT . DS . 'lib' . PATH_SEPARATOR . ini_get('include_path'));
+	}
 	if (!include('Cake' . DS . 'bootstrap.php')) {
 		$failed = true;
 	}
@@ -81,7 +86,7 @@ if (!empty($failed)) {
 }
 
 if (Configure::read('debug') < 1) {
-	die(__d('cake', 'Debug setting does not allow access to this url.'));
+	die(__d('cake_dev', 'Debug setting does not allow access to this url.'));
 }
 
 require_once CAKE . 'TestSuite' . DS . 'CakeTestSuiteDispatcher.php';

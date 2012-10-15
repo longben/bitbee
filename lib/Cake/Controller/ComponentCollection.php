@@ -19,6 +19,12 @@
 App::uses('ObjectCollection', 'Utility');
 App::uses('Component', 'Controller');
 
+/**
+ * Components collection is used as a registry for loaded components and handles loading
+ * and constructing component class objects.
+ *
+ * @package       Cake.Controller
+ */
 class ComponentCollection extends ObjectCollection {
 
 /**
@@ -73,7 +79,7 @@ class ComponentCollection extends ObjectCollection {
  * @param string $component Component name to load
  * @param array $settings Settings for the component.
  * @return Component A component object, Either the existing loaded component or a new one.
- * @throws MissingComponentFileException, MissingComponentClassException when the component could not be found
+ * @throws MissingComponentException when the component could not be found
  */
 	public function load($component, $settings = array()) {
 		if (is_array($settings) && isset($settings['className'])) {
@@ -90,8 +96,7 @@ class ComponentCollection extends ObjectCollection {
 		$componentClass = $name . 'Component';
 		App::uses($componentClass, $plugin . 'Controller/Component');
 		if (!class_exists($componentClass)) {
-			throw new MissingComponentClassException(array(
-				'file' => Inflector::underscore($componentClass) . '.php',
+			throw new MissingComponentException(array(
 				'class' => $componentClass
 			));
 		}

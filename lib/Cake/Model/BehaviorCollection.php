@@ -2,7 +2,7 @@
 /**
  * BehaviorCollection
  *
- * Provides managment and interface for interacting with collections of behaviors.
+ * Provides management and interface for interacting with collections of behaviors.
  *
  * PHP 5
  *
@@ -99,13 +99,16 @@ class BehaviorCollection extends ObjectCollection {
  * @param string $behavior CamelCased name of the behavior to load
  * @param array $config Behavior configuration parameters
  * @return boolean True on success, false on failure
- * @throws MissingBehaviorClassException when a behavior could not be found.
+ * @throws MissingBehaviorException when a behavior could not be found.
  */
 	public function load($behavior, $config = array()) {
 		if (is_array($config) && isset($config['className'])) {
 			$alias = $behavior;
 			$behavior = $config['className'];
 		}
+		$configDisabled = isset($config['enabled']) && $config['enabled'] === false;
+		unset($config['enabled'], $config['className']);
+
 		list($plugin, $name) = pluginSplit($behavior, true);
 		if (!isset($alias)) {
 			$alias = $name;
@@ -115,9 +118,9 @@ class BehaviorCollection extends ObjectCollection {
 
 		App::uses($class, $plugin . 'Model/Behavior');
 		if (!class_exists($class)) {
-			throw new MissingBehaviorClassException(array(
-				'file' => Inflector::underscore($behavior) . '.php',
-				'class' => $class
+			throw new MissingBehaviorException(array(
+				'class' => $class,
+				'plugin' => substr($plugin, 0, -1)
 			));
 		}
 
@@ -165,7 +168,6 @@ class BehaviorCollection extends ObjectCollection {
 			}
 		}
 
-		$configDisabled = isset($config['enabled']) && $config['enabled'] === false;
 		if (!in_array($alias, $this->_enabled) && !$configDisabled) {
 			$this->enable($alias);
 		} elseif ($configDisabled) {
@@ -208,7 +210,7 @@ class BehaviorCollection extends ObjectCollection {
 /**
  * Dispatches a behavior method.  Will call either normal methods or mapped methods.
  *
- * If a method is not handeled by the BehaviorCollection, and $strict is false, a
+ * If a method is not handled by the BehaviorCollection, and $strict is false, a
  * special return of `array('unhandled')` will be returned to signal the method was not found.
  *
  * @param Model $model The model the method was originally called on.
@@ -253,8 +255,8 @@ class BehaviorCollection extends ObjectCollection {
  *
  * @param string $method The method to find.
  * @param boolean $callback Return the callback for the method.
- * @return mixed If $callback is false, a boolean will be returnned, if its true, an array
- *   containing callback information will be returnned.  For mapped methods the array will have 3 elements.
+ * @return mixed If $callback is false, a boolean will be returned, if its true, an array
+ *   containing callback information will be returned.  For mapped methods the array will have 3 elements.
  */
 	public function hasMethod($method, $callback = false) {
 		if (isset($this->_methods[$method])) {

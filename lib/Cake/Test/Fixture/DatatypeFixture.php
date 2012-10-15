@@ -25,29 +25,29 @@
 class DatatypeFixture extends CakeTestFixture {
 
 /**
- * name property
+ * Name property
  *
  * @var string 'Datatype'
  */
 	public $name = 'Datatype';
 
 /**
- * fields property
+ * Fields property
  *
  * @var array
  */
 	public $fields = array(
-		'id' => array('type' => 'integer', 'null'=> false, 'default'=> 0, 'key' => 'primary'),
+		'id' => array('type' => 'integer', 'null' => false, 'default' => 0, 'key' => 'primary'),
 		'float_field' => array('type' => 'float', 'length' => '5,2', 'null' => false, 'default' => null),
 		'bool' => array('type' => 'boolean', 'null' => false, 'default' => false),
 	);
 
 /**
- * records property
+ * Records property
  *
  * @var array
  */
-	var $records = array(
+	public $records = array(
 		array('id' => 1, 'float_field' => 42.23, 'bool' => 0),
 	);
 }

@@ -16,11 +16,15 @@
  * @since         CakePHP(tm) v 2.0
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-PHP_CodeCoverage_Filter::getInstance()->addFileToBlacklist(__FILE__, 'DEFAULT');
 
 App::uses('ConnectionManager', 'Model');
 App::uses('ClassRegistry', 'Utility');
 
+/**
+ * A factory class to manage the life cycle of test fixtures
+ *
+ * @package       Cake.TestSuite.Fixture
+ */
 class CakeFixtureManager {
 
 /**
@@ -45,7 +49,7 @@ class CakeFixtureManager {
 	protected $_loaded = array();
 
 /**
- * Holds the fixture classes that where ins	tantiated indexed by class name
+ * Holds the fixture classes that where instantiated indexed by class name
  *
  * @var array
  */
@@ -84,6 +88,7 @@ class CakeFixtureManager {
 			return;
 		}
 		$db = ConnectionManager::getDataSource('test');
+		$db->cacheSources = false;
 		$this->_db = $db;
 		ClassRegistry::config(array('ds' => 'test'));
 		$this->_initialized = true;
@@ -141,7 +146,7 @@ class CakeFixtureManager {
 	}
 
 /**
- * Runs the drop and create commands on the fixtures if necessary
+ * Runs the drop and create commands on the fixtures if necessary.
  *
  * @param CakeTestFixture $fixture the fixture object to create
  * @param DataSource $db the datasource instance to use
@@ -156,10 +161,7 @@ class CakeFixtureManager {
 			return;
 		}
 
-		$cacheSources = $db->cacheSources;
-		$db->cacheSources = false;
 		$sources = $db->listSources();
-		$db->cacheSources = $cacheSources;
 		$table = $db->config['prefix'] . $fixture->table;
 
 		if ($drop && in_array($table, $sources)) {
@@ -199,7 +201,7 @@ class CakeFixtureManager {
 	}
 
 /**
- * Trucantes the fixtures tables
+ * Truncates the fixtures tables
  *
  * @param CakeTestCase $test the test to inspect for fixture unloading
  * @return void
@@ -217,7 +219,7 @@ class CakeFixtureManager {
 	}
 
 /**
- * Trucantes the fixtures tables
+ * Truncates the fixtures tables
  *
  * @param CakeTestCase $test the test to inspect for fixture unloading
  * @return void

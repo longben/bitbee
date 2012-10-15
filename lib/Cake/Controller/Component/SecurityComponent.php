@@ -22,10 +22,17 @@ App::uses('String', 'Utility');
 App::uses('Security', 'Utility');
 
 /**
- * SecurityComponent
+ * The Security Component creates an easy way to integrate tighter security in 
+ * your application. It provides methods for various tasks like:
+ *
+ * - Restricting which HTTP methods your application accepts.
+ * - CSRF protection.
+ * - Form tampering protection
+ * - Requiring that SSL be used.
+ * - Limiting cross controller communication.
  *
  * @package       Cake.Controller.Component
- * @link http://book.cakephp.org/view/1296/Security-Component
+ * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html
  */
 class SecurityComponent extends Component {
 
@@ -208,13 +215,16 @@ class SecurityComponent extends Component {
 			}
 		}
 		$this->_generateToken($controller);
+		if ($isPost) {
+			unset($controller->request->data['_Token']);
+		}
 	}
 
 /**
  * Sets the actions that require a POST request, or empty for all actions
  *
  * @return void
- * @link http://book.cakephp.org/view/1299/requirePost
+ * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#SecurityComponent::requirePost
  */
 	public function requirePost() {
 		$args = func_get_args();
@@ -255,7 +265,7 @@ class SecurityComponent extends Component {
  * Sets the actions that require a request that is SSL-secured, or empty for all actions
  *
  * @return void
- * @link http://book.cakephp.org/view/1300/requireSecure
+ * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#SecurityComponent::requireSecure
  */
 	public function requireSecure() {
 		$args = func_get_args();
@@ -266,7 +276,7 @@ class SecurityComponent extends Component {
  * Sets the actions that require an authenticated request, or empty for all actions
  *
  * @return void
- * @link http://book.cakephp.org/view/1301/requireAuth
+ * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#SecurityComponent::requireAuth
  */
 	public function requireAuth() {
 		$args = func_get_args();
@@ -274,23 +284,19 @@ class SecurityComponent extends Component {
 	}
 
 /**
- * Black-hole an invalid request with a 404 error or custom callback. If SecurityComponent::$blackHoleCallback
+ * Black-hole an invalid request with a 400 error or custom callback. If SecurityComponent::$blackHoleCallback
  * is specified, it will use this callback by executing the method indicated in $error
  *
  * @param Controller $controller Instantiating controller
  * @param string $error Error method
  * @return mixed If specified, controller blackHoleCallback's response, or no return otherwise
  * @see SecurityComponent::$blackHoleCallback
- * @link http://book.cakephp.org/view/1307/blackHole-object-controller-string-error
+ * @link http://book.cakephp.org/2.0/en/core-libraries/components/security-component.html#handling-blackhole-callbacks
+ * @throws BadRequestException
  */
 	public function blackHole($controller, $error = '') {
 		if ($this->blackHoleCallback == null) {
-			$code = 404;
-			if ($error == 'login') {
-				$code = 401;
-				$controller->header($this->loginRequest());
-			}
-			return $controller->redirect(null, $code, true);
+			throw new BadRequestException(__d('cake_dev', 'The request has been black-holed'));
 		} else {
 			return $this->_callback($controller, $this->blackHoleCallback, array($error));
 		}
@@ -374,7 +380,12 @@ class SecurityComponent extends Component {
 				if ($this->Session->check('_Token')) {
 					$tData = $this->Session->read('_Token');
 
-					if (!empty($tData['allowedControllers']) && !in_array($this->request->params['controller'], $tData['allowedControllers']) || !empty($tData['allowedActions']) && !in_array($this->request->params['action'], $tData['allowedActions'])) {
+					if (
+						!empty($tData['allowedControllers']) && 
+						!in_array($this->request->params['controller'], $tData['allowedControllers']) || 
+						!empty($tData['allowedActions']) && 
+						!in_array($this->request->params['action'], $tData['allowedActions'])
+					) {
 						if (!$this->blackHole($controller, 'auth')) {
 							return null;
 						}
@@ -424,8 +435,8 @@ class SecurityComponent extends Component {
 		$multi = array();
 
 		foreach ($fieldList as $i => $key) {
-			if (preg_match('/\.\d+$/', $key)) {
-				$multi[$i] = preg_replace('/\.\d+$/', '', $key);
+			if (preg_match('/(\.\d+)+$/', $key)) {
+				$multi[$i] = preg_replace('/(\.\d+)+$/', '', $key);
 				unset($fieldList[$i]);
 			}
 		}

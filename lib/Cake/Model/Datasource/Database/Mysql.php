@@ -147,8 +147,13 @@ class Mysql extends DboSource {
 			if (!empty($config['encoding'])) {
 				$flags[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES ' . $config['encoding'];
 			}
+			if (empty($config['unix_socket'])) {
+				$dsn = "mysql:host={$config['host']};port={$config['port']};dbname={$config['database']}";
+			} else {
+				$dsn = "mysql:unix_socket={$config['unix_socket']};dbname={$config['database']}";
+			}
 			$this->_connection = new PDO(
-				"mysql:host={$config['host']};port={$config['port']};dbname={$config['database']}",
+				$dsn,
 				$config['login'],
 				$config['password'],
 				$flags
@@ -176,7 +181,7 @@ class Mysql extends DboSource {
  * Returns an array of sources (tables) in the database.
  *
  * @param mixed $data
- * @return array Array of tablenames in the database
+ * @return array Array of table names in the database
  */
 	public function listSources($data = null) {
 		$cache = parent::listSources();
@@ -233,7 +238,7 @@ class Mysql extends DboSource {
  * @return mixed array with results fetched and mapped to column names or false if there is no results left to fetch
  */
 	public function fetchResult() {
-		if ($row = $this->_result->fetch()) {
+		if ($row = $this->_result->fetch(PDO::FETCH_NUM)) {
 			$resultRow = array();
 			foreach ($this->map as $col => $meta) {
 				list($table, $column, $type) = $meta;
@@ -287,19 +292,21 @@ class Mysql extends DboSource {
 /**
  * Returns an array of the fields in given table name.
  *
- * @param Model $model Name of database table to inspect or model instance
+ * @param Model|string $model Name of database table to inspect or model instance
  * @return array Fields in table. Keys are name and type
  * @throws CakeException
  */
-	public function describe(Model $model) {
+	public function describe($model) {
 		$cache = parent::describe($model);
 		if ($cache != null) {
 			return $cache;
 		}
+		$table = $this->fullTableName($model);
+
 		$fields = false;
-		$cols = $this->_execute('SHOW FULL COLUMNS FROM ' . $this->fullTableName($model));
+		$cols = $this->_execute('SHOW FULL COLUMNS FROM ' . $table);
 		if (!$cols) {
-			throw new CakeException(__d('cake_dev', 'Could not describe table for %s', $model->name));
+			throw new CakeException(__d('cake_dev', 'Could not describe table for %s', $table));
 		}
 
 		foreach ($cols as $column) {
@@ -536,11 +543,11 @@ class Mysql extends DboSource {
 	}
 
 /**
- * Generate MySQL table parameter alteration statementes for a table.
+ * Generate MySQL table parameter alteration statements for a table.
  *
  * @param string $table Table to alter parameters for.
  * @param array $parameters Parameters to add & drop.
- * @return array Array of table property alteration statementes.
+ * @return array Array of table property alteration statements.
  * @todo Implement this method.
  */
 	protected function _alterTableParameters($table, $parameters) {
@@ -560,7 +567,7 @@ class Mysql extends DboSource {
 	protected function _alterIndexes($table, $indexes) {
 		$alter = array();
 		if (isset($indexes['drop'])) {
-			foreach($indexes['drop'] as $name => $value) {
+			foreach ($indexes['drop'] as $name => $value) {
 				$out = 'DROP ';
 				if ($name == 'PRIMARY') {
 					$out .= 'PRIMARY KEY';
@@ -596,39 +603,40 @@ class Mysql extends DboSource {
  * Returns an detailed array of sources (tables) in the database.
  *
  * @param string $name Table name to get parameters
- * @return array Array of tablenames in the database
+ * @return array Array of table names in the database
  */
 	public function listDetailedSources($name = null) {
 		$condition = '';
 		$params = array();
 		if (is_string($name)) {
-			$condition = ' WHERE name = ?' ;
-			$params = array($name);
+				$condition = ' WHERE name = ' . $this->value($name);
+				$params = array($name);
 		}
-		$result = $this->_execute('SHOW TABLE STATUS ' . $condition, $params);
+		$result = $this->_connection->query('SHOW TABLE STATUS ' . $condition, PDO::FETCH_ASSOC);
 
 		if (!$result) {
-			$result->closeCursor();
-			return array();
+				$result->closeCursor();
+				return array();
 		} else {
-			$tables = array();
-			while ($row = $result->fetch()) {
-				$tables[$row->Name] = (array) $row;
-				unset($tables[$row->Name]['queryString']);
-				if (!empty($row->Collation)) {
-					$charset = $this->getCharsetName($row->Collation);
-					if ($charset) {
-						$tables[$row->Name]['charset'] = $charset;
-					}
+				$tables = array();
+				foreach ($result as $row) {
+						$tables[$row['Name']] = (array) $row;
+						unset($tables[$row['Name']]['queryString']);
+						if (!empty($row['Collation'])) {
+								$charset = $this->getCharsetName($row['Collation']);
+								if ($charset) {
+										$tables[$row['Name']]['charset'] = $charset;
+								}
+						}
 				}
-			}
-			$result->closeCursor();
-			if (is_string($name) && isset($tables[$name])) {
-				return $tables[$name];
-			}
-			return $tables;
+				$result->closeCursor();
+				if (is_string($name) && isset($tables[$name])) {
+						return $tables[$name];
+				}
+				return $tables;
 		}
 	}
+
 
 /**
  * Converts database-layer column types to basic types

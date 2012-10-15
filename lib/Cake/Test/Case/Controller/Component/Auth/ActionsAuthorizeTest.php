@@ -1,5 +1,8 @@
 <?php
 /**
+ * ActionsAuthorizeTest file
+ *
+ * PHP 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright 2005-2011, Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -23,7 +26,7 @@ App::uses('CakeResponse', 'Network');
 class ActionsAuthorizeTest extends CakeTestCase {
 
 /**
- * setup
+ * setUp
  *
  * @return void
  */
@@ -74,7 +77,7 @@ class ActionsAuthorizeTest extends CakeTestCase {
 			->method('check')
 			->with($user, '/controllers/Posts/index')
 			->will($this->returnValue(false));
-	
+
 		$this->assertFalse($this->auth->authorize($user['User'], $request));
 	}
 
@@ -103,8 +106,38 @@ class ActionsAuthorizeTest extends CakeTestCase {
 			->method('check')
 			->with($user, '/controllers/Posts/index')
 			->will($this->returnValue(true));
-	
+
 		$this->assertTrue($this->auth->authorize($user['User'], $request));
+	}
+
+/**
+ * testAuthorizeSettings
+ *
+ * @return void
+ */
+	public function testAuthorizeSettings() {
+		$request = new CakeRequest('/posts/index', false);
+		$request->addParams(array(
+			'plugin' => null,
+			'controller' => 'posts',
+			'action' => 'index'
+		));
+
+		$this->_mockAcl();
+
+		$this->auth->settings['userModel'] = 'TestPlugin.TestPluginAuthUser';
+		$user = array(
+			'id' => 1,
+			'user' => 'mariano'
+		);
+
+		$expected = array('TestPlugin.TestPluginAuthUser' => array('id' => 1, 'user' => 'mariano'));
+		$this->Acl->expects($this->once())
+			->method('check')
+			->with($expected, '/controllers/Posts/index')
+			->will($this->returnValue(true));
+
+		$this->assertTrue($this->auth->authorize($user, $request));
 	}
 
 /**

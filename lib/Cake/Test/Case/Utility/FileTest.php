@@ -45,12 +45,12 @@ class FileTest extends CakeTestCase {
 	}
 
 /**
- * tear down for test.
+ * tearDown method
  *
  * @return void
  */
-	public function teardown() {
-		parent::teardown();
+	public function tearDown() {
+		parent::tearDown();
 		$this->File->close();
 		unset($this->File);
 	}
@@ -65,55 +65,55 @@ class FileTest extends CakeTestCase {
 
 		$result = $this->File->pwd();
 		$expecting = $file;
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->name;
 		$expecting = basename(__FILE__);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->info();
 		$expecting = array(
 			'dirname' => dirname(__FILE__), 'basename' => basename(__FILE__),
-			'extension' => 'php', 'filename' =>'FileTest'
+			'extension' => 'php', 'filename' => 'FileTest'
 		);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->ext();
 		$expecting = 'php';
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->name();
 		$expecting = 'FileTest';
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->md5();
 		$expecting = md5_file($file);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->md5(true);
 		$expecting = md5_file($file);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->size();
 		$expecting = filesize($file);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->owner();
 		$expecting = fileowner($file);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->group();
 		$expecting = filegroup($file);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->Folder();
-		$this->assertIsA($result, 'Folder');
+		$this->assertInstanceOf('Folder', $result);
 
 		$this->skipIf(DIRECTORY_SEPARATOR === '\\', 'File permissions tests not supported on Windows.');
 
 		$result = $this->File->perms();
-		$expecting = '0644';
-		$this->assertEqual($result, $expecting);
+		$expecting = decoct(0644 & ~umask());
+		$this->assertEquals($expecting, $result);
 	}
 
 /**
@@ -127,24 +127,24 @@ class FileTest extends CakeTestCase {
 
 		$result = $this->File->read();
 		$expecting = file_get_contents(__FILE__);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 		$this->assertTrue(!is_resource($this->File->handle));
 
 		$this->File->lock = true;
 		$result = $this->File->read();
 		$expecting = file_get_contents(__FILE__);
-		$this->assertEqual($result, trim($expecting));
+		$this->assertEquals($result, trim($expecting));
 		$this->File->lock = null;
 
 		$data = $expecting;
 		$expecting = substr($data, 0, 3);
 		$result = $this->File->read(3);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 		$this->assertTrue(is_resource($this->File->handle));
 
 		$expecting = substr($data, 3, 3);
 		$result = $this->File->read(3);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 	}
 
 /**
@@ -165,18 +165,18 @@ class FileTest extends CakeTestCase {
 
 		$result = $this->File->offset();
 		$expecting = 0;
-		$this->assertIdentical($result, $expecting);
+		$this->assertSame($result, $expecting);
 
 		$data = file_get_contents(__FILE__);
 		$success = $this->File->offset(5);
 		$expecting = substr($data, 5, 3);
 		$result = $this->File->read(3);
 		$this->assertTrue($success);
-		$this->assertEqual($result, $expecting);
+		$this->assertEquals($expecting, $result);
 
 		$result = $this->File->offset();
 		$expecting = 5+3;
-		$this->assertIdentical($result, $expecting);
+		$this->assertSame($result, $expecting);
 	}
 
 /**
@@ -226,7 +226,7 @@ class FileTest extends CakeTestCase {
  * @return void
  */
 	public function testCreate() {
-		$tmpFile = TMP.'tests'.DS.'cakephp.file.test.tmp';
+		$tmpFile = TMP.'tests' . DS . 'cakephp.file.test.tmp';
 		$File = new File($tmpFile, true, 0777);
 		$this->assertTrue($File->exists());
 	}
@@ -239,7 +239,7 @@ class FileTest extends CakeTestCase {
 	public function testOpeningNonExistantFileCreatesIt() {
 		$someFile = new File(TMP . 'some_file.txt', false);
 		$this->assertTrue($someFile->open());
-		$this->assertEqual($someFile->read(), '');
+		$this->assertEquals('', $someFile->read());
 		$someFile->close();
 		$someFile->delete();
 	}
@@ -257,11 +257,11 @@ class FileTest extends CakeTestCase {
 		} else {
 			$expected = "some\nvery\ncool\nteststring here\n\n\nfor\n\n\n\n\nhere";
 		}
-		$this->assertIdentical(File::prepare($string), $expected);
+		$this->assertSame(File::prepare($string), $expected);
 
 		$expected = "some\r\nvery\r\ncool\r\nteststring here\r\n\r\n\r\n";
 		$expected .= "for\r\n\r\n\r\n\r\n\r\nhere";
-		$this->assertIdentical(File::prepare($string, true), $expected);
+		$this->assertSame(File::prepare($string, true), $expected);
 	}
 
 /**
@@ -309,10 +309,11 @@ class FileTest extends CakeTestCase {
  * @return void
  */
 	public function testLastAccess() {
+		$ts = time();
 		$someFile = new File(TMP . 'some_file.txt', false);
 		$this->assertFalse($someFile->lastAccess());
 		$this->assertTrue($someFile->open());
-		$this->assertEqual($someFile->lastAccess(), time());
+		$this->assertTrue($someFile->lastAccess() >= $ts);
 		$someFile->close();
 		$someFile->delete();
 	}
@@ -323,12 +324,13 @@ class FileTest extends CakeTestCase {
  * @return void
  */
 	public function testLastChange() {
+		$ts = time();
 		$someFile = new File(TMP . 'some_file.txt', false);
 		$this->assertFalse($someFile->lastChange());
 		$this->assertTrue($someFile->open('r+'));
-		$this->assertEqual($someFile->lastChange(), time());
+		$this->assertTrue($someFile->lastChange() >= $ts);
 		$someFile->write('something');
-		$this->assertEqual($someFile->lastChange(), time());
+		$this->assertTrue($someFile->lastChange() >= $ts);
 		$someFile->close();
 		$someFile->delete();
 	}
@@ -355,7 +357,7 @@ class FileTest extends CakeTestCase {
 			$r = $TmpFile->write($data);
 			$this->assertTrue($r);
 			$this->assertTrue(file_exists($tmpFile));
-			$this->assertEqual($data, file_get_contents($tmpFile));
+			$this->assertEquals($data, file_get_contents($tmpFile));
 			$this->assertTrue(is_resource($TmpFile->handle));
 			$TmpFile->close();
 
@@ -385,8 +387,8 @@ class FileTest extends CakeTestCase {
 			$r = $TmpFile->append($fragment);
 			$this->assertTrue($r);
 			$this->assertTrue(file_exists($tmpFile));
-			$data = $data.$fragment;
-			$this->assertEqual($data, file_get_contents($tmpFile));
+			$data = $data . $fragment;
+			$this->assertEquals($data, file_get_contents($tmpFile));
 			$TmpFile->close();
 		}
 	}
@@ -428,9 +430,9 @@ class FileTest extends CakeTestCase {
 		if (!file_exists($tmpFile)) {
 			touch($tmpFile);
 		}
-		$file =& new File($tmpFile);
-		$file->read();
-		$this->assertTrue($file->delete());
+		$File =& new File($tmpFile);
+		$File->read();
+		$this->assertTrue($File->delete());
 	}
 
 /**
