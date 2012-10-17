@@ -46,7 +46,11 @@ a:hover{color:#ff0000;}
 .greenpannel .bottom{width:100%;height:12px;clear:both;overflow:hidden;background:#35A547;}
 .greenpannel .bottom .left{width:100%;height:12px;clear:both;overflow:hidden;background:url(/wczhs/img/greenpannel_bottom_left.jpg) left no-repeat;}
 .greenpannel .bottom .right{width:100%;height:12px;clear:both;overflow:hidden;background:url(/wczhs/img/greenpannel_bottom_right.jpg) right no-repeat;}
-.title2{width:105px;height:39px;margin-left:12px;clear:none;overflow:hidden;float:left;background:url(/wczhs/img/title_02.jpg) no-repeat;}
+
+.title2{width:422px;height:26px;margin-left:12px;clear:none;overflow:hidden;float:left;background:url(/wczhs/img//title_02.jpg) no-repeat;text-align:right;padding-top:13px;}
+.title2 a{color:#ffffff}
+.title2 a:hover{color:#ff0000}
+
 .indexhuodong{width:472px;height:189px;clear:both;overflow:hidden;padding:0px 5px 0px 5px;background:#35A547;position:relative;}
 .indexhuodong .showpic{width:231px;height:187px;left:10px;top:0px;z-index:1;border:1px solid #000;position:absolute;}
 .indexhuodong .showwords{width:242px;height:187px;right:12px;top:0px;z-index:1;position:absolute;}
