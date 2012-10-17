@@ -23,7 +23,7 @@ class BlogController extends BlogAppController {
 	public $uses = array('Menu');
 
 	public function index() {
-
+        //TODO:ÔõÃ´×öÄØ£¿
 	}
 
 }
