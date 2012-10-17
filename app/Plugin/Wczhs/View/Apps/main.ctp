@@ -59,7 +59,7 @@ $this->Html->script(array('/wczhs/js/AutoChangePhoto', '/wczhs/js/MSClass', '/js
     <div class="indexmiddel">
         <div class="greenpannel">
             <div class="title">
-                <div class="left"><div class="right"><div class="title2"></div></div></div>
+                <div class="left"><div class="right"><div class="title2"><a href="/app/news/403/最新活动">更多</a></div></div></div>
             </div>
             <div class="indexhuodong">
                 <!--最新活动B-->
