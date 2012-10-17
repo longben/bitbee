@@ -1,4 +1,4 @@
-<script charset="utf-8" src="/js/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/js/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="/js/kindeditor/lang/zh_CN.js"></script>
 
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
@@ -49,7 +49,7 @@
     var editor = KindEditor.create('textarea[id="PostPostContent"]', {uploadJson: '/platforms/upload.json?u=<?=$this->Session->read('Auth.User.User.id')?>',allowFileManager : true});
 
     function newItem(){
-        editor.remove();
+        //editor.remove(); 编辑器升级修复BUG，所以不需要删除了。
         $('#dlg').dialog('open').dialog('setTitle','新增');
         $('#fm').form('clear');
         url = '/admin/posts/add/<?=$category_id?>';
@@ -61,7 +61,7 @@
 
     function editItem(){
 
-        editor.remove();
+        //editor.remove(); 编辑器升级修复BUG，所以不需要删除了。
         var row = $('#dg').datagrid('getSelected');
 
         /**

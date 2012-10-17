@@ -1,4 +1,4 @@
-<script charset="utf-8" src="/js/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/js/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="/js/kindeditor/lang/zh_CN.js"></script>
 
 <style>
