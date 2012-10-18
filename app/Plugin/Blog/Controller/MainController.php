@@ -1,10 +1,10 @@
 <?php
 App::uses('BlogAppController', 'Blog.Controller');
 /**
- * Menus Controller
+ * Main Controller
  *
  */
-class BlogController extends BlogAppController {
+class MainController extends BlogAppController {
 
 /**
  * Controller name
@@ -12,7 +12,7 @@ class BlogController extends BlogAppController {
  * @var string
  * @access public
  */
-	public $name = 'Blog';
+	public $name = 'Main';
 
 /**
  * Models used by the Controller
@@ -22,8 +22,8 @@ class BlogController extends BlogAppController {
  */
 	public $uses = array('Menu');
 
-	public function index() {
-        //TODO:ÔõÃ´×öÄØ£¿
+	public function index($username) {
+        $this->set('username', $username);
 	}
 
 }

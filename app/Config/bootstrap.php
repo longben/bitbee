@@ -100,4 +100,4 @@ define('UPLOAD_VIEW_PATH', '/upload/user/'); //用户上传WEB访问目录
 define('ELEMENT_PATH', APP.'View'.DS.'Elements'.DS);
 
 CakePlugin::load('Wczhs', array('bootstrap' => false, 'routes' => true));
-CakePlugin::load('Blog', array('bootstrap' => false, 'routes' => false));
+CakePlugin::load('Blog', array('bootstrap' => false, 'routes' => true));

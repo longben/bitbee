@@ -71,5 +71,18 @@ class Menu extends BlogAppModel {
 			'finderQuery' => '',
 			'counterQuery' => '',
 		),
+		'User' => array(
+			'className' => 'User',
+			'foreignKey' => 'user_id',
+			'dependent' => true,
+			'conditions' => '',
+			'fields' => '',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => '',
+		),
 	);
 }
