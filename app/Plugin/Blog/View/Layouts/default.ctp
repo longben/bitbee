@@ -162,7 +162,16 @@
                 </div><!-- #content -->
             </div><!-- #primary -->
 
+
+
             <div id="secondary" class="widget-area" role="complementary">
+                <aside class="widget widget_search" id="search-2">	<form action="http://wordpress/" id="searchform" method="get">
+                    <label class="assistive-text" for="s">搜索</label>
+                    <input type="text" placeholder="搜索" id="s" name="s" class="field">
+                    <input type="submit" value="搜索" id="searchsubmit" name="submit" class="submit">
+                </form>
+                </aside>
+
                 <aside id="calendar-3" class="widget widget_calendar"><h3 class="widget-title">&nbsp;</h3><div id="calendar_wrap"><table id="wp-calendar">
                         <caption>2012 年十月</caption>
                         <thead>
@@ -244,7 +253,7 @@
 
 
         <div id="site-generator">
-            <a href="http://wordpress.org:/" title="" rel="generator">Proudly powered by </a>
+            <a href="http://www.wczhs.com" title="" rel="generator">&copyright 2010-2012 All Rights Reserved. 成都五彩智慧树文化传播有限公司 版权信息</a>
         </div>
         </footer><!-- #colophon -->
     </div><!-- #page -->
