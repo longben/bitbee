@@ -20,10 +20,10 @@ class MainController extends BlogAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Menu');
+	public $uses = array('Menu','User');
 
 	public function index($username) {
-        $this->set('username', $username);
+        $this->set( 'user', $this->User->read(null, $username) );
 	}
 
 }

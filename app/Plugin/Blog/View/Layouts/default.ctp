@@ -13,7 +13,7 @@
 <!--<![endif]-->
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
-<title>赵梓佑 | 洋洋小朋友的博客</title>
+<title><?php echo $user['Meta']['site_title'] . ' | ' . $user['Meta']['site_tagline']?></title>
 <link rel="stylesheet" type="text/css" media="all" href="/blog/css/style.css" />
 <!--[if lt IE 9]>
 <script src="/blog/js/html5.js" type="text/javascript"></script>
@@ -24,8 +24,8 @@
     <div id="page" class="hfeed">
         <header id="branding" role="banner">
         <hgroup>
-        <h1 id="site-title"><span><a href="http://www.zhaoziyou.com/" title="赵梓佑" rel="home">赵梓佑</a></span></h1>
-        <h2 id="site-description">洋洋小朋友的博客</h2>
+        <h1 id="site-title"><span><a href="http://www.zhaoziyou.com/" title="赵梓佑" rel="home"><?php echo $user['Meta']['site_title']?></a></span></h1>
+        <h2 id="site-description"><?php echo $user['Meta']['site_tagline']?></h2>
         </hgroup>
 
         <a href="http://www.zhaoziyou.com/">
