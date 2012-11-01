@@ -128,7 +128,7 @@
                     $.post("/admin/users/reset_pwd", {id:row.User.id},function(result){
                         var result = eval('('+result+')');
                         if (result.success){
-                            $.messager.alert('密码重置','密码重置成功！<br/>密码重置为 <font color="red"><b>aaaaaa</b></font>','info');
+                            $.messager.alert('密码重置','密码重置成功！<br/>密码重置为 <font color="red"><b>123456</b></font>','info');
                         } else {
                             $.messager.show({
                                 title: 'Error',
