@@ -60,13 +60,16 @@ class MainController extends BlogAppController {
             $header_img = $array_header[array_rand($array_header)];
         }
 
-        $this->set(compact( 'user', 'post',  'myClass',  'header_img' ));
+        $comments = $this->Comment->find('all', array('conditions' => array('Comment.post_id' => $post_id)));
+
+        $this->set(compact( 'user', 'post',  'myClass',  'header_img', 'comments' ));
 	}
 
 	public function comment() {
         if ( !empty( $this->request->data ) ) {
             $this->Comment->create();
             if ( $this->Comment->save( $this->request->data ) ) {
+                $this->redirect($this->referer());
             } else {
             }
         }

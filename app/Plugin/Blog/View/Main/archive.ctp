@@ -26,6 +26,24 @@
             </article><!-- #post -->
 
             <div id="comments">
+
+                <ol class="commentlist">
+                    <?php foreach($comments as $comment):?>
+                    <li id="li-comment-2" class="comment even thread-even depth-1">
+                    <article class="comment" id="comment-2">
+                    <footer class="comment-meta">
+                    <div class="comment-author vcard">
+                        <img width="68" height="68" class="avatar photo" src="/blog/img/gravatar.png" alt="">
+                        <span class="fn"><?=$comment['Comment']['author']?> 说：</span>
+                    </div><!-- .comment-author .vcard -->
+                    </footer>
+                    <div class="comment-content"><p><?=$comment['Comment']['content']?></p></div>
+                    </article><!-- #comment-## -->
+                    </li>
+                    <?php endforeach;?>
+                </ol>
+
+
                 <div id="respond">
                     <h3 id="reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/index.php/archives/155#respond" style="display:none;">取消回复</a></small></h3>
                     <form action="/blog/main/comment" method="post" id="commentform">
@@ -46,7 +64,7 @@
                         </p>
                         <p class="form-submit">
                         <input name="submit" type="submit" id="submit" value="发表评论" />
-                        <input type='hidden' name='data[Comment][post_id]' value='155' id='comment_post_id' />
+                        <input type='hidden' name='data[Comment][post_id]' value='<?=$post['Post']['id']?>' id='comment_post_id' />
                         <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
                         </p>
                     </form>
