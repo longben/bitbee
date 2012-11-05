@@ -20,7 +20,7 @@ class MainController extends BlogAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Menu', 'User', 'Post');
+	public $uses = array('Menu', 'User', 'Post', 'Comment');
 
 
     public function index($username) {
@@ -61,6 +61,15 @@ class MainController extends BlogAppController {
         }
 
         $this->set(compact( 'user', 'post',  'myClass',  'header_img' ));
+	}
+
+	public function comment() {
+        if ( !empty( $this->request->data ) ) {
+            $this->Comment->create();
+            if ( $this->Comment->save( $this->request->data ) ) {
+            } else {
+            }
+        }
 	}
 
 
