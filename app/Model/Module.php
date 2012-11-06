@@ -76,15 +76,16 @@ class Module extends AppModel {
 						  
 			$_data = $this->query($sql);
 
+            $_hierarchy = 1;
 			if(empty($this->data['Module']['parent_id'])){
 			   $_id = $_data[0][0]['cnt'] ;
+               $_hierarchy = 1;
 			}else{
 			   $_id = $this->data['Module']['parent_id']. str_pad($_data[0][0]['cnt'], 2 , "0", STR_PAD_LEFT);
+               $this->id = $this->data['Module']['parent_id'];
+               $_hierarchy = $this->field('hierarchy') + 1;
 			}
 			
-			$this->id = $this->data['Module']['parent_id'];
-			$_hierarchy = $this->field('hierarchy') + 1;
-
 			$this->query("update modules set id = $_id, hierarchy = $_hierarchy  where id =$module_id");
 			
 			if(!empty($this->data['Module']['parent_id'])){
