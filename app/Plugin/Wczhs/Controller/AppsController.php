@@ -313,5 +313,11 @@ class AppsController extends WczhsAppController {
     }
 
 
+    //博客
+    public function blog(){
+        $this->layout = 'website';
+    }
+
+
 }
 ?>
