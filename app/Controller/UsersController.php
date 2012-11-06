@@ -185,5 +185,23 @@ class UsersController extends AppController {
 
         return new CakeResponse( array('body' => json_encode($data)) );
     }
+	
+    public function avatar(){
+        $this->autoRender = false;
+        if($this->Session->check('id')){
+            $upload_path = AVATAR_UPLOAD_PATH;
+            $id = $this->Session->read('id');
+            $filename="$id.jpg";//要生成的图片名字
+            if (!empty($GLOBALS["HTTP_RAW_POST_DATA"])){
+                $img = $GLOBALS["HTTP_RAW_POST_DATA"];//得到post过来的二进制原始数据
+                $file = fopen($upload_path.$filename,"w");//打开文件准备写入
+                if(fwrite($file,$img)){//写入
+                    $this->User->query("UPDATE user_metas SET avatar = '$filename' WHERE id = $id");
+                }
+                fclose($file);//关闭
+            }
+            return new CakeResponse( array('body' => $filename) );
+        }
+    }	
 
 }

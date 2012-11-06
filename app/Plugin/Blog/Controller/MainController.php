@@ -26,12 +26,10 @@ class MainController extends BlogAppController {
     public function index($username) {
         $user = $this->User->read(null, $username);
 
-        $posts = $this->Post->find('all');
-
         $myClass = "home blog two-column right-sidebar";
 
         $conditions = array(
-            'conditions' => array('Post.post_status' => 'publish'), 
+            'conditions' => array('Post.post_status' => 'publish', 'Meta.category' => '1102', 'Post.post_author' => $username), 
             'recursive' => 0, //int
             'order' => 'Meta.elite, Post.post_date desc',
             'limit' => 6
@@ -72,6 +70,27 @@ class MainController extends BlogAppController {
                 $this->redirect($this->referer());
             } else {
             }
+        }
+	}
+
+	public function admin_setting() {
+        $this->set('user', $this->User->read( null, $this->Session->read('Auth.User.User.id') ));
+        if ( !empty( $this->request->data ) ) {
+            $this->request->data['User']['id'] = $this->Session->read('Auth.User.User.id');;
+
+            $this->User->create();
+            if ( $this->User->saveAll( $this->request->data ) ) {
+                $this->redirect($this->referer());
+            } else {
+            }
+        }
+	}
+
+	public function admin_write() {
+        $user = $this->User->read(null, $this->Session->read('Auth.User.User.id'));
+        if(empty($user['Meta']['site_title'])){
+            $this->Session->setFlash("请先设置博客基本信息！");
+            $this->redirect('/admin/blog/main/setting');
         }
 	}
 

@@ -31,7 +31,7 @@
 
                     <footer class="entry-meta">
                     <span class="comments-link">
-                        <a href="archives/143#respond" title="《<?php echo $post['Post']['post_title'];?>》上的评论"><span class="leave-reply">评论</span></a>
+                        <a href="/blog/main/archive/<?=$user['User']['id']?>/<?=$post['Post']['id']?>#respond" title="《<?php echo $post['Post']['post_title'];?>》上的评论"><span class="leave-reply">评论</span></a>
                     </span>
                     </footer><!-- #entry-meta -->
 

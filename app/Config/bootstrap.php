@@ -97,6 +97,8 @@ if (file_exists(APP . 'Config' . DS . 'settings.yml')) {
 define('UPLOAD_PATH', APP.'webroot'.DS.'upload'.DS.'user'.DS); //用户上传目录
 define('UPLOAD_VIEW_PATH', '/upload/user/'); //用户上传WEB访问目录
 
+define('AVATAR_UPLOAD_PATH', APP.'webroot'.DS.'upload'.DS.'user'.DS.'avatar'.DS);
+
 define('ELEMENT_PATH', APP.'View'.DS.'Elements'.DS);
 
 CakePlugin::load('Wczhs', array('bootstrap' => false, 'routes' => true));
