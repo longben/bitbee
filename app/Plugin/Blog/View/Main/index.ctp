@@ -5,8 +5,13 @@
 
                     <nav id="nav-above">
                     <h3 class="assistive-text">Post navigation</h3>
-                    <div class="nav-previous"><a href="http://www.zhaoziyou.com/index.php/page/2" ><span class="meta-nav">&larr;</span> Older posts</a></div>
-                    <div class="nav-next"></div>
+					<div class="paging">
+					<?php
+						echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+						echo $this->Paginator->numbers(array('separator' => ''));
+						echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+					?>
+					</div>
                     </nav><!-- #nav-above -->
 
                     <?php foreach($posts as $post):?>
@@ -41,8 +46,13 @@
 
                     <nav id="nav-below">
                     <h3 class="assistive-text">Post navigation</h3>
-                    <div class="nav-previous"><a href="" ><span class="meta-nav">&larr;</span> Older posts</a></div>
-                    <div class="nav-next"></div>
+					<div class="paging">
+					<?php
+						echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
+						echo $this->Paginator->numbers(array('separator' => ''));
+						echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
+					?>
+					</div>
                     </nav><!-- #nav-above -->
 
 
@@ -52,7 +62,7 @@
 
 
             <div id="secondary" class="widget-area" role="complementary">
-                <aside class="widget widget_search" id="search-2">	<form action="http://wordpress/" id="searchform" method="get">
+                <aside class="widget widget_search" id="search-2">	<form action="/blog/<?=$user['User']['id']?>" id="searchform" method="get">
                     <label class="assistive-text" for="s">搜索</label>
                     <input type="text" placeholder="搜索" id="s" name="s" class="field">
                     <input type="submit" value="搜索" id="searchsubmit" name="submit" class="submit">
@@ -70,7 +80,7 @@
                 <aside id="meta-3" class="widget widget_meta">
                 <h3 class="widget-title">功能</h3>
                 <ul>
-                    <li><a href="/blog/login">登录</a></li>
+                    <li><a href="/login" target="_blank">登录</a></li>
                 </ul>
                 </aside>		
             </div><!-- #secondary .widget-area -->

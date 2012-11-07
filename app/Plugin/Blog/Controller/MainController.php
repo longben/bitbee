@@ -28,13 +28,13 @@ class MainController extends BlogAppController {
 
         $myClass = "home blog two-column right-sidebar";
 
-        $conditions = array(
-            'conditions' => array('Post.post_status' => 'publish', 'Meta.category' => '1102', 'Post.post_author' => $username), 
+        $this->paginate = array(
+            'conditions' => array('Post.post_status' => 'publish', 'Meta.category' => '1102', 'Post.post_author' => $username, empty($_GET['s'])?'1=1':"Post.post_title LIKE '%". $_GET['s'] ."%'"), 
             'recursive' => 0, //int
             'order' => 'Meta.elite, Post.post_date desc',
             'limit' => 6
         );
-        $posts = $this->Post->find('all', $conditions);
+        $this->set('posts', $this->paginate('Post'));
 
         $header_img = '';
         if(empty( $user['Meta']['site_header'] )){
@@ -42,7 +42,7 @@ class MainController extends BlogAppController {
             $header_img = $array_header[array_rand($array_header)];
         }
 
-        $this->set(compact( 'user', 'posts', 'myClass', 'header_img' ));
+        $this->set(compact( 'user', 'myClass', 'header_img' ));
 
 	}
 

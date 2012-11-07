@@ -30,7 +30,7 @@
 
         <img src="/blog/img/headers/<?php echo $header_img?>" width="1000" height="288" alt="" />
 
-        <form method="get" id="searchform" action="http://www.zhaoziyou.com/">
+        <form method="get" id="searchform" action="/blog/<?=$user['User']['id']?>">
             <label for="s" class="assistive-text">Search</label>
             <input type="text" class="field" name="s" id="s" placeholder="搜索" />
             <input type="submit" class="submit" name="submit" id="searchsubmit" value="Search" />
