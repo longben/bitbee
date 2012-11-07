@@ -6,17 +6,20 @@ echo $this->Html->css(array('/wczhs/css/jq-metro/jq-metro'), 'stylesheet', array
 <script type="text/javascript">
 $(document).ready(function () {
 
-    $("#metroaqui_novo").AddMetroDoubleWithTrailer('bt6', 'metro-azul', '/wczhs/css/jq-metro/admin.png', '五彩智慧树博客', '', 'metro-info');
+    $("#metroaqui_novo").AddMetroDoubleWithTrailer('bt6', 'metro-azul', '/wczhs/css/jq-metro/admin.png', '五彩智慧树博客', '', 'metro-verde');
     //$("#metroaqui_novo").AddMetroDoubleWithTrailerWithBG('bt6', '/upload/user/avatar/default.jpg', '五彩智慧树', 'alert("Text");', 'metro-azul');
 
-    $("#metroaqui_novo").AddMetroSimpleButton('bt1', 'metro-verde', '/wczhs/css/jq-metro/carta.png', '赵梓佑', 'gotoUrl("/blog/1");');
+    <?php foreach($users as $user):?>
+    <?php srand((double)microtime()*1000000);?>
+    $("#metroaqui_novo").AddMetroSimpleButton('bt1', '<?=$cssStyle[array_rand($cssStyle)]?>', '/wczhs/img/blog.png', '<?=$user['Meta']['site_title']?>', 'gotoUrl("/blog/<?=$user['User']['id']?>");');
+    <?php endforeach;?>
+
     $("#metroaqui_novo").AddMetroSimpleButton('bt2', 'metro-laranja', '/wczhs/css/jq-metro/carta.png', 'Laranja', 'alert("Laranja");');
-    $("#metroaqui_novo").AddMetroDoubleButton('bt4', 'metro-azul', '/wczhs/css/jq-metro/carta.png', 'Azul', 'alert("Azul");');
     $("#metroaqui_novo").AddMetroSimpleButton('bt5', 'metro-roxo', '/wczhs/css/jq-metro/carta.png', 'Laranja', 'alert("Laranja");');
     $("#metroaqui_novo").AddMetroSimpleButton('bt1', 'metro-vermelho', '/wczhs/css/jq-metro/admin.png', 'Teste Roger', '');
     $("#metroaqui_novo").AddMetroSimpleButton('bt2', 'metro-laranja', '/wczhs/css/jq-metro/carta.png', 'Laranja', '');
     $("#metroaqui_novo").AddMetroSimpleButton('bt1', 'metro-verde', '/wczhs/css/jq-metro/carta.png', 'Teste Roger', '');
-
+    $("#metroaqui_novo").AddMetroDoubleButton('bt4', 'metro-azul', '/wczhs/css/jq-metro/carta.png', 'Azul', 'alert("Azul");');
 
     $("#metroaqui").AddMetroDoubleButton('bt4', 'metro-azul', '/wczhs/css/jq-metro/carta.png', '2012', 'alert("Azul");');
     $("#metroaqui").AddMetroSimpleButton('bt3', 'metro-vermelho', '/wczhs/css/jq-metro/carta.png', '11', 'alert("Vermelho");');

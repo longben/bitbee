@@ -4,7 +4,7 @@ class AppsController extends WczhsAppController {
 
     public $name = 'Apps';
 
-    public $uses = array('Post', 'Attachment', 'Guestbook', 'CourseMembership');
+    public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'CourseMembership');
 
     public function beforeFilter() {
         parent::beforeFilter(); 
@@ -315,7 +315,19 @@ class AppsController extends WczhsAppController {
 
     //博客
     public function blog(){
+        $this->set('title_for_layout', '博客');
         $this->layout = 'website';
+        $this->paginate = array(
+            'conditions' => array('Meta.site_title IS NOT NULL'), 
+            'recursive' => 0, //int
+            //'order' => 'Guestbook.created desc',
+            'limit' => 11
+        );
+        $this->set('users', $this->paginate('User'));
+
+        $cssStyle = array( 'metro-roxo', 'metro-verde', 'metro-azul', 'metro-vermelho', 'metro-laranja');
+        $this->set('cssStyle', $cssStyle);
+
     }
 
 
