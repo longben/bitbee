@@ -60,7 +60,9 @@ class MainController extends BlogAppController {
 
         $comments = $this->Comment->find('all', array('conditions' => array('Comment.post_id' => $post_id)));
 
-        $this->set(compact( 'user', 'post',  'myClass',  'header_img', 'comments' ));
+        $neighbors = $this->Post->find('neighbors', array('field' => 'id', 'value' => $post_id, 'conditions' => array('Post.post_author' => $user_id, 'Meta.category' => 1102)));
+
+        $this->set(compact( 'user', 'post',  'myClass',  'header_img', 'comments' , 'neighbors'));
 	}
 
 	public function comment() {

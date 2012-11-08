@@ -4,8 +4,12 @@
 
             <nav id="nav-single">
             <h3 class="assistive-text">Post navigation</h3>
-            <span class="nav-previous"><a href="" rel="prev"><span class="meta-nav"> < </span>上一篇</a></span>
-            <span class="nav-next"></span>
+            <?php if(isset($neighbors['prev'])):?>
+            <span class="nav-previous"><a href="/blog/main/archive/<?=$user['User']['id']?>/<?=$neighbors['prev']['Post']['id']?>" rel="prev"><span class="meta-nav"></span>上一篇</a></span>
+            <?php endif;?>
+            <?php if(isset($neighbors['next'])):?>
+            <span class="nav-next"><a href="/blog/main/archive/<?=$user['User']['id']?>/<?=$neighbors['next']['Post']['id']?>" rel="prev"><span class="meta-nav"></span>下一篇</a></span>
+            <?php endif;?>
             </nav><!-- #nav-single -->
 
             <article class="post type-post status-publish format-standard hentry category-4 category-album">
