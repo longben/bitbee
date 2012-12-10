@@ -18,16 +18,16 @@
 </script>
 
 <div class="outdiv">
-    <div class="indexpro"><div class="title1C"></div>
+    <div class="indexpro"><div class="title1E"></div>
         <ul>
-            <li><a href=""><img src="/hy/img/cclass1.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass2.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/ctempclass1.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass4.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass5.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass6.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass7.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass8.jpg" border="0" /></a></li>
+            <li><a href=""><img src="/hy/img/class1.jpg" border="0" /></a></li>
+            <li><a href=""><img src="/hy/img/class2.jpg" border="0" /></a></li>
+            <li><a href=""><img src="/hy/img/tempclass1.jpg" border="0" /></a></li>
+            <li><a href=""><img src="/hy/img/class4.jpg" border="0" /></a></li>
+            <li><a href=""><img src="/hy/img/class5.jpg" border="0" /></a></li>
+            <li><a href=""><img src="/hy/img/class6.jpg" border="0" /></a></li>
+            <li><a href=""><img src="/hy/img/class7.jpg" border="0" /></a></li>
+            <li><a href=""><img src="/hy/img/class8.jpg" border="0" /></a></li>
         </ul>
     </div>
 
@@ -39,7 +39,7 @@
         <div class="indexright2">
 
             <div class="left">
-                <div class="titlebg"><div class="titleleft"><div class="titleright"><img src="/hy/img/ctitle02.jpg" border="0" /></div></div></div>
+                <div class="titlebg"><div class="titleleft"><div class="titleright"><img src="/hy/img/etitle02.jpg" border="0" /></div></div></div>
                 <div class="indexnewsList">
                     <ul>
                         <li><a href="">新闻资讯标题在这里</a></li>

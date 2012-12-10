@@ -101,5 +101,6 @@ define('AVATAR_UPLOAD_PATH', APP.'webroot'.DS.'upload'.DS.'user'.DS.'avatar'.DS)
 
 define('ELEMENT_PATH', APP.'View'.DS.'Elements'.DS);
 
-CakePlugin::load('Wczhs', array('bootstrap' => false, 'routes' => true));
-CakePlugin::load('Blog', array('bootstrap' => false, 'routes' => true));
+//CakePlugin::load('Wczhs', array('bootstrap' => false, 'routes' => false));
+//CakePlugin::load('Blog', array('bootstrap' => false, 'routes' => false));
+CakePlugin::load('Hy', array('bootstrap' => false, 'routes' => true));

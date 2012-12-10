@@ -5,10 +5,10 @@ App::uses('HyAppController', 'Hy.Controller');
  * App Controller
  *
  */
-class AppsController extends HyAppController {
+class EnglishController extends HyAppController {
 
 	public function index() {
-        $this->layout = "website";
+        $this->layout = "english";
 	}
 
 

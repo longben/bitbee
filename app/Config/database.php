@@ -5,9 +5,9 @@ class DATABASE_CONFIG {
 		'datasource' => 'HpMysql',
 		'persistent' => false,
 		'host' => 'localhost',
-		'login' => 'wczhs',
+		'login' => 'hy',
 		'password' => '6N9wBZ9JDWfhL9MN',
-		'database' => 'wczhs',
+		'database' => 'hy',
         'encoding' => 'utf8',
 	);
 }
