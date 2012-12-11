@@ -11,12 +11,14 @@
 
         <div class="bd">
             <ul>
-                <li><img src="/hy/img/temp1.jpg" /></li>
+                <?php foreach($covers as $cover):?>
+                <li><img src="/upload/user/images/<?=$cover['Attachment']['file_path']?>" width="1002" height="273" alt="<?=$cover['Attachment']['name']?>"/></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
 </div>
-<script>
+<script type="text/javascript">
     $(".slideBox").slide( { mainCell:".bd ul",effect:"top",autoPlay:true} );
 </script>
 <?php endif;?>
@@ -36,10 +38,24 @@
     </div>
 
     <div class="indexright">
-        <div class="titlebg"><div class="titleleft"><div class="titleright"><div class="titlewords"><span class="changtabover" id="smenu1" onclick="showtx('1')">產品特性1</span><span class="changtab" onclick="showtx('2')" id="smenu2">產品特性2</span><span class="changtab" onclick="showtx('3')" id="smenu3">產品特性3</span></div></div></div></div>
-        <div class="indexrightcon1" id="scon1"><img src="" width="120" height="119" align="left" style="margin-right:10px;" /><h1>彩用德国肖特(schott)玻璃精密研磨制造</h1>產品特性简要文字介绍在这里出现產品特性简要文字介绍在这里出现產品特性简要文字介绍產品特性简要文字介绍在这里出现產品特性简要文字介绍在这里出现產品特性简要文字介绍產品特性简要文字介绍在这里出现產品特性简要文字介绍在这里出现產品特性简要文字介绍</div>
-        <div class="indexrightcon1" id="scon2" style="display:none;"><img src="" width="120" height="119" align="left" style="margin-right:10px;" /><h1>彩用德国肖特(schott)玻璃精密研磨制造2</h1>產品特性简要文字介绍在这里出现產品特性简要文字介绍在这里出现產品特性简要文字介绍產品特性简要文字介绍在这里出现產品特性简要文字介绍在这里出现產品特性简要文字介绍產品特性简要文字介绍在这里出现產品特性简要文字介绍在这里出现產品特性简要文字介绍</div>
-        <div class="indexrightcon1" id="scon3" style="display:none"><img src="" width="120" height="119" align="left" style="margin-right:10px;" /><h1>彩用德国肖特(schott)玻璃精密研磨制造3</h1>產品特性简要文字介绍在这里出现產品特性简要文字介绍在这里出现產品特性简要文字介绍產品特性简要文字介绍在这里出现產品特性简要文字介绍在这里出现產品特性简要文字介绍產品特性简要文字介绍在这里出现產品特性简要文字介绍在这里出现產品特性简要文字介绍</div>
+        <div class="titlebg">
+            <div class="titleleft">
+                <div class="titleright">
+                    <div class="titlewords">
+                        <?php foreach($features as $i=>$feature):?>
+                        <span class="<?php echo $i==0?'changtabover':'changtab'?>" id="smenu<?=$i?>" onclick="showTab('<?=$i?>')"><?=$feature['Post']['post_title']?></span>
+                        <?php endforeach;?>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <?php foreach($features as $i=>$feature):?>
+        <div class="scon indexrightcon1" id="scon<?=$i?>" <?php echo $i==0?'':'style="display:none;"'?>>
+            <?php echo $feature['Post']['post_content'];?>
+        </div>
+        <?php endforeach;?>
+
         <div class="indexright2">
 
             <div class="left">
@@ -58,3 +74,12 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    function showTab(i){
+        $(".changtabover").attr('class', 'changtab');
+        $(".scon").attr('style', 'display:none');
+
+        $("#smenu" + i).attr('class', 'changtabover');
+        $("#scon" + i).attr('style', 'display:block');
+    }
+</script>

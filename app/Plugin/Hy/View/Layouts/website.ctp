@@ -71,14 +71,5 @@
     </div>
 </body>
 </html>
-<script>
-    function showtx(a){
-        for(i=1;i<4;i++){
-            document.getElementById("smenu"+i).className="changtab";
-            document.getElementById("scon"+i).style.display="none"
-        }
-        document.getElementById("smenu"+a).className="changtabover";
-        document.getElementById("scon"+a).style.display="block";
-    }
-</script>
+
 <?php echo $this->element('sql_dump'); ?>
