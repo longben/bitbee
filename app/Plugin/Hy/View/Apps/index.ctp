@@ -1,13 +1,16 @@
+<?php if(sizeof($covers) > 0):?>
 <div class="flashINDEX">
     <div id="slideBox" class="slideBox">
         <div class="hd">
-            <ul><li>1</li><li>2</li><li>3</li></ul>
+            <ul>
+                <?php for($i=1; $i<=sizeof($covers); $i++):?>
+                <li><?php echo $i;?></li>
+                <?php endfor;?>
+            </ul>
         </div>
 
         <div class="bd">
             <ul>
-                <li><img src="/hy/img/temp1.jpg" /></li>
-                <li><img src="/hy/img/temp1.jpg" /></li>
                 <li><img src="/hy/img/temp1.jpg" /></li>
             </ul>
         </div>
@@ -16,6 +19,7 @@
 <script>
     $(".slideBox").slide( { mainCell:".bd ul",effect:"top",autoPlay:true} );
 </script>
+<?php endif;?>
 
 <div class="outdiv">
     <div class="indexpro"><div class="title1C"></div>
