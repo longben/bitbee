@@ -14,6 +14,7 @@ $(document).ready(function () {
     $("#metroaqui_novo").AddMetroSimpleButton('bt1', '<?=$cssStyle[array_rand($cssStyle)]?>', '/wczhs/img/blog.png', '<?=$user['Meta']['site_title']?>', 'gotoUrl("/blog/<?=$user['User']['id']?>");');
     <?php endforeach;?>
 
+/* 正式运营起来，就有足够的班级支持，暂且屏蔽
     $("#metroaqui_novo").AddMetroSimpleButton('bt2', 'metro-laranja', '/wczhs/css/jq-metro/carta.png', 'Laranja', 'alert("Laranja");');
     $("#metroaqui_novo").AddMetroSimpleButton('bt5', 'metro-roxo', '/wczhs/css/jq-metro/carta.png', 'Laranja', 'alert("Laranja");');
     $("#metroaqui_novo").AddMetroSimpleButton('bt1', 'metro-vermelho', '/wczhs/css/jq-metro/admin.png', 'Teste Roger', '');
@@ -24,7 +25,7 @@ $(document).ready(function () {
     $("#metroaqui").AddMetroDoubleButton('bt4', 'metro-azul', '/wczhs/css/jq-metro/carta.png', '2012', 'alert("Azul");');
     $("#metroaqui").AddMetroSimpleButton('bt3', 'metro-vermelho', '/wczhs/css/jq-metro/carta.png', '11', 'alert("Vermelho");');
     $("#metroaqui").AddMetroSingleLabeledButton('bt6', 'metro-roxo', '/wczhs/css/jq-metro/carta.png', '30', 'alert("Vermelho");');	
-
+*/
 });
 
 function gotoUrl(url){
