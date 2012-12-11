@@ -71,8 +71,8 @@
 
     <div class="copyright" style="margin-top:8px;"> <a href="/app/main">首页</a> | <a href="/app/aboutus">关于我们</a> | <a href="/app/news">最新资讯</a> | <a href="/app/course">培训课程</a> | <a href="/app/student">学员天地</a> | <a href="/app/english">英语外教</a> | <a href="/app/joinus">加盟五彩智慧树</a> | <a href="/app/contact">联系我们</a> | <a href="/app/member">会员电子档案</a> | <a href="">五彩智慧树博客</a><br />
         <span style="color:#009ED1">&copy;2010-2012 All Rights Reserved. 成都五彩智慧树文化传播有限公司 版权信息<br />
-            咨询电话：15719473479  15882196132  85637352  地址：成都华阳缤纷广场二楼8号<br />
-            公交：华阳1路、2A路、4B路到音乐广场站下车</span></div>
+            咨询电话：15882196132  85637352  地址：成都华阳缤纷广场二楼8号<br />
+            公交：华阳1路、2A路、4B路到缤纷广场站下车</span></div>
     <?php echo $this->element('qq'); ?>
 </body>
 </html>
