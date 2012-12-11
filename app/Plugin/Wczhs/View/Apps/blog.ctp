@@ -50,8 +50,8 @@ function gotoUrl(url){
                     </div>
                 </div>
 
-                <div class="leftmenus">
-
+                <div class="leftmenus_blog">
+						<img src="/wczhs/img/blog_left.png" width="246" />
                 </div>
             </div>
             <div class="rightcon">

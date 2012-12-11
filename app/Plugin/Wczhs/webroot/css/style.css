@@ -88,6 +88,7 @@ a:hover{color:#ff0000;}
 .inpage .leftcon .leftmenus{width:258px;height:auto;clear:both;overflow:hidden;}
 .inpage .leftcon .leftmenus a{width:228px;height:32px;clear:both;overflow:hidden;float:left;padding:13px 0px 0px 30px;background:url(/wczhs/img/leftmenubg.gif) left no-repeat;text-decoration:none;color:#fff;font-family:Microsoft YaHei,simsun}
 .inpage .leftcon .leftmenus a:hover{background:url(/wczhs/img/leftmenu_over.gif) left no-repeat;}
+.inpage .leftcon .leftmenus_blog{width:258px;height:auto;clear:both;overflow:hidden;}
 .inpage .rightcon{width:742px;height:auto;clear:none;overflow:hidden;float:right;}
 .leftbottom{width:247px;heigth:11px;clear:both;overflow:hidden;float:left}
 .titleabout{width:93px;height:43px;margin-left:11px;clear:none;overflow:hidden;float:left;background:url(/wczhs/img/title_about.jpg) no-repeat;}
