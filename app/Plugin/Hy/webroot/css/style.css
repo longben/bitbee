@@ -36,7 +36,7 @@ h1{font-size:14px;color:#000000;font-family:'Microsoft YaHei', 微软雅黑, Ari
 .indexrightcon1{width:600px;height:119px;clear:both;overflow:hidden;padding:5px;line-height:170%;}
 .indexright2{width:600px;height:auto;clear:both;overflow:hidden;}
 .indexright2 .left{width:390px;height:auto;clear:none;overflow:hidden;float:left;}
-.indexright2 .flv{width:210px;height:150px;clear:none;overflow:hidden;background:#000;float:right;}
+.indexright2 .flv{background-image: url("/hy/img/video_frame.png"); background-repeat: no-repeat;width:210px;height:150px;clear:none;overflow:hidden;float:right;}
 .titlewords{width:400px;height:auto;clear:none;overflow:hidden;float:left;padding-top:12px;padding-left:20px;}
 .titlewords a{color:#000000;text-decoration:None;}
 .titlewords a:hover{color:#ff0000;}

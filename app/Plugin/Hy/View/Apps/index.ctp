@@ -68,7 +68,13 @@
                     </ul>
                 </div>
             </div>
-            <div class="flv"></div>
+            <div class="flv">
+                <div style="position: relative; left: 60px; top: 34px;">
+                    <a onclick="popup('#popup_video_home_orubase','#video_link1','http://www.youtube.com/embed/ESFmwhY8qS8')" id="video_link1" href="javascript:void(0)">
+                        <img onmouseover="mouseOverImage('#video_link1 img')" onmouseout="mouseOutImage('#video_link1 img')" src="/hy/img/play_normal.png" border="0">
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -80,5 +86,36 @@
 
         $("#smenu" + i).attr('class', 'changtabover');
         $("#scon" + i).attr('style', 'display:block');
+    }
+</script>
+
+<script type="text/javascript" language="javascript">
+    function mouseOverImage(videoid) {
+        var imageUrl = "/hy/img/play_hover.png";
+        $(videoid).attr("src", imageUrl);
+    }
+
+    function mouseOutImage(videoid) {
+        var imageUrl = "/hy/img/play_normal.png";
+        $(videoid).attr("src", imageUrl);
+    }
+</script>
+
+
+<script language="javascript" type="text/javascript">
+    function popup(popupid, videoid, videourl) {
+        $(videoid).colorbox({ width: "900px", height: "500px", inline: true, href: popupid });
+        $("body").css("overflow", "hidden");
+        $(popupid + " iframe").attr("src", videourl + "?autoplay=1&hd=1");
+
+        $("#cboxClose").click(function () {
+            $(popupid + " iframe").attr("src", "");
+            $("body").css("overflow", "auto");
+        });
+
+        $("#cboxOverlay").click(function () {
+            $(popupid + " iframe").attr("src", "");
+            $("body").css("overflow", "auto");
+        });
     }
 </script>
