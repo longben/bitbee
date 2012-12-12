@@ -45,8 +45,15 @@ class AppsController extends HyAppController {
 	}
 
     //公司概况
-	public function intro() {
+	public function about($page = 301) {
+        $_info = array('301' => '公司簡介', '302' => '企業文化', '303' => '榮譽資質');
         $this->layout = "website";
+
+        $this->set('title_for_layout', '公司概况');
+        $this->set('title_for_content', $_info[$page]);
+
+        $this->set('page', $page);
+
 	}
 
     //新闻中心

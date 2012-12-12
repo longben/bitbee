@@ -52,7 +52,7 @@
         <div class="lan"><a href="/en">English</a></div>
         <div class="menu">
             <li><?php echo $this->action=='index'?'<span><span>首頁</span></span>':'<a href="/zh"><span>首頁</span></a>'?></li>
-            <li><?php echo $this->action=='intro'?'<span><span>公司概况</span></span>':'<a href="/zh/intro"><span>公司概况</span></a>'?></li>
+            <li><?php echo $this->action=='about'?'<span><span>公司概况</span></span>':'<a href="/zh/about"><span>公司概况</span></a>'?></li>
             <li><?php echo $this->action=='product'?'<span><span>產品展示</span></span>':'<a href="/zh/product"><span>產品展示</span></a>'?></li>
             <li><?php echo $this->action=='news'?'<span><span>新聞中心</span></span>':'<a href="/zh/news"><span>新聞中心</span></a>'?></li>
             <li><?php echo $this->action=='service'?'<span><span>客服中心</span></span>':'<a href="/zh/service"><span>客服中心</span></a>'?></li>

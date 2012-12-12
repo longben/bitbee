@@ -1,37 +1,29 @@
-<div class="flash" style="border:1px dotted #ccc;"><img src="images/cproducts_title.jpg" /></div>
+<div class="flash" style="border:1px dotted #ccc;"><img src="/hy/img/cknowledge_title.jpg" /></div>
 <div class="outdiv">
     <div class="inpageleft">
-        <span>可調式減光鏡</span><?=$this->action?>
-        <a href="">多層鍍膜UV鏡</a>
-        <a href="">偏光鏡</a>
-        <a href="">減光鏡ND1000</a>
-        <a href="">中灰漸變鏡</a>
-        <a href="">紅外線截止濾鏡</a>
-        <a href="">多功能UV保護鏡</a>
-        <a href="">UC保護濾鏡</a>
+        <span>濾鏡百科全書</span>
+        <a href="">濾鏡使用展示</a>
+        <a href="">精品對比圖</a>
     </div>
     <div class="inpageright">
-        <div class="titlebg">
-            <div class="titleleft">
-                <div class="titleright">
-                    <div class="titlewords"><span class="blue">產品展示</span> <span>show</span>
-                    </div>
-                </div>
-            </div>
+        <div style="width:786px;padding:10px;height:auto;clear:both;overflow:hidden"><span class="blue">专业知识</span> <span>knowledge</span></div>
+        <div class="titlebg"><div class="titleleft"><div class="titleright"><div class="titlewords" style="padding-top:15px;"><a href="">新闻标题在这里</a></div><div class="titledate" style="padding-top:15px;">2012-11-11</div></div></div></div>
+        <div class="rightcontent">
+            <a href="">无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要无图新闻摘要...</a>
         </div>
-        <div class="piclist">
-            <div class="pics">
-                <div class="in">
-                    <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-                        <a href="" title="產品名稱"><img src="" width="217" height="168" border="0" /></a>
-                    </table>
-                </div>
-            </div>
-            <div class="pics"><div class="in"><table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0"><a href="" title="產品名稱"><img src="" width="217" height="168" border="0" /></a></table></div></div>
-            <div class="pics"><div class="in"><table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0"><a href="" title="產品名稱"><img src="" width="217" height="168" border="0" /></a></table></div></div>
-            <div class="pics"><div class="in"><table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0"><a href="" title="產品名稱"><img src="" width="217" height="168" border="0" /></a></table></div></div>
-            <div class="pics"><div class="in"><table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0"><a href="" title="產品名稱"><img src="" width="217" height="168" border="0" /></a></table></div></div>
-            <div class="pics"><div class="in"><table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0"><a href="" title="產品名稱"><img src="" width="217" height="168" border="0" /></a></table></div></div>
+
+        <div class="titlebg"><div class="titleleft"><div class="titleright"><div class="titlewords" style="padding-top:15px;"><a href="">新闻标题在这里</a></div><div class="titledate" style="padding-top:15px;">2012-11-11</div></div></div></div>
+        <div class="rightcontent">
+            <div class="newssmlpic"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><a href=""><img src="" border="0" /></a></td></tr></table></div>
+            <div class="newsintro"><a href="">有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要...</a></div>
         </div>
+
+        <div class="titlebg"><div class="titleleft"><div class="titleright"><div class="titlewords" style="padding-top:15px;"><a href="">新闻标题在这里</a></div><div class="titledate" style="padding-top:15px;">2012-11-11</div></div></div></div>
+        <div class="rightcontent">
+            <div class="newssmlpic"><table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0"><tr><td align="center" valign="middle"><a href=""><img src="" border="0" /></a></td></tr></table></div>
+            <div class="newsintro"><a href="">有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要有图新闻摘要...</a></div>
+        </div>
+
     </div>
 </div>
+
