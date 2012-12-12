@@ -51,13 +51,13 @@
     <div class="top">
         <div class="lan"><a href="/en">English</a></div>
         <div class="menu">
-            <li><span><span>首頁</span></span></li>
-            <li><a href="cabout.html"><span>公司概况</span></a></li>
-            <li><a href="cproducts.html"><span>產品展示</span></a></li>
-            <li><a href="cnews.html"><span>新聞中心</span></a></li>
-            <li><a href="ckefu.html"><span>客服中心</span></a></li>
-            <li><a href="czhuanye.html"><span>專業知識</span></a></li>
-            <li><a href="clianxi.html"><span>聯繫我們</span></a></li>
+            <li><?php echo $this->action=='index'?'<span><span>首頁</span></span>':'<a href="/zh"><span>首頁</span></a>'?></li>
+            <li><?php echo $this->action=='intro'?'<span><span>公司概况</span></span>':'<a href="/zh/intro"><span>公司概况</span></a>'?></li>
+            <li><?php echo $this->action=='product'?'<span><span>產品展示</span></span>':'<a href="/zh/product"><span>產品展示</span></a>'?></li>
+            <li><?php echo $this->action=='news'?'<span><span>新聞中心</span></span>':'<a href="/zh/news"><span>新聞中心</span></a>'?></li>
+            <li><?php echo $this->action=='service'?'<span><span>客服中心</span></span>':'<a href="/zh/service"><span>客服中心</span></a>'?></li>
+            <li><?php echo $this->action=='knowledge'?'<span><span>專業知識</span></span>':'<a href="/zh/knowledge"><span>專業知識</span></a>'?></li>
+            <li><?php echo $this->action=='contact'?'<span><span>聯繫我們</span></span>':'<a href="/zh/contact"><span>聯繫我們</span></a>'?></li>
         </div>
     </div>
 

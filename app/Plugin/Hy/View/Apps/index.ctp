@@ -62,10 +62,9 @@
                 <div class="titlebg"><div class="titleleft"><div class="titleright"><img src="/hy/img/ctitle02.jpg" border="0" /></div></div></div>
                 <div class="indexnewsList">
                     <ul>
-                        <li><a href="">新闻资讯标题在这里</a></li>
-                        <li><a href="">新闻资讯标题在这里</a></li>
-                        <li><a href="">新闻资讯标题在这里</a></li>
-                        <li><a href="">新闻资讯标题在这里</a></li>
+                        <?php foreach($news as $post):?>
+                        <li><a href="<?php echo $this->Html->url('/app/content/'.$post['Post']['id'])?>" target="_blank"><?php echo $post['Post']['post_title']?></a> [<?=date("Y-m-d",strtotime($post['Post']['post_date']))?>]</li>
+                        <?php endforeach;?>
                     </ul>
                 </div>
             </div>
