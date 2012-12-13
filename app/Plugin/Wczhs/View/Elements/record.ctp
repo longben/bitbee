@@ -5,7 +5,7 @@
     data-options="url:'/admin/posts/json_data.json?c=201&u=<?=$this->Session->read('id')?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
-            <th data-options="field:'id'">编号</th>  
+            
             <th data-options="field:'post_title'" width="100">标题</th>  
             <th data-options="field:'post_date'" width="50">发布时间</th>  
 			<th data-options="field:'action',formatter:view">操作</th>
