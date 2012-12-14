@@ -5,17 +5,28 @@
     data-options="url:'/admin/posts/json_data.json?c=201&u=<?=$this->Session->read('id')?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
-            <th data-options="field:'id'">编号</th>  
+            
             <th data-options="field:'post_title'" width="100">标题</th>  
             <th data-options="field:'post_date'" width="50">发布时间</th>  
+			<th data-options="field:'action',formatter:view">操作</th>
         </tr>  
     </thead>  
 </table>  
+
+<script type="text/javascript">
+function view(value, row){
+    return '<a href="/app/content/' + row.id + '" target="_blank">查看详情</a>';
+}
+</script>
+
 
 <div id="toolbar">  
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增生活点滴记录</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="deleteItem()">删除</a>
+	<!-- toolbar view 模式
+	<a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="viewItem()">查看</a>
+	-->
 </div> 
 
 <div id="dlg" class="easyui-dialog" style="width:770px;height:auto;padding:0px 0px"
@@ -79,7 +90,16 @@
 
         editor.create();
     }
+	
+  /*	toolbar view 模式
+  function viewItem(){
 
+        var row = $('#dg').datagrid('getSelected');
+		
+		window.location = '/app/content/' + row.id;
+    }
+	*/
+	
     function saveItem(){
         $('#PostPostContent').val(editor.html());
 
