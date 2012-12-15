@@ -3,9 +3,9 @@
     <thead>  
         <tr>
             <th data-options="field:'name'" width="50">名称</th>  
-            <th data-options="field:'description'" width="50">备注</th>  
-            <th data-options="field:'icon'" width="50">备注</th>  
-            <th data-options="field:'locale'" width="50">编码</th>  
+            <th data-options="field:'description'" width="50">描述</th>  
+            <th data-options="field:'icon'" width="50">图标</th>  
+            <th data-options="field:'locale'" width="50">I18N</th>  
         </tr>  
     </thead>  
 </table>  

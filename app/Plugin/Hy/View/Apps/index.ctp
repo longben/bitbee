@@ -26,14 +26,14 @@
 <div class="outdiv">
     <div class="indexpro"><div class="title1C"></div>
         <ul>
-            <li><a href=""><img src="/hy/img/cclass1.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass2.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/ctempclass1.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass4.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass5.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass6.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass7.jpg" border="0" /></a></li>
-            <li><a href=""><img src="/hy/img/cclass8.jpg" border="0" /></a></li>
+            <li><a href="/zh/product/1"><img src="/hy/img/cclass1.jpg" border="0" /></a></li>
+            <li><a href="/zh/product/2"><img src="/hy/img/cclass2.jpg" border="0" /></a></li>
+            <li><a href="/zh/product/3"><img src="/hy/img/ctempclass1.jpg" border="0" /></a></li>
+            <li><a href="/zh/product/4"><img src="/hy/img/cclass4.jpg" border="0" /></a></li>
+            <li><a href="/zh/product/5"><img src="/hy/img/cclass5.jpg" border="0" /></a></li>
+            <li><a href="/zh/product/6"><img src="/hy/img/cclass6.jpg" border="0" /></a></li>
+            <li><a href="/zh/product/7"><img src="/hy/img/cclass7.jpg" border="0" /></a></li>
+            <li><a href="/zh/product/8"><img src="/hy/img/cclass8.jpg" border="0" /></a></li>
         </ul>
     </div>
 

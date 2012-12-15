@@ -99,4 +99,15 @@ class AppController extends Controller {
         }
     }  
 
+    //新闻列表
+    public function _posts($id){
+        $this->paginate = array(
+            'conditions' => "Meta.category = $id", 
+            'recursive' => 0, //int
+            'order' => 'Post.post_date desc',
+            'limit' => 12
+        );
+        $this->set('news', $this->paginate());
+    }
+
 }

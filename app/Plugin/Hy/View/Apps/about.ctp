@@ -15,7 +15,6 @@
             </div>
         </div>
         <div class="rightcontent">
-            <img src="/hy/img/about_pic.jpg" align="right" />
             <?php echo $this->element($page); ?>
         </div>
     </div>

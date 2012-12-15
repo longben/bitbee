@@ -1,5 +1,9 @@
-<table id="dg" class="easyui-treegrid" style="width:auto;height:auto"
-    data-options="url:'/admin/products/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20,idField:'id',treeField:'name'">
+<?php $this->Html->script(array('kindeditor/kindeditor-min', 'kindeditor/lang/zh_CN'), array('inline' => false));?>
+
+
+
+<table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
+    data-options="url:'/admin/hy/products/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
             <th data-options="field:'name'" width="50">名称</th>  
@@ -22,15 +26,15 @@
     </span>
 </div> 
 
-<div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
-    closed="true" buttons="#dlg-buttons">
+<div id="dlg" class="easyui-dialog" style="width:800px;height:auto;padding:10px 20px"
+    data-options="closed:true,buttons:'#dlg-buttons'">
     <?php 
-    echo $this->Form->create('Code', array('action' => 'add', 'id' => 'fm', 'class' => 'formee', 'type' => 'file'));
+    echo $this->Form->create('Product', array('action' => 'add', 'id' => 'fm', 'class' => 'formee', 'type' => 'file'));
     echo $this->Form->input('id', array('id' => 'id'));
-    //echo $this->Form->input('parent_id', array('label' => __('Parent Id'),  'default' => 1, 'required' => true));
     echo $this->Form->input('name');
     echo $this->Form->input('code_id');
-    echo $this->Form->input('file', array('id' => 'file', 'label'=> __('Add Icon'), 'type'=> 'file'));
+    echo $this->Form->input('file', array('id' => 'file', 'label'=> '微缩图', 'type'=> 'file'));
+    echo $this->Form->input('description', array('id' => 'editor' ,'style' => 'width:670px;height:auto'));
     echo $this->Form->end();
     ?>
 </div>
@@ -43,15 +47,27 @@
 
 <script type="text/javascript">
     var url;
+    //var editor = KindEditor.create('textarea[id="ProductDescription"]', {uploadJson: '/platforms/upload.json?u=<?=$this->Session->read('Auth.User.User.id')?>',allowFileManager : false});
+
+    var editor;
+    KindEditor.ready(function(K) {
+        var options = {
+            uploadJson : '/platforms/upload.json?u=<?=$this->Session->read('Auth.User.User.id')?>',
+            allowFileManager : false
+        };
+        editor = K.create('textarea[id="editor"]', options);
+    });
+
 
     function newItem(){
         $('#dlg').dialog('open').dialog('setTitle','新增');
         clearForm('#fm');
-        url = '/admin/products/add/';
+        url = '/admin/hy/products/add/';
     }
 
     function editItem(){
         var row = $('#dg').datagrid('getSelected');
+
         clearForm('#fm');
 
         /**
@@ -60,7 +76,7 @@
         */ 
         var _row = '';
         for(var key in row){
-            _row = _row + "'data[Code][" + key + "]':row." + key + ",";
+            _row = _row + "'data[Product][" + key + "]':row." + key + ",";
         }
         _row = '{' + _row + 't:1}';
 
@@ -69,11 +85,16 @@
         if (row){
             $('#dlg').dialog('open').dialog('setTitle','编辑');
             $('#fm').form('load', json);
-            url = '/admin/products/edit';
+            url = '/admin/hy/products/edit';
+
+            editor.html(row.description);
+            editor.sync();
         }
+
     }
 
     function saveItem(){
+        editor.sync();
         $('#fm').form('submit',{
             url: url,
             onSubmit: function(){
@@ -83,7 +104,7 @@
                 var result = eval('('+result+')');
                 if (result.success){
                     $('#dlg').dialog('close');		// close the dialog
-                    $('#dg').treegrid('reload');
+                    $('#dg').datagrid('reload');
                 } else {
                     $.messager.show({
                         title: 'Error',
@@ -101,7 +122,7 @@
                 if (r){
                     $.post('<?=$this->Html->url('delete')?>',{id:row.id},function(result){
                         if (result.success){
-                            $('#dg').treegrid('reload');	// reload the user data
+                            $('#dg').datagrid('reload');	// reload the user data
                         } else {
                             $.messager.show({	// show error message
                                 title: 'Error',
@@ -116,7 +137,7 @@
 
 
     function search(value, name){
-        $('#dg').treegrid(
+        $('#dg').datagrid(
             'load',
             {q:value, field:name}
         );

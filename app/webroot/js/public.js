@@ -8,7 +8,7 @@ function clearForm(form){
             this.value = "";
         }
 
-        if (type == 'text'){
+        if (type == 'text' || type == 'textarea'){
             this.value = "";
         }
     });
