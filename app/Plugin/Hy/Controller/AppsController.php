@@ -10,11 +10,27 @@ class AppsController extends HyAppController {
 
     public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'Code', 'Hy.Product');
 
+    //跳转
+    public function sw(){
+        $locale = Configure::read('Config.language');
+        switch ( $locale ) {
+        case 'zh-cn':
+            $this->redirect('/zh');
+            break;
+        case 'zh-TW':
+            $this->redirect('/zh');
+            break;
+        case 'eng':
+            $this->redirect('/en');
+            break;
+        }
+    }  
 
     //首页
     public function index() {
         $this->layout = "website";
 
+        
         $this->set('title_for_layout', '歡迎您！');
 
         //大图轮换(201)
@@ -43,7 +59,7 @@ class AppsController extends HyAppController {
 
 
     //产品
-	public function product($code_id = 1) {
+    public function product($code_id = 1) {
         $this->layout = "website";
 
         $this->set('title_for_layout', '產品展示');
@@ -65,10 +81,10 @@ class AppsController extends HyAppController {
         );
         $this->set('products', $this->Product->find('all', $conditions));
 
-	}
+    }
 
     //产品详情
-	public function product_detail($id) {
+    public function product_detail($id) {
         $this->layout = "website";
 
 
@@ -84,12 +100,12 @@ class AppsController extends HyAppController {
 
         $this->set('title_for_layout', $product['Product']['name']);
 
-	}
+    }
 
 
 
     //公司概况
-	public function about($page = 301) {
+    public function about($page = 301) {
         $_info = array('301' => '公司簡介', '302' => '企業文化', '303' => '榮譽資質');
         $this->layout = "website";
 
@@ -98,22 +114,22 @@ class AppsController extends HyAppController {
 
         $this->set('page', $page);
 
-	}
+    }
 
     //新闻中心
-	public function news($id = 501) {
+    public function news($id = 501) {
         $this->layout = "website";
-        
+
         $this->set('title_for_layout', '新聞中心');
 
         $info = array('501' => '公司新聞', '502' => '行業動態');
         $this->set('page', $id);
 
         $this->_posts($id);
-	}
+    }
 
     //客户中心
-	public function service($page = 601) {
+    public function service($page = 601) {
         $this->layout = "website";
 
         $this->set('title_for_layout', '客服中心');
@@ -123,10 +139,10 @@ class AppsController extends HyAppController {
 
         $this->set('title_for_content', $info[$page]);
 
-	}
+    }
 
     //专业知识
-	public function knowledge($id = 701) {
+    public function knowledge($id = 701) {
         $this->layout = "website";
         $this->set('title_for_layout', '專業知識');
 
@@ -135,17 +151,16 @@ class AppsController extends HyAppController {
 
         $this->_posts($id);
 
-	}
+    }
 
     //联系我们
-	public function contact() {
+    public function contact() {
         $this->layout = "website";
-
         $this->set('title_for_layout', '聯繫我們');
-	}
+    }
 
     //新闻内容页面
-	public function content($id) {
+    public function content($id) {
         $this->layout = "website";
 
 
@@ -153,7 +168,7 @@ class AppsController extends HyAppController {
 
         $this->set('title_for_layout', $post['Post']['post_title']);
         $this->set('post', $post);		
-	}
+    }
 
 
 }
