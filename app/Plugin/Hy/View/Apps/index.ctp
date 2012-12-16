@@ -41,7 +41,7 @@
         <div class="titlebg">
             <div class="titleleft">
                 <div class="titleright">
-                    <div class="titlewords" id="features">
+                    <div class="titlewords">
                         <?php foreach($features as $i=>$feature):?>
                         <span class="<?php echo $i==0?'changtabover':'changtab'?>" id="smenu<?=$i?>" onclick="showTab('<?=$i?>')"><?=$feature['Post']['post_title']?></span>
                         <?php endforeach;?>
@@ -50,11 +50,13 @@
             </div>
         </div>
 
-        <?php foreach($features as $i=>$feature):?>
-        <div class="scon indexrightcon1" id="scon<?=$i?>" <?php echo $i==0?'':'style="display:none;"'?>>
-            <?php echo $feature['Post']['post_content'];?>
+        <div id="features">
+            <?php foreach($features as $i=>$feature):?>
+            <div class="scon indexrightcon1" id="scon<?=$i?>" <?php echo $i==0?'':'style="display:none;"'?>>
+                <?php echo $feature['Post']['post_content'];?>
+            </div>
+            <?php endforeach;?>
         </div>
-        <?php endforeach;?>
 
         <div class="indexright2">
 
