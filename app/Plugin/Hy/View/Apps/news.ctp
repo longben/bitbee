@@ -36,7 +36,9 @@
                 </table>
             </div>
             <div class="newsintro">
-                <a href=""><?php echo $this->Text->truncate( trim(strip_tags($p['Post']['post_content'])) , 200, array('ending' => '...', 'exact' => true, 'html' => true) )?></a>
+                <a href="/zh/content/<?=$p['Post']['id']?>" target="_blank">
+                    <?php echo $this->Text->truncate( trim(strip_tags($p['Post']['post_content'])) , 200, array('ending' => '...', 'exact' => true, 'html' => true) )?>
+                </a>
             </div>
             <?php endif;?>
         </div>
