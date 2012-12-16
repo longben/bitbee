@@ -42,6 +42,7 @@ class PagesController extends AppController {
  * @param string What page to display
  */
 	public function display() {
+		$this->layout = "blank";
 		$path = func_get_args();
 
 		$count = count($path);

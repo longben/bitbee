@@ -7,8 +7,8 @@
         <title>H&amp;Y - <?php echo $title_for_layout; ?></title>
         <?php 
         echo $this->Html->meta('icon', '/hy/img/favicon.ico');
-        echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.SuperSlide','zebra_dialog/zebra_dialog'));
-        echo $this->Html->css(array('/hy/css/style.css?ver=1.0.0', 'zebra_dialog/zebra_dialog'));
+        echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.SuperSlide','zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min'));
+        echo $this->Html->css(array('/hy/css/style.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox'));
 
         echo $scripts_for_layout;
 
