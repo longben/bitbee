@@ -41,7 +41,7 @@
         <div class="titlebg">
             <div class="titleleft">
                 <div class="titleright">
-                    <div class="titlewords">
+                    <div class="titlewords" id="features">
                         <?php foreach($features as $i=>$feature):?>
                         <span class="<?php echo $i==0?'changtabover':'changtab'?>" id="smenu<?=$i?>" onclick="showTab('<?=$i?>')"><?=$feature['Post']['post_title']?></span>
                         <?php endforeach;?>
