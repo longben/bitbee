@@ -6,26 +6,29 @@
     </div>
 
     <div class="inpageright">
-        <div style="width:786px;padding:10px;height:auto;clear:both;overflow:hidden"><span class="blue">新聞中心</span></div>
 
         <?php foreach($news as $p):?>
         <div class="titlebg">
             <div class="titleleft">
                 <div class="titleright">
-                    <div class="titlewords" style="padding-top:15px;"><?=$this->Html->link($p['Post']['post_title'], 1)?></div>
+                    <div class="titlewords" style="padding-top:15px;">
+                        <span class="blue"><?=$this->Html->link($p['Post']['post_title'], '/zh/content/'.$p['Post']['id'], array('target' => '_blank'))?></span>
+                    </div>
                     <div class="titledate" style="padding-top:15px;"><?=date("Y-m-d",strtotime($p['Post']['post_date']))?></div>
                 </div>
             </div>
         </div>
         <div class="rightcontent">
             <?php if( empty($p['Meta']['picture']) ):?>
-            <a href=""><?php echo $this->Text->truncate( trim(strip_tags($p['Post']['post_content'])) , 200, array('ending' => '...', 'exact' => true, 'html' => true) )?></a>
+            <a href="/zh/content/<?=$p['Post']['id']?>" target="_blank">
+                <?php echo $this->Text->truncate( trim(strip_tags($p['Post']['post_content'])) , 200, array('ending' => '...', 'exact' => true, 'html' => true) )?>
+            </a>
             <?php else:?>
             <div class="newssmlpic">
                 <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
                     <tr>
                         <td align="center" valign="middle">
-                            <a href="">
+                            <a href="/zh/content/<?=$p['Post']['id']?>" target="_blank">
                                 <img src='<?php echo dirname($p['Meta']['picture']).'/240x180_'.basename($p['Meta']['picture'])?>'/>
                             </a>
                         </td>

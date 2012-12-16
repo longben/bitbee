@@ -63,7 +63,7 @@
                 <div class="indexnewsList">
                     <ul>
                         <?php foreach($news as $post):?>
-                        <li><a href="<?php echo $this->Html->url('/app/content/'.$post['Post']['id'])?>" target="_blank"><?php echo $post['Post']['post_title']?></a> [<?=date("Y-m-d",strtotime($post['Post']['post_date']))?>]</li>
+                        <li><a href="<?php echo $this->Html->url('/zh/content/'.$post['Post']['id'])?>" target="_blank"><?php echo $post['Post']['post_title']?></a> [<?=date("Y-m-d",strtotime($post['Post']['post_date']))?>]</li>
                         <?php endforeach;?>
                     </ul>
                 </div>

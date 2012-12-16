@@ -31,7 +31,7 @@
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
     <?php 
-    echo $this->Form->create('Module', array('action' => 'add', 'id' => 'fm'));
+    echo $this->Form->create('Module', array('action' => 'add', 'id' => 'fm', 'class' => 'formee'));
     echo $this->Form->input('id', array('id' => 'id'));
     echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
     echo $this->Form->input('type');

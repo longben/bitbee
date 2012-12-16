@@ -144,5 +144,16 @@ class AppsController extends HyAppController {
         $this->set('title_for_layout', '聯繫我們');
 	}
 
+    //新闻内容页面
+	public function content($id) {
+        $this->layout = "website";
+
+
+        $post = $this->Post->read(null, $id);
+
+        $this->set('title_for_layout', $post['Post']['post_title']);
+        $this->set('post', $post);		
+	}
+
 
 }
