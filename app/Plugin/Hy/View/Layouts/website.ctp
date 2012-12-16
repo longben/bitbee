@@ -65,9 +65,19 @@
     <?php echo $content_for_layout; ?>
 
     <div class="bottombg">
-        <div class="bottommenu"><a href="cabout.html">公司概況</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="cproducts.html">產品展示</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="cnews.html">新聞中心</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="ckefu.html">客服中心</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="czhuanye.html">專業知識</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="clianxi.html">聯繫我們</a></div>
-        <div class="bottomcopyright">Copyright H&Y<br />Tel:028-12345678   123456789<br />
-            Address:成都市</div>
+        <div class="bottommenu">
+            <div><a href="/zh/about">公司概況</a></div>
+            <div><a href="/zh/product">產品展示</a></div>
+            <div><a href="/zh/news">新聞中心</a></div>
+            <div><a href="/zh/service">客服中心</a></div>
+            <div><a href="/zh/knowledge">專業知識</a></div>
+            <div><a href="/zh/contact">聯繫我們</a></div>
+        </div>
+        <div class="bottomcopyright">
+            Copyright H&Y<br />
+            Tel:028-12345678   123456789<br />
+            Address:成都市
+        </div>
     </div>
 </body>
 </html>

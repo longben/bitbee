@@ -52,6 +52,7 @@ h1{font-size:14px;color:#000000;font-family:'Microsoft YaHei', 微软雅黑, Ari
 .bottommenu{width:1004px;height:24px;clear:both;overflow:hidden;margin:0px auto;padding-top:8px;font-size:12px;text-align:center;}
 .bottommenu a{color:#000000;text-decoration:none;}
 .bottommenu a:hover{color:#ff0000;}
+.bottommenu div {float: left;width:16%;}
 .bottomcopyright{width:984px;height:70px;clear:both;overflow:hidden;margin:0px auto;padding:10px;background:url(/hy/img/bottom_logo.jpg) right no-repeat;color:#ffffff;line-height:170%;}
 .inpageleft{width:178px;min-height:400px; _height:400px; overflow: visible;clear:none;float:left;background:url(/hy/img/left_bg.jpg) top no-repeat;padding:10px 10px;}
 .inpageleft a{width:158px;height:auto;clear:both;overflow:hidden;float:left;border-bottom:1px dotted #ccc;font-family:'Microsoft YaHei', 微软雅黑, Arial, Lucida Grande, Tahoma, sans-serif;padding:6px 10px;color:#666;background:none;text-decoration:None;}
