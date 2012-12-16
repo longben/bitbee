@@ -38,6 +38,7 @@
     echo $this->Form->input('parent_id');
     echo $this->Form->input('module_image');
     echo $this->Form->input('url');
+    echo $this->Form->input('setting');
     echo $this->Form->end();
     ?>
 </div>

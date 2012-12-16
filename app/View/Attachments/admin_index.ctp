@@ -28,13 +28,13 @@
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
     <?php 
-    echo $this->Form->create('Attachment', array('action' => 'add', 'id' => 'fm', 'type' => 'file'));
+    echo $this->Form->create('Attachment', array('action' => 'add', 'id' => 'fm', 'class' => 'formee', 'type' => 'file'));
     echo $this->Form->input('id', array('id' => 'id'));
     echo $this->Form->input('name', array('class' => 'easyui-validatebox' ,'required' => true));
     echo $this->Form->hidden('type_id', array('value' => $type_id));
-    echo $this->Form->input('url');
-    echo $this->Form->input('description');
-    echo $msg . $this->Form->file('file', array('id' => 'file', 'class' => 'required'));
+    echo $this->Form->input('url', array('label' => '链接地址'));
+    echo $this->Form->input('description', array('label' => '描述'));
+    echo $this->Form->input('file', array('id' => 'file', 'label'=> $msg, 'type'=> 'file'));
     echo $this->Form->end();
     ?>
 </div>

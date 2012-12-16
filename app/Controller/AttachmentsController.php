@@ -6,6 +6,9 @@
  */
 class AttachmentsController extends AppController {
 
+
+    public $uses = array('Attachment', 'Module');
+
     /**
      * 更加条件查询用户JSON数据
      *
@@ -17,15 +20,10 @@ class AttachmentsController extends AppController {
 
     public function admin_index($type_id){
 
-        $msg = '';
-        switch ( $type_id ) {
-            case 201 :
-                $msg = '轮换大图图片(1004 x 329)';
-                break;
-            case 206:
-                $msg = '友情链接图片(250 x 80)';
-                break;
-        }
+//                $msg = '友情链接图片(250 x 80)';
+
+        $this->Module->id = $type_id;
+        $msg = $this->Module->field('setting'); 
 
 
         $this->set(compact('msg', 'type_id'));
