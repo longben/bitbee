@@ -29,7 +29,7 @@
                     <tr>
                         <td align="center" valign="middle">
                             <a href="/zh/content/<?=$p['Post']['id']?>" target="_blank">
-                                <img src='<?php echo dirname($p['Meta']['picture']).'/240x180_'.basename($p['Meta']['picture'])?>'/>
+                                <img src='<?php echo dirname($p['Meta']['picture']).'/120x120_'.basename($p['Meta']['picture'])?>'/>
                             </a>
                         </td>
                     </tr>
