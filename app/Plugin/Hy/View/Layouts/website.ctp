@@ -75,8 +75,8 @@
         </div>
         <div class="bottomcopyright">
             Copyright H&Y<br />
-            Tel:028-12345678   123456789<br />
-            Address:成都市
+            Tel:88888888<br />
+            Address:HK
         </div>
     </div>
 </body>
