@@ -74,9 +74,9 @@
             <div><a href="/zh/contact">聯繫我們</a></div>
         </div>
         <div class="bottomcopyright">
-            Copyright H&Y<br />
-            Tel:88888888<br />
-            Address:HK
+            Copyright H&Y Digital Co. Ltd<br />
+            Tel:(+852)23708816<br />
+            Address:C16, 2/F, Por Mee Ind. Bldg 500 Castle Peak Road, Lai Chi Kok Kowloon, HongKong
         </div>
     </div>
 </body>
