@@ -28,6 +28,16 @@ class AttachmentsController extends AppController {
 
         $this->set(compact('msg', 'type_id'));
     }
+	
+    public function admin_video($type_id){
+        App::uses('Folder', 'Utility');
+        App::uses('File', 'Utility');
+
+        $dir = new Folder(APP.'webroot'.DS.'upload'.DS.'video');
+        $filePaths = $dir->find('.*\.flv');
+
+        $this->set(compact('type_id', 'filePaths'));
+    }	
 
     public function admin_add() {
         $this->autoRender = false;
