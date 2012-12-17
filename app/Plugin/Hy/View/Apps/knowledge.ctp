@@ -21,13 +21,13 @@
         </div>
         <div class="rightcontent">
             <?php if( empty($p['Meta']['picture']) ):?>
-            <a href=""><?php echo $this->Text->truncate( trim(strip_tags($p['Post']['post_content'])) , 200, array('ending' => '...', 'exact' => true, 'html' => true) )?></a>
+            <a href="/zh/content/<?=$p['Post']['id']?>"><?php echo $this->Text->truncate( trim(strip_tags($p['Post']['post_content'])) , 200, array('ending' => '...', 'exact' => true, 'html' => true) )?></a>
             <?php else:?>
             <div class="newssmlpic">
                 <table width="100%" height="100%" cellpadding="0" cellspacing="0" border="0">
                     <tr>
                         <td align="center" valign="middle">
-                            <a href="">
+                            <a href="/zh/content/<?=$p['Post']['id']?>">
                                 <img src='<?php echo dirname($p['Meta']['picture']).'/240x180_'.basename($p['Meta']['picture'])?>'/>
                             </a>
                         </td>
@@ -35,7 +35,7 @@
                 </table>
             </div>
             <div class="newsintro">
-                <a href=""><?php echo $this->Text->truncate( trim(strip_tags($p['Post']['post_content'])) , 200, array('ending' => '...', 'exact' => true, 'html' => true) )?></a>
+                <a href="/zh/content/<?=$p['Post']['id']?>"><?php echo $this->Text->truncate( trim(strip_tags($p['Post']['post_content'])) , 200, array('ending' => '...', 'exact' => true, 'html' => true) )?></a>
             </div>
             <?php endif;?>
         </div>

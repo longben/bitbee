@@ -134,12 +134,51 @@ class AppsController extends HyAppController {
 
         $this->set('title_for_layout', '客服中心');
 
-        $info = array('601' => '在線咨訊', '602' => '代理商加盟', '603' => '銷售網絡');
+        $info = array('601' => '在線咨訊', '602' => '代理商加盟', '603' => '銷售網絡', '604' => '信息反饋');
         $this->set('page', $page);
 
         $this->set('title_for_content', $info[$page]);
 
+        if($page == 604){
+            $this->paginate = array(
+                'conditions' => array('Guestbook.flag' => 1, 'Guestbook.type_id' => 1), 
+                'recursive' => 0, //int
+                'order' => 'Guestbook.created desc',
+                'limit' => 11
+            );
+            $this->set('guestbooks', $this->paginate('Guestbook'));
+        }
     }
+
+
+	public function add_guestbook($type_id = 1) {
+        if (!empty($this->data)) {
+            $_msg = '';
+            $_url = '';
+            switch ($type_id) {
+            case 1:
+                $_msg = '您的信息反饋已經提交！';
+                $_url = '/zh/service/604';
+                break;
+            case 2:
+                $_msg = '您的试听申请已提交，我们将在1-2个工作日内联系您！';
+                $_url = '/app/main';
+                break;
+             case 3:
+                $_msg = '您的加盟申请已提交，我们将在1-2个工作日内联系您！';
+                $_url = '/app/joinus';
+                break;
+            }
+            $this->Guestbook->create();
+            if ($this->Guestbook->save($this->request->data)) {
+                $this->Session->setFlash($_msg, true);
+                $this->redirect($_url);
+            } else {
+                $this->Session->setFlash(__('保存失败！', true));
+            }
+        }
+    }
+
 
     //专业知识
     public function knowledge($id = 701) {

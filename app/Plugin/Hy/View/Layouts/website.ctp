@@ -8,7 +8,7 @@
         <?php 
         echo $this->Html->meta('icon', '/hy/img/favicon.ico');
         echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.SuperSlide','zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min'));
-        echo $this->Html->css(array('/hy/css/style.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox'));
+        echo $this->Html->css(array('/hy/css/style.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
 
         echo $scripts_for_layout;
 

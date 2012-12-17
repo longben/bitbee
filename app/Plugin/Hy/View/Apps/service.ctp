@@ -4,7 +4,7 @@
         <?php echo $page==601?'<span>在線咨訊</span>':'<a href="/zh/service/601">在線咨訊</a>'?>
         <?php echo $page==602?'<span>代理商加盟</span>':'<a href="/zh/service/602">代理商加盟</a>'?>
         <?php echo $page==603?'<span>銷售網絡</span>':'<a href="/zh/service/603">銷售網絡</a>'?>
-        <a href="">信息反饋</a>
+        <?php echo $page==604?'<span>信息反饋</span>':'<a href="/zh/service/604">信息反饋</a>'?>
     </div>
 
     <div class="inpageright">
