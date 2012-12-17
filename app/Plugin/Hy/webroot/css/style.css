@@ -64,7 +64,7 @@ h1{font-size:14px;color:#000000;font-family:'Microsoft YaHei', 微软雅黑, Ari
 .inpageright .piclist .pics{width:262px;height:200px;clear:none;overflow:hidden;float:left;}
 .inpageright .piclist .pics .in{width:217px;height:168px;clear:both;overflow:hidden;background:url(/hy/img/pic_bg.jpg) no-repeat;padding:9px 10px 8px 9px;margin:0px auto;}
 .blue{font-size:14px;font-family:'Microsoft YaHei', 微软雅黑, Arial, Lucida Grande, Tahoma, sans-serif;color:#006699;font-weight:bold;}
-.newssmlpic{width:240px;height:180;clear:none;overflow:hidden;float:left;background:url(/hy/img/smlpic_bg.jpg) no-repeat;padding:5px 6px 5px 5px}
+.newssmlpic{width:117px;height:92px;clear:none;overflow:hidden;float:left;background:url(/hy/img/smlpic_bg.jpg) no-repeat;padding:5px 6px 5px 5px}
 .newsintro{width:529px;height:auto;clear:none;overflow:hidden;line-height:170%;float:right;}
 
 .slideBox{ width:1002; height:273px; overflow:hidden; position:relative;    } 
