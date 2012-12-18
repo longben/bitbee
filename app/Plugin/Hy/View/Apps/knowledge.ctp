@@ -40,6 +40,42 @@
             <?php endif;?>
         </div>
         <?php endforeach;?>
-
+        
+        <?php if(!empty($covers)):?>
+        <div class="piclist">
+            <?php foreach($covers as $i=>$p):?>
+            <div class="pics">
+                <div class="in">
+                    <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+                        <div style="position: relative; left: 60px; top: 34px;">
+                            <a class="video" id="video_link<?=$i?>" href="/pages/video/<?=$p['Attachment']['file_path']?>">
+                                <img onmouseover="mouseOverImage('#video_link<?=$i?> img')" onmouseout="mouseOutImage('#video_link<?=$i?> img')" src="/hy/img/play_normal.png" border="0">
+                            </a>
+                        </div>
+                    </a>
+                </table>
+            </div>
+            <div align="center"><?=$p['Attachment']['name']?></div>
+        </div>
+        <?php endforeach;?>
     </div>
+    <?php endif;?>
 </div>
+</div>
+
+
+<script type="text/javascript" language="javascript">
+    function mouseOverImage(videoid) {
+        var imageUrl = "/hy/img/play_hover.png";
+        $(videoid).attr("src", imageUrl);
+    }
+
+    function mouseOutImage(videoid) {
+        var imageUrl = "/hy/img/play_normal.png";
+        $(videoid).attr("src", imageUrl);
+    }
+
+    $(document).ready(function(){
+        $(".video").colorbox({iframe:true, innerWidth:550, innerHeight:430});
+    });
+</script>

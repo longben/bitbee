@@ -190,6 +190,12 @@ class AppsController extends HyAppController {
 
         $this->_posts($id);
 
+        if(702 == $id){
+            //滤镜使用展示(702)
+            $covers = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 702), 'limit' => 12));
+            $this->set('covers', $covers);
+        }
+
     }
 
     //联系我们
