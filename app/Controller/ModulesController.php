@@ -15,7 +15,8 @@ class ModulesController extends AppController {
 
     public function admin_index() {
 
-        $parents = $this->Module->generateTreeList(array('Module.hierarchy' => 1), null, null, '--', null);
+        //$parents = $this->Module->generateTreeList(array('Module.hierarchy' => 1), null, null, '--', null);
+        $parents = $this->Module->generateTreeList(null, null, null, '--', null);
         //$parents = $this->Module->generateTreeList(null, null, null, '--');
         $parents = array('' => '无上级栏目') + $parents;
 
