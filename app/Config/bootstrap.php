@@ -104,3 +104,5 @@ define('ELEMENT_PATH', APP.'View'.DS.'Elements'.DS);
 //CakePlugin::load('Wczhs', array('bootstrap' => false, 'routes' => false));
 //CakePlugin::load('Blog', array('bootstrap' => false, 'routes' => false));
 CakePlugin::load('Hy', array('bootstrap' => false, 'routes' => true));
+
+CakePlugin::load('Cd4you', array('bootstrap' => false, 'routes' => false));

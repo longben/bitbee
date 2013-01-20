@@ -5,6 +5,8 @@ class PostsController extends AppController {
 
     public $components = array('Session', 'BFile');
 
+    public $uses = array('Post', 'Module');
+
     /**
      * 根据条件查询用户JSON数据
      *
@@ -35,6 +37,10 @@ class PostsController extends AppController {
 
     public function admin_manage($category_id){
         $this->set('category_id', $category_id);
+
+        $tags = $this->Module->generateTreeList(array('Module.parent_id' => $category_id), null, null, '--', null);
+
+        $this->set('tags', $tags);
     }
 
     /**
@@ -60,6 +66,23 @@ class PostsController extends AppController {
         }
         $this->set('post', $this->Post->read(null, $id));
     }
+
+    /**
+     * admin_read method
+     *
+     * @throws NotFoundException
+     * @param string $id
+     * @return void
+     */
+    public function admin_read($id = null) {
+        $this->Post->id = $id;
+        if (!$this->Post->exists()) {
+            throw new NotFoundException(__('Invalid post'));
+        }
+        return new CakeResponse(array('body' => json_encode($this->Post->read(null, $id))));
+    }
+
+
 
     /**
      * admin_add method
@@ -122,7 +145,7 @@ class PostsController extends AppController {
         //$this->Post->id = $this->request->data['Post']['id'];
 
         if (!empty($this->request->data)) {
-            if ($this->Post->save($this->request->data)) {
+            if ($this->Post->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));

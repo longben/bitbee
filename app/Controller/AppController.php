@@ -110,4 +110,16 @@ class AppController extends Controller {
         $this->set('news', $this->paginate());
     }
 
+
+    //新闻列表2
+    public function findNewsByTag($id){
+        $this->paginate = array(
+            'conditions' => "Meta.tag LIKE '$id%'", 
+            'recursive' => 0, //int
+            'order' => 'Post.post_date desc',
+            'limit' => 12
+        );
+        $this->set('news', $this->paginate());
+    }
+
 }

@@ -24,18 +24,23 @@
     </span>
 </div> 
 
-<div id="dlg" class="easyui-dialog" style="width:800px;height:auto;padding:0px 0px"
-    data-options="closed:true,buttons:'#dlg-buttons'">
-		<?php 
-			echo $this->Form->create('Post', array('inputDefaults' => array('label' => false), 'action' => 'add/', 'name' => 'fm', 'id' => 'fm'));
-			echo $this->Form->input('id');
-            echo $this->Form->input('post_title', array('type' => 'text', 'class' => 'required easyui-validatebox','style' => 'width:730px', 'data-options' => "required: true, missingMessage:'请输入文章标题'"));
-            echo $this->Form->input('post_content', array('style' => 'width:730px;height:300px;'));
+<div id="dlg" class="easyui-dialog" style="width:800px;height:auto;padding:0px 0px" data-options="closed:true,buttons:'#dlg-buttons'">
+    <?php 
+    echo $this->Form->create('Post', array('inputDefaults' => array('label' => false), 'action' => 'add/', 'name' => 'fm', 'id' => 'fm'));
+    echo $this->Form->input('id');
 
-			echo $this->Form->hidden('Module', array('value' => $category_id));
-			echo $this->Form->hidden('post_type', array('value' => 'post'));
-			echo $this->Form->end();
-		?>
+    $attributes = array('legend' => false, 'value' => false, 'data-options' => 'required: true');
+    echo "所属栏目：".$this->Form->radio('Meta.tag', $tags, $attributes);
+
+    echo $this->Form->input('post_title', array('type' => 'text', 'class' => 'required easyui-validatebox','style' => 'width:730px', 'data-options' => "required: true, missingMessage:'请输入文章标题'"));
+    echo $this->Form->input('post_content', array('style' => 'width:730px;height:300px;'));
+
+    echo $this->Form->hidden('Module', array('value' => $category_id));
+    echo $this->Form->hidden('post_type', array('value' => 'post'));
+
+
+    echo $this->Form->end();
+    ?>
 </div>
 <div id="dlg-buttons">
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveItem()">保存</a>
@@ -73,17 +78,24 @@
         for(var key in row){
             _row = _row + "'data[Post][" + key + "]':row." + key + ",";
         }
-        _row = '{' + _row + 't:1}';
 
-        var json = eval("("+ _row +")");
 
-        if (row){
-            $('#dlg').dialog('open').dialog('setTitle','编辑');
-            $('#fm').form('load', json);
-            url = '/admin/posts/edit';
-        }
+        var jqxhr = $.getJSON("/admin/posts/read/" + row.id,
+            function(result){
+                //_row = _row + "'data[Post][post_content]':'" + result.Post.post_content + "',";
+                $("#PostPostContent").val(result.Post.post_content);
+                _row = _row + "'data[Meta][tag]':'" + result.Meta.tag + "',";
+            }).success(function() { 
+                _row = '{' + _row + "t:1}";
+                var json = eval("("+ _row +")");
 
-        editor.create();
+                if (row){
+                    $('#dlg').dialog('open').dialog('setTitle','编辑');
+                    $('#fm').form('load', json);
+                    url = '/admin/posts/edit';
+                }
+                editor.create();
+            });
     }
 
     function saveItem(){

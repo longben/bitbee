@@ -54,11 +54,54 @@ class AppsController extends Cd4youAppController {
     public function aboutus(){
 
         $conditions = array(
-            'conditions' => array('Module.parent_id' => 6), 
+            'conditions' => array('Module.parent_id' => 7), 
             'recursive' => 0, //int
             'order' => 'Module.id'
         );
         $this->set('menus', $this->Module->find('all', $conditions));
+
+    }
+
+    public function page($id, $child = null, $third = null){
+
+        $this->set('module', $this->Module->read(null, $id)); 
+
+        $conditions = array(
+            'conditions' => array('Module.parent_id' => $id), 
+            'recursive' => 0, //int
+            'order' => 'Module.id'
+        );
+        $menus =$this->Module->find('all', $conditions);
+        $this->set('menus', $menus);
+
+        $current = $child;
+        if( sizeof($menus) > 0){
+            if( empty($child) ){
+                $current = $menus[0]['Module']['id'];
+            }else{
+                $current = $child;
+            }
+            $conditions = array(
+                'conditions' => array('Module.parent_id' => $current), 
+                'recursive' => 0, //int
+                'order' => 'Module.id'
+            );
+            $childs =$this->Module->find('all', $conditions);
+            $this->set('childs', $childs);
+            $this->set('current', $current);
+
+
+            $this->set('cmodule', $this->Module->read(null, $current)); 
+        }
+
+        $page = 0; //当前页面文章列表
+        if( !empty($third) ){
+            $page = $third;
+            $this->findNewsByTag($page);
+        }else{
+            $page = $current;
+            $this->_posts($page);
+        }
 
     }
 

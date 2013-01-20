@@ -71,7 +71,9 @@ class Post extends AppModel {
 			if(!empty($this->data['Post']['type'])) {
 				$data['Meta']['type'] = $this->data['Post']['type']; 
             }
-            
+			if(!empty($this->data['Post']['tag'])) {
+				//$data['Meta']['tag'] = $this->data['Post']['tag']; 
+            }
         /*    
 			
 			$reg = "/<img[^>]+src=(['\"])(.+)\\1/isU"; //过滤规则

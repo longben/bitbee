@@ -4,7 +4,7 @@
 A.navfont:link {
 	color:#666;
 	text-decoration: none;
-	margin-right: 8px;
+	margin-right: 4px;
 }
 A.navfont:visited {
 	color:#666;
@@ -16,7 +16,7 @@ A.navfont:active {
 }
 A.navfont:hover {
 	color:#00aaee;
-	margin-right: 8px;
+	margin-right: 4px;
 }
 /*---------------------------------------最新消息------------------------------------------*/
 .news_list {

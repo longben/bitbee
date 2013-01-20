@@ -5,8 +5,6 @@
         <div class="cbl_list">
             <ul>
                 <li class="cbl_xz">园所介绍</li>
-                <li class="cbl"><a href="#" onFocus=this.blur()>环境设施</a></li>
-                <li class="cbl"><a href="#" onFocus=this.blur()>发展规划</a></li>
                 <?php foreach($menus as $m):?>
                 <li class="cbl"><a href="#"><?=$m['Module']['name']?></a></li>
                 <?php endforeach;?>
