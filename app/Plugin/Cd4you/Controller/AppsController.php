@@ -106,4 +106,41 @@ class AppsController extends Cd4youAppController {
     }
 
 
+
+    public function content($post_id, $id, $child = null, $third = null){
+
+        $this->set('module', $this->Module->read(null, $id)); 
+
+        $conditions = array(
+            'conditions' => array('Module.parent_id' => $id), 
+            'recursive' => 0, //int
+            'order' => 'Module.id'
+        );
+        $menus =$this->Module->find('all', $conditions);
+        $this->set('menus', $menus);
+
+        $current = $child;
+        if( sizeof($menus) > 0){
+            if( empty($child) ){
+                $current = $menus[0]['Module']['id'];
+            }else{
+                $current = $child;
+            }
+            $conditions = array(
+                'conditions' => array('Module.parent_id' => $current), 
+                'recursive' => 0, //int
+                'order' => 'Module.id'
+            );
+            $childs =$this->Module->find('all', $conditions);
+            $this->set('childs', $childs);
+            $this->set('current', $current);
+
+
+            $this->set('cmodule', $this->Module->read(null, $current)); 
+        }
+
+        $this->set('post', $this->Post->read(null, $post_id));
+
+    }
+
 }
