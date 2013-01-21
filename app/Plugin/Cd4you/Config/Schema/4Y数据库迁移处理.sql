@@ -1,6 +1,6 @@
 ﻿set autocommit=0;
 
-	use cds4you;
+	use cd4you;
    ----------------------------------posts update--------------------------------------
 	-- 走进四幼 内容更新
 	update posts set post_category='301' where post_category = '3020101';
@@ -40,12 +40,12 @@
 	
 
 	-- ---------------------------将老网站posts迁移到新网站DB---------------------------------------
-	insert into cds4you_new.posts(comment_count,comment_status,menu_order,ping_status,pinged,post_author,post_content,post_content_filtered,post_date,post_date_gmt,post_excerpt,post_mime_type,post_modified,post_modified_gmt,post_name,post_parent,post_password,post_status,post_title,post_type,to_ping) select comment_count,comment_status,menu_order,ping_status,pinged,post_author,post_content,post_content_filtered,post_date,post_date_gmt,post_excerpt,post_mime_type,post_modified,post_modified_gmt,post_name,post_parent,post_password,post_status,post_title,post_type,to_ping from cds4you.posts;
+	insert into cds4you.posts(comment_count,comment_status,menu_order,ping_status,pinged,post_author,post_content,post_content_filtered,post_date,post_date_gmt,post_excerpt,post_mime_type,post_modified,post_modified_gmt,post_name,post_parent,post_password,post_status,post_title,post_type,to_ping) select comment_count,comment_status,menu_order,ping_status,pinged,post_author,post_content,post_content_filtered,post_date,post_date_gmt,post_excerpt,post_mime_type,post_modified,post_modified_gmt,post_name,post_parent,post_password,post_status,post_title,post_type,to_ping from cd4you.posts;
 
 	--------------------------------将老网站posts_modules迁移到新网站DB---------------------------
-	insert into cds4you_new.posts_modules(post_id,module_id) select post_id,module_id from cds4you.posts_modules;
+	insert into cds4you.posts_modules(post_id,module_id) select post_id,module_id from cd4you.posts_modules;
 
 	-----------------------------------新网站post_metas 插入对应数据----------------------------------
-	insert into cds4you_new.post_metas(id,category,tag) select a.post_id,b.parent_id,a.module_id from cds4you_new.posts_modules a,cds4you_new.modules b where a.module_id = b.id;
+	insert into cds4you.post_metas(id,category) select a.post_id,a.module_id from cds4you.posts_modules a,cds4you.modules b where a.module_id = b.id;
 	
 commit;

@@ -102,7 +102,7 @@ class AppController extends Controller {
     //新闻列表
     public function _posts($id){
         $this->paginate = array(
-            'conditions' => "Meta.category = $id", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.category = $id", 
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 12
@@ -114,7 +114,7 @@ class AppController extends Controller {
     //新闻列表2
     public function findNewsByTag($id){
         $this->paginate = array(
-            'conditions' => "Meta.tag LIKE '$id%'", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.tag LIKE '$id%'", 
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 12
@@ -124,7 +124,7 @@ class AppController extends Controller {
 
     public function findPostByCategory($id, $_order = 'DESC', $_limit = 12){
         $this->paginate = array(
-            'conditions' => "Meta.category = $id", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.category = $id", 
             'recursive' => 0, //int
             'order' => 'Post.post_date ' . $_order,
             'limit' => $_limit 
