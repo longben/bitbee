@@ -3,11 +3,11 @@
     <div class="box"><div id="newsSlider">
             <div class="container">
                 <ul class=slides>
-                    <li><a href="#" ><img src="/cd4you/img/01.jpg"></a>
-                    <li><a href="#" ><img src="/cd4you/img/02.jpg"></a>
-                    <li><a href="#" ><img src="/cd4you/img/03.jpg"></a>
-                    <li><a href="#" ><img src="/cd4you/img/04.jpg"></a>
-                    <li><a href="#" ><img src="/cd4you/img/05.jpg"></a> </li>
+                    <li><a href="#" ><img src="/cd4you/img/01.jpg"></a></li>
+                    <li><a href="#" ><img src="/cd4you/img/02.jpg"></a></li>
+                    <li><a href="#" ><img src="/cd4you/img/03.jpg"></a></li>
+                    <li><a href="#" ><img src="/cd4you/img/04.jpg"></a></li>
+                    <li><a href="#" ><img src="/cd4you/img/05.jpg"></a></li>
                 </ul>
             </div>
             <div class="validate_Slider"></div>
@@ -30,12 +30,9 @@
         <div class="news">
             <div class="news_list">
                 <ul>
-                    <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体我是中文测</a></li>
-                    <li class="newslist"><a href=xxgg/xxgg.html>我是中文测试字体我测试字体</a></li>
-                    <li class="newslist"><a href=xxgg/xxgg.html>我是中文测体</a></li>
-                    <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体</a></li>
-                    <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体我是中文测试字体</a></li>
-                    <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
+                    <?php foreach($news as $p):?>
+                    <li class="newslist"><a href=#><?=$p['Post']['post_title']?></a></li>
+                    <?php endforeach;?>
                 </ul>
             </div>
         </div>
@@ -45,11 +42,9 @@
     <div class="xygg_box">
         <div class="xygg_list">
             <ul>
-                <li class="bluefont"><a href=#>我是中文测试字体我中文测</a></li>
-                <li class="bluefont"><a href=#>我是中文试体我测试字体</a></li>
-                <li class="bluefont"><a href=#>我是中文测体</a></li>
-                <li class="bluefont"><a href=#>我是中文测试是中文测试字体</a></li>
-                <li class="bluefont"><a href=#>我是字体我是测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="bluefont"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -60,13 +55,9 @@
     <div class="gjdxhd_box">
         <div class="gjdxhd_list">
             <ul>
-                <li class="gjdxhd"><a href=#>我是中文测试字体我中文测</a></li>
-                <li class="gjdxhd"><a href=#>我是中文试体我测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测试是中文测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是字体我是测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测试是中文测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="gjdxhd"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -75,13 +66,9 @@
     <div class="tslyhd_box">
         <div class="gjdxhd_list">
             <ul>
-                <li class="gjdxhd"><a href=#>我是中文测试字体我中文测</a></li>
-                <li class="gjdxhd"><a href=#>我是中文试体我测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测试是中文测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是字体我是测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测试是中文测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="gjdxhd"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -90,10 +77,9 @@
     <div class="jydt_box">
         <div class="xygg_list">
             <ul>
-                <li class="bluefont"><a href=#>我是中文测试字体我中文测</a></li>
-                <li class="bluefont"><a href=#>我是中文试体我测试字体</a></li>
-                <li class="bluefont"><a href=#>我是中文测体</a></li>
-                <li class="bluefont"><a href=#>我是中文测试是中文测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="bluefont"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -104,13 +90,9 @@
     <div class="jygy_box">
         <div class="gjdxhd_list">
             <ul>
-                <li class="gjdxhd"><a href=#>我是中文测试字体我中文测</a></li>
-                <li class="gjdxhd"><a href=#>我是中文试体我测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测试是中文测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是字体我是测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测试是中文测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="gjdxhd"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -119,13 +101,9 @@
     <div class="wxbj_box">
         <div class="gjdxhd_list">
             <ul>
-                <li class="gjdxhd"><a href=#>我是中文测试字体我中文测</a></li>
-                <li class="gjdxhd"><a href=#>我是中文试体我测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测试是中文测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是字体我是测试字体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测体</a></li>
-                <li class="gjdxhd"><a href=#>我是中文测试是中文测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="gjdxhd"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -134,10 +112,9 @@
     <div class="jtjs_box">
         <div class="xygg_list">
             <ul>
-                <li class="bluefont"><a href=#>我是中文测试字体我中文测</a></li>
-                <li class="bluefont"><a href=#>我是中文试体我测试字体</a></li>
-                <li class="bluefont"><a href=#>我是中文测体</a></li>
-                <li class="bluefont"><a href=#>我是中文测试是中文测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="bluefont"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -148,13 +125,9 @@
     <div class="zjzx_box">
         <div class="zjzx_list">
             <ul>
-                <li class="zjzx"><a href=#>我是中文测试字体我中文测</a></li>
-                <li class="zjzx"><a href=#>我是中文试体我文试文试体我试字体</a></li>
-                <li class="zjzx"><a href=#>我是中文测体</a></li>
-                <li class="zjzx"><a href=#>我是中文测试是中文测试字体</a></li>
-                <li class="zjzx"><a href=#>我是字体我文试文试是测试字体</a></li>
-                <li class="zjzx"><a href=#>我是字体我是测试字体</a></li>
-                <li class="zjzx"><a href=#>我是字体文试我是测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="zjzx"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -163,13 +136,9 @@
     <div class="yyjk_box">
         <div class="zjzx_list">
             <ul>
-                <li class="zjzx"><a href=yyjk/sp.html>我是中文测试字体我中文测</a></li>
-                <li class="zjzx"><a href=#>我是中文试体我文试文试体我试字体</a></li>
-                <li class="zjzx"><a href=#>我是中文测体</a></li>
-                <li class="zjzx"><a href=#>我是中文测试是中文测试字体</a></li>
-                <li class="zjzx"><a href=#>我是字体我文试文试是测试字体</a></li>
-                <li class="zjzx"><a href=#>我是字体我是测试字体</a></li>
-                <li class="zjzx"><a href=#>我是字体文试我是测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="zjzx"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -178,13 +147,9 @@
     <div class="zygx_box">
         <div class="zjzx_list">
             <ul>
-                <li class="zjzx"><a href=#>我是中文测试字体我中文测</a></li>
-                <li class="zjzx"><a href=#>我是中文试体我文试文试体我试字体</a></li>
-                <li class="zjzx"><a href=#>我是中文测体</a></li>
-                <li class="zjzx"><a href=#>我是中文测试是中文测试字体</a></li>
-                <li class="zjzx"><a href=#>我是字体我文试文试是测试字体</a></li>
-                <li class="zjzx"><a href=#>我是字体我是测试字体</a></li>
-                <li class="zjzx"><a href=#>我是字体文试我是测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="zjzx"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -193,13 +158,9 @@
     <div class="zxbs_box">
         <div class="zjzx_list">
             <ul>
-                <li class="zjzx"><a href="zxbs/zxbs.html">我是中文测试字体我中文测</a></li>
-                <li class="zjzx"><a href="#">我是中文试体我文试文试体我试字体</a></li>
-                <li class="zjzx"><a href="zxbs/zxbs.html">我是中文测体</a></li>
-                <li class="zjzx"><a href="#">我是中文测试是中文测试字体</a></li>
-                <li class="zjzx"><a href="#">我是字体我文试文试是测试字体</a></li>
-                <li class="zjzx"><a href="#">我是字体我是测试字体</a></li>
-                <li class="zjzx"><a href="#">我是字体文试我是测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="zjzx"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>

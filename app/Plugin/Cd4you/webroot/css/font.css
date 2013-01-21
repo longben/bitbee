@@ -35,6 +35,9 @@ ul {
 	background-image: url(/cd4you/img/index/d_16.png);
 	background-repeat: no-repeat;
 	background-position: left center;
+    width:400px;
+    white-space:nowrap;
+    overflow:hidden;
 }
 li:last-child {
 	border: none;
@@ -70,6 +73,9 @@ li:last-child {
 	border-right-style: none;
 	border-bottom-style: none;
 	border-left-style: none;
+    width:200px;
+    white-space:nowrap;
+    overflow:hidden;
 }
 .bluefont a {
 	text-decoration: none;
@@ -99,6 +105,9 @@ li:last-child {
 	background-image: url(/cd4you/img/index/d_16.png);
 	background-repeat: no-repeat;
 	background-position: left center;
+    width:277px;
+    white-space:nowrap;
+    overflow:hidden;
 }
 .gjdxhd a {
 	text-decoration: none;
@@ -129,6 +138,9 @@ li:last-child {
 	background-image: url(/cd4you/img/index/d2_26.png);
 	background-repeat: no-repeat;
 	background-position: left center;
+    width:209px;
+    white-space:nowrap;
+    overflow:hidden;
 }
 .zjzx a {
 	text-decoration: none;

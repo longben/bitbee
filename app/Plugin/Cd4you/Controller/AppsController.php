@@ -41,10 +41,10 @@ class AppsController extends Cd4youAppController {
 
         //新闻资讯(203)
         $conditions = array(
-            'conditions' => 'Meta.category IN (501,502)', 
+            'conditions' => 'Meta.category = 4', 
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
-            'limit' => 4
+            'limit' => 6 
         );
         $this->set('news', $this->Post->find('all', $conditions));
 

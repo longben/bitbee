@@ -122,4 +122,14 @@ class AppController extends Controller {
         $this->set('news', $this->paginate());
     }
 
+    public function findPostByCategory($id, $_order = 'DESC', $_limit = 12){
+        $this->paginate = array(
+            'conditions' => "Meta.category = $id", 
+            'recursive' => 0, //int
+            'order' => 'Post.post_date ' . $_order,
+            'limit' => $_limit 
+        );
+        return $this->paginate();
+    }
+
 }
