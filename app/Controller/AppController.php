@@ -132,4 +132,24 @@ class AppController extends Controller {
         return $this->paginate();
     }
 
+    public function getPostByCategory($id, $_limit = 7, $_order = 'DESC'){
+        $conditions = array(
+            'conditions' => "Meta.category = $id", 
+            'recursive' => 0, //int
+            'order' => "Post.post_date $_order",
+            'limit' => $_limit 
+        );
+        return $this->Post->find('all', $conditions);
+    }
+
+    public function getPostByCategorys($id, $_limit = 7, $_order = 'DESC'){
+        $conditions = array(
+            'conditions' => "Meta.category IN ($id)", 
+            'recursive' => 0, //int
+            'order' => "Post.post_date $_order",
+            'limit' => $_limit 
+        );
+        return $this->Post->find('all', $conditions);
+    }
+
 }

@@ -24,7 +24,7 @@ class AppsController extends Cd4youAppController {
         $this->layout = "website";
 
         
-        $this->set('title_for_layout', '歡迎您！');
+        $this->set('title_for_layout', '欢迎您！');
 
         //大图轮换(201)
         $covers = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 201), 'limit' => 6));
@@ -39,15 +39,35 @@ class AppsController extends Cd4youAppController {
         );
         $this->set('features', $this->Post->find('all', $conditions));
 
-        //新闻资讯(203)
-        $conditions = array(
-            'conditions' => 'Meta.category = 4', 
-            'recursive' => 0, //int
-            'order' => 'Post.post_date desc',
-            'limit' => 6 
-        );
-        $this->set('news', $this->Post->find('all', $conditions));
+        //最新消息(401)
+        $this->set( 'news', $this->getPostByCategory(401, 6) );
 
+        //校园公告(501)
+        $this->set( 'xygg', $this->getPostByCategory(501, 5) );
+
+        //全园大型活动(802)
+        $this->set( 'qydxhd', $this->getPostByCategory(802, 7) );
+
+        //特色领域活动(801)
+        $this->set( 'tslyhd', $this->getPostByCategory(801, 7) );
+
+        //教研动态
+        $this->set( 'jydt', $this->getPostByCategorys('701,702', 5) );
+
+        //家园共育
+        $this->set( 'jygy', $this->getPostByCategorys('601,602', 5) );
+
+        //集团建设
+        $this->set( 'jtjs', $this->getPostByCategorys('1101,1102,1103', 5) );
+
+        //早教中心
+        $this->set( 'zjzx', $this->getPostByCategorys('1001,1002,1003', 7) );
+
+        //营养健康
+        $this->set( 'yyjk', $this->getPostByCategorys('1401,1402', 7) );
+
+        //资源共享
+        $this->set( 'zygx', $this->getPostByCategorys('1201,1202,1203', 7) );
     }
 
     //走进四幼
@@ -107,7 +127,7 @@ class AppsController extends Cd4youAppController {
 
 
 
-    public function content($post_id, $id, $child = null, $third = null){
+    public function __content($post_id, $id, $child = null, $third = null){
 
         $this->set('module', $this->Module->read(null, $id)); 
 
@@ -138,6 +158,13 @@ class AppsController extends Cd4youAppController {
 
             $this->set('cmodule', $this->Module->read(null, $current)); 
         }
+
+        $this->set('post', $this->Post->read(null, $post_id));
+
+    }
+
+    
+    public function content($post_id){
 
         $this->set('post', $this->Post->read(null, $post_id));
 

@@ -31,7 +31,7 @@
             <div class="news_list">
                 <ul>
                     <?php foreach($news as $p):?>
-                    <li class="newslist"><a href=#><?=$p['Post']['post_title']?></a></li>
+                    <li class="newslist"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                     <?php endforeach;?>
                 </ul>
             </div>
@@ -42,8 +42,8 @@
     <div class="xygg_box">
         <div class="xygg_list">
             <ul>
-                <?php foreach($news as $p):?>
-                <li class="bluefont"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php foreach($xygg as $p):?>
+                <li class="bluefont"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -51,23 +51,23 @@
     <!---校园公告start--->
 </div>
 <div class="content_box2">
-    <!---国际大型活动start--->
+    <!---全园大型活动start--->
     <div class="gjdxhd_box">
         <div class="gjdxhd_list">
             <ul>
-                <?php foreach($news as $p):?>
-                <li class="gjdxhd"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php foreach($qydxhd as $p):?>
+                <li class="gjdxhd"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
     </div>
-    <!---国际大型活动end--->
-    <!---特色领导活动start--->
+    <!---全园大型活动end--->
+    <!---特色领域活动start--->
     <div class="tslyhd_box">
         <div class="gjdxhd_list">
             <ul>
-                <?php foreach($news as $p):?>
-                <li class="gjdxhd"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php foreach($tslyhd as $p):?>
+                <li class="gjdxhd"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -77,8 +77,8 @@
     <div class="jydt_box">
         <div class="xygg_list">
             <ul>
-                <?php foreach($news as $p):?>
-                <li class="bluefont"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php foreach($jydt as $p):?>
+                <li class="bluefont"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -90,8 +90,8 @@
     <div class="jygy_box">
         <div class="gjdxhd_list">
             <ul>
-                <?php foreach($news as $p):?>
-                <li class="gjdxhd"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php foreach($jygy as $p):?>
+                <li class="gjdxhd"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -102,7 +102,7 @@
         <div class="gjdxhd_list">
             <ul>
                 <?php foreach($news as $p):?>
-                <li class="gjdxhd"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <li class="gjdxhd"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -112,8 +112,8 @@
     <div class="jtjs_box">
         <div class="xygg_list">
             <ul>
-                <?php foreach($news as $p):?>
-                <li class="bluefont"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php foreach($jtjs as $p):?>
+                <li class="bluefont"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -125,8 +125,8 @@
     <div class="zjzx_box">
         <div class="zjzx_list">
             <ul>
-                <?php foreach($news as $p):?>
-                <li class="zjzx"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php foreach($zjzx as $p):?>
+                <li class="zjzx"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -136,8 +136,8 @@
     <div class="yyjk_box">
         <div class="zjzx_list">
             <ul>
-                <?php foreach($news as $p):?>
-                <li class="zjzx"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php foreach($yyjk as $p):?>
+                <li class="zjzx"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -147,8 +147,8 @@
     <div class="zygx_box">
         <div class="zjzx_list">
             <ul>
-                <?php foreach($news as $p):?>
-                <li class="zjzx"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <?php foreach($zygx as $p):?>
+                <li class="zjzx"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
@@ -159,7 +159,7 @@
         <div class="zjzx_list">
             <ul>
                 <?php foreach($news as $p):?>
-                <li class="zjzx"><a href=#><?=$p['Post']['post_title']?></a></li>
+                <li class="zjzx"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>

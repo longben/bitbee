@@ -3,7 +3,7 @@
     <div class="btwo_list">
         <ul>
             <?php foreach($news as $p):?>
-            <li class="btwo"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>/<?=$p['Meta']['category']?>/<?=$p['Meta']['category']?>"><?=$p['Post']['post_title']?></a></li>
+            <li class="btwo"><a href="/cd4you/apps/content/<?=$p['Post']['id']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
             <?php endforeach;?>
         </ul>
     </div>

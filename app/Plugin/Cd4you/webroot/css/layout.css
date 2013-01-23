@@ -467,3 +467,53 @@ body {
 	width: 630px;
 	padding-top: 20px;
 }
+
+.post_box {
+	width: 1073px;
+	padding-top: 60px;
+	padding-left: 49px;
+}
+.post_line {
+	width: 984px;
+	height: 3px;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	background-color: #0E9AC1;
+}
+.post_title {
+	width: 930px;
+	font-family: "微软雅黑", "新宋体", Arial;
+	font-size: 22px;
+	line-height: 70px;
+	text-align: center;
+	height: 70px;
+	color: #666;
+	padding-left: 49px;
+	letter-spacing: 5px;
+	font-weight: normal;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #AAE7F9;
+}
+.post_date {
+	font-size: 12px;
+	line-height: 20px;
+	color: #5BC2C8;
+	text-align: right;
+	height: 20px;
+	width: 930px;
+	font-family: "微软雅黑", "新宋体", Arial;
+	letter-spacing: 1px;
+	padding-left: 49px;
+}
+.post_content {
+	height: auto;
+	width: 930px;
+	font-family: "微软雅黑", "新宋体", Arial;
+	font-size: 15px;
+	color: #666;
+	text-indent: 24px;
+	line-height: 25px;
+	letter-spacing: 2px;
+	padding-left: 49px;
+}
