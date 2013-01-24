@@ -101,9 +101,9 @@ define('AVATAR_UPLOAD_PATH', APP.'webroot'.DS.'upload'.DS.'user'.DS.'avatar'.DS)
 
 define('ELEMENT_PATH', APP.'View'.DS.'Elements'.DS);
 
-if (file_exists(APP . 'Config' . DS . 'settings.yml')) {
-    $plugins = explode(',', Configure::read('Site.plugins'));
-    foreach( $plugins as $plugin){
+$plugins = explode(',', Configure::read('Site.plugins'));
+foreach( $plugins as $plugin){
+    if (!empty($plugin) && file_exists(APP . 'Plugin' . DS . $plugin)) {
         CakePlugin::load($plugin, array('bootstrap' => false, 'routes' => true));
     }
 }
