@@ -8,17 +8,17 @@
                 <?php if($m['Module']['id'] == $current):?>
                 <li class="cbl_xz"><?=$m['Module']['name']?></li>
                 <?php foreach($childs as $c):?>
-                <li class="zcd"><a href="/cd4you/apps/page/<?=$module['Module']['id']?>/<?=$m['Module']['id']?>/<?=$c['Module']['id']?>"><?=$c['Module']['name']?></a></li>
+                <li class="zcd"><a href="/app/page/<?=$module['Module']['id']?>/<?=$m['Module']['id']?>/<?=$c['Module']['id']?>"><?=$c['Module']['name']?></a></li>
                 <?php endforeach;?>
                 <?php else:?>
-                <li class="cbl"><a href="/cd4you/apps/page/<?=$module['Module']['id']?>/<?=$m['Module']['id']?>"><?=$m['Module']['name']?></a></li>
+                <li class="cbl"><a href="/app/page/<?=$module['Module']['id']?>/<?=$m['Module']['id']?>"><?=$m['Module']['name']?></a></li>
                 <?php endif;?>
                 <?php endforeach;?>
             </ul>
         </div>
     </div>
     <!---子菜单end--->
-    <div class="back"><a href="/cd4you/apps/index" target="_self" onFocus=this.blur()><img src="/cd4you/img/list/list_10.png" border="0"/></a></div>
+    <div class="back"><a href="/" target="_self" onFocus=this.blur()><img src="/cd4you/img/list/list_10.png" border="0"/></a></div>
     <div class="bj_001"></div>
 </div>
 <div class="column_title_newst">

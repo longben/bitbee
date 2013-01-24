@@ -41,8 +41,8 @@
         <script type="text/javascript" src="/js/DD_belatedPNG.js" ></script>
         <script type="text/javascript">
             $(window).load(function() { 
-        DD_belatedPNG.fix('*');
-        });
+				DD_belatedPNG.fix('*');
+			});
     </script>
     <![endif]-->
 </head>
@@ -66,19 +66,19 @@
             <script type="text/javascript" language="JavaScript">swf('/cd4you/img/index/br.swf','1073','178');</script>
         </div>
         <div class="nav_top">
-            <a href="/cd4you/apps/index" target="_self" class="navfont">首页</a>
-            <a href="/cd4you/apps/page/3" target="_self" class="navfont">走进四幼</a>
-            <a href="/cd4you/apps/page/4" target="_self" class="navfont">新闻播报</a>
-            <a href="/cd4you/apps/page/5" target="_self" class="navfont">校园公告</a>
-            <a href="/cd4you/apps/page/6" target="_self" class="navfont">家园共育</a>
-            <a href="/cd4you/apps/page/7" target="_self" class="navfont">教研科研</a>
-            <a href="/cd4you/apps/page/8" target="_self" class="navfont">特色活动</a>
-            <a href="/cd4you/apps/page/9" target="_self" class="navfont">温馨班级</a>
-            <a href="/cd4you/apps/page/10" target="_self" class="navfont">早教中心</a>
-            <a href="/cd4you/apps/page/11" target="_self" class="navfont">集团建设</a>
-            <a href="/cd4you/apps/page/12" target="_self" class="navfont">资源共享</a>
-            <a href="/cd4you/apps/page/13" target="_self" class="navfont">精彩视频</a>
-            <a href="/cd4you/apps/page/14" target="_self" class="navfont">营养健康</a>
+            <a href="/" target="_self" class="navfont">首页</a>
+            <a href="/app/page/3" target="_self" class="navfont">走进四幼</a>
+            <a href="/app/page/4" target="_self" class="navfont">新闻播报</a>
+            <a href="/app/page/5" target="_self" class="navfont">校园公告</a>
+            <a href="/app/page/6" target="_self" class="navfont">家园共育</a>
+            <a href="/app/page/7" target="_self" class="navfont">教研科研</a>
+            <a href="/app/page/8" target="_self" class="navfont">特色活动</a>
+            <a href="#" target="_self" class="navfont">温馨班级</a>
+            <a href="/app/page/10" target="_self" class="navfont">早教中心</a>
+            <a href="/app/page/11" target="_self" class="navfont">集团建设</a>
+            <a href="/app/page/12" target="_self" class="navfont">资源共享</a>
+            <a href="/app/page/13" target="_self" class="navfont">精彩视频</a>
+            <a href="/app/page/14" target="_self" class="navfont">营养健康</a>
         </div>
     </div>
     <!---动画与导航end--->
@@ -90,7 +90,7 @@
         <div class="pt"><img src="/cd4you/img/index/index_28a.png"  border="0"/></div>
         <div class="footer">
             <p><a class="endfont">地址:成都市茶店子育苗路4号    电话:86-028-87521419   邮编:610036<br />
-            </a><a class="endfont">Copyright ? 2007-2010 成都市第四幼儿园版权所有 蜀ICP备07000521号</a> </p>
+            </a><a class="endfont">Copyright &copy; 2007-2013 成都市第四幼儿园版权所有 蜀ICP备07000521号</a> </p>
         </div>
     </div>
 </body>

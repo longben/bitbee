@@ -1,3 +1,3 @@
 <?php
-    Router::connect('/app/:action/*', array('plugin' => 'cds4you', 'controller' => 'apps'));
-	Router::connect('/', array('plugin'=>'cds4you' ,'controller' => 'apps', 'action' => 'index'));
+    Router::connect('/app/:action/*', array('plugin' => 'cd4you', 'controller' => 'apps'));
+	Router::connect('/', array('plugin'=>'cd4you' ,'controller' => 'apps', 'action' => 'index'));

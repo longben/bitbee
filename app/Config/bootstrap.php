@@ -101,12 +101,9 @@ define('AVATAR_UPLOAD_PATH', APP.'webroot'.DS.'upload'.DS.'user'.DS.'avatar'.DS)
 
 define('ELEMENT_PATH', APP.'View'.DS.'Elements'.DS);
 
-$plugins = explode(',', Configure::read('Site.plugins')); 
-foreach( $plugins as $plugin){
-//    CakePlugin::load($plugin, array('bootstrap' => false, 'routes' => true));
-}
 
-//CakePlugin::load('Wczhs', array('bootstrap' => false, 'routes' => false));
-//CakePlugin::load('Blog', array('bootstrap' => false, 'routes' => false));
-//CakePlugin::load('Hy', array('bootstrap' => false, 'routes' => false));
-//CakePlugin::load('Cd4you', array('bootstrap' => false, 'routes' => false));
+
+$plugins = explode(',', Configure::read('Site.plugins'));
+foreach( $plugins as $plugin){
+   CakePlugin::load($plugin, array('bootstrap' => false, 'routes' => true));
+}
