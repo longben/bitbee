@@ -170,4 +170,18 @@ class AppsController extends Cd4youAppController {
 
     }
 
+
+    public function mailbox(){
+        $this->layout = "website";
+        $this->set('title_for_content', '园长信箱');
+
+        $this->paginate = array(
+            'conditions' => array('Guestbook.flag' => 1, 'Guestbook.type_id' => 1), 
+            'recursive' => 0, //int
+            'order' => 'Guestbook.created desc',
+            'limit' => 11
+        );
+        $this->set('guestbooks', $this->paginate('Guestbook'));
+    }
+
 }
