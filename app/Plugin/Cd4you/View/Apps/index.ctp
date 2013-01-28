@@ -23,7 +23,7 @@
 <!---动态图片end--->
 <div class="content_box">
     <!---园长信箱start--->
-    <div class="mail_box"><a href="#" target="_self" onFocus=this.blur()><img src="/cd4you/img/index/index_12.png" border="0" /></a></div>
+    <div class="mail_box"><a href="/app/mailbox" target="_self" onFocus=this.blur()><img src="/cd4you/img/index/index_12.png" border="0" /></a></div>
     <!---园长信箱end--->
     <!---最新消息start--->
     <div class="news_box">

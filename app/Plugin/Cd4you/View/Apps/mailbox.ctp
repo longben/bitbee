@@ -24,7 +24,7 @@
     </div>
     <!---列表start--->
 
-    <div class="comments-template" style="width:95%,align:center">
+    <div class="comments-template" style="width:95%,align:center,font-size:11pt">
 
         <!-- You can start editing here. -->
         <ol class="commentlist">

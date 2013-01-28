@@ -37,6 +37,7 @@ h3.comments {
 	margin: 15px 0 0;
 	border-top: 1px solid #ccc;
 	padding: 15px 0 0;
+	font-size: 11pt;
 }
 
 .comments-template ol{
