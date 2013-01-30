@@ -38,6 +38,8 @@ h3.comments {
 	border-top: 1px solid #ccc;
 	padding: 15px 0 0;
 	font-size: 11pt;
+    width:97%;
+    float:right;
 }
 
 .comments-template ol{
