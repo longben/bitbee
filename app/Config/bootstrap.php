@@ -108,3 +108,5 @@ foreach( $plugins as $plugin){
     }
 }
 
+
+//CakePlugin::load('Hy2', array('bootstrap' => false, 'routes' => false));

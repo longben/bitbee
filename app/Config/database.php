@@ -7,7 +7,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => '',
-		'database' => 'cds4you',
+		'database' => 'hy',
         'encoding' => 'utf8',
 	);
 }
