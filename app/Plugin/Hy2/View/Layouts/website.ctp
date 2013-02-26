@@ -7,7 +7,7 @@
         <title>H&amp;Y - <?php echo $title_for_layout; ?></title>
         <?php 
         echo $this->Html->meta('icon', '/hy/img/favicon.ico');
-        echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.SuperSlide','zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min'));
+        echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.SuperSlide','zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min','jquery/jquery.slides'));
         echo $this->Html->css(array('/hy2/css/style.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
 
         echo $scripts_for_layout;
@@ -56,30 +56,26 @@
             <div class="language fontsong shadow"><font style="color:#495f72">中文</font> | <a href="Enindex.html">ENGLISH</a></div>
             <ul class="menu">
                 <li class="no_sub"><a href="/" class="tablink nosub">首頁</a></li>
-                <li><a href="" class="tablink">產品</a>
+                <li><a href="/zh/product" class="tablink">產品</a>
                 <ul>
                     <div class="lists">
-                        <div class="pics"><a href=""><img src="" border="0" width="132" height="96" /></a></div>
-                        <div class="words fontsong"><b style="padding-bottom:5px;clear:both;"><a href="">攝影濾鏡</a></b><br />
-                            <a href="">UV濾鏡（UV）</a><br />
-                            <a href="">偏振鏡 （CPL）</a><br />
-                            <a href="">灰度鏡 （ND）</a><br />
-                            <a href="">可調/漸變灰度鏡(Adjustable ND)</a><br />
-                            <a href="">方片</a>
-                        </div>
-                    </div>
-                    <div class="lists">
-                        <div class="pics"><a href=""><img src="" border="0" width="132" height="96" /></a></div>
+                        <div class="pics"><a href=""><img src="/hy2/img/100.png" border="0" width="132" height="96" /></a></div>
                         <div class="words fontsong"><b style="padding-bottom:5px;clear:both;"><a href="">微型投影儀</a></b><br />
-                            <a href="">MP-312</a><br />
-                            <a href="">MP-315</a><br />
-                            <a href="">MP-315A</a><br />
-                            <a href="">MP-318</a><br />
-                            <a href="">MP-320</a>
                         </div>
                     </div>
                     <div class="lists">
-                        <div class="pics"><a href=""><img src="" border="0" width="132" height="96" /></a></div>
+                        <div class="pics"><a href=""><img src="/hy2/img/200.png" border="0" width="132" height="96" /></a></div>
+                        <div class="words fontsong"><b style="padding-bottom:5px;clear:both;"><a href="">攝影濾鏡</a></b><br />
+                            <a href="">可調式減光鏡</a><br />
+                            <a href="">多層鍍膜UV鏡</a><br />
+                            <a href="">偏光鏡減光鏡ND</a><br />
+                            <a href="">中灰漸變鏡</a><br />
+                            <a href="">紅外線截止濾鏡</a><br />
+							<a href="">多功能UV保護鏡</a><br />
+                        </div>
+                    </div>
+                    <div class="lists">
+                        <div class="pics"><a href=""><img src="/hy2/img/300.png" border="0" width="132" height="96" /></a></div>
                         <div class="words fontsong"><b style="padding-bottom:5px;clear:both;"><a href="">玻璃貼膜</a></b><br />
                         </div>
                     </div>
@@ -115,7 +111,8 @@
             </div>
             <div class="lists">
                 <div class="first"><a href="">攝影濾鏡</a></div>
-                <div class="sec"><a href="">UV濾鏡（UV）</a><br />
+                <div class="sec">
+                    <a href="">UV濾鏡（UV）</a><br />
                     <a href="">偏振鏡 （CPL）</a><br />
                     <a href="">灰度鏡 （ND）</a><br />
                     <a href="">可調/漸變灰度鏡(Adjustable ND)</a><br />
@@ -125,32 +122,24 @@
                 <div class="first"><a href="">方片</a></div>
             </div>
             <div class="lists">
-                <div class="first"><a href="">微型投影儀</a></div>
-                <div class="first"><a href="">玻璃貼膜</a></div>
-                <div class="first"><a href="">方片</a></div>
+
             </div>
             <div class="lists">
-                <div class="first"><a href="">微型投影儀</a></div>
-                <div class="first"><a href="">玻璃貼膜</a></div>
-                <div class="first"><a href="">方片</a></div>
+
             </div>
             <div class="lists">
-                <div class="first"><a href="">微型投影儀</a></div>
-                <div class="first"><a href="">玻璃貼膜</a></div>
-                <div class="first"><a href="">方片</a></div>
+
             </div>
             <div class="lists">
-                <div class="first"><a href="">微型投影儀</a></div>
-                <div class="first"><a href="">玻璃貼膜</a></div>
-                <div class="first"><a href="">方片</a></div>
+                <div class="first"><a href="">參展活動</a></div>
+                <div class="first"><a href="">企業新聞</a></div>
+                <div class="first"><a href="">線下活動</a></div>
             </div>
             <div class="lists">
-                <div class="first"><a href="">微型投影儀</a></div>
-                <div class="first"><a href="">玻璃貼膜</a></div>
-                <div class="first"><a href="">方片</a></div>
+
             </div>
             <div class="searchshow">
-                <form action="/sdfs" method="get">
+                <form action="" method="post">
                     <div class="searchleft"></div>
                     <div class="serachbg">
                         <input type="text" name="keywords" class="searchinput" />

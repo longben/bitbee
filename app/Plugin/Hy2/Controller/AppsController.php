@@ -8,7 +8,7 @@ App::uses('Hy2AppController', 'Hy2.Controller');
 class AppsController extends Hy2AppController {
 
 
-    public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'Code', 'Hy.Product');
+    public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'Code', 'Hy2.Product');
 
     //跳转
     public function sw(){
@@ -37,23 +37,13 @@ class AppsController extends Hy2AppController {
         $covers = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 201), 'limit' => 6));
         $this->set('covers', $covers);
 
-        //产品特性(202)
-        $conditions = array(
-            'conditions' => 'Meta.category = 202', 
-            'recursive' => 0, //int
-            'order' => 'Meta.elite, Post.post_date desc',
-            'limit' => 6
-        );
-        $this->set('features', $this->Post->find('all', $conditions));
+        //友情链接(202)
+        $links = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 202), 'limit' => 10));
+        $this->set('links', $links);
 
-        //新闻资讯(203)
-        $conditions = array(
-            'conditions' => 'Meta.category IN (501,502)', 
-            'recursive' => 0, //int
-            'order' => 'Post.post_date desc',
-            'limit' => 4
-        );
-        $this->set('news', $this->Post->find('all', $conditions));
+        //最新产品
+        $products = $this->Product->find('all', array('limit' => 4, 'order' => 'Product.id DESC'));
+        $this->set('products', $products);
 
     }
 
