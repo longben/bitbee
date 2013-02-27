@@ -63,15 +63,8 @@ class AppsController extends Hy2AppController {
 
         $this->set('code_id', $code_id);
 
-
-        $conditions = array(
-            'conditions' => array('Product.code_id' => $code_id), 
-            'recursive' => 0, //int
-            'order' => 'Product.id asc',
-        );
-        $this->set('products', $this->Product->find('all', $conditions));
-
     }
+
 
     //产品详情
     public function product_detail($id) {

@@ -51,6 +51,22 @@ class ProductsController extends Hy2AppController {
     }
 
 
+    public function findByCode($code_id){
+        $conditions = array(
+            'conditions' => array('Product.code_id' => $code_id), 
+            'recursive' => 0, //int
+            'order' => 'Product.id asc',
+        );
+        $products = $this->Product->find('all', $conditions);
+
+        if ($this->request->is('requested')) {
+            return $products;
+        } else {
+            $this->set('products', $products);
+        }
+
+    }
+
 
 
 }

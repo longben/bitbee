@@ -44,6 +44,7 @@
     <?php foreach($codes as $code):?>
     <div class="prolisttitle"><?=$code['Code']['name']?></div>
     <div class="prolistpics">
+        <?php $products = $this->requestAction('/hy2/products/findByCode/' . $code['Code']['id']);?>
         <?php foreach($products as $p):?>
         <div class="pics">
             <div class="picshow">
