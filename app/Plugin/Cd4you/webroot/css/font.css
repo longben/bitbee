@@ -8,11 +8,11 @@ A.navfont:link {
 }
 A.navfont:visited {
 	color:#666;
-	text-decoration: none;margin-right: 8px;
+	text-decoration: none;margin-right: 4px;
 }
 A.navfont:active {
 	color:#666;
-	text-decoration: none;margin-right: 8px;
+	text-decoration: none;margin-right: 4px;
 }
 A.navfont:hover {
 	color:#00aaee;
@@ -35,9 +35,6 @@ ul {
 	background-image: url(/cd4you/img/index/d_16.png);
 	background-repeat: no-repeat;
 	background-position: left center;
-    width:400px;
-    white-space:nowrap;
-    overflow:hidden;
 }
 li:last-child {
 	border: none;
@@ -73,9 +70,6 @@ li:last-child {
 	border-right-style: none;
 	border-bottom-style: none;
 	border-left-style: none;
-    width:200px;
-    white-space:nowrap;
-    overflow:hidden;
 }
 .bluefont a {
 	text-decoration: none;
@@ -105,9 +99,6 @@ li:last-child {
 	background-image: url(/cd4you/img/index/d_16.png);
 	background-repeat: no-repeat;
 	background-position: left center;
-    width:277px;
-    white-space:nowrap;
-    overflow:hidden;
 }
 .gjdxhd a {
 	text-decoration: none;
@@ -138,9 +129,6 @@ li:last-child {
 	background-image: url(/cd4you/img/index/d2_26.png);
 	background-repeat: no-repeat;
 	background-position: left center;
-    width:209px;
-    white-space:nowrap;
-    overflow:hidden;
 }
 .zjzx a {
 	text-decoration: none;
