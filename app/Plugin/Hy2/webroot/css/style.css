@@ -141,7 +141,7 @@ ul,ol,li {list-style:none}
 .thirdmenu{width:1004px;height:46px;clear:both;overflow:hidden;background:#ec7d05;margin:0px auto;margin-bottom:10px;}
 .thirdmenu .left{background:url(/hy2/img/secmenu_left.jpg) no-repeat;float:left;width:22px;height:46px;clear:none;overflow:hidden;}
 .thirdmenu .in{width:903px;height:34px;clear:none;overflow:hidden;float:left;padding-left:10px;font-size:15px;padding-top:12px;}
-.thirdmenu .in a{color:#fddbb7;text-decoration:None;margin:0px 15px;}
+.thirdmenu .in a{color:#fddbb7;text-decoration:None;margin:0px 10px;}
 .thirdmenu .in a:hover{color:#FFF}
 .thirdmenu .right{background:url(/hy2/img/secmenu_right.jpg) left no-repeat #D4D9DF;width:69px;height:46px;clear:none;overflow:hidden;float:right;}
 .prolisttitle{width:1004px;height:auto;clear:both;overflow:hidden;margin:0px auto;color:#47505d;font-size:19px;padding:8px 0px;}

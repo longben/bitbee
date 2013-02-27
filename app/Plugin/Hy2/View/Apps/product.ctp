@@ -33,16 +33,22 @@
     <div class="thirdmenu">
         <div class="left"></div>
         <div class="in">
-            <span id="thirdmenu1" class="inthirdmenu"><a href="">UV濾鏡(UV)</a><a href="">偏振鏡(CPL)</a><a href="">灰度鏡(ND)</a><a href="">方片</a></span>
-            <span id="thirdmenu2" class="inthirdmenu"style="display:none"><a href="">UV濾鏡(UV)2</a><a href="">偏振鏡(CPL)</a><a href="">灰度鏡(ND)</a><a href="">方片</a></span>
-            <span id="thirdmenu3" class="inthirdmenu"style="display:none;"><a href="">UV濾鏡(UV)3</a><a href="">偏振鏡(CPL)</a><a href="">灰度鏡(ND)</a><a href="">方片</a></span>
+            <span id="thirdmenu1" class="inthirdmenu">
+                <?php
+                foreach($codes as $code){
+                    echo $this->Html->link($code['Code']['name'], '#'.$code['Code']['id']);
+                }
+                ?>
+            </span>
+            <span id="thirdmenu2" class="inthirdmenu"style="display:none"> </span>
+            <span id="thirdmenu3" class="inthirdmenu"style="display:none;"> </span>
         </div>
         <div class="right"></div>
 
     </div>
 
     <?php foreach($codes as $code):?>
-    <div class="prolisttitle"><?=$code['Code']['name']?></div>
+    <div class="prolisttitle"><a name="<?=$code['Code']['id']?>"><?=$code['Code']['name']?></a></div>
     <div class="prolistpics">
         <?php $products = $this->requestAction('/hy2/products/findByCode/' . $code['Code']['id']);?>
         <?php foreach($products as $p):?>

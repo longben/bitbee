@@ -66,12 +66,12 @@
                     <div class="lists">
                         <div class="pics"><a href=""><img src="/hy2/img/200.png" border="0" width="132" height="96" /></a></div>
                         <div class="words fontsong"><b style="padding-bottom:5px;clear:both;"><a href="">攝影濾鏡</a></b><br />
-                            <a href="">可調式減光鏡</a><br />
-                            <a href="">多層鍍膜UV鏡</a><br />
-                            <a href="">偏光鏡減光鏡ND</a><br />
-                            <a href="">中灰漸變鏡</a><br />
-                            <a href="">紅外線截止濾鏡</a><br />
-							<a href="">多功能UV保護鏡</a><br />
+                            <a href="/zh/product#1">可調式減光鏡</a><br />
+                            <a href="/zh/product#2">多層鍍膜UV鏡</a><br />
+                            <a href="/zh/product#3">偏光鏡減光鏡ND</a><br />
+                            <a href="/zh/product#4">中灰漸變鏡</a><br />
+                            <a href="/zh/product#5">紅外線截止濾鏡</a><br />
+							<a href="/zh/product#6">多功能UV保護鏡</a><br />
                         </div>
                     </div>
                     <div class="lists">
