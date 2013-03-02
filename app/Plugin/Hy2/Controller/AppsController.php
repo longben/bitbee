@@ -33,7 +33,7 @@ class AppsController extends Hy2AppController {
         $this->set('title_for_layout', '歡迎您！');
 
         //大图轮换(201)
-        $covers = $this->attachment->find('all', array('conditions' => array('attachment.type_id' => 201), 'limit' => 6));
+        $covers = $this->Attachment->find('all', array('conditions' => array('attachment.type_id' => 201), 'limit' => 6));
         $this->set('covers', $covers);
 
         //友情链接(202)
