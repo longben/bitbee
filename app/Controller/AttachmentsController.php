@@ -20,8 +20,6 @@ class AttachmentsController extends AppController {
 
     public function admin_index($type_id){
 
-//                $msg = '友情链接图片(250 x 80)';
-
         $this->Module->id = $type_id;
         $msg = $this->Module->field('setting'); 
 
@@ -68,6 +66,20 @@ class AttachmentsController extends AppController {
             if ($this->Attachment->delete()) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             }else{
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
+    }
+
+    public function flash_upload($session_id, $type_id = null, $object_id = null){
+        $this->autoRender = false;
+        if (!empty($this->request->data)) {
+            $this->Attachment->create();
+            $this->request->data['Attachment']['type_id'] = $type_id;  
+            $this->request->data['Attachment']['object_id'] = $object_id;  
+            if ($this->Attachment->save($this->request->data)) {
+                return new CakeResponse(array('body' => json_encode(array('success'=>true))));
+            } else {
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
             }
         }

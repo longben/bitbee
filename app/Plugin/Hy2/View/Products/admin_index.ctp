@@ -1,7 +1,6 @@
 <?php $this->Html->script(array('kindeditor/kindeditor-min', 'kindeditor/lang/zh_CN'), array('inline' => false));?>
 
 
-
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
     data-options="url:'/admin/hy2/products/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
@@ -17,6 +16,7 @@
 <div id="toolbar">  
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="addPictrue()">添加产品图片</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="deleteItem()">删除</a>
     <span style="float:right;white-space:nowrap;clear: none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
@@ -34,6 +34,7 @@
     echo $this->Form->input('name');
     echo $this->Form->input('code_id');
     echo $this->Form->input('file', array('id' => 'file', 'label'=> '微缩图', 'type'=> 'file'));
+	echo $this->Form->input('url', array('label'=> '购买地址'));
     echo $this->Form->input('description', array('id' => 'editor' ,'style' => 'width:670px;height:auto'));
     echo $this->Form->end();
     ?>
@@ -41,6 +42,22 @@
 <div id="dlg-buttons">
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveItem()">保存</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+</div>
+
+
+<div id="dlgPicture" class="easyui-dialog" style="width:800px;height:500px;padding:10px 20px" data-options="closed:true,buttons:'#dlg-buttons2'">
+
+    <script type="text/javascript" src="/js/swfobject.js"></script>
+    <script type="text/javascript">
+
+        window.onload = function(){
+
+        }
+
+        function upload(){
+        }
+    </script>
+    <div id="myContent"></div>
 </div>
 
 
@@ -141,6 +158,24 @@
             'load',
             {q:value, field:name}
         );
+    }
+
+
+    function addPictrue(){
+        var row = $('#dg').datagrid('getSelected');
+
+
+        if (row){
+            $('#dlgPicture').dialog('open').dialog('setTitle','新增');
+            var params = {
+                uploadServerUrl : "/attachments/flash_upload/<?=session_id()?>" + "/402/" + row.id,	//上传响应页面(必须设置)
+                jsFunction : "upload",			//上传成功后回调JS
+                filter : "*.jpg;*.png"			//上传文件类型限制
+            }
+            swfobject.embedSWF("/img/uploadImage.swf", "myContent", "100%", "400", "10.0.0", "/img/expressInstall.swf", params);
+
+        }
+
     }
 </script>
 

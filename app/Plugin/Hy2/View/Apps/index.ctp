@@ -23,7 +23,11 @@
     <div class="bannerbg indexbanner" id="slides">
         <div class="bannerImg">
             <div class="slides_container">
-                <div id="banner_pic_1"><img src="/hy2/img/index_bg.png"></div>
+                <?php foreach($covers as $cover):?>
+                <div id="banner_pic_<?=$cover['Attachment']['id']?>">
+                    <img src="/upload/user/images/<?=$cover['Attachment']['file_path']?>" width="1382" height="573" alt="<?=$cover['Attachment']['name']?>"/>
+                </div>
+                <?php endforeach;?>                
             </div>
         </div>
     </div>

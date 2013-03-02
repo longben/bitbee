@@ -38,3 +38,8 @@ CREATE TABLE `products` (
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+ALTER TABLE hy.attachments
+ ADD object_id INT AFTER `order`;
+ALTER TABLE hy.products
+ ADD url VARCHAR(100) AFTER network_avg;
+

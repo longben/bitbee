@@ -32,8 +32,26 @@ class Attachment extends AppModel {
             }
         }
 
+
+        if(isset($_FILES['Filedata']['tmp_name']) && !empty($_FILES['Filedata']['tmp_name'])){
+
+            App::import('Vendor', '/utils/file');
+
+            $_tmp_filename = $_FILES['Filedata']['name'];
+            $_new_filename = md5(time().$_tmp_filename).'.'.getFileExtension($_tmp_filename);
+
+            $uploadfile = UPLOAD_PATH. 'images'. DS . $_new_filename;
+
+            if(move_uploaded_file($_FILES['Filedata']['tmp_name'], $uploadfile)){
+                list($width, $height, $type) = getimagesize($uploadfile);
+                $this->data['Attachment']['name'] = 'Picture';
+                $this->data['Attachment']['file_path'] = $_new_filename;
+                $this->data['Attachment']['width'] = $width;
+                $this->data['Attachment']['height'] = $height;
+            }
+        }
+
         return true;
     }
-
 
 }

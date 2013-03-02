@@ -51,6 +51,8 @@
     <div class="weizhi"><a href="">首頁</a> &gt; 產品列表</div>
     <div class="geline"></div>
     <div class="pagetitle shadow"><?=$product['Product']['name']?></div>
+
+    <?php if(sizeof($images) >0 ):?>
     <div class="proshowpic">
         <div class="bigimg">
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
@@ -59,7 +61,7 @@
                     <td align="center">
                         <table align="center" cellpadding="0" cellspacing="0" border="0">
                             <tr>
-                                <td class="pics"><img src="/hy2/img/temppic.jpg" id="showbigimg" /></td>
+                                <td class="pics"><img src="/upload/user/images/<?=$images[0]['Attachment']['file_path']?>" id="showbigimg" /></td>
                             </tr>
                             <tr>
                                 <td><img src="/hy2/img/pic_shadow.png" width="100%" /></td>
@@ -74,40 +76,45 @@
         <table align="center">
             <tr>
                 <td class="showsml">
-                    <div class="isover canclick" id="button1" >
-                        <input type="hidden" name="img" value="/hy2/img/temppic.jpg" />
-                        <img src="/hy2/img/temppic.jpg" />
+                    <?php foreach($images as $i=>$img):?>
+                    <div class="<?php echo $i==0?'isover':'isno'?> canclick" id="button<?=$i?>">
+                        <input type="hidden" name="img" value="/upload/user/images/<?=$img['Attachment']['file_path']?>" />
+                        <img src="/upload/user/images/<?=$img['Attachment']['file_path']?>" />
                     </div>
-                    <div class="isno canclick"  id="button2">
-                        <input type="hidden" name="img" value="temp/1.jpg" /><img src="temp/1.jpg" />
-                    </div>
+                    <?php endforeach;?>
                 </td>
             </tr>
         </table>
     </div>
+    <?php endif;?>
 
     <div class="protitleinfo">
         <div class="proclass">產品介紹</div>
-        <div class="probuy"><a href=""><img src="/hy2/img/showbuy.png" border="0" /></a></div>
+        <div class="probuy"><a href="<?=$product['Product']['url']?>" target="_blank"><img src="/hy2/img/showbuy.png" border="0" /></a></div>
     </div>
     <div class="newscontents">
         <?=$product['Product']['description']?>
     </div>
 
+
+    <?php if(sizeof($images) >0 ):?>
     <div class="protitleinfo">
         <div class="proclass">產品細節展示</div>
     </div>
 
     <div class="proallpic" align="center">
+        <?php foreach($images as $img):?>
         <table align="center" cellpadding="0" cellspacing="0" border="0">
             <tr>
-                <td class="pics"><img src="" width="950" /></td>
+                <td class="pics"><img src="/upload/user/images/<?=$img['Attachment']['file_path']?>" width="950" /></td>
             </tr>
             <tr>
                 <td><img src="/hy2/img/pic_shadow.png" width="100%" /></td>
             </tr>
         </table>
+        <?php endforeach;?>
     </div>
+    <?php endif;?>
 
     <div class="newslinks">
         <div class="showfront"><a href="">< 上一篇 中國 HTNS深圳公司</a></div>

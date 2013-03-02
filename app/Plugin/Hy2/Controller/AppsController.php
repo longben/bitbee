@@ -30,11 +30,10 @@ class AppsController extends Hy2AppController {
     public function index() {
         $this->layout = "website";
 
-        
         $this->set('title_for_layout', '歡迎您！');
 
         //大图轮换(201)
-        $covers = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 201), 'limit' => 6));
+        $covers = $this->attachment->find('all', array('conditions' => array('attachment.type_id' => 201), 'limit' => 6));
         $this->set('covers', $covers);
 
         //友情链接(202)
@@ -70,7 +69,6 @@ class AppsController extends Hy2AppController {
     public function product_detail($id) {
         $this->layout = "website";
 
-
         $product = $this->Product->read(null, $id);
         $this->set('product', $product);
 
@@ -80,6 +78,9 @@ class AppsController extends Hy2AppController {
             'order' => 'Code.id asc',
         );
         $this->set('codes', $this->Code->find('all', $conditions));
+
+        $images = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 402, 'Attachment.object_id' => $id), 'limit' => 6));
+        $this->set('images', $images);
 
         $this->set('title_for_layout', $product['Product']['name']);
 
