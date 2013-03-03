@@ -53,7 +53,7 @@
 
     <div class="topBG">
         <div class="topin">
-            <div class="language fontsong shadow"><font style="color:#495f72">中文</font> | <a href="Enindex.html">ENGLISH</a></div>
+            <div class="language fontsong shadow"><font style="color:#495f72">中文</font> | <a href="#">ENGLISH</a></div>
             <ul class="menu">
                 <li class="no_sub"><a href="/" class="tablink nosub">首頁</a></li>
                 <li><a href="/zh/product" class="tablink">產品</a>
