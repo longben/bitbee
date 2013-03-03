@@ -82,6 +82,9 @@ class AppsController extends Hy2AppController {
         $images = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 402, 'Attachment.object_id' => $id), 'limit' => 6));
         $this->set('images', $images);
 
+        $neighbors = $this->Product->find('neighbors', array('field' => 'id', 'value' => $id));
+        $this->set('neighbors', $neighbors);
+
         $this->set('title_for_layout', $product['Product']['name']);
 
     }

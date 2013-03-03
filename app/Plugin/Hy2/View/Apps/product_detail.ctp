@@ -119,7 +119,23 @@
     <?php endif;?>
 
     <div class="newslinks">
-        <div class="showfront"><a href="">< 上一篇 中國 HTNS深圳公司</a></div>
+        <div class="showfront">
+            <?php
+            if(isset($neighbors['prev'])){
+              echo $this->Html->link($neighbors['prev']['Product']['name'], '/zh/product_detail/'. $neighbors['prev']['Product']['id']);
+            }else{
+              echo '< 上一篇  無';
+            }
+            ?>
+        </div>
         <div class="reback"><a href=""><img src="/hy2/img/reback.png" border="0" /></a></div>
-        <div class="shownext"><a href="">支持記錄4K分辨率影像的...下一篇></a></div>
+        <div class="shownext">
+            <?php
+            if(isset($neighbors['next'])){
+              echo $this->Html->link($neighbors['next']['Product']['name'], '/zh/product_detail/'. $neighbors['next']['Product']['id']);
+            }else{
+            echo '> 下一篇  無';
+            }
+            ?>
+        </div>
     </div>
