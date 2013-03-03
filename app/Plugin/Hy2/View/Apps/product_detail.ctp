@@ -61,7 +61,9 @@
                     <td align="center">
                         <table align="center" cellpadding="0" cellspacing="0" border="0">
                             <tr>
-                                <td class="pics"><img src="/upload/user/images/<?=$images[0]['Attachment']['file_path']?>" id="showbigimg" /></td>
+                                <td class="pics">
+                                    <img src="/upload/user/images/<?=$images[0]['Attachment']['file_path']?>" id="showbigimg" <?=$images[0]['Attachment']['width']>770?'width=770px':''?>/>
+                                </td>
                             </tr>
                             <tr>
                                 <td><img src="/hy2/img/pic_shadow.png" width="100%" /></td>
