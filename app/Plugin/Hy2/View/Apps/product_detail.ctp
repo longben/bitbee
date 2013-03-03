@@ -122,7 +122,7 @@
         <div class="showfront">
             <?php
             if(isset($neighbors['prev'])){
-              echo $this->Html->link($neighbors['prev']['Product']['name'], '/zh/product_detail/'. $neighbors['prev']['Product']['id']);
+              echo $this->Html->link('< 上一篇 '.$neighbors['prev']['Product']['name'], '/zh/product_detail/'. $neighbors['prev']['Product']['id']);
             }else{
               echo '< 上一篇  無';
             }
@@ -132,7 +132,7 @@
         <div class="shownext">
             <?php
             if(isset($neighbors['next'])){
-              echo $this->Html->link($neighbors['next']['Product']['name'], '/zh/product_detail/'. $neighbors['next']['Product']['id']);
+              echo $this->Html->link('> 下一篇 '. $neighbors['next']['Product']['name'], '/zh/product_detail/'. $neighbors['next']['Product']['id']);
             }else{
             echo '> 下一篇  無';
             }
