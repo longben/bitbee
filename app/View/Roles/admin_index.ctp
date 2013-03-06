@@ -39,7 +39,7 @@
 </div>
 
 
-<div id="dlgAuth" class="easyui-dialog" style="width:240px;height:590px;padding:0px 0px"
+<div id="dlgAuth" class="easyui-dialog" style="width:240px;height:600px;padding:0px 0px"
     data-options="iconCls:'icon-save',modal:true,closed:true,buttons:'#dlgAuth-buttons'">
     <div id="role" style="height:520px;"></div>
 </div>
