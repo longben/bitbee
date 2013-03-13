@@ -73,7 +73,7 @@
             <a href="/app/page/6" target="_self" class="navfont">家园共育</a>
             <a href="/app/page/7" target="_self" class="navfont">教研科研</a>
             <a href="/app/page/8" target="_self" class="navfont">特色活动</a>
-            <a href="#" target="_self" class="navfont">温馨班级</a>
+            <a href="/app/blog" target="_self" class="navfont">温馨班级</a>
             <a href="/app/page/10" target="_self" class="navfont">早教中心</a>
             <a href="/app/page/11" target="_self" class="navfont">集团建设</a>
             <a href="/app/page/12" target="_self" class="navfont">资源共享</a>

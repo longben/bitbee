@@ -54,7 +54,7 @@
 
         <footer id="colophon" role="contentinfo">
         <div id="site-generator">
-            <a href="http://www.wczhs.com" title="" rel="generator">&copyright 2010-2012 All Rights Reserved. 成都五彩智慧树文化传播有限公司 版权信息</a>
+            <a href="#" title="" rel="generator">&copyright 2010-2012 All Rights Reserved. 版权信息</a>
         </div>
         </footer><!-- #colophon -->
         
