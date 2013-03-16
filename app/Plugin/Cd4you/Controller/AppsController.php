@@ -189,9 +189,8 @@ class AppsController extends Cd4youAppController {
         $this->layout = 'website';
         $this->paginate = array(
             'conditions' => array('Meta.site_title IS NOT NULL'), 
-            'recursive' => 0, //int
+            'recursive' => 0 //int
             //'order' => 'Guestbook.created desc',
-            'limit' => 11
         );
         $this->set('users', $this->paginate('User'));
 
