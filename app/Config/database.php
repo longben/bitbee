@@ -3,7 +3,7 @@ class DATABASE_CONFIG {
 
 
     public function __construct(){
-        $db_name = is_null(Configure::read('Site.db'))?'hy':Configure::read('Site.db');
+        $db_name = is_null(Configure::read('Site.db'))?'bitbee':Configure::read('Site.db');
 
         $this->default = array(
             'datasource' => 'HpMysql',
