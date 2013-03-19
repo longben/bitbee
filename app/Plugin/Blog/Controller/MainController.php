@@ -23,13 +23,15 @@ class MainController extends BlogAppController {
 	public $uses = array('Menu', 'User', 'Post', 'Comment');
 
 
-    public function index($username) {
+    public function index($username, $taxnonomy = null) {
         $user = $this->User->read(null, $username);
+
+        $taxnonomys =  explode("|", $user['Meta']['site_taxnonomy']); 
 
         $myClass = "home blog two-column right-sidebar";
 
         $this->paginate = array(
-            'conditions' => array('Post.post_status' => 'publish', 'Meta.category' => '1102', 'Post.post_author' => $username, empty($_GET['s'])?'1=1':"Post.post_title LIKE '%". $_GET['s'] ."%'"), 
+            'conditions' => array('Post.post_status' => 'publish', 'Meta.category' => '1102', 'Post.post_author' => $username, empty($_GET['s'])?'1=1':"Post.post_title LIKE '%". $_GET['s'] ."%'", empty($_GET['t'])?'1=1':"Meta.tag ='". $_GET['t'] ."'"), 
             'recursive' => 0, //int
             'order' => 'Meta.elite, Post.post_date desc',
             'limit' => 6
@@ -42,12 +44,16 @@ class MainController extends BlogAppController {
             $header_img = $array_header[array_rand($array_header)];
         }
 
-        $this->set(compact( 'user', 'myClass', 'header_img' ));
+        $this->set(compact( 'user', 'myClass', 'header_img', 'taxnonomys' ));
 
 	}
 
 	public function archive($user_id, $post_id) {
         $user = $this->User->read(null, $user_id);
+
+
+        $taxnonomys =  explode("|", $user['Meta']['site_taxnonomy']); 
+
         $post = $this->Post->read(null, $post_id);
 
         $myClass = "single single-post single-format-standard singular two-column right-sidebar";
@@ -62,7 +68,7 @@ class MainController extends BlogAppController {
 
         $neighbors = $this->Post->find('neighbors', array('field' => 'id', 'value' => $post_id, 'conditions' => array('Post.post_author' => $user_id, 'Meta.category' => 1102)));
 
-        $this->set(compact( 'user', 'post',  'myClass',  'header_img', 'comments' , 'neighbors'));
+        $this->set(compact( 'user', 'post',  'myClass',  'header_img', 'comments' , 'neighbors', 'taxnonomys'));
 	}
 
 	public function comment() {
@@ -90,11 +96,22 @@ class MainController extends BlogAppController {
 
 	public function admin_write() {
         $user = $this->User->read(null, $this->Session->read('Auth.User.User.id'));
+
+        $taxnonomys =  explode("|", $user['Meta']['site_taxnonomy']); 
+
+        $tags = array();
+
+        foreach($taxnonomys as $t){
+            $tags = $tags + array("$t" => $t);
+        }
+
+        $this->set('tags', array_values($tags) );
+
         if(empty($user['Meta']['site_title'])){
             $this->Session->setFlash("请先设置博客基本信息！");
             $this->redirect('/admin/blog/main/setting');
         }
-	}
+    }
 
 
 }

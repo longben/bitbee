@@ -26,6 +26,10 @@
             <label for="id_password">副标题</label>
             <input name="data[Meta][site_tagline]" id="UserPassword" type="text" class="easyui-validatebox" required="1" value="<?=$user['Meta']['site_tagline']?>">
         </div>
+        <div class="grid-12-12">
+            <label for="id_password">文章分类</label>
+            <input name="data[Meta][site_taxnonomy]" id="SiteTaxnonomy" type="text" value="<?=$user['Meta']['site_taxnonomy']?>">
+        </div>
         <div class="grid-2-12 right">
             <?php echo $this->Session->flash(); echo $this->Session->flash('auth');?>
             <input class="green_button" value="保存" type="submit">

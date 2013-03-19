@@ -43,6 +43,9 @@
         <div class="menu">
             <ul>
                 <li class="current_page_item"><a href="/blog/<?=$user['User']['id']?>" title="首页">首页</a></li>
+				<?php foreach($taxnonomys as $t):?>
+				<li class="page_item"><a href="/blog/<?=$user['User']['id']?>?t=<?=$t?>" title="<?=$t?>"><?=$t?></a></li>
+				<?php endforeach;?>
             </ul>
         </div>
         </nav><!-- #access -->

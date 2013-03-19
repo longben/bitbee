@@ -54,3 +54,6 @@ CREATE TABLE `terms` (
   UNIQUE KEY `slug` (`user_id`,`slug`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+ALTER TABLE user_metas
+ ADD site_taxnonomy VARCHAR(200) AFTER site_header;
+
