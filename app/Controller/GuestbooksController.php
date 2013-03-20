@@ -36,7 +36,15 @@ class GuestbooksController extends AppController {
 
     public function admin_json_data(){
         $this->findJSON4Grid('id', array('Guestbook.type_id' => $_GET['type_id']), 'DESC'); 
-   }
+    }
+
+    public function admin_json_blog(){
+        $this->findJSON4Grid('id', array('Guestbook.object_id' => $_GET['object_id']), 'DESC'); 
+    }
+
+    public function admin_blog($object_id) {
+        $this->set('object_id', $object_id);
+    }
 
     public function admin_index($type_id = 1) {
         $this->set('type_id', $type_id);

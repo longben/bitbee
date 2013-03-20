@@ -11,7 +11,7 @@ class Menu extends BlogAppModel {
  *
  * @var string
  */
-	public $displayField = 'title';
+	public $displayField = 'name';
 
 /**
  * Behaviors used by the Model

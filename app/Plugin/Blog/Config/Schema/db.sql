@@ -4,19 +4,18 @@ ALTER TABLE wczhs.post_metas
 
 CREATE TABLE `menus` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `class` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description` text COLLATE utf8_unicode_ci,
+  `name` varchar(255)  utf8_unicode_ci NOT NULL,
+  `alias` varchar(255) utf8_unicode_ci,
+  `style` varchar(255) utf8_unicode_ci,
+  `description` text  utf8_unicode_ci,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `weight` int(11) DEFAULT NULL,
   `link_count` int(11) NOT NULL,
   `params` text COLLATE utf8_unicode_ci,
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `menu_alias` (`alias`)
+  `user_id` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
@@ -56,4 +55,8 @@ CREATE TABLE `terms` (
 
 ALTER TABLE user_metas
  ADD site_taxnonomy VARCHAR(200) AFTER site_header;
+ 
+ALTER TABLE guestbooks
+ ADD object_id INT(10) AFTER reply_type;
+
 

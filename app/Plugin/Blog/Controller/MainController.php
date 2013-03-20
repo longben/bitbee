@@ -20,18 +20,18 @@ class MainController extends BlogAppController {
  * @var array
  * @access public
  */
-	public $uses = array('Menu', 'User', 'Post', 'Comment');
+	public $uses = array('Menu', 'User', 'Post', 'Comment', 'Guestbook');
 
 
     public function index($username, $taxnonomy = null) {
         $user = $this->User->read(null, $username);
 
-        $taxnonomys =  explode("|", $user['Meta']['site_taxnonomy']); 
+        $this->set('tags', $this->Menu->findAllByUserId($this->Session->read('Auth.User.User.id')) );
 
         $myClass = "home blog two-column right-sidebar";
 
         $this->paginate = array(
-            'conditions' => array('Post.post_status' => 'publish', 'Meta.category' => '1102', 'Post.post_author' => $username, empty($_GET['s'])?'1=1':"Post.post_title LIKE '%". $_GET['s'] ."%'", empty($_GET['t'])?'1=1':"Meta.tag ='". $_GET['t'] ."'"), 
+            'conditions' => array('Post.post_status' => 'publish', 'Meta.category' => '1102', 'Post.post_author' => $username, empty($_GET['s'])?'1=1':"Post.post_title LIKE '%". $_GET['s'] ."%'", empty($_GET['tag'])?'1=1':"Meta.tag ='". $_GET['tag'] ."'"), 
             'recursive' => 0, //int
             'order' => 'Meta.elite, Post.post_date desc',
             'limit' => 6
@@ -44,7 +44,7 @@ class MainController extends BlogAppController {
             $header_img = $array_header[array_rand($array_header)];
         }
 
-        $this->set(compact( 'user', 'myClass', 'header_img', 'taxnonomys' ));
+        $this->set(compact( 'user', 'myClass', 'header_img' ));
 
 	}
 
@@ -52,7 +52,7 @@ class MainController extends BlogAppController {
         $user = $this->User->read(null, $user_id);
 
 
-        $taxnonomys =  explode("|", $user['Meta']['site_taxnonomy']); 
+        $this->set('tags', $this->Menu->findAllByUserId($this->Session->read('Auth.User.User.id')) );
 
         $post = $this->Post->read(null, $post_id);
 
@@ -64,12 +64,14 @@ class MainController extends BlogAppController {
             $header_img = $array_header[array_rand($array_header)];
         }
 
-        $comments = $this->Comment->find('all', array('conditions' => array('Comment.post_id' => $post_id)));
+        $comments = $this->Guestbook->find('all', array('conditions' => array('Guestbook.object_id' => $post_id, 'Guestbook.flag' => 1)));
 
         $neighbors = $this->Post->find('neighbors', array('field' => 'id', 'value' => $post_id, 'conditions' => array('Post.post_author' => $user_id, 'Meta.category' => 1102)));
 
-        $this->set(compact( 'user', 'post',  'myClass',  'header_img', 'comments' , 'neighbors', 'taxnonomys'));
+        $this->set(compact( 'user', 'post',  'myClass',  'header_img', 'comments' , 'neighbors'));
 	}
+
+
 
 	public function comment() {
         if ( !empty( $this->request->data ) ) {
@@ -81,31 +83,48 @@ class MainController extends BlogAppController {
         }
 	}
 
-	public function admin_setting() {
-        $this->set('user', $this->User->read( null, $this->Session->read('Auth.User.User.id') ));
-        if ( !empty( $this->request->data ) ) {
-            $this->request->data['User']['id'] = $this->Session->read('Auth.User.User.id');;
 
-            $this->User->create();
-            if ( $this->User->saveAll( $this->request->data ) ) {
+	public function guestbook() {
+        if ( !empty( $this->request->data ) ) {
+            $this->Guestbook->create();
+            $this->request->data['Guestbook']['type_id'] = 9;
+            if ( $this->Guestbook->save( $this->request->data ) ) {
                 $this->redirect($this->referer());
             } else {
             }
         }
 	}
 
-	public function admin_write() {
-        $user = $this->User->read(null, $this->Session->read('Auth.User.User.id'));
+	public function admin_setting() {
+        $this->set('user', $this->User->read( null, $this->Session->read('Auth.User.User.id') ));
+        $this->set('menus', $this->Menu->findAllByUserId($this->Session->read('Auth.User.User.id')) );
 
-        $taxnonomys =  explode("|", $user['Meta']['site_taxnonomy']); 
+        if ( !empty( $this->request->data ) ) {
+            $this->request->data['User']['id'] = $this->Session->read('Auth.User.User.id');;
 
-        $tags = array();
-
-        foreach($taxnonomys as $t){
-            $tags = $tags + array("$t" => $t);
+            $this->User->create();
+            if ( $this->User->saveAll( $this->request->data ) ) {
+                if(!empty($this->request->data['Menu'])){
+                    for($i=0; $i<sizeof($this->request->data['Menu']); $i++){
+                        $this->Menu->create();
+                        $data['Menu']['user_id'] = $this->Session->read('Auth.User.User.id');
+                        $data['Menu']['name'] = $this->request->data['Menu'][$i]['name'];
+                        $this->Menu->save($data);
+                    }
+                }
+                $this->redirect($this->referer());
+            } 
         }
+    }
 
-        $this->set('tags', array_values($tags) );
+    public function admin_write() {
+        $user = $this->User->read(null, $this->Session->read('Auth.User.User.id'));
+        
+        $tags = $this->Menu->find('list', array(
+            'conditions' => array('Menu.user_id' => $this->Session->read('Auth.User.User.id'))
+        ));
+
+        $this->set('tags', $tags);
 
         if(empty($user['Meta']['site_title'])){
             $this->Session->setFlash("请先设置博客基本信息！");

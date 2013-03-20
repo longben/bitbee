@@ -43,8 +43,8 @@
         <div class="menu">
             <ul>
                 <li class="current_page_item"><a href="/blog/<?=$user['User']['id']?>" title="首页">首页</a></li>
-				<?php foreach($taxnonomys as $t):?>
-				<li class="page_item"><a href="/blog/<?=$user['User']['id']?>?t=<?=$t?>" title="<?=$t?>"><?=$t?></a></li>
+				<?php foreach($tags as $tag):?>
+				<li class="page_item"><a href="/blog/<?=$user['User']['id']?>?tag=<?=$tag['Menu']['id']?>" title="<?=$tag['Menu']['name']?>"><?=$tag['Menu']['name']?></a></li>
 				<?php endforeach;?>
             </ul>
         </div>

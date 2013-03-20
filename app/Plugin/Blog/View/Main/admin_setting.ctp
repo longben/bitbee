@@ -26,9 +26,15 @@
             <label for="id_password">副标题</label>
             <input name="data[Meta][site_tagline]" id="UserPassword" type="text" class="easyui-validatebox" required="1" value="<?=$user['Meta']['site_tagline']?>">
         </div>
+
         <div class="grid-12-12">
             <label for="id_password">文章分类</label>
-            <input name="data[Meta][site_taxnonomy]" id="SiteTaxnonomy" type="text" value="<?=$user['Meta']['site_taxnonomy']?>">
+            <label><a href="javascript:;" id="add">添加</a> | <a href="#" id="remove">删除</a></label>
+            <div class="inputs">
+                <?php foreach($menus as $menu):?>
+                <div><input type="text" class="field" id="menu" name="data[Menu][][name]" value="<?php echo $menu['Menu']['name']?>"/></div>
+                <?php endforeach;?>
+            </div>
         </div>
         <div class="grid-2-12 right">
             <?php echo $this->Session->flash(); echo $this->Session->flash('auth');?>
@@ -62,4 +68,55 @@
             $("#avatar").attr("src", "/meise/user/avatar/" + pic);
         });
     }
+
+
+    $(document).ready(function(){
+
+
+        var i = $('#menu').size() + 1;
+
+        $('#add').click(function() {
+            $('<div><input type="text" class="field" id="menu" name="data[Menu][][name]" /></div>').fadeIn('slow').appendTo('.inputs');
+            i++;
+        });
+
+        $('#remove').click(function() {
+            if(i > 1) {
+                $('.field:last').remove();
+                i--; 
+            }
+        });
+
+        $('#reset').click(function() {
+            while(i > 2) {
+                $('.field:last').remove();
+                i--;
+            }
+        });
+
+
+        // here's our click function for when the forms submitted
+
+        $('.submit').click(function(){
+
+
+            var answers = [];
+            $.each($('.field'), function() {
+                answers.push($(this).val()); 
+            });
+
+            if(answers.length == 0) { 
+                answers = "none"; 
+            }   
+
+            alert(answers);
+
+            return false;
+
+        });
+
+
+
+    });
+
 </script>
