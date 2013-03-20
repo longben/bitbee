@@ -3,20 +3,21 @@ ALTER TABLE wczhs.post_metas
 
 
 CREATE TABLE `menus` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255)  utf8_unicode_ci NOT NULL,
-  `alias` varchar(255) utf8_unicode_ci,
-  `style` varchar(255) utf8_unicode_ci,
-  `description` text  utf8_unicode_ci,
-  `status` tinyint(1) NOT NULL DEFAULT '1',
-  `weight` int(11) DEFAULT NULL,
+  `id` int(10) NOT NULL auto_increment,
+  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `alias` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `style` varchar(255) collate utf8_unicode_ci NOT NULL,
+  `description` text collate utf8_unicode_ci,
+  `status` tinyint(1) NOT NULL default '1',
+  `weight` int(11) default NULL,
   `link_count` int(11) NOT NULL,
-  `params` text COLLATE utf8_unicode_ci,
+  `params` text collate utf8_unicode_ci,
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
-  `user_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `user_id` int(10) default NULL,
+  PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 
 CREATE TABLE `links` (
