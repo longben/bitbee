@@ -29,10 +29,11 @@
 
         <div class="grid-12-12">
             <label for="id_password">文章分类</label>
-            <label><a href="javascript:;" id="add">添加</a> | <a href="#" id="remove">删除</a></label>
+            <label><a href="javascript:;" id="add">添加</a> | <a href="#" id="remove2">删除</a></label>
             <div class="inputs">
-                <?php foreach($menus as $menu):?>
-                <div><input type="text" class="field" id="menu" name="data[Menu][][name]" value="<?php echo $menu['Menu']['name']?>"/></div>
+                <?php foreach($menus as $i => $menu):?>
+                <div><input type="text" class="field mm" id="menu" name="data[Menu][<?=$i?>][name]" value="<?php echo $menu['Menu']['name']?>"/></div>
+                <div><input type="hidden" name="data[Menu][<?=$i?>][id]" value="<?php echo $menu['Menu']['id']?>"/></div>
                 <?php endforeach;?>
             </div>
         </div>
@@ -73,10 +74,10 @@
     $(document).ready(function(){
 
 
-        var i = $('#menu').size() + 1;
+        var i = $('.mm').size();
 
         $('#add').click(function() {
-            $('<div><input type="text" class="field" id="menu" name="data[Menu][][name]" /></div>').fadeIn('slow').appendTo('.inputs');
+            $('<div><input type="text" class="field mm" id="menu" name="data[Menu][' + i  + '][name]" /></div>').fadeIn('slow').appendTo('.inputs');
             i++;
         });
 

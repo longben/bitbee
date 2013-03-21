@@ -15,7 +15,8 @@ CREATE TABLE `menus` (
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
   `user_id` int(10) default NULL,
-  PRIMARY KEY  (`id`)
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `menu_alias` (`name`, `user_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

@@ -97,7 +97,9 @@ class MainController extends BlogAppController {
 
 	public function admin_setting() {
         $this->set('user', $this->User->read( null, $this->Session->read('Auth.User.User.id') ));
-        $this->set('menus', $this->Menu->findAllByUserId($this->Session->read('Auth.User.User.id')) );
+
+        $menus = $this->Menu->findAllByUserId($this->Session->read('Auth.User.User.id'));
+        $this->set('menus', $menus );
 
         if ( !empty( $this->request->data ) ) {
             $this->request->data['User']['id'] = $this->Session->read('Auth.User.User.id');;
@@ -106,9 +108,15 @@ class MainController extends BlogAppController {
             if ( $this->User->saveAll( $this->request->data ) ) {
                 if(!empty($this->request->data['Menu'])){
                     for($i=0; $i<sizeof($this->request->data['Menu']); $i++){
-                        $this->Menu->create();
+                        if(!empty($this->request->data['Menu'][$i]['id'])){
+                            $data['Menu']['id'] = $this->request->data['Menu'][$i]['id'];
+                        }else{
+                            $this->Menu->create();
+                            $data['Menu']['id'] = null;
+                        }
                         $data['Menu']['user_id'] = $this->Session->read('Auth.User.User.id');
                         $data['Menu']['name'] = $this->request->data['Menu'][$i]['name'];
+
                         $this->Menu->save($data);
                     }
                 }
