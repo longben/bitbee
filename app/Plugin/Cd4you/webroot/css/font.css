@@ -1,24 +1,33 @@
 @charset "utf-8";
 /* CSS Document */
-
+.navfont {
+	margin-right: auto;
+	margin-left: auto;
+	height: 40px;
+	text-align: center;
+	color: #4d4948;
+	font-family: "微软雅黑", "宋体",Arial;
+	font-size: 14px;
+	line-height: 40px;
+	font-weight: bold;
+}
 A.navfont:link {
-	color:#666;
+	color:#4d4948;
 	text-decoration: none;
-	margin-right: 4px;
+	margin-right: 2px;
 }
 A.navfont:visited {
-	color:#666;
-	text-decoration: none;margin-right: 8px;
+	color:#4d4948;
+	text-decoration: none;
 }
 A.navfont:active {
-	color:#666;
-	text-decoration: none;margin-right: 8px;
+	color:#4d4948;
+	text-decoration: none;
 }
 A.navfont:hover {
 	color:#00aaee;
-	margin-right: 4px;
 }
-/*---------------------------------------最新消息------------------------------------------*/
+/*----------*/
 .news_list {
 	width: 400px;
 }
@@ -28,16 +37,13 @@ ul {
 	padding: 0;
 }
 .newslist {
-	font-family: "微软雅黑", "新宋体", Arial;
+	font-family: "微软雅黑", "宋体",Arial;
 	font-size: 14px;
 	line-height: 1.5;
 	font-weight: normal;
-	background-image: url(/cd4you/img/index/d_16.png);
+	background-image: url(/cd4you/img/d_16.jpg);
 	background-repeat: no-repeat;
 	background-position: left center;
-    width:400px;
-    white-space:nowrap;
-    overflow:hidden;
 }
 li:last-child {
 	border: none;
@@ -46,129 +52,118 @@ li:last-child {
 	text-decoration: none;
 	color: #666;
 	display: block;
-	width: 400px;
 	text-indent: 15px;
 	line-height: 37px;
+    width:390px;
+	white-space:nowrap;	    
+	overflow:hidden;			
+    text-overflow:ellipsis;    
 }
 .newslist a:hover {
 	font-size: 14px;
 	line-height: 37px;
 	color: #00aaee;
-	background-image: url(/cd4you/img/index/d_16.png);
+	background-image: url(/cd4you/img/d_16.jpg);
 	background-repeat: no-repeat;
 	background-position: left center;
 	text-decoration: underline;
 }
-/*--------------------------------------------校园公告-----------------------------------------------------------------*/
-.xygg_list {
-	width: 200px;
-}
-.bluefont {
-	font-family: "微软雅黑", "新宋体", Arial;
+/*--------------------------*/
+.gjdxhdd a {
+	text-decoration: none;
+	color: #666;
+	display: block;
+	width: 277px;
+	text-indent: 15px;
 	font-size: 14px;
-	line-height: 37px;
+	line-height: 28px;
+	font-family:"微软雅黑", "宋体",Arial;
+	background-image: url(/cd4you/img/d_16.jpg);
+	background-repeat: no-repeat;
+	background-position: left center;    
+	white-space:nowrap;	    
+	overflow:hidden;			
+    text-overflow:ellipsis;    
+}
+.gjdxhdd a:hover {
+	line-height: 28px;
+	color: #00aaee;
+	background-image: url(/cd4you/img/d_16.jpg);
+	background-repeat: no-repeat;
+	background-position: left center;
+	text-decoration: underline;
+}
+
+/*----------------------------*/
+.bluefont {
+	font-family: "微软雅黑", "宋体",Arial;
+	font-size: 14px;
+	line-height: 28px;	
 	font-weight: normal;
 	background-image: none;
 	border-top-style: none;
 	border-right-style: none;
 	border-bottom-style: none;
 	border-left-style: none;
-    width:200px;
-    white-space:nowrap;
-    overflow:hidden;
 }
 .bluefont a {
 	text-decoration: none;
 	color: #19B5C5;
 	display: block;
-	width: 200px;
-	text-indent: 5px;
-	line-height: 37px;
+    width:168px;
+	white-space:nowrap;	    
+	overflow:hidden;			
+    text-overflow:ellipsis;    	
 }
 .bluefont a:hover {
 	font-size: 14px;
-	line-height: 37px;
 	color: #FF9900;
 	text-decoration: underline;
 	background-image: none;
+	display: block;
 }
-/*--------------------------------------------国际大型活动-----------------------------------------------------------------*/
+/*----------------------------------------------------------*/
+.zjzxa {
+	font-family: "微软雅黑", "宋体",Arial;
+	font-size: 12px;
+	line-height: 26px;	
+	font-weight: normal;
+	background-image: url(/cd4you/img/d2_26.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+}
+.zjzxa a {
+	text-decoration: none;
+	color: #666;
+	display: block;
+	width: 200px;
+	text-indent: 15px;
+	line-height: 26px;
+	white-space:nowrap;	    
+	overflow:hidden;			
+    text-overflow:ellipsis;    	
+}
+.zjzxa a:hover {
+	font-size: 12px;
+	line-height: 26px;
+	color: #00aaee;
+	background-image: url(/cd4you/img/d2_26.png);
+	background-repeat: no-repeat;
+	background-position: left center;
+	text-decoration: underline;
+}
 
-.gjdxhd_list {
-	width: 277px;
-}
-.gjdxhd {
-	font-family: "微软雅黑", "新宋体", Arial;
-	font-size: 14px;
-	line-height: 28px;
-	font-weight: normal;
-	background-image: url(/cd4you/img/index/d_16.png);
-	background-repeat: no-repeat;
-	background-position: left center;
-    width:277px;
-    white-space:nowrap;
-    overflow:hidden;
-}
-.gjdxhd a {
-	text-decoration: none;
-	color: #666;
-	display: block;
-	width: 277px;
-	text-indent: 15px;
-	line-height: 28px;
-}
-.gjdxhd a:hover {
-	font-size: 14px;
-	line-height: 28px;
-	color: #00aaee;
-	background-image: url(/cd4you/img/index/d_16.png);
-	background-repeat: no-repeat;
-	background-position: left center;
-	text-decoration: underline;
-}
-/*--------------------------------------------早教中心-----------------------------------------------------------------*/
-.zjzx_list {
-	width: 209px;
-}
-.zjzx {
-	font-family: "微软雅黑", "新宋体", Arial;
-	font-size: 12px;
-	line-height: 26px;
-	font-weight: normal;
-	background-image: url(/cd4you/img/index/d2_26.png);
-	background-repeat: no-repeat;
-	background-position: left center;
-    width:209px;
-    white-space:nowrap;
-    overflow:hidden;
-}
-.zjzx a {
-	text-decoration: none;
-	color: #666;
-	display: block;
-	width: 209px;
-	text-indent: 15px;
-	line-height: 26px;
-}
-.zjzx a:hover {
-	font-size: 12px;
-	line-height: 26px;
-	color: #00aaee;
-	background-image: url(/cd4you/img/index/d2_26.png);
-	background-repeat: no-repeat;
-	background-position: left center;
-	text-decoration: underline;
-}
+
 /*--------------------------------------------二级侧边栏-----------------------------------------------------------------*/
 .cbl_list {
 	width: 185px;
 }
 .cbl {
-	font-family: "微软雅黑", "新宋体", Arial;
+	font-family: "微软雅黑", "宋体",Arial;
 	font-size: 15px;
 	line-height: 27px;
 	font-weight: normal;
-	background-image: url(/cd4you/img/list/cbl_13.png);
+	background-image: url(/cd4you/img/cbl_13.png);
 	background-repeat: no-repeat;
 	background-position: left center;
 	color: #666;
@@ -189,7 +184,7 @@ li:last-child {
 	font-size: 15px;
 	line-height: 27px;
 	color: #FFFFFF;
-	background-image: url(/cd4you/img/list/cbl_10.png);
+	background-image: url(/cd4you/img/cbl_10.png);
 	background-repeat: no-repeat;
 	background-position: center center;
 }
@@ -197,12 +192,12 @@ li:last-child {
 	font-size: 15px;
 	line-height: 27px;
 	color: #FFFFFF;
-	background-image: url(/cd4you/img/list/cbl_10.png);
+	background-image: url(/cd4you/img/cbl_10.png);
 	background-repeat: no-repeat;
 	background-position: left center;
 	text-decoration: none;
 	text-align: center;
-	font-family: "微软雅黑", "新宋体", Arial;
+	font-family: "微软雅黑", "宋体",Arial;
 	border-bottom-width: 1px;
 	border-bottom-style: dashed;
 	border-bottom-color: #e7e7e7;
@@ -210,7 +205,7 @@ li:last-child {
 }
 /*----------子菜单---------*/
 .zcd {
-	font-family: "微软雅黑", "新宋体", Arial;
+	font-family: "微软雅黑", "宋体",Arial;
 	font-size: 12px;
 	font-weight: normal;
 	background-repeat: no-repeat;
@@ -236,13 +231,13 @@ li:last-child {
 	width: 630px;
 }
 .btwo {
-	font-family: "微软雅黑", "新宋体", Arial;
+	font-family: "微软雅黑", "宋体",Arial;
 	font-size: 14px;
 	line-height: 50px;
 	font-weight: normal;
 	color: #666;
 	letter-spacing: 1px;
-	background-image: url(/cd4you/img/list/listbox_09.png);
+	background-image: url(/cd4you/img/listbox_09.png);
 	background-repeat: repeat-x;
 	background-position: bottom;
 	text-indent: 15px;
@@ -253,12 +248,13 @@ li:last-child {
 	display: block;
 	width: 630px;
 	line-height: 50px;
+	text-decoration: underline;
 }
 .btwo a:hover {
 	font-size: 14px;
 	line-height: 50px;
 	color: #00aaee;
-	background-image: url(/cd4you/img/list/listbox_09a.png);
+	background-image: url(/cd4you/img/listbox_09a.png);
 	background-repeat: no-repeat;
 	background-position: left center;
 	text-decoration: underline;

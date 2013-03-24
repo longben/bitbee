@@ -22,7 +22,7 @@ opacity: 0.8;
 
 .metro-panel {
     clear:both;
-    width:722px;
+    width:680px;
 	height:138px;
 	margin:0px auto;
 }
@@ -75,11 +75,11 @@ opacity: 0.8;
 }
 
 .metrosingle {
-    width:170px;
+    width:160px;
 }
 
 .metrodouble {
-    width:350px;
+    width:330px;
 }
 
 .metro-destaque-rodape {

@@ -20,7 +20,7 @@ function gotoUrl(url){
     window.location = url;
 }
 </script>
-
+<div class="w950">
 <div class="sidebar_left">
     <div class="column_name">温馨班级</div>
     <!---子菜单start--->
@@ -29,17 +29,18 @@ function gotoUrl(url){
         <div class="cbl_list">
             <ul>
                 <?php foreach($users as $user):?>
-                <li class="cbl"><a href="/blog/<?=$user['User']['id']?>"><?=$user['Meta']['site_title']?></a></li>
+                <li class="cbl"><a href="/blog/<?=$user['User']['id']?>" target="_blank"><?=$user['Meta']['site_title']?></a></li>
                 <?php endforeach;?>
             </ul>
         </div>
         </div>
     </div>
     <!---子菜单end--->
-    <div class="back"><a href="/" target="_self" onFocus=this.blur()><img src="/cd4you/img/list/list_10.png" border="0"/></a></div>
+    <div class="back"><a href="/" target="_self" onFocus=this.blur()><img src="/cd4you/img/list_10.png" border="0"/></a></div>
     <div class="bj_001"></div>
 </div>
-<div class="column_title_newst">
+
+<div class="blog_content">
     <div class="title_namess"><img src="/cd4you/img/blog.png"  border="0"/></div>
     <!---列表start--->
 
@@ -50,4 +51,5 @@ function gotoUrl(url){
 
                 </div>
     <!---列表end--->
+</div>
 </div>
