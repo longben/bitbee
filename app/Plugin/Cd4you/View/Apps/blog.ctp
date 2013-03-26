@@ -9,9 +9,9 @@ $(document).ready(function () {
     $("#metroaqui_novo").AddMetroDoubleWithTrailer('bt6', 'metro-azul', '/cd4you/css/jq-metro/admin.png', '成都四幼博客', '', 'metro-verde');
     //$("#metroaqui_novo").AddMetroDoubleWithTrailerWithBG('bt6', '/upload/user/avatar/default.jpg', '五彩智慧树', 'alert("Text");', 'metro-azul');
 
-    <?php foreach($users as $user):?>
+    <?php foreach($users as $i=>$user):?>
     <?php srand((double)microtime()*1000000);?>
-    $("#metroaqui_novo").AddMetroSimpleButton('bt1', '<?=$cssStyle[array_rand($cssStyle)]?>', '/cd4you/img/blog_bg.png', '<?=$user['Meta']['site_title']?>', 'gotoUrl("/blog/<?=$user['User']['id']?>");');
+    $("#metroaqui_novo").AddMetroSimpleButton('bt<?=$i?>', '<?=$cssStyle[array_rand($cssStyle)]?>', '/cd4you/img/blog_bg.png', '<?=$user['Meta']['site_title']?>', 'gotoUrl("/blog/<?=$user['User']['id']?>");');
     <?php endforeach;?>
 
 });

@@ -84,7 +84,11 @@ class AppsController extends Cd4youAppController {
 
     public function page($id, $child = null, $third = null){
 
-        $this->set('module', $this->Module->read(null, $id)); 
+
+        $module = $this->Module->read(null, $id); 
+        $this->set('module', $module); 
+
+        $this->set('title_for_layout', $module['Module']['name']);
 
         $conditions = array(
             'conditions' => array('Module.parent_id' => $id), 
@@ -165,15 +169,15 @@ class AppsController extends Cd4youAppController {
 
     
     public function content($post_id){
-
-        $this->set('post', $this->Post->read(null, $post_id));
-
+        $post = $this->Post->read(null, $post_id);
+        $this->set('post', $post);
+        $this->set('title_for_layout', $post['Post']['post_title']);
     }
 
 
     public function mailbox(){
         $this->layout = "website";
-        $this->set('title_for_content', '园长信箱');
+        $this->set('title_for_layout', '园长信箱');
 
         $this->paginate = array(
             'conditions' => array('Guestbook.flag' => 1, 'Guestbook.type_id' => 1), 
