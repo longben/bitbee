@@ -50,7 +50,7 @@
 
 
         <h3 id="respond">给园长留言</h3>
-        <form id="commentform" method="post" action="/zh/add_guestbook">
+        <form id="commentform" method="post" action="/app/add_guestbook">
 
             <input type="hidden" name="data[Guestbook][type_id]" value="1" />
 

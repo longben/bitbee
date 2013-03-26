@@ -184,6 +184,36 @@ class AppsController extends Cd4youAppController {
         $this->set('guestbooks', $this->paginate('Guestbook'));
     }
 
+
+	public function add_guestbook($type_id = 1) {
+        //$this->autoRender = false;
+        if (!empty($this->data)) {
+            $_msg = '';
+            $_url = '';
+            switch ($type_id) {
+            case 1:
+                $_msg = '信息已提交。我们将在1-2个工作日内回复您！';
+                $_url = '/app/mailbox';
+                break;
+            case 2:
+                $_msg = '您的试听申请已提交，我们将在1-2个工作日内联系您！';
+                $_url = '/app/main';
+                break;
+             case 3:
+                $_msg = '您的加盟申请已提交，我们将在1-2个工作日内联系您！';
+                $_url = '/app/joinus';
+                break;
+            }
+            $this->Guestbook->create();
+            if ($this->Guestbook->save($this->request->data)) {
+                $this->Session->setFlash($_msg);
+                $this->redirect($_url);
+            } else {
+                $this->Session->setFlash(__('保存失败！'));
+            }
+        }
+    }
+
     public function blog(){
         $this->set('title_for_layout', '博客');
         $this->layout = 'website';
