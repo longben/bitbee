@@ -15,6 +15,20 @@ class AppsController extends WczhsAppController {
         $this->Auth->authError = '您还未登录，请录入会员用户名及密码进行登录！若忘记用户名或密码，请与智慧树老师联系！';
         $this->Auth->deny('member', 'files');
     }
+	
+    public function test(){
+        $this->layout = "blank";
+
+        if($this->request->is('post')){
+            if($this->Auth->login()){
+                $this->Session->write('id', $this->Session->read('Auth.User.User.id'));
+                $this->Session->write('role', $this->Session->read('Auth.User.Meta.role_id'));
+                $this->set('msg', "OK");
+            }else{
+				$this->set('msg', "您还未登录，请录入会员用户名及密码进行登录！\n\n若忘记用户名或密码，请与智慧树老师联系！");
+            }
+        }
+    }
 
     /*
      ************************************************************************************************************
