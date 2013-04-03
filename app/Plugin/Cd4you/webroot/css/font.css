@@ -12,12 +12,12 @@
 	font-weight: bold;
 }
 A.navfont:link {
-	color:#4d4948;
+	color:#000;
 	text-decoration: none;
 	margin-right: 2px;
 }
 A.navfont:visited {
-	color:#4d4948;
+	color:#000;
 	text-decoration: none;
 }
 A.navfont:active {
