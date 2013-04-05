@@ -6,6 +6,8 @@ class AppsController extends WczhsAppController {
 
     public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'CourseMembership');
 
+    //public $theme = 'Red';
+
     public function beforeFilter() {
         parent::beforeFilter(); 
 
@@ -70,6 +72,7 @@ class AppsController extends WczhsAppController {
 
     //首页
     function main(){
+        //$this->theme = 'Red';
         $this->layout="website";
         $this->set('title_for_layout', '欢迎您！');
 
