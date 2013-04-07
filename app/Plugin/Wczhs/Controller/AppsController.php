@@ -25,9 +25,9 @@ class AppsController extends WczhsAppController {
             if($this->Auth->login()){
                 $this->Session->write('id', $this->Session->read('Auth.User.User.id'));
                 $this->Session->write('role', $this->Session->read('Auth.User.Meta.role_id'));
-                $this->set('msg', "OK");
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'OK'))));
             }else{
-				$this->set('msg', "用户名或者密码错误！");
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'用户名或者密码错误！'))));
             }
         }
     }
