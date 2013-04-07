@@ -8,7 +8,7 @@
         <?php 
         echo $this->Html->meta('icon', '/cd4you/img/favicon.ico');
         echo $this->Html->script(array('jquery/jquery-1.7.2.min', 'jquery/jquery.SuperSlide','zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min', 'jquery/loopedslider.min', '/cd4you/js/focus', 'flash'));
-        echo $this->Html->css(array('/cd4you/css/layout.css?ver=1.0.0', '/cd4you/css/style.css?ver=1.0.0','/cd4you/css/font.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
+        echo $this->Html->css(array('/cd4you/css/layout.css?ver=1.0.1', '/cd4you/css/style.css?ver=1.0.0','/cd4you/css/font.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
 
         echo $scripts_for_layout;
 
