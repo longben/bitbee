@@ -27,7 +27,7 @@ class AppsController extends WczhsAppController {
                 $this->Session->write('role', $this->Session->read('Auth.User.Meta.role_id'));
                 $this->set('msg', "OK");
             }else{
-				$this->set('msg', "用户名或者密码错误！\n\n若忘记用户名或密码，请与智慧树老师联系！");
+				$this->set('msg', "用户名或者密码错误！");
             }
         }
     }
