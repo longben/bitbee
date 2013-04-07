@@ -139,7 +139,7 @@
 <!--在线办事start---> 
   <div class="zxbs">
     <ul>
-		<?php foreach($news as $p):?>
+		<?php foreach($zxbs as $p):?>
 		<li class="zjzxa"><a href="/app/content/<?=$p['Post']['id']?>"   title="<?=$p['Post']['post_title']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
 		<?php endforeach;?>
     </ul>

@@ -71,6 +71,9 @@ class AppsController extends Cd4youAppController {
 
         //资源共享
         $this->set( 'zygx', $this->getPostByCategorys('1201,1202,1203', 7) );
+
+        //在线办事
+        $this->set( 'zxbs', $this->getPostByCategorys(205, 7) );
     }
 
     //走进四幼
