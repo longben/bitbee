@@ -31,7 +31,7 @@ class MainController extends BlogAppController {
         $myClass = "home blog two-column right-sidebar";
 
         $this->paginate = array(
-            'conditions' => array('Post.post_status' => 'publish', 'Meta.category' => '1102', 'Post.post_author' => $username, empty($_GET['s'])?'1=1':"Post.post_title LIKE '%". $_GET['s'] ."%'", empty($_GET['tag'])?'1=1':"Meta.tag ='". $_GET['tag'] ."'"), 
+            'conditions' => array('Post.post_status' => 'publish', 'Meta.category' => BLOG_MODULE, 'Post.post_author' => $username, empty($_GET['s'])?'1=1':"Post.post_title LIKE '%". $_GET['s'] ."%'", empty($_GET['tag'])?'1=1':"Meta.tag ='". $_GET['tag'] ."'"), 
             'recursive' => 0, //int
             'order' => 'Meta.elite, Post.post_date desc',
             'limit' => 6

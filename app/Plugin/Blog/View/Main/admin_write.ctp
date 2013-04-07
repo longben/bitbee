@@ -2,7 +2,7 @@
 <script charset="utf-8" src="/js/kindeditor/lang/zh_CN.js"></script>
 
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
-    data-options="url:'/admin/posts/json_data.json?c=1102&u=<?=$this->Session->read('Auth.User.User.id')?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
+    data-options="url:'/admin/posts/json_data.json?c=<?=BLOG_MODULE?>&u=<?=$this->Session->read('Auth.User.User.id')?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
     <thead>  
         <tr>
             <th data-options="field:'id'">编号</th>  
@@ -42,7 +42,7 @@
     //$status = array('publish' => '上网发布', 'draft' => '草稿');
     //echo "发布状态：".$this->Form->radio('Post.post_status', $status, $attributes);
 
-    echo $this->Form->hidden('Module', array('value' => 1102));
+    echo $this->Form->hidden('Module', array('value' => BLOG_MODULE));
     echo $this->Form->hidden('post_type', array('value' => 'post'));
     echo $this->Form->end();
     ?>
@@ -70,7 +70,7 @@
         editor.remove();
         $('#dlg').dialog('open').dialog('setTitle','新增');
         $('#fm').form('clear');
-        url = '/admin/posts/add/1102';
+        url = '/admin/posts/add/<?=BLOG_MODULE?>';
 
         editor.create();
         $('#dlg').center();

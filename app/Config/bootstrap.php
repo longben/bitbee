@@ -101,6 +101,8 @@ define('AVATAR_UPLOAD_PATH', APP.'webroot'.DS.'upload'.DS.'user'.DS.'avatar'.DS)
 
 define('ELEMENT_PATH', APP.'View'.DS.'Elements'.DS);
 
+define('BLOG_MODULE', 2464); //Ä¬ÈÏ²©¿ÍÀ¸Ä¿±àºÅ
+
 $plugins = explode(',', Configure::read('Site.plugins'));
 foreach( $plugins as $plugin){
     if (!empty($plugin) && file_exists(APP . 'Plugin' . DS . $plugin)) {
