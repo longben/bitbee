@@ -19,8 +19,7 @@ class AppsController extends WczhsAppController {
     }
 	
     public function test(){
-        $this->layout = "blank";
-
+        $this->autoRender = false;
         if($this->request->is('post')){
             if($this->Auth->login()){
                 $this->Session->write('id', $this->Session->read('Auth.User.User.id'));
