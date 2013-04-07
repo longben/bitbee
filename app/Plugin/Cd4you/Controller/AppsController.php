@@ -55,10 +55,10 @@ class AppsController extends Cd4youAppController {
         $this->set( 'jydt', $this->getPostByCategorys('701,702', 5) );
 
         //家园共育
-        $this->set( 'jygy', $this->getPostByCategorys('601,602', 5) );
+        $this->set( 'jygy', $this->getPostByCategorys('601,602', 7) );
 
         //温馨班级
-        $this->set( 'wxbj', $this->getPostByCategorys(BLOG_MODULE, 5) );
+        $this->set( 'wxbj', $this->getPostByCategorys(BLOG_MODULE, 7) );
 
         //集团建设
         $this->set( 'jtjs', $this->getPostByCategorys('1101,1102,1103', 5) );
