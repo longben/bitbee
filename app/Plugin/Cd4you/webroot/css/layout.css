@@ -307,7 +307,7 @@ blr:expression(this.onFocus=this.blur());
 .btwo_news {
 	width: 630px;
 	font-family: "微软雅黑", "宋体",Arial;
-	font-size: 28px;
+	font-size: 20px;
 	line-height: 70px;
 	text-align: center;
 	height: 70px;
