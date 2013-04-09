@@ -301,6 +301,7 @@ class AppsController extends WczhsAppController {
 
         //$this->CourseMembership->recursive = 2;
         $this->set('c', $this->CourseMembership->read(null, $id));
+        $this->set('_serialize', array('c'));
     }
 
 
