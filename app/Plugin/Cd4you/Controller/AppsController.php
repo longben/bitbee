@@ -30,6 +30,11 @@ class AppsController extends Cd4youAppController {
         $covers = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 201), 'limit' => 6));
         $this->set('covers', $covers);
 
+
+        //友情链接(204)
+        $links = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 204), 'limit' => 5));
+        $this->set('links', $links);
+
         //产品特性(202)
         $conditions = array(
             'conditions' => 'Meta.category = 202', 

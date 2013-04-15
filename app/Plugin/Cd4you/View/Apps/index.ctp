@@ -147,14 +147,13 @@
   <!---在线办事end--->  
 </div>
 
+<?php if(sizeof($links)):?>
 <div class="w950">
-  <div class="yqlink">
-    <div class="pcitupian"><img src="/cd4you/img/index_21.png" width="152" height="70" /></div>
-    <div class="pcitupian"><img src="/cd4you/img/index_21.png" width="152" height="70" /></div>
-    <div class="pcitupian"><img src="/cd4you/img/index_21.png" width="152" height="70" /></div>
-    <div class="pcitupian"><img src="/cd4you/img/index_21.png" width="152" height="70" /></div>
-    <div class="pcitupian"><img src="/cd4you/img/index_21.png" width="152" height="70" /></div>
-  </div>
+    <div class="yqlink">
+        <?php foreach($links as $link):?>
+        <div class="pcitupian"><a href="<?=$link['Attachment']['url']?>" target="_blank"><img src="/upload/user/images/<?=$link['Attachment']['file_path']?>" width="152" height="70" border="0"/></a></div>
+        <?php endforeach;?>
+    </div>
 </div>
-
+<?php endif;?>
 
