@@ -29,7 +29,7 @@
 
         <div class="grid-12-12">
             <label for="id_password">文章分类</label>
-            <label><a href="javascript:;" id="add">添加</a> | <a href="#" id="remove2">删除</a></label>
+            <label><a href="javascript:;" id="add">添加</a> | <a href="#" id="remove">删除</a></label>
             <div class="inputs">
                 <?php foreach($menus as $i => $menu):?>
                 <div><input type="text" class="field mm" id="menu" name="data[Menu][<?=$i?>][name]" value="<?php echo $menu['Menu']['name']?>"/></div>

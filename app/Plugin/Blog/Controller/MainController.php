@@ -114,10 +114,14 @@ class MainController extends BlogAppController {
                             $this->Menu->create();
                             $data['Menu']['id'] = null;
                         }
-                        $data['Menu']['user_id'] = $this->Session->read('Auth.User.User.id');
-                        $data['Menu']['name'] = $this->request->data['Menu'][$i]['name'];
 
-                        $this->Menu->save($data);
+                        if(!empty($this->request->data['Menu'][$i]['name'])){
+                            $data['Menu']['user_id'] = $this->Session->read('Auth.User.User.id');
+                            $data['Menu']['name'] = $this->request->data['Menu'][$i]['name'];
+                            $this->Menu->save($data);
+                        }else if(!empty($this->request->data['Menu'][$i]['id'])){
+                            $this->Menu->delete($this->request->data['Menu'][$i]['id']);
+                        }
                     }
                 }
                 $this->redirect($this->referer());
@@ -127,7 +131,7 @@ class MainController extends BlogAppController {
 
     public function admin_write() {
         $user = $this->User->read(null, $this->Session->read('Auth.User.User.id'));
-        
+
         $tags = $this->Menu->find('list', array(
             'conditions' => array('Menu.user_id' => $this->Session->read('Auth.User.User.id'))
         ));
