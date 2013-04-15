@@ -26,7 +26,7 @@ class MainController extends BlogAppController {
     public function index($username, $taxnonomy = null) {
         $user = $this->User->read(null, $username);
 
-        $this->set('tags', $this->Menu->findAllByUserId($this->Session->read('Auth.User.User.id')) );
+        $this->set('tags', $this->Menu->findAllByUserId( $username ) );
 
         $myClass = "home blog two-column right-sidebar";
 
@@ -52,7 +52,7 @@ class MainController extends BlogAppController {
         $user = $this->User->read(null, $user_id);
 
 
-        $this->set('tags', $this->Menu->findAllByUserId($this->Session->read('Auth.User.User.id')) );
+        $this->set('tags', $this->Menu->findAllByUserId( $user_id ) );
 
         $post = $this->Post->read(null, $post_id);
 
