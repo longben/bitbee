@@ -8,20 +8,20 @@ class PlatformsController extends AppController {
 
     public function upload(){ //保存图片
 
-        session_start();
         if (isset($_POST["PHPSESSID"])) {
+            session_start();
             session_id($_POST["PHPSESSID"]);
         } else if (isset($_GET["PHPSESSID"])) {
+            session_start();
             session_id($_GET["PHPSESSID"]);
         }
+
+        $this->log($this->Session->read('Auth.User.User.id'), 'cxf');
 
 
         App::import('Vendor', '/utils/file');
 
         $user_id = '';
-
-        //$this->log($this->Session->read('id'), 'cxf');
-
 
         if( $this->Session->check('id') ){
             $user_id = $this->Session->read('id');
