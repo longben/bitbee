@@ -2,23 +2,22 @@ ALTER TABLE wczhs.post_metas
  ADD term INT AFTER type;
 
 
-CREATE TABLE `menus` (
-  `id` int(10) NOT NULL auto_increment,
-  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `alias` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `style` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `description` text collate utf8_unicode_ci,
-  `status` tinyint(1) NOT NULL default '1',
-  `weight` int(11) default NULL,
+
+CREATE TABLE IF NOT EXISTS `menus` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `style` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `status` tinyint(1) NOT NULL DEFAULT '1',
+  `weight` int(11) DEFAULT NULL,
   `link_count` int(11) NOT NULL,
-  `params` text collate utf8_unicode_ci,
+  `params` text COLLATE utf8_unicode_ci,
   `updated` datetime NOT NULL,
   `created` datetime NOT NULL,
-  `user_id` int(10) default NULL,
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `menu_alias` (`name`, `user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
+  `user_id` int(10) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
 
 
 CREATE TABLE `links` (

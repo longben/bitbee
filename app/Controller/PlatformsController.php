@@ -20,6 +20,8 @@ class PlatformsController extends AppController {
 
         $user_id = '';
 
+        //$this->log($this->Session->read('id'), 'cxf');
+
 
         if( $this->Session->check('id') ){
             $user_id = $this->Session->read('id');
@@ -48,25 +50,32 @@ class PlatformsController extends AppController {
         if(move_uploaded_file($_FILES['imgFile']['tmp_name'], $uploadfile)){
             list($width, $height, $type) = getimagesize($uploadfile);
 
-            $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 100);
-            $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '240x180_'.$_new_filename, 240, 180, 100);
+            if(!empty($type)){
 
-            $this->request->data['TweetImage']['name'] = 'TWEET_IMAGE';
-            $this->request->data['TweetImage']['tweet_id'] = 0; //表示临时存储
-            $this->request->data['TweetImage']['user_id'] = $user_id;
-            $this->request->data['TweetImage']['user_name'] = $user_name;
-            $this->request->data['TweetImage']['photo'] = "$user_id/default/" . $_new_filename;
-            $this->request->data['TweetImage']['image_url'] = '';
-            $this->request->data['TweetImage']['width'] = $width;
-            $this->request->data['TweetImage']['height'] = $height;
-            $this->request->data['TweetImage']['album_id'] = $this->Session->read('default_album_id');
-            $this->TweetImage->create();
-            $this->TweetImage->save($this->request->data);
+                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 100);
+                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '240x180_'.$_new_filename, 240, 180, 100);
 
-            $id = $this->TweetImage->getLastInsertID();
+                $this->request->data['TweetImage']['name'] = 'TWEET_IMAGE';
+                $this->request->data['TweetImage']['tweet_id'] = 0; //表示临时存储
+                $this->request->data['TweetImage']['user_id'] = $user_id;
+                $this->request->data['TweetImage']['user_name'] = $user_name;
+                $this->request->data['TweetImage']['photo'] = "$user_id/default/" . $_new_filename;
+                $this->request->data['TweetImage']['image_url'] = '';
+                $this->request->data['TweetImage']['width'] = $width;
+                $this->request->data['TweetImage']['height'] = $height;
+                $this->request->data['TweetImage']['album_id'] = $this->Session->read('default_album_id');
+                $this->TweetImage->create();
+                $this->TweetImage->save($this->request->data);
 
-            $file = $view_path.$_new_filename;
-            $micrograph = $view_path.'120x120_'.$_new_filename;
+                $id = $this->TweetImage->getLastInsertID();
+
+                $file = $view_path.$_new_filename;
+                $micrograph = $view_path.'120x120_'.$_new_filename;
+            }else{
+                $id = 0;
+                $file = $view_path.$_new_filename;
+                $micrograph = $view_path.$_new_filename;
+            }
         }
 
         return new CakeResponse(array('body' => json_encode(array('error' => 0, 'url' => $file, 'id' => $id, 'file' => $micrograph))));
