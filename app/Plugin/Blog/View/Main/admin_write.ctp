@@ -90,17 +90,25 @@
         for(var key in row){
             _row = _row + "'data[Post][" + key + "]':row." + key + ",";
         }
-        _row = '{' + _row + 't:1}';
 
-        var json = eval("("+ _row +")");
 
-        if (row){
-            $('#dlg').dialog('open').dialog('setTitle','编辑');
-            $('#fm').form('load', json);
-            url = '/admin/posts/edit';
-        }
+        var jqxhr = $.getJSON("/admin/posts/read/" + row.id,
+            function(result){
+                //_row = _row + "'data[Post][post_content]':'" + result.Post.post_content + "',";
+                $("#PostPostContent").val(result.Post.post_content);
+                _row = _row + "'data[Meta][tag]':'" + result.Meta.tag + "',";
+            }).success(function() { 
+                _row = '{' + _row + "t:1}";
+                var json = eval("("+ _row +")");
 
-        editor.create();
+                if (row){
+                    $('#dlg').dialog('open').dialog('setTitle','编辑');
+                    $('#fm').form('load', json);
+                    url = '/admin/posts/edit';
+                }
+                editor.create();
+            });
+
     }
 
     function saveItem(){
