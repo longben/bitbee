@@ -92,7 +92,7 @@
   <div class="wxbj">
     <ul>
 			<?php foreach($wxbj as $p):?>
-			<li class="gjdxhdd"><a href="/app/content/<?=$p['Post']['id']?>"  title="<?=$p['Post']['post_title']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
+			<li class="gjdxhdd"><a href="/blog/main/archive/<?=$p['Post']['post_author']?>/<?=$p['Post']['id']?>"  title="<?=$p['Post']['post_title']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
 			<?php endforeach;?>
     </ul>
   </div>
