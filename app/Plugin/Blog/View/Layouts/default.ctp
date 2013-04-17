@@ -28,7 +28,7 @@
         <h2 id="site-description"><?php echo $user['Meta']['site_tagline']?></h2>
         </hgroup>
 
-        <img src="/blog/img/headers/<?php echo $header_img?>" width="1000" height="288" alt="" />
+        <img src="<?php echo $header_img?>" width="1000" height="288" alt="" />
 
         <form method="get" id="searchform" action="/blog/<?=$user['User']['id']?>">
             <label for="s" class="assistive-text">Search</label>

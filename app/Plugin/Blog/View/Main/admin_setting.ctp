@@ -1,7 +1,7 @@
-<div style="width:800px">
+<div style="width:800px" class="formee">
 
     <fieldset>
-        <legend>设置博客封面</legend>
+        <legend>设置博客头像</legend>
         <div align="center">
             <object id="ImagesUpload" width="670" height="240" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10.0.32" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" name="ImagesUpload">
                 <param value="#666666" name="bgColor">
@@ -14,6 +14,22 @@
             </object>
         </div>
     </fieldset>
+
+    <fieldset>
+        <legend>设置博客大图封面</legend>
+        <div align="center">
+            <object id="ImagesUpload2" width="1500" height="350" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=10.0.32" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" name="ImagesUpload2">
+                <param value="#666666" name="bgColor">
+                <param value="/img/ImagesUpload.swf?img=/upload/user/avatar/<?=$user['Meta']['site_header']?>&w=1000&h=288" name="movie">
+                <param value="url=/users/site_header" name="flashvars">
+                <param value="high" name="quality">
+                <param value="always" name="allowScriptAccess">
+                <param value="transparent" name="WMODE">
+                <embed width="1500" height="350" wmode="transparent" type="application/x-shockwave-flash" flashvars="url=/users/site_header" pluginspage="http://www.macromedia.com/go/getflashplayer" quality="high" src="/img/ImagesUpload.swf?img=/upload/user/avatar/<?=$user['Meta']['site_header']?>&w=1000&h=288" name="ImagesUpload2">
+            </object>
+        </div>
+    </fieldset>
+
 
     <?php echo $this->Form->create('User', array('url' => '/admin/blog/main/setting', 'class' => 'formee'));?>
     <fieldset>
@@ -43,6 +59,8 @@
         </div>
     </fieldset>
     <?php echo $this->Form->end();?>
+
+
 
 </div>
 

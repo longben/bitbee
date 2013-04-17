@@ -41,7 +41,9 @@ class MainController extends BlogAppController {
         $header_img = '';
         if(empty( $user['Meta']['site_header'] )){
             $array_header = array('chessboard.jpg', 'hanoi.jpg', 'lanterns.jpg', 'pine-cone.jpg', 'shore.jpg', 'trolley.jpg', 'wheel.jpg', 'willow.jpg');
-            $header_img = $array_header[array_rand($array_header)];
+            $header_img = '/blog/img/headers/' . $array_header[array_rand($array_header)];
+        }else{
+            $header_img = '/upload/user/avatar/' . $user['Meta']['site_header'];
         }
 
         $this->set(compact( 'user', 'myClass', 'header_img' ));
@@ -61,7 +63,9 @@ class MainController extends BlogAppController {
         $header_img = '';
         if(empty( $user['Meta']['site_header'] )){
             $array_header = array('chessboard.jpg', 'hanoi.jpg', 'lanterns.jpg', 'pine-cone.jpg', 'shore.jpg', 'trolley.jpg', 'wheel.jpg', 'willow.jpg');
-            $header_img = $array_header[array_rand($array_header)];
+            $header_img = '/blog/img/headers/' . $array_header[array_rand($array_header)];
+        }else{
+            $header_img = '/upload/user/avatar/' . $user['Meta']['site_header'];
         }
 
         $comments = $this->Guestbook->find('all', array('conditions' => array('Guestbook.object_id' => $post_id, 'Guestbook.flag' => 1)));
