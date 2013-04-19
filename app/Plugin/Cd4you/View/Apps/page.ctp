@@ -39,8 +39,8 @@
     <?php
     if(sizeof($news) == 0){
        echo $this->element('nothing');
-    }elseif(sizeof($news) == 1){
-       echo $this->element('single');
+    //}elseif(sizeof($news) == 1){
+    //   echo $this->element('single');
     }else{
        echo $this->element('list');
     }
