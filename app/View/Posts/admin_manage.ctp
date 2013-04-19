@@ -1,4 +1,4 @@
-<script charset="utf-8" src="/js/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="/js/kindeditor/kindeditor-min.js?version=1.0.1"></script>
 <script charset="utf-8" src="/js/kindeditor/lang/zh_CN.js"></script>
 
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
@@ -52,7 +52,7 @@
 
 <script type="text/javascript">
     var url;
-    var editor = KindEditor.create('textarea[id="PostPostContent"]', {uploadJson: '/platforms/upload.json?u=<?=$this->Session->read('Auth.User.User.id')?>',allowFileManager : false});
+    var editor = KindEditor.create('textarea[id="PostPostContent"]', {uploadJson: '/platforms/upload.json?PHPSESSID=<?=session_id()?>&u=<?=$this->Session->read('Auth.User.User.id')?>',allowFileManager : false});
 
     function newItem(){
         editor.remove();
@@ -78,9 +78,8 @@
         for(var key in row){
             _row = _row + "'data[Post][" + key + "]':row." + key + ",";
         }
-
-
-        var jqxhr = $.getJSON("/admin/posts/read/" + row.id,
+		
+        var jqxhr = $.getJSON("/admin/posts/read/" + row.id + '?rand=' + Math.random(),
             function(result){
                 //_row = _row + "'data[Post][post_content]':'" + result.Post.post_content + "',";
                 $("#PostPostContent").val(result.Post.post_content);

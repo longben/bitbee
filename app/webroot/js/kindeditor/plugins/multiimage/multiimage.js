@@ -28,10 +28,11 @@ K.extend(KSWFUpload, {
 			'<div class="ke-inline-block ke-swfupload-button">',
 			'<input type="button" value="Browse" />',
 			'</div>',
-			'<div class="ke-inline-block ke-swfupload-desc">' + options.uploadDesc + '</div>',
+			
 			'<span class="ke-button-common ke-button-outer ke-swfupload-startupload">',
 			'<input type="button" class="ke-button-common ke-button" value="' + options.startButtonValue + '" />',
-			'</span>',
+			'</span><br/>',
+			'<div class="ke-inline-block ke-swfupload-desc">' + options.uploadDesc + '</div>',
 			'</div>',
 			'<div class="ke-swfupload-body"></div>',
 			'</div>'
