@@ -6,7 +6,9 @@ class AppsController extends WczhsAppController {
 
     public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'CourseMembership');
 
-    public $theme = 'Red';
+    /*  先屏蔽，冬天采用红色风格
+	public $theme = 'Red';
+	*/
 
     public function beforeFilter() {
         parent::beforeFilter(); 
