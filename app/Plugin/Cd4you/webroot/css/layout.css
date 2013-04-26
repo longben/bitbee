@@ -211,6 +211,13 @@ blr:expression(this.onFocus=this.blur());
 	padding-left: 15px;
 }
 
+.w950 .yqlink .pcitupian img {
+	background: #EDF9FA;
+	height: 68px;
+	width: 152px;
+	border: 1px solid #C6E9F2;
+}
+
 /*** 二级栏目****/
 
 .sidebar_left {
