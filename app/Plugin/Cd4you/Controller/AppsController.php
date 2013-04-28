@@ -47,8 +47,8 @@ class AppsController extends Cd4youAppController {
         //最新消息(401)
         $this->set( 'news', $this->getPostByCategory(401, 6) );
 
-        //校园公告(501)
-        $this->set( 'xygg', $this->getPostByCategory(501, 6) );
+        //校园公告(502，上每周工作安排)
+        $this->set( 'xygg', $this->getPostByCategory(502, 6) );
 
         //全园大型活动(802)
         $this->set( 'qydxhd', $this->getPostByCategory(802, 7) );
