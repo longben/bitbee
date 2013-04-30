@@ -17,6 +17,11 @@
  * @since         CakePHP(tm) v 1.2.0.4206
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
+App::uses('MockTransactionDboSource', 'Model/Datasource');
+App::uses('MockTransactionAssociatedDboSource', 'Model/Datasource');
+App::uses('MockManyTransactionDboSource', 'Model/Datasource');
+App::uses('MockAssociatedTransactionDboSource', 'Model/Datasource');
+
 require_once dirname(__FILE__) . DS . 'ModelTestBase.php';
 /**
  * ModelWriteTest
@@ -1647,7 +1652,9 @@ class ModelWriteTest extends BaseModelTest {
 
 		$TestModel->id = 2;
 		$data = array('Tag' => array('Tag' => array(2)));
-		$TestModel->save($data);
+		$result = $TestModel->save($data);
+
+		$this->assertEquals($data['Tag'], $result['Tag']);
 
 		$result = $TestModel->findById(2);
 		$expected = array(

@@ -323,12 +323,14 @@ class HttpSocket extends CakeSocket {
 
 		if (isset($this->request['uri']['user'], $this->request['uri']['pass'])) {
 			$this->configAuth('Basic', $this->request['uri']['user'], $this->request['uri']['pass']);
+		} elseif (isset($this->request['auth'], $this->request['auth']['method'], $this->request['auth']['user'], $this->request['auth']['pass'])) {
+			$this->configAuth($this->request['auth']['method'], $this->request['auth']['user'], $this->request['auth']['pass']);
 		}
 		$this->_setAuth();
 		$this->request['auth'] = $this->_auth;
 
 		if (is_array($this->request['body'])) {
-			$this->request['body'] = http_build_query($this->request['body']);
+			$this->request['body'] = http_build_query($this->request['body'], '', '&');
 		}
 
 		if (!empty($this->request['body']) && !isset($this->request['header']['Content-Type'])) {
@@ -696,7 +698,7 @@ class HttpSocket extends CakeSocket {
 		}
 
 		$uri['path'] = preg_replace('/^\//', null, $uri['path']);
-		$uri['query'] = http_build_query($uri['query']);
+		$uri['query'] = http_build_query($uri['query'], '', '&');
 		$uri['query'] = rtrim($uri['query'], '=');
 		$stripIfEmpty = array(
 			'query' => '?%query',
@@ -934,13 +936,21 @@ class HttpSocket extends CakeSocket {
 /**
  * Builds cookie headers for a request.
  *
+ * Cookies can either be in the format returned in responses, or
+ * a simple key => value pair.
+ *
  * @param array $cookies Array of cookies to send with the request.
  * @return string Cookie header string to be sent with the request.
  */
 	public function buildCookies($cookies) {
 		$header = array();
 		foreach ($cookies as $name => $cookie) {
-			$header[] = $name . '=' . $this->_escapeToken($cookie['value'], array(';'));
+			if (is_array($cookie)) {
+				$value = $this->_escapeToken($cookie['value'], array(';'));
+			} else {
+				$value = $this->_escapeToken($cookie, array(';'));
+			}
+			$header[] = $name . '=' . $value;
 		}
 		return $this->_buildHeader(array('Cookie' => implode('; ', $header)), 'pragmatic');
 	}

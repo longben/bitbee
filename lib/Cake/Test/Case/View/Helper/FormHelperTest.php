@@ -748,7 +748,7 @@ class FormHelperTest extends CakeTestCase {
 			'type' => 'float',
 			'null' => false,
 			'default' => null,
-			'length' => null
+			'length' => 10
 		)));
 
 		$this->Form->create('Contact');
@@ -1200,7 +1200,8 @@ class FormHelperTest extends CakeTestCase {
 		$this->assertTags($result, $expected);
 
 		$result = $this->Form->hidden('UserForm.stuff');
-		$expected = array('input' => array(
+		$expected = array(
+			'input' => array(
 				'type' => 'hidden', 'name' => 'data[UserForm][stuff]',
 				'id' => 'UserFormStuff'
 		));
@@ -1257,6 +1258,30 @@ class FormHelperTest extends CakeTestCase {
 	}
 
 /**
+ * Test secured inputs with custom names.
+ *
+ * @return void
+ */
+	public function testSecuredInputCustomName() {
+		$this->Form->request['_Token'] = array('key' => 'testKey');
+		$this->assertEquals(array(), $this->Form->fields);
+
+		$this->Form->input('text_input', array(
+			'name' => 'data[Option][General.default_role]',
+		));
+		$expected = array('Option.General.default_role');
+		$this->assertEquals($expected, $this->Form->fields);
+
+		$this->Form->input('select_box', array(
+			'name' => 'data[Option][General.select_role]',
+			'type' => 'select',
+			'options' => array(1, 2),
+		));
+		$expected = array('Option.General.default_role', 'Option.General.select_role');
+		$this->assertEquals($expected, $this->Form->fields);
+	}
+
+/**
  * Tests that the correct keys are added to the field hash index
  *
  * @return void
@@ -1304,6 +1329,27 @@ class FormHelperTest extends CakeTestCase {
 
 		$this->Form->radio('Test.test', $options);
 		$expected = array('Test.test');
+		$this->assertEquals($expected, $this->Form->fields);
+	}
+
+/**
+ * Test that when disabled is in a list based attribute array it works.
+ *
+ * @return void
+ */
+	public function testFormSecuredAndDisabledNotAssoc() {
+		$this->Form->request['_Token'] = array('key' => 'testKey');
+
+		$this->Form->select('Model.select', array(1, 2), array('disabled'));
+		$this->Form->checkbox('Model.checkbox', array('disabled'));
+		$this->Form->text('Model.text', array('disabled'));
+		$this->Form->textarea('Model.textarea', array('disabled'));
+		$this->Form->password('Model.password', array('disabled'));
+		$this->Form->radio('Model.radio', array(1, 2), array('disabled'));
+
+		$expected = array(
+			'Model.radio' => ''
+		);
 		$this->assertEquals($expected, $this->Form->fields);
 	}
 
@@ -1820,7 +1866,7 @@ class FormHelperTest extends CakeTestCase {
 			'label' => array('for'),
 			'Balance',
 			'/label',
-			'input' => array('name', 'type' => 'number', 'maxlength' => 8, 'id'),
+			'input' => array('name', 'type' => 'number', 'id'),
 			'/div',
 		);
 		$this->assertTags($result, $expected);
@@ -2210,6 +2256,15 @@ class FormHelperTest extends CakeTestCase {
 		$this->assertContains('<option value="06" selected="selected">6</option>', $result);
 		$this->assertContains('<option value="15" selected="selected">15</option>', $result);
 		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+
+		$result = $this->Form->input('published', array('type' => 'time'));
+		$now = strtotime('now');
+		$this->assertContains('<option value="' . date('h', $now) . '" selected="selected">' . date('g', $now) . '</option>', $result);
+
+		$now = strtotime('2013-03-09 00:42:21');
+		$result = $this->Form->input('published', array('type' => 'time', 'selected' => $now));
+		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
+		$this->assertContains('<option value="42" selected="selected">42</option>', $result);
 	}
 
 /**
@@ -2265,6 +2320,63 @@ class FormHelperTest extends CakeTestCase {
 		$this->assertContains('<option value="01" selected="selected">1</option>', $result);
 		$this->assertContains('<option value="00" selected="selected">0</option>', $result);
 		$this->assertContains('<option value="00" selected="selected">00</option>', $result);
+	}
+
+/**
+ * Test interval & timeFormat = 12
+ *
+ * @return void
+ */
+	public function testInputTimeWithIntervalAnd12HourFormat() {
+		$result = $this->Form->input('Model.start_time', array(
+			'type' => 'time',
+			'timeFormat' => 12,
+			'interval' => 5,
+			'selected' => array('hour' => '4', 'min' => '30', 'meridian' => 'pm')
+		));
+		$this->assertContains('<option value="04" selected="selected">4</option>', $result);
+		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
+		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+
+		$result = $this->Form->input('Model.start_time', array(
+			'type' => 'time',
+			'timeFormat' => '12',
+			'interval' => 5,
+			'selected' => '2013-04-19 16:30:00'
+		));
+		$this->assertContains('<option value="04" selected="selected">4</option>', $result);
+		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
+		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+
+		$result = $this->Form->input('Model.start_time', array(
+			'type' => 'time',
+			'timeFormat' => '12',
+			'interval' => 10,
+			'selected' => '2013-05-19 00:33:00'
+		));
+		$this->assertContains('<option value="12" selected="selected">12</option>', $result);
+		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
+		$this->assertContains('<option value="am" selected="selected">am</option>', $result);
+
+		$result = $this->Form->input('Model.start_time', array(
+			'type' => 'time',
+			'timeFormat' => '12',
+			'interval' => 10,
+			'selected' => '2013-05-19 13:33:00'
+		));
+		$this->assertContains('<option value="01" selected="selected">1</option>', $result);
+		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
+		$this->assertContains('<option value="pm" selected="selected">pm</option>', $result);
+
+		$result = $this->Form->input('Model.start_time', array(
+			'type' => 'time',
+			'timeFormat' => '12',
+			'interval' => 10,
+			'selected' => '2013-05-19 01:33:00'
+		));
+		$this->assertContains('<option value="01" selected="selected">1</option>', $result);
+		$this->assertContains('<option value="30" selected="selected">30</option>', $result);
+		$this->assertContains('<option value="am" selected="selected">am</option>', $result);
 	}
 
 /**
@@ -5560,23 +5672,6 @@ class FormHelperTest extends CakeTestCase {
 		);
 		$this->assertTags($result, $expected);
 
-		$result = $this->Form->input('published', array('type' => 'time'));
-		$now = strtotime('now');
-		$expected = array(
-			'div' => array('class' => 'input time'),
-			'label' => array('for' => 'ContactPublishedHour'),
-			'Published',
-			'/label',
-			array('select' => array('name' => 'data[Contact][published][hour]', 'id' => 'ContactPublishedHour')),
-			'preg:/(?:<option value="([\d])+">[\d]+<\/option>[\r\n]*)*/',
-			array('option' => array('value' => date('h', $now), 'selected' => 'selected')),
-			date('g', $now),
-			'/option',
-			'*/select',
-			':',
-		);
-		$this->assertTags($result, $expected);
-
 		$result = $this->Form->input('published', array(
 			'timeFormat' => 24,
 			'interval' => 5,
@@ -5588,8 +5683,14 @@ class FormHelperTest extends CakeTestCase {
 		$this->assertRegExp('/<option[^<>]+value="03"[^<>]+selected="selected"[^>]*>3<\/option>/', $result);
 		$this->assertRegExp('/<option[^<>]+value="13"[^<>]+selected="selected"[^>]*>13<\/option>/', $result);
 		$this->assertRegExp('/<option[^<>]+value="35"[^<>]+selected="selected"[^>]*>35<\/option>/', $result);
+	}
 
-		$this->assertNoErrors();
+/**
+ * Test that empty values don't trigger errors.
+ *
+ * @return void
+ */
+	public function testDateTimeNoErrorsOnEmptyData() {
 		$this->Form->request->data['Contact'] = array(
 			'date' => array(
 				'day' => '',
@@ -5601,6 +5702,7 @@ class FormHelperTest extends CakeTestCase {
 			)
 		);
 		$result = $this->Form->dateTime('Contact.date', 'DMY', '12', array('empty' => false));
+		$this->assertNotEmpty($result);
 	}
 
 /**
@@ -5845,6 +5947,23 @@ class FormHelperTest extends CakeTestCase {
 			'*/select',
 		);
 		$this->assertTags($result, $expected);
+
+		$this->Form->request->data['Project']['release'] = '2050-02-10';
+		$result = $this->Form->month('Project.release');
+
+		$expected = array(
+			array('select' => array('name' => 'data[Project][release][month]', 'id' => 'ProjectReleaseMonth')),
+			array('option' => array('value' => '')),
+			'/option',
+			array('option' => array('value' => '01')),
+			'January',
+			'/option',
+			array('option' => array('value' => '02', 'selected' => 'selected')),
+			'February',
+			'/option',
+			'*/select',
+		);
+		$this->assertTags($result, $expected);
 	}
 
 /**
@@ -5917,6 +6036,28 @@ class FormHelperTest extends CakeTestCase {
 		$result = $this->Form->day('Model.field', array('value' => true));
 		$expected = array(
 			array('select' => array('name' => 'data[Model][field][day]', 'id' => 'ModelFieldDay')),
+			array('option' => array('value' => '')),
+			'/option',
+			array('option' => array('value' => '01')),
+			'1',
+			'/option',
+			array('option' => array('value' => '02')),
+			'2',
+			'/option',
+			$daysRegex,
+			array('option' => array('value' => '10', 'selected' => 'selected')),
+			'10',
+			'/option',
+			$daysRegex,
+			'/select',
+		);
+		$this->assertTags($result, $expected);
+
+		$this->Form->request->data['Project']['release'] = '2050-10-10';
+		$result = $this->Form->day('Project.release');
+
+		$expected = array(
+			array('select' => array('name' => 'data[Project][release][day]', 'id' => 'ProjectReleaseDay')),
 			array('option' => array('value' => '')),
 			'/option',
 			array('option' => array('value' => '01')),
@@ -6103,6 +6244,26 @@ class FormHelperTest extends CakeTestCase {
 		$thisHour = date('H');
 		$optValue = date('G');
 		$this->assertRegExp('/<option value="' . $thisHour . '" selected="selected">' . $optValue . '<\/option>/', $result);
+
+		$this->Form->request->data['Model']['field'] = '2050-10-10 01:12:32';
+		$result = $this->Form->hour('Model.field', true);
+		$expected = array(
+			array('select' => array('name' => 'data[Model][field][hour]', 'id' => 'ModelFieldHour')),
+			array('option' => array('value' => '')),
+			'/option',
+			array('option' => array('value' => '00')),
+			'0',
+			'/option',
+			array('option' => array('value' => '01', 'selected' => 'selected')),
+			'1',
+			'/option',
+			array('option' => array('value' => '02')),
+			'2',
+			'/option',
+			$hoursRegex,
+			'/select',
+		);
+		$this->assertTags($result, $expected);
 	}
 
 /**
@@ -6307,6 +6468,14 @@ class FormHelperTest extends CakeTestCase {
 
 		$result = $matches[1];
 		$expected = range(2050, date('Y') - 20);
+		$this->assertEquals($result, $expected);
+
+		$this->Form->request->data['Project']['release'] = '1881-10-10';
+		$result = $this->Form->year('Project.release', 1890, 1900);
+		preg_match_all('/<option value="([\d]+)"/', $result, $matches);
+
+		$result = $matches[1];
+		$expected = range(1900, 1881);
 		$this->assertEquals($result, $expected);
 	}
 
@@ -8528,7 +8697,7 @@ class FormHelperTest extends CakeTestCase {
 		$this->Form->inputDefaults(array('required' => false));
 		$result = $this->Form->input('Contact.imrequired');
 		$expected = array(
-			'div' => array('class' => 'input text required'),
+			'div' => array('class' => 'input text'),
 			'label' => array('for' => 'ContactImrequired'),
 			'Imrequired',
 			'/label',
@@ -8541,6 +8710,23 @@ class FormHelperTest extends CakeTestCase {
 		$this->assertTags($result, $expected);
 
 		$result = $this->Form->input('Contact.imrequired', array('required' => false));
+		$this->assertTags($result, $expected);
+
+		$result = $this->Form->input('Contact.imrequired', array('required' => true));
+		$expected = array(
+			'div' => array('class' => 'input text required'),
+			'label' => array('for' => 'ContactImrequired'),
+			'Imrequired',
+			'/label',
+			'input' => array(
+				'required' => 'required', 'type' => 'text', 'name' => 'data[Contact][imrequired]',
+				'id' => 'ContactImrequired'
+			),
+			'/div'
+		);
+		$this->assertTags($result, $expected);
+
+		$result = $this->Form->input('Contact.imrequired', array('required' => null));
 		$this->assertTags($result, $expected);
 	}
 
