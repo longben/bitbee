@@ -18,6 +18,7 @@
     <!--[if lt IE 9]>
     <script src="/blog/js/html5.js" type="text/javascript"></script>
     <![endif]-->
+    <?php echo $this->Html->script(array('jquery/jquery-1.8.0.min'));?>
 </head>
 
 <body class="<?=$myClass?>">
@@ -62,6 +63,18 @@
         </footer><!-- #colophon -->
         
     </div><!-- #page -->
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            //信息提示显示
+            if ( $('#flashMessage').text() != '') {
+                alert($('#flashMessage').text());
+                $('#flashMessage').text("");
+            }
+        });
+    </script>
+
+
 
 </body>
 </html>
