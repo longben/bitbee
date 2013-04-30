@@ -247,12 +247,16 @@ li:last-child {
 	color: #666;
 	display: block;
 	width: 630px;
-	line-height: 50px;
-	text-decoration: underline;
+	line-height: 40px;
+	text-decoration: none;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 640px;
+
 }
 .btwo a:hover {
 	font-size: 14px;
-	line-height: 50px;
 	color: #00aaee;
 	background-image: url(/cd4you/img/listbox_09a.png);
 	background-repeat: no-repeat;

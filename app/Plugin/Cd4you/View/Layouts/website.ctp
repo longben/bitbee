@@ -8,7 +8,7 @@
         <?php 
         echo $this->Html->meta('icon', '/cd4you/img/favicon.ico');
         echo $this->Html->script(array('jquery/jquery-1.7.2.min', 'jquery/jquery.SuperSlide','zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min', 'jquery/loopedslider.min', '/cd4you/js/focus', 'flash'));
-        echo $this->Html->css(array('/cd4you/css/layout.css?ver=1.0.3', '/cd4you/css/style.css?ver=1.0.0','/cd4you/css/font.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
+        echo $this->Html->css(array('/cd4you/css/layout.css?ver=1.0.3', '/cd4you/css/style.css?ver=1.0.0','/cd4you/css/font.css?ver=1.0.1', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
 
         echo $scripts_for_layout;
 
@@ -96,7 +96,7 @@
 		</div>
         <div class="footer">
 			<div class="cl">地址:成都市茶店子育苗路4号    电话:86-028-87521419   邮编:610036 <br />
-				Copyright © 2007-2013 成都市第四幼儿园版权所有 蜀ICP备07000521号 
+				Copyright ? 2007-2013 成都市第四幼儿园版权所有 蜀ICP备07000521号 
 			</div>
         </div>
     </div>
