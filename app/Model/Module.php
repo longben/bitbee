@@ -1,18 +1,18 @@
 <?php
 class Module extends AppModel {
 
-	public $name = 'Module';
+	//public $name = 'Module';
 	
     public $actsAs = array('Tree');
 
-	var $belongsTo = array(
+    var $belongsTo = array(
 			'Parent' => array('className' => 'Module',
 								'foreignKey' => 'parent_id',
 								'conditions' => 'Parent.id <> Module.id',
 								'fields' => 'Module.id, Module.name',
 								'order' => ''
 			)
-	);
+        );
 
 	var $hasAndBelongsToMany = array(
 			'Post' => array('className' => 'Post',
@@ -43,7 +43,7 @@ class Module extends AppModel {
 						'deleteQuery' => '',
 						'insertQuery' => ''
 			)
-	);
+        );
 
 
 	/**

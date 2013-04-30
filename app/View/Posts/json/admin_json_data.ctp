@@ -5,6 +5,7 @@ foreach ($data as &$post) {
     unset($post['Post']['post_content']);
 }
 
-$posts = Set::extract($data, '{n}.Post'); 
+$posts = sizeof($data) > 0 ? Set::extract($data, '{n}.Post') : array(); 
 
 echo json_encode(array('total' => $this->params['paging']['Post']['count'], 'rows' => $posts));
+
