@@ -444,7 +444,6 @@ blr:expression(this.onFocus=this.blur());
 	font-size: 22px;
 	line-height: 70px;
 	text-align: center;
-	height: 70px;
 	color: #666;	
 	letter-spacing: 5px;
 	font-weight: normal;
