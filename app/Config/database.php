@@ -6,7 +6,8 @@ class DATABASE_CONFIG {
         $db_name = is_null(Configure::read('Site.db'))?'bitbee':Configure::read('Site.db');
 
         $this->default = array(
-            'datasource' => 'HpMysql',
+            //'datasource' => 'HpMysql',
+            'datasource' => 'Database/Mysql',
             'persistent' => false,
             'host' => 'localhost',
             'login' => 'bitbee',
