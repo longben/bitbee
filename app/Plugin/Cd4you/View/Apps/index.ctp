@@ -136,17 +136,18 @@
     </ul>
   </div>
 <!---资源共享end--->
-<!--在线办事start---> 
+<!--友情链接start---> 
   <div class="zxbs">
     <ul>
-		<?php foreach($zxbs as $p):?>
-		<li class="zjzxa"><a href="/app/content/<?=$p['Post']['id']?>"   title="<?=$p['Post']['post_title']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
+		<?php foreach($links as $link):?>
+		<li class="zjzxa"><a href="<?=$link['Attachment']['url']?>"   title="<?=$link['Attachment']['name']?>" target="_blank"><?=$link['Attachment']['name']?></a></li>
 		<?php endforeach;?>
     </ul>
   </div>
-  <!---在线办事end--->  
+  <!---友情链接end--->  
 </div>
 
+<!--   底部logo友情链接，4Y屏蔽取消该展示方式，移到在线办事栏目
 <?php if(sizeof($links)):?>
 <div class="w950">
     <div class="yqlink">
@@ -156,4 +157,5 @@
     </div>
 </div>
 <?php endif;?>
+-->
 
