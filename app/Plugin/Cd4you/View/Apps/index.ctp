@@ -4,10 +4,9 @@
     <div id="newsSlider">
       <div class="container">
         <ul class=slides>          
-          <li><a href="#" ><img src="/cd4you/img/02.jpg" border="0"></a> </li>
-          <li><a href="#" ><img src="/cd4you/img/03.jpg" border="0"></a> </li>
-          <li><a href="#" ><img src="/cd4you/img/04.jpg" border="0"></a> </li>
-          <li><a href="#" ><img src="/cd4you/img/05.jpg" border="0"></a> </li>
+			<?php foreach($covers as $cover):?>
+			<li><a href="#" ><img src="/upload/user/images/<?=$cover['Attachment']['file_path']?>" border="0"></a></li>
+			<?php endforeach;?>
         </ul>
       </div>
       <div class="validate_Slider"></div>
