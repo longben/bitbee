@@ -26,8 +26,8 @@ class AppsController extends Cd4youAppController {
         
         $this->set('title_for_layout', '欢迎您！');
 
-        //大图轮换(201)
-        $covers = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 201), 'limit' => 6));
+        //大图轮换(202)
+        $covers = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 202), 'limit' => 6));
         $this->set('covers', $covers);
 
 
