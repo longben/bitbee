@@ -3,16 +3,16 @@
     <div id="newsSlider">
         <div class="container">
             <ul class="slides">
-			<?php foreach($covers as $cover):?>
-			<li><a href="#" ><img src="/upload/user/images/<?=$cover['Attachment']['file_path']?>" border="0"></a></li>
-			<?php endforeach;?>
+                <?php foreach($covers as $cover):?>
+                <li><a href="#" ><img src="/upload/user/images/<?=$cover['Attachment']['file_path']?>" border="0"></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
         <div class="validate_Slider"></div>
         <ul class="pagination">
-			<?php foreach($covers as $cover):?>
-			<li><a href="javascript:;"></a> </li>
-			<?php endforeach;?>
+            <?php foreach($covers as $cover):?>
+            <li><a href="javascript:;"></a> </li>
+            <?php endforeach;?>
         </ul>
     </div>
 </div>
@@ -23,14 +23,9 @@
         <div class="more"><a href="#" target="_self">更多></a></div>
         <div class="news_list">
             <ul>
-                <li class="newslist"><a href=xxgg/xxgg.html>我是中文测试字体我测试字体</a></li>
-                <li class="newslist"><a href=xxgg/xxgg.html>我是中文测体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
+                <?php foreach($news as $p):?>
+                <li class="newslist"><a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -43,7 +38,7 @@
                 <li class="newslist"><a href=xxgg/xxgg.html>我是中文测试字体我测试字体</a></li>
                 <li class="newslist"><a href=xxgg/xxgg.html>我是中文测体</a></li>
                 <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体我是中文测试字体</a></li>
+                <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体我是中文测试字体试字体我是中文测试字体试字体我是中文测试字体</a></li>
                 <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
                 <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
                 <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
@@ -101,13 +96,9 @@
             <div id="bjbk">
                 <div class="more"><a href="#" target="_self">更多></a></div>
                 <ul>
-                    <li class="gjdxhdd"><a href=#>我是中文测试字体我中文测</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文试体我测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测试是中文测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是字体我是测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测试是中文测试字体</a></li>
+                    <?php foreach($wxbj as $p):?>
+                    <li class="gjdxhdd"><a href="/blog/main/archive/<?=$p['Post']['post_author']?>/<?=$p['Post']['id']?>"  title="<?=$p['Post']['post_title']?>" target="_blank"><?=$p['Post']['post_title']?></a></li>
+                    <?php endforeach;?>
                 </ul>
             </div>
             <!--班级博客end--> 
