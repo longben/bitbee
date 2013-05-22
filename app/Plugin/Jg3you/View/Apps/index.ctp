@@ -35,14 +35,9 @@
         <div class="more"><a href="#" target="_self">更多></a></div>
         <div class="news_list">
             <ul>
-                <li class="newslist"><a href=xxgg/xxgg.html>我是中文测试字体我测试字体</a></li>
-                <li class="newslist"><a href=xxgg/xxgg.html>我是中文测体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字体我是中文测试字体我是中文测试字体试字体我是中文测试字体试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
-                <li class="newslist"><a href=#>我是中文测试字测试字体我是中文测试字体</a></li>
+                <?php foreach($byyj as $p):?>
+                <li class="newslist"><a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
     </div>
@@ -106,13 +101,9 @@
             <div id="jwhhd">
                 <div class="more"><a href="#" target="_self">更多></a></div>
                 <ul>
-                    <li class="gjdxhdd"><a href=#>我是中文测试字体我中文测</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文试体我测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测试是中文测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是字体我是测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测试是中文测试字体</a></li>
+                    <?php foreach($jwhhd as $p):?>
+                    <li class="gjdxhdd"><a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a></li>
+                    <?php endforeach;?>
                 </ul>
             </div>
             <!--家委会活动end--> 
@@ -122,13 +113,9 @@
             <div id="bjbyyj">
                 <div class="more"><a href="#" target="_self">更多></a></div>
                 <ul>
-                    <li class="gjdxhdd"><a href=#>我是中文测试字体我中文测</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文试体我测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测试是中文测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是字体我是测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测试是中文测试字体</a></li>
+                    <?php foreach($bybjhd as $p):?>
+                    <li class="gjdxhdd"><a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a></li>
+                    <?php endforeach;?>
                 </ul>
             </div>
             <!--保健保育研究end--> 
@@ -136,13 +123,9 @@
             <div id="jssb">
                 <div class="more"><a href="#" target="_self">更多></a></div>
                 <ul>
-                    <li class="gjdxhdd"><a href=#>我是中文测试字体我中文测</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文试体我测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测试是中文测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是字体我是测试字体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测体</a></li>
-                    <li class="gjdxhdd"><a href=#>我是中文测试是中文测试字体</a></li>
+                    <?php foreach($jssb as $p):?>
+                    <li class="gjdxhdd"><a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a></li>
+                    <?php endforeach;?>
                 </ul>
             </div>
             <!--教师随笔end--> 

@@ -47,14 +47,26 @@ class AppsController extends Jg3youAppController {
         //最新消息(401)
         $this->set( 'news', $this->getPostByCategory(401, 8) );
 
-        //校园公告(502，上每周工作安排)
-        $this->set( 'xygg', $this->getPostByCategory(502, 6) );
+        //本园研究(501，本园教研)
+        $this->set( 'byyj', $this->getPostByCategory(501, 8) );
 
-        //全园大型活动(802)
-        $this->set( 'qydxhd', $this->getPostByCategory(802, 7) );
+        //家委会活动(601)
+        $this->set( 'jwhhd', $this->getPostByCategory(601, 7) );
 
-        //特色领域活动(801)
-        $this->set( 'tslyhd', $this->getPostByCategory(801, 7) );
+        //保育保健活动(802)
+        $this->set( 'bybjhd', $this->getPostByCategory(802, 7) );
+
+        //教师随笔(502)
+        $this->set( 'jssb', $this->getPostByCategory(502, 7) );
+
+        //每周安排(302)
+        $this->set( 'mjap', $this->getPostByCategory(302, 5));
+
+        //温馨提示(205)
+        $this->set( 'wxts', $this->getPostByCategory(205, 5));
+        
+        //每周食谱(803)
+        $this->set( 'mzsp', $this->getPostByCategory(803, 5));
 
         //教研动态
         $this->set( 'jydt', $this->getPostByCategorys('701,702', 5) );
