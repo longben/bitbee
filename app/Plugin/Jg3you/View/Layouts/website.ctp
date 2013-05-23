@@ -7,7 +7,7 @@
         <title>成都市金牛区机关第三幼儿园|成都三幼|机关三幼|成都市市级机关第三幼儿园 - <?php echo $title_for_layout; ?></title>
         <?php 
         echo $this->Html->meta('icon', '/jg3you/img/favicon.ico');
-        echo $this->Html->script(array('jquery/jquery-1.7.2.min', 'zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min', 'jquery/loopedslider.min'));
+        echo $this->Html->script(array('jquery/jquery-1.7.2.min', 'zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min', 'jquery/loopedslider.min', 'flash'));
         echo $this->Html->css(array('/jg3you/css/style.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
 
         echo $scripts_for_layout;
@@ -49,14 +49,18 @@
 
 <body>
     <div id="top">
-        <form>
-            <div class="searchbox"><span>
-                    <input name="search" type="text" id="search" />
-                </span>
-                <div class="left"><a href="#"><img src="/jg3you/img/search_04.gif" width="45" height="30" border="0" /></a></div>
-            </div>
-        </form>
+        <div>
+            <form>
+                <div class="searchbox"><span>
+                        <input name="search" type="text" id="search" />
+                    </span>
+                    <div class="left"><a href="#"><img src="/jg3you/img/search_04.gif" width="45" height="30" border="0" /></a></div>
+                </div>
+            </form>
+        </div>
+        <div class="flashbox"><script type="text/javascript" language="JavaScript">swf('/jg3you/img/head.swf','950','180');</script></div>
     </div>
+
     <!--横向导航-->
     <div id="nav">
         <div class="left"><a href="/jg3you/apps/"><img src="/jg3you/img/index_04.png" width="56" height="83" border="0" /></a></div>
