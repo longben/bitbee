@@ -12,6 +12,10 @@ class AppsController extends Jg3youAppController {
     public function beforeFilter() {
         parent::beforeFilter(); 
 
+        //友情链接(204)
+        $links = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 204), 'limit' => 5));
+        $this->set('links', $links);
+
         $this->layout = "website";
     }
 
@@ -30,19 +34,8 @@ class AppsController extends Jg3youAppController {
         $covers = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 202), 'limit' => 6));
         $this->set('covers', $covers);
 
-
-        //友情链接(204)
-        $links = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 204), 'limit' => 5));
-        $this->set('links', $links);
-
-        //产品特性(202)
-        $conditions = array(
-            'conditions' => 'Meta.category = 202', 
-            'recursive' => 0, //int
-            'order' => 'Meta.elite, Post.post_date desc',
-            'limit' => 6
-        );
-        $this->set('features', $this->Post->find('all', $conditions));
+        //温馨班级
+        $this->set( 'wxbj', $this->getPostByCategorys(BLOG_MODULE, 7) );
 
         //最新消息(401)
         $this->set( 'news', $this->getPostByCategory(401, 8) );
@@ -60,37 +53,13 @@ class AppsController extends Jg3youAppController {
         $this->set( 'jssb', $this->getPostByCategory(502, 7) );
 
         //每周安排(302)
-        $this->set( 'mjap', $this->getPostByCategory(302, 5));
+        $this->set( 'mzap', $this->getPostByCategory(302, 5));
 
         //温馨提示(205)
         $this->set( 'wxts', $this->getPostByCategory(205, 5));
         
         //每周食谱(803)
         $this->set( 'mzsp', $this->getPostByCategory(803, 5));
-
-        //教研动态
-        $this->set( 'jydt', $this->getPostByCategorys('701,702', 5) );
-
-        //家园共育
-        $this->set( 'jygy', $this->getPostByCategorys('601,602', 7) );
-
-        //温馨班级
-        $this->set( 'wxbj', $this->getPostByCategorys(BLOG_MODULE, 7) );
-
-        //集团建设
-        $this->set( 'jtjs', $this->getPostByCategorys('1101,1102,1103', 5) );
-
-        //早教中心
-        $this->set( 'zjzx', $this->getPostByCategorys('1001,1002,1003', 7) );
-
-        //营养健康
-        $this->set( 'yyjk', $this->getPostByCategorys('1401,1402', 7) );
-
-        //资源共享
-        $this->set( 'zygx', $this->getPostByCategorys('1201,1202,1203', 7) );
-
-        //在线办事
-        $this->set( 'zxbs', $this->getPostByCategorys(205, 7) );
     }
 
     public function page($id, $child = null, $third = null){

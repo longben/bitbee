@@ -52,11 +52,9 @@
         <div id="zmap">
             <div class="moresmall"><a href="#" target="_self">更多></a></div>
             <ul>
-                <li class="mzap"><a href=#>家园携手话教育，交流沟通促发展</a></li>
-                <li class="mzap"><a href=#>动手动脑、快乐建构</a></li>
-                <li class="mzap"><a href=#>记专家机关幼儿园蹲点</a></li>
-                <li class="mzap"><a href=#>商讨制定科学合理考核方案</a></li>
-                <li class="mzap"><a href=#>我健康，我运动</a></li>
+                <?php foreach($mzap as $p):?>
+                <li class="mzap"><a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
         <!--每周安排end--> 
@@ -64,11 +62,9 @@
         <div id="wxts">
             <div class="moresmall"><a href="#" target="_self">更多></a></div>
             <ul>
-                <li class="mzap"><a href=#>家园携手话教育，交流沟通促发展</a></li>
-                <li class="mzap"><a href=#>动手动脑、快乐建构</a></li>
-                <li class="mzap"><a href=#>记专家机关幼儿园蹲点</a></li>
-                <li class="mzap"><a href=#>商讨制定科学合理考核方案</a></li>
-                <li class="mzap"><a href=#>我健康，我运动</a></li>
+                <?php foreach($wxts as $p):?>
+                <li class="mzap"><a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
         <!--温馨提示end--> 
@@ -76,11 +72,9 @@
         <div id="mzsp">
             <div class="moresmall"><a href="#" target="_self">更多></a></div>
             <ul>
-                <li class="mzap"><a href=#>家园携手话教育，交流沟通促发展</a></li>
-                <li class="mzap"><a href=#>动手动脑、快乐建构</a></li>
-                <li class="mzap"><a href=#>记专家机关幼儿园蹲点</a></li>
-                <li class="mzap"><a href=#>商讨制定科学合理考核方案</a></li>
-                <li class="mzap"><a href=#>我健康，我运动</a></li>
+                <?php foreach($mzsp as $p):?>
+                <li class="mzap"><a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a></li>
+                <?php endforeach;?>
             </ul>
         </div>
         <!--每周食谱end--> 

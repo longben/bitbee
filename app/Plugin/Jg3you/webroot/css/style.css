@@ -220,6 +220,9 @@ li:last-child {
     color: #a37c08;
     display: block;
     width: 277px;
+    text-overflow: ellipsis;
+    overflow:hidden;
+    white-space: nowrap;
     text-indent: 15px;
     font-size: 14px;
     line-height: 30px;
@@ -264,6 +267,9 @@ li:last-child {
     color: #86a227;
     display: block;
     width: 220px;
+    text-overflow: ellipsis;
+    overflow:hidden;
+    white-space: nowrap;
     text-indent: 30px;
     background-repeat: no-repeat;
     background-position: left center;
@@ -458,9 +464,8 @@ ul.pagination li a:hover {
     float: left;
     width: 240px;
 }
-#sidebarzxxx {
-}
-.subnav {
+
+.sub_nav {
     background: url(/jg3you/img/list_axxx.gif) repeat-y;
     height: 45px;
     font: 24px/45px "宋体";
@@ -469,13 +474,24 @@ ul.pagination li a:hover {
     color: #666666;
     font-weight: bold;
 }
-.subnavli {
+
+
+.sub_nav_3 {
+    background: url(/jg3you/img/list_axxx.gif) repeat-y;
+    height: 45px;
+    font: 24px/45px "宋体";
+    padding-left: 45px;
+    display: block;
+    color: #666666;
+    font-weight: bold;
+}
+.sub_nav_li_3 {
     background: url(/jg3you/img/list_axxx.gif) repeat-y;
     height: 12px;
 
 }
 
-.subnavxyfm {
+.sub_nav_4 {
     background: url(/jg3you/img/xyfm_01.gif) repeat-y;
     height: 45px;
     font: 24px/45px "宋体";
@@ -484,11 +500,12 @@ ul.pagination li a:hover {
     color: #666666;
     font-weight: bold;
 }
-.subnavxyfmli {
+.sub_nav_li_4 {
     background: url(/jg3you/img/xyfm_01.gif) repeat-y;
     height: 12px;
 }
-.subnavjkydt {
+
+.sub_nav_5 {
     background: url(/jg3you/img/jkydt_02_01.gif) repeat-y;
     height: 45px;
     font: 24px/45px "宋体";
@@ -497,11 +514,12 @@ ul.pagination li a:hover {
     color: #666666;
     font-weight: bold;
 }
-.subnavjkydtli {
+.sub_nav_li_5 {
     background: url(/jg3you/img/jkydt_02_01.gif) repeat-y;
     height: 12px;
 }
-.subnavjzkj {
+
+.sub_nav_6 {
     background: url(/jg3you/img/jzkj_02_01.gif) repeat-y;
     height: 45px;
     font: 24px/45px "宋体";
@@ -510,11 +528,12 @@ ul.pagination li a:hover {
     color: #666666;
     font-weight: bold;
 }
-.subnavjzkjli {
+.sub_nav_li_6 {
     background: url(/jg3you/img/jzkj_02_01.gif) repeat-y;
     height: 12px;
 }
-.subnavbaby {
+
+.sub_nav_7 {
     background: url(/jg3you/img/chbb_02_01.gif) repeat-y;
     height: 45px;
     font: 24px/45px "宋体";
@@ -523,11 +542,12 @@ ul.pagination li a:hover {
     color: #666666;
     font-weight: bold;
 }
-.subnavbabyli {
+.sub_nav_li_7 {
     background: url(/jg3you/img/chbb_02_01.gif) repeat-y;
     height: 12px;
 }
-.subnavwsbj {
+
+.sub_nav_8 {
     background: url(/jg3you/img/wsbj_02_01.gif) repeat-y;
     height: 45px;
     font: 24px/45px "宋体";
@@ -536,12 +556,12 @@ ul.pagination li a:hover {
     color: #666666;
     font-weight: bold;
 }
-.subnavwsbjli {
+.sub_nav_li_8 {
     background: url(/jg3you/img/wsbj_02_01.gif) repeat-y;
     height: 12px;
 }
 
-.subnavjyzy {
+.sub_nav_9 {
     background: url(/jg3you/img/jyzy_02_01.gif) repeat-y;
     height: 45px;
     font: 24px/45px "宋体";
@@ -550,33 +570,35 @@ ul.pagination li a:hover {
     color: #666666;
     font-weight: bold;
 }
-.subnavjyzyli {
+.sub_nav_li_9 {
     background: url(/jg3you/img/jyzy_02_01.gif) repeat-y;
     height: 12px;
 }
-A.style1:hover {
+
+a.style1:hover {
     text-decoration: underline;
     color: #697f00;
     font-weight: bold;
 }
-A.style1:link {
+a.style1:link {
     text-decoration: none;
     color: #666;
     overflow: hidden;
     white-space: nowrap;
     font-weight: bold;
 }
-A.style1:visited {
+a.style1:visited {
     color: #666;
     text-decoration: none;
     line-height: 45px;
     font-weight: bold;
 }
-A.style1:active {
+a.style1:active {
     text-decoration: none;
     color: #666;
     font-weight: bold;
 }
+
 .ct #container {
     float: left;
     width: 710px;

@@ -63,14 +63,14 @@
 
     <!--横向导航-->
     <div id="nav">
-        <div class="left"><a href="/jg3you/apps/"><img src="/jg3you/img/index_04.png" width="56" height="83" border="0" /></a></div>
-        <div class="left"><a href="/jg3you/apps/page/1" target="_self"><img src="/jg3you/img/index_05.png" width="88" height="83" border="0" /></a></div>
-        <div class="left"><a href="info/xyfm.html" target="_self"><img src="/jg3you/img/index_06.png" width="88" height="83" border="0"/></a></div>
-        <div class="left"><a href="info/jkydt.html" target="_self"><img src="/jg3you/img/index_07.png" width="107" height="83" border="0"/></a></div>
-        <div class="left"><a href="info/jzkj.html" target="_self"><img src="/jg3you/img/index_08.png" width="89" height="83" border="0"/></a></div>
-        <div class="left"><a href="info/chbb.html" target="_self"><img src="/jg3you/img/index_09.png" width="88" height="83" border="0"/></a></div>
-        <div class="left"><a href="info/wsbj.html" target="_self"><img src="/jg3you/img/index_10.png" width="88" height="83" border="0"/></a></div>
-        <div class="left"><a href="info/jyzy.html" target="_self"><img src="/jg3you/img/index_11.png" width="88" height="83" border="0"/></a></div>
+        <div class="left"><a href="/"><img src="/jg3you/img/index_04.png" width="56" height="83" border="0" /></a></div>
+        <div class="left"><a href="/app/page/3" target="_self"><img src="/jg3you/img/index_05.png" width="88" height="83" border="0" /></a></div>
+        <div class="left"><a href="/app/page/4" target="_self"><img src="/jg3you/img/index_06.png" width="88" height="83" border="0"/></a></div>
+        <div class="left"><a href="/app/page/5" target="_self"><img src="/jg3you/img/index_07.png" width="107" height="83" border="0"/></a></div>
+        <div class="left"><a href="/app/page/6" target="_self"><img src="/jg3you/img/index_08.png" width="89" height="83" border="0"/></a></div>
+        <div class="left"><a href="/app/page/7" target="_self"><img src="/jg3you/img/index_09.png" width="88" height="83" border="0"/></a></div>
+        <div class="left"><a href="/app/page/8" target="_self"><img src="/jg3you/img/index_10.png" width="88" height="83" border="0"/></a></div>
+        <div class="left"><a href="/app/page/9" target="_self"><img src="/jg3you/img/index_11.png" width="88" height="83" border="0"/></a></div>
     </div>
 
 
@@ -83,9 +83,9 @@
         <div id="link">
             <form name="form" id="form">
                 <select name="jumpMenu" id="jumpMenu" onchange="MM_jumpMenu('parent',this,0)" >
-                    <option value="#">友情连接1</option>
-                    <option value="#">友情连接2</option>
-                    <option value="#">友情连接3</option>
+                    <?php foreach($links as $link):?>
+                    <option value="<?=$link['Attachment']['url']?>"><?=$link['Attachment']['name']?></option>
+                    <?php endforeach;?>
                 </select>
             </form>
         </div>
