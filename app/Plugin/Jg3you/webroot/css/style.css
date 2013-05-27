@@ -647,6 +647,9 @@ a.style1:active {
     text-indent: 15px;
     line-height: 35px;
     height: 35px;
+    text-overflow: ellipsis;
+    overflow:hidden;
+    white-space: nowrap;    
 }
 .list a:hover {
     font-size: 14px;
