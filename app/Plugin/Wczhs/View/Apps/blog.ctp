@@ -6,7 +6,7 @@ echo $this->Html->css(array('/wczhs/css/jq-metro/jq-metro'), 'stylesheet', array
 <script type="text/javascript">
 $(document).ready(function () {
 
-    $("#metroaqui_novo").AddMetroDoubleWithTrailer('bt6', 'metro-azul', '/wczhs/css/jq-metro/admin.png', '五彩智慧树博客', '', 'metro-verde');
+    //$("#metroaqui_novo").AddMetroDoubleWithTrailer('bt6', 'metro-azul', '/wczhs/css/jq-metro/admin.png', '五彩智慧树博客', '', 'metro-verde');
     //$("#metroaqui_novo").AddMetroDoubleWithTrailerWithBG('bt6', '/upload/user/avatar/default.jpg', '五彩智慧树', 'alert("Text");', 'metro-azul');
 
     <?php foreach($users as $user):?>
