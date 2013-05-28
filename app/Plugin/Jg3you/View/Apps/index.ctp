@@ -46,7 +46,7 @@
 <div class="ct">
     <div class="left"> 
         <!--园长信箱start-->
-        <div><a href="#" target="_self"><img src="/jg3you/img/index_15.png" width="245" height="275" border="0" /></a></div>
+        <div><a href="/app/mailbox" target="_self"><img src="/jg3you/img/index_15.png" width="245" height="275" border="0" /></a></div>
         <!--园长信箱end--> 
         <!--每周安排start-->
         <div id="zmap">
