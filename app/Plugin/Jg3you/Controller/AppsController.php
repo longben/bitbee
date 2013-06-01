@@ -20,14 +20,11 @@ class AppsController extends Jg3youAppController {
     }
 
 
-
-
-
     //首页
     public function index() {
         $this->layout = "website";
 
-        
+
         $this->set('title_for_layout', '欢迎您！');
 
         //大图轮换(202)
@@ -35,7 +32,16 @@ class AppsController extends Jg3youAppController {
         $this->set('covers', $covers);
 
         //温馨班级
-        $this->set( 'wxbj', $this->getPostByCategorys(BLOG_MODULE, 7) );
+        $this->set( 'wxbj', $this->getPostByCategory(BLOG_MODULE, 7) );
+
+
+        $conditions = array(
+            'conditions' => array('Meta.category' =>BLOG_MODULE, 'Meta.picture is NOT NULL'), 
+            'recursive' => 0, //int
+            'order' => "Post.post_date DESC",
+            'limit' => 7 
+        );
+        $this->set( 'bktp', $this->Post->find('all', $conditions) );
 
         //最新消息(401)
         $this->set( 'news', $this->getPostByCategory(401, 8) );
@@ -57,10 +63,11 @@ class AppsController extends Jg3youAppController {
 
         //温馨提示(205)
         $this->set( 'wxts', $this->getPostByCategory(205, 5));
-        
+
         //每周食谱(803)
         $this->set( 'mzsp', $this->getPostByCategory(803, 5));
     }
+
 
     public function page($id, $child = null, $third = null){
 
@@ -79,12 +86,18 @@ class AppsController extends Jg3youAppController {
         $this->set('menus', $menus);
 
         $current = $child;
+        $current_module = null;
+
         if( sizeof($menus) > 0){
             if( empty($child) ){
                 $current = $menus[0]['Module']['id'];
             }else{
                 $current = $child;
             }
+
+            $current_module = $this->Module->read(null, $current);
+            $this->set('cmodule', $current_module); 
+
             $conditions = array(
                 'conditions' => array('Module.parent_id' => $current), 
                 'recursive' => 0, //int
@@ -93,61 +106,32 @@ class AppsController extends Jg3youAppController {
             $childs =$this->Module->find('all', $conditions);
             $this->set('childs', $childs);
             $this->set('current', $current);
-
-
-            $this->set('cmodule', $this->Module->read(null, $current)); 
         }
 
-        $page = 0; //当前页面文章列表
-        if( !empty($third) ){
-            $page = $third;
-            $this->findNewsByTag($page);
+        if('system' == $current_module['Module']['type']){
+            $this->paginate = array(
+                'conditions' => array('Meta.site_title IS NOT NULL'), 
+                'recursive' => 0 //int
+                //'order' => 'Guestbook.created desc',
+            );
+            $this->set('users', $this->paginate('User'));
+
+            $cssStyle = array( 'metro-roxo', 'metro-verde', 'metro-azul', 'metro-vermelho', 'metro-laranja');
+            $this->set('cssStyle', $cssStyle);			
         }else{
-            $page = $current;
-            $this->_posts($page);
-        }
-
-    }
-
-
-
-    public function __content($post_id, $id, $child = null, $third = null){
-
-        $this->set('module', $this->Module->read(null, $id)); 
-
-        $conditions = array(
-            'conditions' => array('Module.parent_id' => $id), 
-            'recursive' => 0, //int
-            'order' => 'Module.id'
-        );
-        $menus =$this->Module->find('all', $conditions);
-        $this->set('menus', $menus);
-
-        $current = $child;
-        if( sizeof($menus) > 0){
-            if( empty($child) ){
-                $current = $menus[0]['Module']['id'];
+            $page = 0; //当前页面文章列表
+            if( !empty($third) ){
+                $page = $third;
+                $this->findNewsByTag($page);
             }else{
-                $current = $child;
-            }
-            $conditions = array(
-                'conditions' => array('Module.parent_id' => $current), 
-                'recursive' => 0, //int
-                'order' => 'Module.id'
-            );
-            $childs =$this->Module->find('all', $conditions);
-            $this->set('childs', $childs);
-            $this->set('current', $current);
-
-
-            $this->set('cmodule', $this->Module->read(null, $current)); 
+                $page = $current;
+                $this->_posts($page);
+            }		
         }
-
-        $this->set('post', $this->Post->read(null, $post_id));
-
     }
 
-    
+
+
     public function content($post_id){
         $post = $this->Post->read(null, $post_id);
         $this->set('post', $post);
@@ -169,7 +153,7 @@ class AppsController extends Jg3youAppController {
     }
 
 
-	public function add_guestbook($type_id = 1) {
+    public function add_guestbook($type_id = 1) {
         //$this->autoRender = false;
         if (!empty($this->data)) {
             $_msg = '';
@@ -183,7 +167,7 @@ class AppsController extends Jg3youAppController {
                 $_msg = '您的试听申请已提交，我们将在1-2个工作日内联系您！';
                 $_url = '/app/main';
                 break;
-             case 3:
+            case 3:
                 $_msg = '您的加盟申请已提交，我们将在1-2个工作日内联系您！';
                 $_url = '/app/joinus';
                 break;

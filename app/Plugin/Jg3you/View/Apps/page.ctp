@@ -28,15 +28,20 @@
       </div>
       <div><img src="/jg3you/img/list_03.gif" width="710" height="48" border="0" /></div>
 
-      <?php
-      if(sizeof($news) == 0){
-      echo $this->element('nothing');
-      //}elseif(sizeof($news) == 1){
-      //   echo $this->element('single');
-      }else{
-      echo $this->element('list');
-      }
-      ?>
+<?php
+
+if('system' == $cmodule['Module']['type']){
+    echo $this->element($cmodule['Module']['url']);
+}else{
+    if(sizeof($news) == 0){
+        echo $this->element('nothing');
+        //}elseif(sizeof($news) == 1){
+        //   echo $this->element('single');
+    }else{
+        echo $this->element('list');
+    }
+}
+?>
 
   </div>
 </div>

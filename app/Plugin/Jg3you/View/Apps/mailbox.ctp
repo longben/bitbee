@@ -49,14 +49,14 @@
 
             <input type="hidden" name="data[Guestbook][type_id]" value="1" />
 
-            <p><input type="text" tabindex="1" size="40" id="author" name="data[Guestbook][username]">
+            <p><input type="text" tabindex="1" size="40" id="author" name="data[Guestbook][username]" class="easyui-validatebox" required="1">
             <label for="author"><small>姓名（必填）</small></label></p>
 
-            <p><input type="text" tabindex="2" size="40" id="email" name="data[Guestbook][email]">
+            <p><input type="text" tabindex="2" size="40" id="email" name="data[Guestbook][email]" class="easyui-validatebox" required="1">
             <label for="email"><small>电子邮箱（必填）</small></label></p>
 
             <p><input type="text" tabindex="3" size="40" id="telephone" name="data[Guestbook][telephone]">
-            <label for="url"><small>Website</small></label></p>
+            <label for="url"><small>博客/微博</small></label></p>
 
             <p><textarea tabindex="4" rows="10" cols="60" id="comment" name="data[Guestbook][content]"></textarea></p>
 

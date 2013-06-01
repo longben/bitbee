@@ -264,8 +264,11 @@ class BFileComponent extends Component {
 
 
         file_put_contents($upload_path.$filename, file_get_contents($url));
+		
+		$this->resizeImage('resizeCrop', $filename, $upload_path, '120x120_'.$filename, 120, 120, 100);
+        $this->resizeImage('resizeCrop', $filename, $upload_path, '240x180_'.$filename, 240, 180, 100);
 
-        return $filename;
+        return  UPLOAD_VIEW_PATH . $user_id .'/default/' . $filename;
    }
 
 }

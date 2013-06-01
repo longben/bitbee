@@ -129,7 +129,13 @@
             <div id="jywenhua_photo">
                 <div id="demo">
                     <div id="indemo">
-                        <div id="demo1"> <span class="hengxiangphoto"><a href="#" target="_blank" class="145110" ><img src="/jg3you/img/photo_01.gif" border="0" alt="蛋糕"/></a></span> <span class="hengxiangphoto"><a href="#" target="_blank" class="145110" ><img src="/jg3you/img/photo_02.gif" border="0" alt="蛋糕"/></a></span> <span class="hengxiangphoto"><a href="#" target="_blank" class="145110" ><img src="/jg3you/img/photo_03.gif" border="0" alt="蛋糕"/></a></span> </div>
+                        <div id="demo1">
+                            <?php foreach($bktp as $post):?>
+                            <span class="hengxiangphoto">
+                                <a href="/blog/main/archive/<?=$post['Post']['post_author']?>/<?=$post['Post']['id']?>" target="_blank" class="145110" ><img src='<?php echo dirname($post['Meta']['picture']).'/240x180_'.basename($post['Meta']['picture'])?>'/></a>
+                            </span> 
+                            <?php endforeach;?>
+                        </div>
                         <div id="demo2"></div>
                     </div>
                 </div>
