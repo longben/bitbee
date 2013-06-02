@@ -50,11 +50,12 @@
 <body>
     <div id="top">
         <div>
-            <form>
-                <div class="searchbox"><span>
-                        <input name="search" type="text" id="search" />
+            <form method="post" action="/app/search" name="sou" id="sou">
+                <div class="searchbox">
+                    <span>
+                        <input name="keywords" type="text" id="search" class="easyui-validatebox" required="1"/>
                     </span>
-                    <div class="left"><a href="#"><img src="/jg3you/img/search_04.gif" width="45" height="30" border="0" /></a></div>
+                    <div class="left"><a href="javascript:$('#sou').submit()"><img src="/jg3you/img/search_04.gif" width="45" height="30" border="0" /></a></div>
                 </div>
             </form>
         </div>

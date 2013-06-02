@@ -196,6 +196,24 @@ class AppsController extends Jg3youAppController {
         $this->set('cssStyle', $cssStyle);
 
     }
+	
+	public function search(){
+        $this->set('title_for_layout', '搜索结果');
+        $this->layout = 'website';
+
+        $k = $this->request->data['keywords'];
+
+        if(!empty($k)){
+            $this->paginate = array(
+                'conditions' => array('Post.post_status' => 'publish', "Post.post_title LIKE '%$k%'"), 
+                'recursive' => 0,
+                'order' => 'Post.post_date desc',
+            );
+            $this->set('news', $this->paginate('Post'));	
+        }else{
+            $this->set('news', NULL);
+        }
+    }
 
 
 }
