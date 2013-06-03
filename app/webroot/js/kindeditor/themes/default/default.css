@@ -954,6 +954,7 @@
 	line-height: 23px;
 }
 .ke-swfupload-startupload {
+	position: absolute;
 	top: 0;
 	right: 0;
 }
