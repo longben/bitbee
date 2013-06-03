@@ -30,8 +30,8 @@
 
 <?php
 
-if('system' == $cmodule['Module']['type']){
-    echo $this->element($cmodule['Module']['url']);
+if(!empty($cmodule['Module']['display_style'])){
+    echo $this->element($cmodule['Module']['display_style']);
 }else{
     if(sizeof($news) == 0){
         echo $this->element('nothing');

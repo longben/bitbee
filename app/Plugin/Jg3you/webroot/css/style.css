@@ -767,3 +767,30 @@ a.style1:active {
 #demo2 {
     float: left;
 }
+
+.photolistbox {
+	height: auto;
+	padding-top: 25px;
+	width: 600px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.photobox {
+	float: left;
+	height: 230px;
+	width: 260px;
+	margin-right: 20px;
+	margin-left: 10px;
+	text-align: center;
+	font: 14px "宋体";
+	color: #666;
+}
+.photowh {
+	background: #f9f4e4;
+	height: 166px;
+	width: 225px;
+	border: 1px solid #f3ecd6;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 10px;
+}

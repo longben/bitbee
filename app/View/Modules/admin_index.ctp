@@ -39,6 +39,7 @@
     echo $this->Form->input('module_image');
     echo $this->Form->input('url');
     echo $this->Form->input('setting');
+    echo $this->Form->input('display_style');
     echo $this->Form->end();
     ?>
 </div>
