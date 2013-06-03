@@ -28,11 +28,10 @@ K.extend(KSWFUpload, {
 			'<div class="ke-inline-block ke-swfupload-button">',
 			'<input type="button" value="Browse" />',
 			'</div>',
-			
+			'<div class="ke-inline-block ke-swfupload-desc">' + options.uploadDesc + '</div>',
 			'<span class="ke-button-common ke-button-outer ke-swfupload-startupload">',
 			'<input type="button" class="ke-button-common ke-button" value="' + options.startButtonValue + '" />',
-			'</span><br/>',
-			'<div class="ke-inline-block ke-swfupload-desc">' + options.uploadDesc + '</div>',
+			'</span>',
 			'</div>',
 			'<div class="ke-swfupload-body"></div>',
 			'</div>'
@@ -218,8 +217,8 @@ KindEditor.plugin('multiimage', function(K) {
 		].join('');
 		var dialog = self.createDialog({
 			name : name,
-			width : 450,
-			height : 310,
+			width : 650,
+			height : 510,
 			title : self.lang(name),
 			body : html,
 			previewBtn : {
@@ -235,7 +234,10 @@ KindEditor.plugin('multiimage', function(K) {
 				}
 			},
 			beforeRemove : function() {
-				swfupload.remove();
+				// IE9 bugfix: https://github.com/kindsoft/kindeditor/issues/72
+				if (!K.IE || K.V <= 8) {
+					swfupload.remove();
+				}
 			}
 		}),
 		div = dialog.div;
