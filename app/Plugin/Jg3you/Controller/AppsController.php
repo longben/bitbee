@@ -44,7 +44,7 @@ class AppsController extends Jg3youAppController {
         $this->set( 'bktp', $this->Post->find('all', $conditions) );
 
         //最新消息(401)
-        $this->set( 'news', $this->getPostByCategory(401, 8) );
+        $this->set( 'news', $this->getPostByCategory(301, 8) );
 
         //本园研究(501，本园教研)
         $this->set( 'byyj', $this->getPostByCategory(501, 8) );
