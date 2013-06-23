@@ -61,8 +61,8 @@ class AppsController extends Jg3youAppController {
         //每周安排(302)
         $this->set( 'mzap', $this->getPostByCategory(302, 5));
 
-        //温馨提示(205)
-        $this->set( 'wxts', $this->getPostByCategory(205, 5));
+        //国旗下的活动(303)
+        $this->set( 'gqxdhd', $this->getPostByCategory(303, 5));
 
         //每周食谱(803)
         $this->set( 'mzsp', $this->getPostByCategory(803, 5));
