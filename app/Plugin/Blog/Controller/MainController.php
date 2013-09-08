@@ -92,6 +92,7 @@ class MainController extends BlogAppController {
         if ( !empty( $this->request->data ) ) {
             $this->Guestbook->create();
             $this->request->data['Guestbook']['type_id'] = 9;
+            $this->request->data['Guestbook']['flag'] = Configure::read('Comment.audit');
             if ( $this->Guestbook->save( $this->request->data ) ) {
                 $this->Session->setFlash("评论成功！评论内容稍后显示。");
                 $this->redirect($this->referer());
