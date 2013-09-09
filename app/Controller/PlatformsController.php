@@ -55,6 +55,10 @@ class PlatformsController extends AppController {
                 $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 100);
                 $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '240x180_'.$_new_filename, 240, 180, 100);
 
+                if($width > 900){
+                    $this->PImage->resizeImage('resize', $_new_filename, $upload_path, '900_'.$_new_filename, 900, floor($height*(900/$width)), 100);
+                }
+
                 $this->request->data['TweetImage']['name'] = 'TWEET_IMAGE';
                 $this->request->data['TweetImage']['tweet_id'] = 0; //表示临时存储
                 $this->request->data['TweetImage']['user_id'] = $user_id;
@@ -69,7 +73,12 @@ class PlatformsController extends AppController {
 
                 $id = $this->TweetImage->getLastInsertID();
 
-                $file = $view_path.$_new_filename;
+                if($width > 900){
+                    $file = $view_path.'900_'.$_new_filename;
+                }else{
+                    $file = $view_path.$_new_filename;
+                }
+
                 $micrograph = $view_path.'120x120_'.$_new_filename;
             }else{
                 $id = 0;
