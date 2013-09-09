@@ -13,7 +13,8 @@ class PostsController extends AppController {
      * @return JSON
      */
     public function admin_json_data(){
-        $_conditions = array('Post.post_status' => 'publish');
+        //$_conditions = array('Post.post_status' => 'publish');
+        $_conditions = array();
 
         if(isset($_GET['c'])){
             $_conditions = array_merge($_conditions, array('Meta.category' => $_GET['c']));

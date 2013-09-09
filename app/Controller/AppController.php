@@ -134,7 +134,7 @@ class AppController extends Controller {
 
     public function getPostByCategory($id, $_limit = 7, $_order = 'DESC'){
         $conditions = array(
-            'conditions' => "Meta.category = $id", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.category = $id", 
             'recursive' => 0, //int
             'order' => "Post.post_date $_order",
             'limit' => $_limit 
@@ -144,7 +144,7 @@ class AppController extends Controller {
 
     public function getPostByCategorys($id, $_limit = 7, $_order = 'DESC'){
         $conditions = array(
-            'conditions' => "Meta.category IN ($id)", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.category IN ($id)", 
             'recursive' => 0, //int
             'order' => "Post.post_date $_order",
             'limit' => $_limit 

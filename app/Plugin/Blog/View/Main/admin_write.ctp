@@ -38,9 +38,9 @@
 
     echo $this->Form->input('post_content', array('style' => 'width:730px;height:300px;'));
 
-    //$attributes = array('legend' => false, 'value' => 'publish', 'data-options' => 'required: true');
-    //$status = array('publish' => '上网发布', 'draft' => '草稿');
-    //echo "发布状态：".$this->Form->radio('Post.post_status', $status, $attributes);
+    $attributes = array('legend' => false, 'value' => 'publish', 'data-options' => 'required: true');
+    $status = array('publish' => '上网发布', 'draft' => '草稿');
+    echo "发布状态：".$this->Form->radio('Post.post_status', $status, $attributes);
 
     echo $this->Form->hidden('Module', array('value' => BLOG_MODULE));
     echo $this->Form->hidden('post_type', array('value' => 'post'));
