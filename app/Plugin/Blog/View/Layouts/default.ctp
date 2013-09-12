@@ -59,7 +59,7 @@
         <footer id="colophon" role="contentinfo">
         <div id="site-generator">
             <a href="#" title="" rel="generator">&copyCopyright 2010-2013 All Rights Reserved. 版权信息</a>
-            <br/>欢迎您登录本站，您是本站第<b><?=$user['Meta']['tweet_count']?></b>位访问者
+            <br/>欢迎您登录本站，您是本站第<strong><font color="red"><?=$user['Meta']['tweet_count']?></font></strong>位访问者
         </div>
         </footer><!-- #colophon -->
         
