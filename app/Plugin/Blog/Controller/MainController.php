@@ -26,6 +26,11 @@ class MainController extends BlogAppController {
     public function index($username, $taxnonomy = null) {
         $user = $this->User->read(null, $username);
 
+        $this->User->Meta->read(null, $username);
+        $this->User->Meta->set('tweet_count', $user['Meta']['tweet_count'] + 1);
+        $this->User->Meta->save();
+
+
         $this->set('tags', $this->Menu->findAllByUserId( $username ) );
 
         $myClass = "home blog two-column right-sidebar";
@@ -53,6 +58,9 @@ class MainController extends BlogAppController {
 	public function archive($user_id, $post_id) {
         $user = $this->User->read(null, $user_id);
 
+        $this->User->Meta->read(null, $user_id);
+        $this->User->Meta->set('tweet_count', $user['Meta']['tweet_count'] + 1);
+        $this->User->Meta->save();
 
         $this->set('tags', $this->Menu->findAllByUserId( $user_id ) );
 
