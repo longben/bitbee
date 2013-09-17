@@ -43,6 +43,23 @@
                     </footer>
                     <div class="comment-content"><p><?=$comment['Guestbook']['content']?></p></div>
                     </article><!-- #comment-## -->
+					
+	<ul class='children'>
+	<li class="comment byuser comment-author-admin odd alt depth-2" id="li-comment-265">
+		<article id="comment-265" class="comment">
+			<footer class="comment-meta">
+				<div class="comment-author vcard">
+					<img alt='' src='/blog/img/gravatar.png' class='avatar avatar-39 photo' height='39' width='39' /><span class="fn">老师</span> 在 <time><?=$comment['Guestbook']['modified']?></time><span class="says">说:</span>
+				</div><!-- .comment-author .vcard -->
+			</footer>
+
+			<div class="comment-content"><p><?=$comment['Guestbook']['reply_content']?></p></div>
+
+		</article><!-- #comment-## -->
+
+	</li>
+</ul>					
+					
                     </li>
                     <?php endforeach;?>
                 </ol>
