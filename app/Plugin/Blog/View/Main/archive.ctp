@@ -43,23 +43,23 @@
                     </footer>
                     <div class="comment-content"><p><?=$comment['Guestbook']['content']?></p></div>
                     </article><!-- #comment-## -->
-					
-	<ul class='children'>
-	<li class="comment byuser comment-author-admin odd alt depth-2" id="li-comment-265">
-		<article id="comment-265" class="comment">
-			<footer class="comment-meta">
-				<div class="comment-author vcard">
-					<img alt='' src='/blog/img/gravatar.png' class='avatar avatar-39 photo' height='39' width='39' /><span class="fn">老师</span> 在 <time><?=$comment['Guestbook']['modified']?></time><span class="says">说:</span>
-				</div><!-- .comment-author .vcard -->
-			</footer>
 
-			<div class="comment-content"><p><?=$comment['Guestbook']['reply_content']?></p></div>
+                    <?php if(!empty($comment['Guestbook']['reply_content'])):?>
+                    <ul class='children'>
+                        <li class="comment byuser comment-author-admin odd alt depth-2" id="li-comment-265">
+                        <article id="comment-265" class="comment">
+                        <footer class="comment-meta">
+                        <div class="comment-author vcard">
+                            <img alt='' src='/blog/img/gravatar.png' class='avatar avatar-39 photo' height='39' width='39' />
+                            <span class="fn">老师</span> 在 <time><?=$comment['Guestbook']['modified']?></time><span class="says">说:</span>
+                        </div><!-- .comment-author .vcard -->
+                        </footer>
+                        <div class="comment-content"><p><?=$comment['Guestbook']['reply_content']?></p></div>
+                        </article><!-- #comment-## -->
+                        </li>
+                    </ul>					
+                    <?php endif;?>
 
-		</article><!-- #comment-## -->
-
-	</li>
-</ul>					
-					
                     </li>
                     <?php endforeach;?>
                 </ol>
@@ -71,17 +71,17 @@
                         <p class="comment-notes">电子邮件地址不会被公开。 必填项已用 <span class="required">*</span> 标注</p>
                         <p class="comment-form-author">
                         <label for="author">姓名</label> <span class="required">*</span>
-                        <input id="author" name="data[Guestbook][username]" type="text" value="" size="30" aria-required='true' />
+                        <input id="author" name="data[Guestbook][username]" type="text" value="" size="30" aria-required='true' class="easyui-validatebox" required="1"/>
                         </p>
                         <p class="comment-form-email">
                         <label for="email">电子邮件</label> <span class="required">*</span>
-                        <input id="email" name="data[Guestbook][email]" type="text" value="" size="30" aria-required='true' />
+                        <input id="email" name="data[Guestbook][email]" type="text" value="" size="30" aria-required='true' class="easyui-validatebox" required="1"/>
                         </p>
                         <p class="comment-form-url">
                         <label for="url">站点</label><input id="url" name="data[Guestbook][homepage]" type="text" value="" size="30" />
                         </p>
                         <p class="comment-form-comment">
-                        <label for="comment">评论</label><textarea id="comment" name="data[Guestbook][content]" cols="45" rows="8" aria-required="true"></textarea>
+                        <label for="comment">评论</label><textarea id="comment" name="data[Guestbook][content]" cols="45" rows="8" aria-required="true" class="easyui-validatebox" required="1"></textarea>
                         </p>
                         <p class="form-submit">
                         <input name="submit" type="submit" id="submit" value="发表评论" />
