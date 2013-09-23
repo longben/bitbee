@@ -78,7 +78,6 @@
     <?php echo $this->Session->flash(); ?>
     <?php echo $content_for_layout; ?>
 
-
     <div class="ct"><img src="/jg3you/img/index_24.png" width="950" height="121" border="0" /></div>
     <div id="footer">
         <div id="link">
@@ -90,6 +89,7 @@
                 </select>
             </form>
         </div>
+		<div class="jishuqi">456789</div>	
     </div>
 </body>
 </html>

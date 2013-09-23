@@ -143,6 +143,7 @@ form, a, ul,  input {
     margin-left: auto;
     background: url(/jg3you/img/index_26.gif) no-repeat right;
     padding-bottom: 40px;
+	height: 100px;	
 }
 #link {
     background: url(/jg3you/img/index_25.png) no-repeat;
@@ -150,6 +151,7 @@ form, a, ul,  input {
     width: 300px;
     padding-top: 49px;
     padding-left: 136px;
+	float: left;	
 }
 /*--------------------------------------------------------------------------------*/
 .news_list {
@@ -794,3 +796,13 @@ a.style1:active {
 	margin-left: auto;
 	margin-bottom: 10px;
 }
+#footer .jishuqi {
+	width: 80px;
+	float: left;
+	padding-left: 245px;
+	padding-top: 65px;
+	color: #B55141;
+	font: bold 16px/22px "黑体";
+	text-align: center;
+}
+
