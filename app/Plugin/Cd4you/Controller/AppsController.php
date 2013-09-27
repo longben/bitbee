@@ -233,9 +233,9 @@ class AppsController extends Cd4youAppController {
         $this->set('title_for_layout', '博客');
         $this->layout = 'website';
         $this->paginate = array(
-            'conditions' => array('Meta.site_title IS NOT NULL'), 
+            'conditions' => array('Meta.site_title IS NOT NULL'), 			
             'recursive' => 0 ,//int
-            'order' => 'User.user_login asc',
+            'order' => 'User.user_login asc'
         );
         $this->set('users', $this->paginate('User'));
 
