@@ -45,7 +45,7 @@ form, a, ul,  input {
     float: left;
 }
 #photo {
-    background: url(/jg3you/img/index_12.png) no-repeat;
+    background:  no-repeat;
     height: 200px;
     width: 950px;
     margin-right: auto;
