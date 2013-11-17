@@ -11,7 +11,7 @@ class Attachment extends AppModel {
  */
 	public $displayField = 'name';
 
-    function beforeSave($created) {
+    function beforeSave($options = array()) {
 
         if(isset($this->data['Attachment']['file']) && !empty($this->data['Attachment']['file'])){
             extract($this->data['Attachment']['file']);

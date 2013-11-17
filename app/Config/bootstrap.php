@@ -61,7 +61,7 @@ Configure::write('Dispatcher.filters', array(
 	'AssetDispatcher',
 	'CacheDispatcher'
 ));
- 
+
 
 /**
  * Configures default file logging options
@@ -77,7 +77,7 @@ CakeLog::config('error', array(
 	'scopes' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
- 
+
 //CakePlugin::load('Acl'); //Loads a single plugin named DebugKit
 /**
  * Libraries
@@ -110,5 +110,3 @@ foreach( $plugins as $plugin){
     }
 }
 
-
-//CakePlugin::load('Hy2', array('bootstrap' => false, 'routes' => false));
