@@ -23,6 +23,17 @@
     </span>
 </div>
 
+
+<div id="dlgPoll" class="easyui-dialog" style="width:400px;height:auto;padding:0px 0px"
+    data-options="iconCls:'icon-save',modal:true,closed:true,buttons:'#dlgPoll-buttons'">
+    <div id="poll" style="height:520px;"></div>
+</div>
+<div id="dlgPoll-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveAuth()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlgPoll').dialog('close')">取消</a>
+</div>
+
+
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
     <?php
@@ -56,33 +67,22 @@
 <script type="text/javascript">
     var url;
 
+
     function newItem(){
-        $('#dlg').dialog('open').dialog('setTitle','新增');
-        clearForm('#fm');
-        url = '/admin/polls/polls/add/';
+        $('#poll').html('Loading...');
+        $('#dlgPoll').dialog('open').dialog('setTitle','新增投票');
+        $('#poll').html('<iframe id="auth" scrolling="auto" frameborder="0"  src="/polls/polls/add/" style="width:100%;height:100%;"></iframe>');
     }
+
 
     function editItem(){
 
-        clearForm('#fm');
         var row = $('#dg').datagrid('getSelected');
 
-        /**
-        * 生成通用JSON格式
-        *
-        */
-        var _row = '';
-        for(var key in row){
-            _row = _row + "'data[Poll][" + key + "]':row." + key + ",";
-        }
-        _row = '{' + _row + 't:1}';
-
-        var json = eval("("+ _row +")");
-
         if (row){
-            $('#dlg').dialog('open').dialog('setTitle','编辑');
-            $('#fm').form('load', json);
-            url = '/admin/polls/polls/edit/'+row.id;
+            $('#poll').html('Loading...');
+            $('#dlgPoll').dialog('open').dialog('setTitle','编辑投票');
+            $('#poll').html('<iframe id="auth" scrolling="auto" frameborder="0"  src="/polls/polls/edit/' + row.id + '" style="width:100%;height:100%;"></iframe>');
         }
     }
 

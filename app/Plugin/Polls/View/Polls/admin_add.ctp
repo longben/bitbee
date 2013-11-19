@@ -22,6 +22,5 @@ $this->set('context_menu', array('menus' => array(
 			),
 		),
 	))); ?>
-<?php echo $this->Html->script('/js/jquery/jquery-1.8.0.min.js');?>
 <?php echo $this->Html->script('/js/jquery/jquery.FormModifier.js');?>
 <?php echo $this->Html->script('/polls/poll.js');?>

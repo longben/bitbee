@@ -26,7 +26,7 @@ class PollsController extends PollsAppController {
   }
 
   public function admin_add() {
-    $this->autoRender = false;
+    $this->layout = 'admin';
     if (!empty($this->request->data)) {
       $this->Poll->create();
       if ($this->Poll->save($this->request->data)) {
