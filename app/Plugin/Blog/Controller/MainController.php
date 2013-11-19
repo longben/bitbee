@@ -96,7 +96,7 @@ class MainController extends BlogAppController {
 	}
 
 
-	public function guestbook() {
+	public function fbppll() {
     if ( !empty( $this->request->data ) ) {
       if (preg_match("/[\x7f-\xff]/", $this->request->data['Guestbook']['content'])){ //垃圾处理
         $this->Guestbook->create();

@@ -57,7 +57,7 @@
                         <div class="comment-content"><p><?=$comment['Guestbook']['reply_content']?></p></div>
                         </article><!-- #comment-## -->
                         </li>
-                    </ul>					
+                    </ul>
                     <?php endif;?>
 
                     </li>
@@ -67,7 +67,7 @@
 
                 <div id="respond">
                     <h3 id="reply-title">发表评论 <small><a rel="nofollow" id="cancel-comment-reply-link" href="/index.php/archives/155#respond" style="display:none;">取消回复</a></small></h3>
-                    <form action="/blog/main/guestbook" method="post" id="commentform">
+                    <form action="/blog/main/fbppll" method="post" id="commentform">
                         <p class="comment-notes">电子邮件地址不会被公开。 必填项已用 <span class="required">*</span> 标注</p>
                         <p class="comment-form-author">
                         <label for="author">姓名</label> <span class="required">*</span>
