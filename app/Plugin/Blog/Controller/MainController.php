@@ -102,6 +102,7 @@ class MainController extends BlogAppController {
         $this->Guestbook->create();
         $this->request->data['Guestbook']['type_id'] = 9;
         $this->request->data['Guestbook']['flag'] = Configure::read('Comment.audit');
+        $this->request->data['Guestbook']['ip'] = $this->RequestHandler->getClientIP();
         if ( $this->Guestbook->save( $this->request->data ) ) {
           $this->Session->setFlash("评论成功！评论内容稍后显示。");
           $this->redirect($this->referer());
