@@ -29,7 +29,7 @@
     <div id="poll" style="height:520px;"></div>
 </div>
 <div id="dlgPoll-buttons">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveAuth()">保存</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="savePoll()">保存</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlgPoll').dialog('close')">取消</a>
 </div>
 
@@ -71,18 +71,16 @@
     function newItem(){
         $('#poll').html('Loading...');
         $('#dlgPoll').dialog('open').dialog('setTitle','新增投票');
-        $('#poll').html('<iframe id="auth" scrolling="auto" frameborder="0"  src="/polls/polls/add/" style="width:100%;height:100%;"></iframe>');
+        $('#poll').html('<iframe id="poll" scrolling="auto" frameborder="0"  src="/admin/polls/polls/add/" style="width:100%;height:100%;"></iframe>');
     }
 
 
     function editItem(){
-
         var row = $('#dg').datagrid('getSelected');
-
         if (row){
             $('#poll').html('Loading...');
             $('#dlgPoll').dialog('open').dialog('setTitle','编辑投票');
-            $('#poll').html('<iframe id="auth" scrolling="auto" frameborder="0"  src="/polls/polls/edit/' + row.id + '" style="width:100%;height:100%;"></iframe>');
+            $('#poll').html('<iframe id="poll" scrolling="auto" frameborder="0"  src="/polls/polls/edit/' + row.id + '" style="width:100%;height:100%;"></iframe>');
         }
     }
 
@@ -133,5 +131,24 @@
             'load',
             {q:value, field:name}
         );
+    }
+
+
+    function savePoll(){
+        $("#poll").contents().find("#bbForm").form('submit',{
+            url: '/admin/polls/polls/add',
+            success: function(result){
+                var result = eval('('+result+')');
+                if (result.success){
+                    $('#dlgPoll').dialog('close');		// close the dialog
+                    $.messager.alert('信息提示','角色授权成功！','info');
+                } else {
+                    $.messager.show({
+                        title: 'Error',
+                        msg: result.msg
+                    });
+                }
+            }
+        });
     }
 </script>
