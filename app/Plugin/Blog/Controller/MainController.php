@@ -98,7 +98,7 @@ class MainController extends BlogAppController {
 
 	public function fbppll() {
     if ( !empty( $this->request->data ) ) {
-      if (preg_match("/[\x7f-\xff]/", $this->request->data['Guestbook']['content'])){ //垃圾处理
+      if (preg_match("/[\x7f-\xff]/", $this->request->data['Guestbook']['content']) && empty($this->request->data['Guestbook']['homepage'])){ //垃圾处理
         $this->Guestbook->create();
         $this->request->data['Guestbook']['type_id'] = 9;
         $this->request->data['Guestbook']['flag'] = Configure::read('Comment.audit');
