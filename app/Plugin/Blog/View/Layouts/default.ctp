@@ -18,7 +18,7 @@
     <!--[if lt IE 9]>
     <script src="/blog/js/html5.js" type="text/javascript"></script>
     <![endif]-->
-    <?php echo $this->Html->script(array('jquery/jquery-1.8.0.min'));?>
+    <?php echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'jquery/jquery.scrollLoading-min'));?>
 </head>
 
 <body class="<?=$myClass?>">
@@ -72,6 +72,8 @@
                 alert($('#flashMessage').text());
                 $('#flashMessage').text("");
             }
+
+            $('.scrollLoading').scrollLoading();
         });
     </script>
 
