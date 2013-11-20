@@ -1,18 +1,18 @@
-<script charset="utf-8" src="/js/kindeditor/kindeditor-all.js?version=1.0.1"></script>
+<script charset="utf-8" src="/js/kindeditor/kindeditor-all.js?version=1.1.1"></script>
 <script charset="utf-8" src="/js/kindeditor/lang/zh_CN.js"></script>
 
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
     data-options="url:'/admin/posts/json_data.json?c=<?=$category_id?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20">
-    <thead>  
+    <thead>
         <tr>
-            <th data-options="field:'id'">编号</th>  
-            <th data-options="field:'post_title'" width="100">标题</th>  
-            <th data-options="field:'post_date'" width="50">发布时间</th>  
-        </tr>  
-    </thead>  
-</table>  
+            <th data-options="field:'id'">编号</th>
+            <th data-options="field:'post_title'" width="100">标题</th>
+            <th data-options="field:'post_date'" width="50">发布时间</th>
+        </tr>
+    </thead>
+</table>
 
-<div id="toolbar">  
+<div id="toolbar">
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="deleteItem()">删除</a>
@@ -22,10 +22,10 @@
             <div data-options="name:'post_title',iconCls:'icon-user'">标题</div>
         </div>
     </span>
-</div> 
+</div>
 
 <div id="dlg" class="easyui-dialog" style="width:800px;height:auto;padding:0px 0px" data-options="closed:true,buttons:'#dlg-buttons'">
-    <?php 
+    <?php
     echo $this->Form->create('Post', array('inputDefaults' => array('label' => false), 'action' => 'add/', 'name' => 'fm', 'id' => 'fm'));
     echo $this->Form->input('id');
 
@@ -73,18 +73,18 @@
         /**
         * 生成通用JSON格式
         *
-        */ 
+        */
         var _row = '';
         for(var key in row){
             _row = _row + "'data[Post][" + key + "]':row." + key + ",";
         }
-		
+
         var jqxhr = $.getJSON("/admin/posts/read/" + row.id + '?rand=' + Math.random(),
             function(result){
                 //_row = _row + "'data[Post][post_content]':'" + result.Post.post_content + "',";
                 $("#PostPostContent").val(result.Post.post_content.replace(/data-url=/g, "src="));
                 _row = _row + "'data[Meta][tag]':'" + result.Meta.tag + "',";
-            }).success(function() { 
+            }).success(function() {
                 _row = '{' + _row + "t:1}";
                 var json = eval("("+ _row +")");
 
