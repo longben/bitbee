@@ -7,7 +7,7 @@
 <title>成都市解放北路小学 - <?php echo $title_for_layout; ?></title>
 <?php
 echo $this->Html->meta('icon', '/jbyx/img/favicon.ico');
-echo $this->Html->script(array('jquery/jquery-1.7.2.min', 'zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min', 'jquery/loopedslider.min', 'flash'));
+echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min', 'jquery/loopedslider.min', 'jquery/jquery.scrollLoading-min', 'flash'));
 echo $this->Html->css(array('/jbyx/css/style.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
 
 echo $scripts_for_layout;
@@ -34,6 +34,7 @@ $(document).ready(function(){
     });
     $('#authMessage').text("");
   }
+  $('.scrollLoading').scrollLoading();
 });
 </script>
 

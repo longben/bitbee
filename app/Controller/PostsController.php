@@ -124,6 +124,7 @@ class PostsController extends AppController {
             $this->request->data['Post']['post_date'] = date("Y-m-d H:i:s");
             $this->request->data['Meta']['category'] = $category_id;
             $this->request->data['Post']['post_author'] = $this->Session->read('id');
+            $this->request->data['Post']['post_content'] = str_ireplace("src=","data-url=", $this->request->data['Post']['post_content']);
 
             if ($this->Post->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
@@ -146,6 +147,8 @@ class PostsController extends AppController {
         //$this->Post->id = $this->request->data['Post']['id'];
 
         if (!empty($this->request->data)) {
+            $this->request->data['Post']['post_content'] = str_ireplace("src=","data-url=", $this->request->data['Post']['post_content']);
+
             if ($this->Post->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {

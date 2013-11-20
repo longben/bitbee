@@ -1,4 +1,4 @@
-<script charset="utf-8" src="/js/kindeditor/kindeditor-min.js?version=1.0.1"></script>
+<script charset="utf-8" src="/js/kindeditor/kindeditor-all.js?version=1.0.1"></script>
 <script charset="utf-8" src="/js/kindeditor/lang/zh_CN.js"></script>
 
 <table id="dg" class="easyui-datagrid" style="width:auto;height:auto"
@@ -82,7 +82,7 @@
         var jqxhr = $.getJSON("/admin/posts/read/" + row.id + '?rand=' + Math.random(),
             function(result){
                 //_row = _row + "'data[Post][post_content]':'" + result.Post.post_content + "',";
-                $("#PostPostContent").val(result.Post.post_content);
+                $("#PostPostContent").val(result.Post.post_content.replace(/data-url=/g, "src="));
                 _row = _row + "'data[Meta][tag]':'" + result.Meta.tag + "',";
             }).success(function() { 
                 _row = '{' + _row + "t:1}";
