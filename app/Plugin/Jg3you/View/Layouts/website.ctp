@@ -34,6 +34,8 @@
                     });
                     $('#authMessage').text("");
                 }
+
+                $('.scrollLoading').scrollLoading();
             });
         </script>
 
