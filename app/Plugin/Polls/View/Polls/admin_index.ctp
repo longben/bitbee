@@ -34,35 +34,6 @@
 </div>
 
 
-<div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
-    closed="true" buttons="#dlg-buttons">
-    <?php
-    echo $this->Form->create('Poll', array('action' => 'add', 'id' => 'fm', 'class' => 'formee'));
-    echo $this->Form->input('id', array('id' => 'id'));
-    echo $this->Form->input('question', array('class' => 'easyui-validatebox' ,'required' => true));
-    echo $this->Form->input('description', array('label' => '描述'));
-    ?>
-
-    <div class="grid-12-12">
-      <label for="id_password">文章分类</label>
-      <label><a href="javascript:;" id="add">添加</a> | <a href="#" id="remove">删除</a></label>
-      <div class="inputs">
-        <?php foreach($menus as $i => $menu):?>
-        <div><input type="text" class="field mm" id="menu" name="data[Menu][<?=$i?>][name]" value="<?php echo $menu['Menu']['name']?>"/></div>
-        <div><input type="hidden" name="data[Menu][<?=$i?>][id]" value="<?php echo $menu['Menu']['id']?>"/></div>
-        <?php endforeach;?>
-      </div>
-    </div>
-    <?php
-    echo $this->Form->end();
-    ?>
-</div>
-<div id="dlg-buttons">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveItem()">保存</a>
-    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
-</div>
-
-
 
 <script type="text/javascript">
     var url;
@@ -71,7 +42,7 @@
     function newItem(){
         $('#poll').html('Loading...');
         $('#dlgPoll').dialog('open').dialog('setTitle','新增投票');
-        $('#poll').html('<iframe id="poll" scrolling="auto" frameborder="0"  src="/admin/polls/polls/add/" style="width:100%;height:100%;"></iframe>');
+        $('#poll').html('<iframe id="ifrmPoll" scrolling="auto" frameborder="0"  src="/admin/polls/polls/add/" style="width:100%;height:100%;"></iframe>');
     }
 
 
@@ -135,7 +106,7 @@
 
 
     function savePoll(){
-        $("#poll").contents().find("#bbForm").form('submit',{
+        $("#ifrmPoll").contents().find("#bbForm").form('submit',{
             url: '/admin/polls/polls/add',
             success: function(result){
                 var result = eval('('+result+')');
