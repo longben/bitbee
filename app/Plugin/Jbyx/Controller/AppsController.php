@@ -76,6 +76,13 @@ class AppsController extends JbyxAppController {
         $this->set( 'jjfx', $this->getPostByCategory(1101, 6));
 
         //网上调查
+        $conditions = array(
+            //'conditions' => array('Meta.category' =>BLOG_MODULE, 'Meta.picture is NOT NULL'),
+            'recursive' => 0, //int
+            'order' => "Polls.created DESC",
+            'limit' => 5
+        );
+        $this->set( 'polls', $this->Polls->find('all', $conditions) );
     }
 
 

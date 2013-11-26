@@ -299,7 +299,9 @@
       <div class="title"><img src="/jbyx/img/index_37.png" width="230" height="30" border="0" /></div>
       <div class="jobs4">
         <ul>
-          <li class="w180"><a href="#">网上调查项目</a></li>
+          <?php foreach($polls as $p):?>
+          <li class="w180"><a href="/app/vote/<?=$p['Polls']['id']?>"><?=$p['Polls']['question']?></a></li>
+          <?php endforeach;?>
         </ul>
       </div>
       <div><img src="/jbyx/img/index_39.png" width="230" height="20" /></div>

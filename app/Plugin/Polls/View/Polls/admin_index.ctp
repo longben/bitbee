@@ -51,7 +51,7 @@
         if (row){
             $('#poll').html('Loading...');
             $('#dlgPoll').dialog('open').dialog('setTitle','编辑投票');
-            $('#poll').html('<iframe id="poll" scrolling="auto" frameborder="0"  src="/polls/polls/edit/' + row.id + '" style="width:100%;height:100%;"></iframe>');
+            $('#poll').html('<iframe id="poll" scrolling="auto" frameborder="0"  src="/admin/polls/polls/edit/' + row.id + '" style="width:100%;height:100%;"></iframe>');
         }
     }
 
@@ -81,7 +81,7 @@
         if (row){
             $.messager.confirm('请确认','你是否要删除这条数据？',function(r){
                 if (r){
-                    $.post('<?=$this->Html->url('delete')?>',{id:row.id},function(result){
+                    $.post('/admin/polls/polls/delete',{id:row.id},function(result){
                         if (result.success){
                             $('#dg').datagrid('reload');	// reload the user data
                         } else {
@@ -112,7 +112,8 @@
                 var result = eval('('+result+')');
                 if (result.success){
                     $('#dlgPoll').dialog('close');		// close the dialog
-                    $.messager.alert('信息提示','角色授权成功！','info');
+                    $.messager.alert('信息提示','投票新增成功！','info');
+                    $('#dg').datagrid('reload');	// reload the user data
                 } else {
                     $.messager.show({
                         title: 'Error',

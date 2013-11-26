@@ -3,7 +3,7 @@
 	<?php
 		echo $this->Form->input('Poll.question');
 		echo $this->Form->input('Poll.description');
-		echo $this->Form->input('PollOption.0.option', array('after' => $this->Html->link('Add (+)', array('#'), array('class' => 'newOptionLink')), 'div' => array('class' => 'input text pollOption')));
+		echo $this->Form->input('PollOption.0.option', array('div' => array('class' => 'input text pollOption')));
         echo $this->Form->end();
 	?>
 
