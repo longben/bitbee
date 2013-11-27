@@ -7,7 +7,7 @@ App::uses('JbyxAppController', 'Jbyx.Controller');
 class AppsController extends JbyxAppController {
 
 
-    public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'Code', 'Module', 'Polls.Polls');
+    public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'Code', 'Module', 'Polls.Polls', 'Polls.PollOption', 'Polls.PollVote');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -129,7 +129,7 @@ class AppsController extends JbyxAppController {
             $this->paginate = array(
                 'conditions' => array('Meta.site_title IS NOT NULL'),
                 'recursive' => 0, //int
-				'limit' => 30,
+                'limit' => 30,
                 //'order' => 'Guestbook.created desc',
             );
             $this->set('users', $this->paginate('User'));
@@ -215,7 +215,7 @@ class AppsController extends JbyxAppController {
 
     }
 
-	public function search(){
+    public function search(){
         $this->set('title_for_layout', '搜索结果');
         $this->layout = 'website';
 
@@ -231,6 +231,13 @@ class AppsController extends JbyxAppController {
         }else{
             $this->set('news', NULL);
         }
+    }
+
+    public function vote($id = null){
+        $poll = $this->Polls->read(null, $id);
+
+        $this->set('options', $this->PollOption->findByPollId($id));
+        $this->set('poll', $poll);
     }
 
 

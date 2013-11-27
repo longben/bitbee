@@ -51,7 +51,7 @@
         if (row){
             $('#poll').html('Loading...');
             $('#dlgPoll').dialog('open').dialog('setTitle','编辑投票');
-            $('#poll').html('<iframe id="poll" scrolling="auto" frameborder="0"  src="/admin/polls/polls/edit/' + row.id + '" style="width:100%;height:100%;"></iframe>');
+            $('#poll').html('<iframe id="ifrmPoll" scrolling="auto" frameborder="0"  src="/admin/polls/polls/edit/' + row.id + '" style="width:100%;height:100%;"></iframe>');
         }
     }
 
@@ -112,7 +112,7 @@
                 var result = eval('('+result+')');
                 if (result.success){
                     $('#dlgPoll').dialog('close');		// close the dialog
-                    $.messager.alert('信息提示','投票新增成功！','info');
+                    $.messager.alert('信息提示','投票保存成功！','info');
                     $('#dg').datagrid('reload');	// reload the user data
                 } else {
                     $.messager.show({
