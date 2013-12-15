@@ -69,11 +69,11 @@ $(document).ready(function(){
     <a href="/app/page/5" target="_self" class="style2">校园新闻</a>
     <a href="/app/page/6" target="_self" class="style2">德育专栏</a>
     <a href="/app/page/7" target="_self" class="style2">教学科研</a>
-    <a href="/app/page/8" target="_self" class="style2">办学特色</a>
+    <a href="/app/page/8" target="_self" class="style2">特色活动</a>
     <a href="/app/page/9" target="_self" class="style2">学生乐园</a>
-    <a href="/app/page/10" target="_self" class="style2">家长互动</a>
+    <a href="/app/page/10" target="_self" class="style2">家校互动</a>
     <a href="/app/page/11" target="_self" class="style2">教育资源</a>
-    <a href="/app/page/13" target="_self" class="style2">温馨班级</a>
+    <a href="/app/page/13" target="_self" class="style2">班级博客</a>
   </div>
 </div>
 
