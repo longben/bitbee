@@ -128,7 +128,7 @@ class AppsController extends JbyxAppController {
       $this->paginate = array(
         'conditions' => array('Meta.site_title IS NOT NULL'),
         'recursive' => 0, //int
-        'limit' => 30,
+        'limit' => 30
         //'order' => 'Guestbook.created desc',
       );
       $this->set('users', $this->paginate('User'));
