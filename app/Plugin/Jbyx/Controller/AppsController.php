@@ -125,13 +125,13 @@ class AppsController extends JbyxAppController {
     }
 
     if('system' == $current_module['Module']['type']){
-      $this->paginate = array(
+      $conditions = array(
         'conditions' => array('Meta.site_title IS NOT NULL'),
         'recursive' => 0, //int
-        'limit' => 30
-        //'order' => 'Guestbook.created desc',
+        //'limit' => 30
+        'order' => 'Meta.id'
       );
-      $this->set('users', $this->paginate('User'));
+      $this->set('users', $this->User->find('all', $conditions) );
 
       $cssStyle = array( 'metro-roxo', 'metro-verde', 'metro-azul', 'metro-vermelho', 'metro-laranja');
       $this->set('cssStyle', $cssStyle);
