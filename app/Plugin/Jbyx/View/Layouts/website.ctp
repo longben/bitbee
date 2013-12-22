@@ -65,6 +65,7 @@ $(document).ready(function(){
   <div class="nav">
     <span id="home"><a href="/" target="_self" class="style3">首 页</a></span>
     <a href="/app/page/3" target="_self" class="style2">学校概况</a>
+    <a href="/app/page/11" target="_self" class="style2">党支部</a>	
     <a href="/app/page/4" target="_self" class="style2">校务公开</a>
     <a href="/app/page/5" target="_self" class="style2">校园新闻</a>
     <a href="/app/page/6" target="_self" class="style2">德育专栏</a>
@@ -72,7 +73,6 @@ $(document).ready(function(){
     <a href="/app/page/8" target="_self" class="style2">特色活动</a>
     <a href="/app/page/9" target="_self" class="style2">学生乐园</a>
     <a href="/app/page/10" target="_self" class="style2">家校互动</a>
-    <a href="/app/page/11" target="_self" class="style2">教育资源</a>
     <a href="/app/page/13" target="_self" class="style2">班级博客</a>
   </div>
 </div>
