@@ -7,14 +7,19 @@ App::uses('Jg3youAppController', 'Jg3you.Controller');
 class AppsController extends Jg3youAppController {
 
 
-    public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'Code', 'Module');
+    public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'Code', 'Module', 'Setting');
 
     public function beforeFilter() {
-        parent::beforeFilter(); 
+        parent::beforeFilter();
 
         //友情链接(204)
         $links = $this->Attachment->find('all', array('conditions' => array('Attachment.type_id' => 204), 'limit' => 5));
         $this->set('links', $links);
+
+        $this->Setting->query("UPDATE settings SET value = value + 1 WHERE id = 10");
+        $counter = $this->Setting->read('value',10);
+        $this->set('counter', $counter['Setting']['value']);
+
 
         $this->layout = "website";
     }
@@ -36,10 +41,10 @@ class AppsController extends Jg3youAppController {
 
 
         $conditions = array(
-            'conditions' => array('Meta.category' =>BLOG_MODULE, 'Meta.picture is NOT NULL'), 
+            'conditions' => array('Meta.category' =>BLOG_MODULE, 'Meta.picture is NOT NULL'),
             'recursive' => 0, //int
             'order' => "Post.post_date DESC",
-            'limit' => 7 
+            'limit' => 7
         );
         $this->set( 'bktp', $this->Post->find('all', $conditions) );
 
@@ -72,13 +77,13 @@ class AppsController extends Jg3youAppController {
     public function page($id, $child = null, $third = null){
 
 
-        $module = $this->Module->read(null, $id); 
-        $this->set('module', $module); 
+        $module = $this->Module->read(null, $id);
+        $this->set('module', $module);
 
         $this->set('title_for_layout', $module['Module']['name']);
 
         $conditions = array(
-            'conditions' => array('Module.parent_id' => $id), 
+            'conditions' => array('Module.parent_id' => $id),
             'recursive' => 0, //int
             'order' => 'Module.id'
         );
@@ -96,10 +101,10 @@ class AppsController extends Jg3youAppController {
             }
 
             $current_module = $this->Module->read(null, $current);
-            $this->set('cmodule', $current_module); 
+            $this->set('cmodule', $current_module);
 
             $conditions = array(
-                'conditions' => array('Module.parent_id' => $current), 
+                'conditions' => array('Module.parent_id' => $current),
                 'recursive' => 0, //int
                 'order' => 'Module.id'
             );
@@ -110,7 +115,7 @@ class AppsController extends Jg3youAppController {
 
         if('system' == $current_module['Module']['type']){
             $this->paginate = array(
-                'conditions' => array('Meta.site_title IS NOT NULL'), 
+                'conditions' => array('Meta.site_title IS NOT NULL'),
                 'recursive' => 0, //int
 				'limit' => 30,
                 //'order' => 'Guestbook.created desc',
@@ -118,7 +123,7 @@ class AppsController extends Jg3youAppController {
             $this->set('users', $this->paginate('User'));
 
             $cssStyle = array( 'metro-roxo', 'metro-verde', 'metro-azul', 'metro-vermelho', 'metro-laranja');
-            $this->set('cssStyle', $cssStyle);			
+            $this->set('cssStyle', $cssStyle);
         }else{
             $page = 0; //当前页面文章列表
             if( !empty($third) ){
@@ -127,7 +132,7 @@ class AppsController extends Jg3youAppController {
             }else{
                 $page = $current;
                 $this->_posts($page);
-            }		
+            }
         }
     }
 
@@ -145,7 +150,7 @@ class AppsController extends Jg3youAppController {
         $this->set('title_for_layout', '园长信箱');
 
         $this->paginate = array(
-            'conditions' => array('Guestbook.flag' => 1, 'Guestbook.type_id' => 1), 
+            'conditions' => array('Guestbook.flag' => 1, 'Guestbook.type_id' => 1),
             'recursive' => 0, //int
             'order' => 'Guestbook.created desc',
             'limit' => 11
@@ -187,7 +192,7 @@ class AppsController extends Jg3youAppController {
         $this->set('title_for_layout', '博客');
         $this->layout = 'website';
         $this->paginate = array(
-            'conditions' => array('Meta.site_title IS NOT NULL'), 
+            'conditions' => array('Meta.site_title IS NOT NULL'),
             'recursive' => 0 //int
             //'order' => 'Guestbook.created desc',
         );
@@ -197,7 +202,7 @@ class AppsController extends Jg3youAppController {
         $this->set('cssStyle', $cssStyle);
 
     }
-	
+
 	public function search(){
         $this->set('title_for_layout', '搜索结果');
         $this->layout = 'website';
@@ -206,11 +211,11 @@ class AppsController extends Jg3youAppController {
 
         if(!empty($k)){
             $this->paginate = array(
-                'conditions' => array('Post.post_status' => 'publish', "Post.post_title LIKE '%$k%'"), 
+                'conditions' => array('Post.post_status' => 'publish', "Post.post_title LIKE '%$k%'"),
                 'recursive' => 0,
                 'order' => 'Post.post_date desc',
             );
-            $this->set('news', $this->paginate('Post'));	
+            $this->set('news', $this->paginate('Post'));
         }else{
             $this->set('news', NULL);
         }

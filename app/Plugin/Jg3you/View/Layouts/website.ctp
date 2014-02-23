@@ -2,17 +2,17 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <?php echo $this->Html->charset(); ?>
-        <meta name="keywords" content="<?=Configure::read('Meta.keywords')?>"/> 
-        <meta name="description" content="<?=Configure::read('Meta.description')?>"/> 
+        <meta name="keywords" content="<?=Configure::read('Meta.keywords')?>"/>
+        <meta name="description" content="<?=Configure::read('Meta.description')?>"/>
         <title>成都市金牛区机关第三幼儿园|成都三幼|机关三幼|成都市市级机关第三幼儿园 - <?php echo $title_for_layout; ?></title>
-        <?php 
+        <?php
         echo $this->Html->meta('icon', '/jg3you/img/favicon.ico');
         echo $this->Html->script(array('jquery/jquery-1.7.2.min', 'zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min', 'jquery/loopedslider.min', 'jquery/jquery.scrollLoading-min','flash'));
         echo $this->Html->css(array('/jg3you/css/style.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
 
         echo $scripts_for_layout;
 
-        echo $this->element('google-analytics'); 
+        echo $this->element('google-analytics');
         ?>
 
         <script type="text/javascript">
@@ -42,7 +42,7 @@
         <!--[if IE 6]>
         <script type="text/javascript" src="/js/DD_belatedPNG.js" ></script>
         <script type="text/javascript">
-            $(window).load(function() { 
+            $(window).load(function() {
         DD_belatedPNG.fix('*');
         });
     </script>
@@ -91,7 +91,7 @@
                 </select>
             </form>
         </div>
-		<div class="jishuqi">456789</div>	
+        <div class="jishuqi"><?php echo $counter;?></div>
     </div>
 </body>
 </html>
