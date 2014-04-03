@@ -52,11 +52,14 @@ class PlatformsController extends AppController {
 
             if(!empty($type)){
 
-                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 100);
-                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '240x180_'.$_new_filename, 240, 180, 100);
+                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 80);
+                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '240x180_'.$_new_filename, 240, 180, 80);
 
-                if($width > 900){
-                    $this->PImage->resizeImage('resize', $_new_filename, $upload_path, '900_'.$_new_filename, 900, floor($height*(900/$width)), 100);
+                if($width > 700){
+                    $this->PImage->resizeImage('resize', $_new_filename, $upload_path, '700_'.$_new_filename, 700, floor($height*(700/$width)), 90);
+                    if(file_exists($uploadfile)){
+                        unlink($uploadfile);
+                    }
                 }
 
                 $this->request->data['TweetImage']['name'] = 'TWEET_IMAGE';
@@ -73,8 +76,8 @@ class PlatformsController extends AppController {
 
                 $id = $this->TweetImage->getLastInsertID();
 
-                if($width > 900){
-                    $file = $view_path.'900_'.$_new_filename;
+                if($width > 700){
+                    $file = $view_path.'700_'.$_new_filename;
                 }else{
                     $file = $view_path.$_new_filename;
                 }
