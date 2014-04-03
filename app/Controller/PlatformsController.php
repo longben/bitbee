@@ -52,11 +52,11 @@ class PlatformsController extends AppController {
 
             if(!empty($type)){
 
-                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 80);
-                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '240x180_'.$_new_filename, 240, 180, 80);
+                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '120x120_'.$_new_filename, 120, 120, 75);
+                $this->PImage->resizeImage('resizeCrop', $_new_filename, $upload_path, '240x180_'.$_new_filename, 240, 180, 75);
 
                 if($width > 700){
-                    $this->PImage->resizeImage('resize', $_new_filename, $upload_path, '700_'.$_new_filename, 700, floor($height*(700/$width)), 90);
+                    $this->PImage->resizeImage('resize', $_new_filename, $upload_path, '700_'.$_new_filename, 700, floor($height*(700/$width)), 75);
                     if(file_exists($uploadfile)){
                         unlink($uploadfile);
                     }
