@@ -25,6 +25,10 @@ class RolesController extends AppController {
 
 	}
 
+    public function admin_add2(){
+
+    }
+
     public function admin_add() {
         $this->autoRender = false;
         if (!empty($this->request->data)) {

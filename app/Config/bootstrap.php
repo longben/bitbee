@@ -110,5 +110,3 @@ foreach( $plugins as $plugin){
     }
 }
 
-
-CakePlugin::load('Ga', array('bootstrap' => false, 'routes' => false));
