@@ -26,15 +26,18 @@ echo $this->Form->input('parent_id', array(
     'options' => $areas
 ));
 echo $this->Form->input('Meta.corporation', array(
-    'required' => true,
     'label' => '法人代表',
-    'div' => array('class' => 'grid-2-12')
+    'div' => array('class' => 'grid-2-12'),
+    'class' => 'easyui-validatebox',
+    'data-options' => 'required:true'
 ));
-echo $this->Form->input('Meta.registered_capital', array(
-    'required' => true,
+echo $this->Form->input('Meta.registered_capital_c', array(
     'label' => '注册资本',
-    'div' => array('class' => 'grid-3-12')
+    'div' => array('class' => 'grid-3-12'),
+    'onFocus' => 'change2Arab()',
+    'onBlur' => 'change2Chinese()'
 ));
+echo $this->Form->hidden('Meta.registered_capital');
 
 
 //Line 2
@@ -131,8 +134,8 @@ echo $this->Form->input('Meta.renewal_date', array(
 
 <div class="grid-12-12">
 <span class="right">
-<a href="javascript:void(0)" class="easyui-linkbutton" onclick="saveItem()">保存</a>
 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">复位</a>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
 </span>
 </div>
 
