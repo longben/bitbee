@@ -1,12 +1,10 @@
 ﻿/**
- * jQuery EasyUI 1.3.3
+ * jQuery EasyUI 1.3.6
  * 
- * Copyright (c) 2009-2013 www.jeasyui.com. All rights reserved.
+ * Copyright (c) 2009-2014 www.jeasyui.com. All rights reserved.
  *
- * Licensed under the GPL or commercial licenses
- * To use it on other terms please contact us: info@jeasyui.com
- * http://www.gnu.org/licenses/gpl.txt
- * http://www.jeasyui.com/license_commercial.php
+ * Licensed under the GPL license: http://www.gnu.org/licenses/gpl.txt
+ * To use it on other terms please contact us at info@jeasyui.com
  *
  */
 (function($){
@@ -71,6 +69,10 @@ case "bottom":
 _e-=(_d._outerWidth()-t._outerWidth())/2;
 _f+=t._outerHeight()+12+(_c.trackMouse?12:0);
 break;
+}
+if(!$(_a).is(":visible")){
+_e=-100000;
+_f=-100000;
 }
 _d.css({left:_e,top:_f,zIndex:(_c.zIndex!=undefined?_c.zIndex:($.fn.window?$.fn.window.defaults.zIndex++:""))});
 _c.onPosition.call(_a,_e,_f);

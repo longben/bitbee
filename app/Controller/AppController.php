@@ -46,7 +46,7 @@ class AppController extends Controller {
      * @params $_conditions array 查询条件
      * @params $_order_field String 排序
      * @return void
-     * 
+     *
      */
     public function findJSON4Grid($_order_field = 'id', $_conditions = array('1' => '1'), $_order = 'desc'){
         $q     = isset($_POST['q']) ? $_POST['q'] : '';           //查询关键字
@@ -57,7 +57,8 @@ class AppController extends Controller {
 
         if(isset($_POST['q'])){
             if( isset( $_conditions ) ){
-                $_conditions = array_merge( $_conditions, array( $this->modelClass. '.' . $_POST['field'] . ' LIKE' => '%'.$q.'%' ) );
+                $_conditions = array_merge( $_conditions, array(
+                    $this->modelClass. '.' . $_POST['field'] . ' LIKE' => '%'.$q.'%' ) );
             }else{
                 $_conditions = array($_POST['field'] . ' LIKE' => '%'.$q.'%');
             }
@@ -79,7 +80,7 @@ class AppController extends Controller {
      * 判断名称是否存在
      * @param string $fieldName 检查字段名称
      * @param int $type 检查方式
-     * @return String JSON 
+     * @return String JSON
      * @access public
      */
     public function is_not_exists($fieldName, $type=0){
@@ -97,12 +98,12 @@ class AppController extends Controller {
                 return new CakeResponse(array('body' => 'false'));
             }
         }
-    }  
+    }
 
     //新闻列表
     public function _posts($id){
         $this->paginate = array(
-            'conditions' => "Post.post_status = 'publish' AND Meta.category = $id", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.category = $id",
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 12
@@ -114,7 +115,7 @@ class AppController extends Controller {
     //新闻列表2
     public function findNewsByTag($id){
         $this->paginate = array(
-            'conditions' => "Post.post_status = 'publish' AND Meta.tag LIKE '$id%'", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.tag LIKE '$id%'",
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 12
@@ -124,30 +125,30 @@ class AppController extends Controller {
 
     public function findPostByCategory($id, $_order = 'DESC', $_limit = 12){
         $this->paginate = array(
-            'conditions' => "Post.post_status = 'publish' AND Meta.category = $id", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.category = $id",
             'recursive' => 0, //int
             'order' => 'Post.post_date ' . $_order,
-            'limit' => $_limit 
+            'limit' => $_limit
         );
         return $this->paginate();
     }
 
     public function getPostByCategory($id, $_limit = 7, $_order = 'DESC'){
         $conditions = array(
-            'conditions' => "Post.post_status = 'publish' AND Meta.category = $id", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.category = $id",
             'recursive' => 0, //int
             'order' => "Post.post_date $_order",
-            'limit' => $_limit 
+            'limit' => $_limit
         );
         return $this->Post->find('all', $conditions);
     }
 
     public function getPostByCategorys($id, $_limit = 7, $_order = 'DESC'){
         $conditions = array(
-            'conditions' => "Post.post_status = 'publish' AND Meta.category IN ($id)", 
+            'conditions' => "Post.post_status = 'publish' AND Meta.category IN ($id)",
             'recursive' => 0, //int
             'order' => "Post.post_date $_order",
-            'limit' => $_limit 
+            'limit' => $_limit
         );
         return $this->Post->find('all', $conditions);
     }

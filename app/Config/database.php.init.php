@@ -63,7 +63,7 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'bitbee',
 		'password' => 'M9HcYnVC5fwAdjV5',
-		'database' => 'jbyx',
+		'database' => 'ga',
 		'prefix' => '',
 		'encoding' => 'utf8',
 	);

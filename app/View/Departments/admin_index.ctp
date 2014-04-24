@@ -1,15 +1,15 @@
 <table id="dg" class="easyui-treegrid" style="width:auto;height:auto"
     data-options="url:'/admin/departments/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20,idField:'id',treeField:'name'">
-    <thead>  
+    <thead>
         <tr>
-            <th data-options="field:'name'" width="50">班级名称</th>  
-            <th data-options="field:'telephone'" width="50">联系电话</th>  
-            <th data-options="field:'linkman'" width="50">班级老师</th>  
-        </tr>  
-    </thead>  
-</table>  
+            <th data-options="field:'name'" width="50">班级名称</th>
+            <th data-options="field:'telephone'" width="50">联系电话</th>
+            <th data-options="field:'linkman'" width="50">班级老师</th>
+        </tr>
+    </thead>
+</table>
 
-<div id="toolbar">  
+<div id="toolbar">
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove', plain:true"  onclick="deleteItem()">删除</a>
@@ -20,11 +20,11 @@
             <div data-options="name:'parent_id',iconCls:'icon-public'">所属学校</div>
         </div>
     </span>
-</div> 
+</div>
 
 <div id="dlg" class="easyui-dialog" style="width:400px;height:auto;padding:10px 20px"
     closed="true" buttons="#dlg-buttons">
-    <?php 
+    <?php
     echo $this->Form->create('Department', array('action' => 'add', 'id' => 'fm', 'class' => 'formee'));
     echo $this->Form->input('id', array('id' => 'id'));
     echo $this->Form->input('name', array('label' =>  __('Name'), 'class' => 'easyui-validatebox' , 'required' => true));
@@ -57,7 +57,7 @@
         /**
         * 生成通用JSON格式
         *
-        */ 
+        */
         var _row = '';
         for(var key in row){
             _row = _row + "'data[Department][" + key + "]':row." + key + ",";

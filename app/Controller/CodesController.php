@@ -7,6 +7,18 @@ App::uses('AppController', 'Controller');
  */
 class CodesController extends AppController {
 
+
+    function children(){
+        $this->RequestHandler->isXml();
+        $params = array(
+            'conditions' => array(
+                'Code.parent_id' => $this->data['parent_id']),
+                'order' => 'Code.id'
+        );
+        $this->set('children', $this->Code->find('all', $params));
+        $this->set('_serialize', array('children'));
+    }
+
     /**
      * 根据条件查询用户JSON数据
      *
@@ -29,7 +41,7 @@ class CodesController extends AppController {
     public function admin_add() {
         $this->autoRender = false;
         if (!empty($this->request->data)) {
-            $this->Code->create();  
+            $this->Code->create();
             if ($this->Code->save($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {
@@ -40,7 +52,7 @@ class CodesController extends AppController {
 
     public function admin_edit() {
         $this->autoRender = false;
-        if (!empty($this->request->data)) {    
+        if (!empty($this->request->data)) {
             if ($this->Code->save($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true, 'msg' => 'OK'))));
             } else {

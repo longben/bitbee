@@ -5,7 +5,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php echo Configure::read('Site.title');?></title>
         <link href="/css/default.css" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="/css/easyui/themes/default/easyui.css" />
+        <link rel="stylesheet" type="text/css" href="/css/easyui/themes/bitbee/easyui.css" />
         <link rel="stylesheet" type="text/css" href="/css/easyui/themes/icon.css" />
         <script type="text/javascript" src="/js/jquery/jquery-1.7.2.min.js"></script>
         <script type="text/javascript" src="/js/jquery/easyui/jquery.easyui.min.js"></script>
@@ -43,7 +43,7 @@
                 if ($oldpass.val() == '') {
                     msgShow('系统提示', '请输入旧密码！', 'warning');
                     return false;
-                }			
+                }
                 if ($newpass.val() == '') {
                     msgShow('系统提示', '请输入密码！', 'warning');
                     return false;
@@ -138,7 +138,7 @@
                             </div>
                         </div>
 
-                    </div>			   
+                    </div>
 
 
                 </div>
@@ -156,7 +156,7 @@
                         <tr>
                             <td>旧密码：</td>
                             <td><input id="txtOldPass" type="Password" class="txt01" /></td>
-                        </tr>				
+                        </tr>
                         <tr>
                             <td>新密码：</td>
                             <td><input id="txtNewPass" type="Password" class="txt01" /></td>

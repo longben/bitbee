@@ -1,7 +1,7 @@
 ﻿/********************************************************************
 
 Project: Formee - http://www.formeeee.org
-Launched: 
+Launched:
 Version: 3.1
 Authors: Bernard De Luna - http://www.bernarddeluna.com
          Daniel Araujo - http://www.dnlaraujo.com.br
@@ -134,7 +134,7 @@ Structure
 }
 .formee-msg-info li, .formee-msg-warning li, .formee-msg-error li, .formee-msg-success li {
 	list-style: none;
-	padding:0;	
+	padding:0;
 	margin-bottom: .4%;
 	font-size:1.4em;
 	line-height:1.1em;

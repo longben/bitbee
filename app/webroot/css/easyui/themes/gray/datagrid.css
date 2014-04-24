@@ -32,7 +32,7 @@
   position: absolute;
   top: 50%;
   margin-top: -20px;
-  padding: 12px 5px 10px 30px;
+  padding: 10px 5px 10px 30px;
   width: auto;
   height: 16px;
   border-width: 2px;
@@ -56,6 +56,7 @@
   margin: 2px 1px;
 }
 .datagrid .datagrid-pager {
+  display: block;
   margin: 0;
   border-width: 1px 0 0 0;
   border-style: solid;
@@ -96,7 +97,6 @@
   overflow: hidden;
   height: 18px;
   line-height: 18px;
-  font-weight: normal;
   font-size: 12px;
 }
 .datagrid-header .datagrid-cell {
@@ -240,6 +240,7 @@
 .datagrid-btable,
 .datagrid-ftable {
   color: #000000;
+  border-collapse: separate;
 }
 .datagrid-row-alt {
   background: #fafafa;

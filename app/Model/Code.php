@@ -1,12 +1,12 @@
 <?php
 class Code extends AppModel {
-	public $name = 'Code';
-    
+    public $name = 'Code';
+
     public $actsAs = array('Tree');
 
-	public $displayField = 'name';
+    public $displayField = 'name';
 
-    function beforeSave($created) {
+    function beforeSave($options = array()) {
 
         if(isset($this->data['Code']['file']) && !empty($this->data['Code']['file'])){
             extract($this->data['Code']['file']);

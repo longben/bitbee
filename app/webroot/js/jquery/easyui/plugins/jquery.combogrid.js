@@ -1,12 +1,10 @@
 ﻿/**
- * jQuery EasyUI 1.3.3
+ * jQuery EasyUI 1.3.6
  * 
- * Copyright (c) 2009-2013 www.jeasyui.com. All rights reserved.
+ * Copyright (c) 2009-2014 www.jeasyui.com. All rights reserved.
  *
- * Licensed under the GPL or commercial licenses
- * To use it on other terms please contact us: info@jeasyui.com
- * http://www.gnu.org/licenses/gpl.txt
- * http://www.jeasyui.com/license_commercial.php
+ * Licensed under the GPL license: http://www.gnu.org/licenses/gpl.txt
+ * To use it on other terms please contact us at info@jeasyui.com
  *
  */
 (function($){
@@ -147,14 +145,23 @@ _2a.datagrid("load",$.extend({},_29.queryParams,{q:q}));
 if(!q){
 return;
 }
+_2a.datagrid("clearSelections").datagrid("highlightRow",-1);
 var _2b=_2a.datagrid("getRows");
-for(var i=0;i<_2b.length;i++){
-if(_29.filter.call(_27,q,_2b[i])){
-_2a.datagrid("clearSelections");
+var qq=_29.multiple?q.split(_29.separator):[q];
+$.map(qq,function(q){
+q=$.trim(q);
+if(q){
+$.map(_2b,function(row,i){
+if(q==row[_29.textField]){
 _2a.datagrid("selectRow",i);
-return;
+}else{
+if(_29.filter.call(_27,q,row)){
+_2a.datagrid("highlightRow",i);
 }
 }
+});
+}
+});
 }
 };
 function _2c(_2d){
@@ -162,13 +169,8 @@ var _2e=$.data(_2d,"combogrid");
 var _2f=_2e.options;
 var _30=_2e.grid;
 var tr=_2f.finder.getTr(_30[0],null,"highlight");
-if(!tr.length){
-tr=_2f.finder.getTr(_30[0],null,"selected");
-}
-if(!tr.length){
-return;
-}
 _2e.remainText=false;
+if(tr.length){
 var _31=parseInt(tr.attr("datagrid-row-index"));
 if(_2f.multiple){
 if(tr.hasClass("datagrid-row-selected")){
@@ -178,6 +180,14 @@ _30.datagrid("selectRow",_31);
 }
 }else{
 _30.datagrid("selectRow",_31);
+}
+}
+var vv=[];
+$.map(_30.datagrid("getSelections"),function(row){
+vv.push(row[_2f.idField]);
+});
+$(_2d).combogrid("setValues",vv);
+if(!_2f.multiple){
 $(_2d).combogrid("hidePanel");
 }
 };
@@ -187,7 +197,7 @@ var _34=$.fn.combogrid.methods[_32];
 if(_34){
 return _34(this,_33);
 }else{
-return $.fn.combo.methods[_32](this,_33);
+return this.combo(_32,_33);
 }
 }
 _32=_32||{};
@@ -233,17 +243,21 @@ $.fn.combogrid.parseOptions=function(_3a){
 var t=$(_3a);
 return $.extend({},$.fn.combo.parseOptions(_3a),$.fn.datagrid.parseOptions(_3a),$.parser.parseOptions(_3a,["idField","textField","mode"]));
 };
-$.fn.combogrid.defaults=$.extend({},$.fn.combo.defaults,$.fn.datagrid.defaults,{loadMsg:null,idField:null,textField:null,mode:"local",keyHandler:{up:function(){
+$.fn.combogrid.defaults=$.extend({},$.fn.combo.defaults,$.fn.datagrid.defaults,{loadMsg:null,idField:null,textField:null,mode:"local",keyHandler:{up:function(e){
 nav(this,"prev");
-},down:function(){
+e.preventDefault();
+},down:function(e){
 nav(this,"next");
-},enter:function(){
+e.preventDefault();
+},left:function(e){
+},right:function(e){
+},enter:function(e){
 _2c(this);
-},query:function(q){
+},query:function(q,e){
 _26(this,q);
 }},filter:function(q,row){
 var _3b=$(this).combogrid("options");
-return row[_3b.textField].indexOf(q)==0;
+return row[_3b.textField].toLowerCase().indexOf(q.toLowerCase())==0;
 }});
 })(jQuery);
 

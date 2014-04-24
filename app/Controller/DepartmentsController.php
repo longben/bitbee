@@ -14,7 +14,7 @@ class DepartmentsController extends AppController {
 
     public function admin_index() {
 
-        $parents = $this->Department->generateTreeList(array('Department.id' => 1), null, null, '--', null);
+        $parents = $this->Department->generateTreeList(array('Department.hierarchy <=' => 2), null, null, '--', null);
         //$parents = array('' => '无上级部门') + $parents;
 
         $this->set(compact('parents'));
@@ -25,7 +25,12 @@ class DepartmentsController extends AppController {
     public function admin_add() {
         $this->autoRender = false;
         if (!empty($this->request->data)) {
-            $this->Department->create();  
+            $this->Department->create();
+
+            //$my = $this->Department->getMyId('Department', $this->request->data['Department']['parent_id']);
+            //$this->request->data['Department']['id'] = $my['id'];
+            //$this->request->data['Department']['hierarchy'] = $my['hierarchy'];
+
             if ($this->Department->save($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {
@@ -36,7 +41,7 @@ class DepartmentsController extends AppController {
 
     public function admin_edit() {
         $this->autoRender = false;
-        if (!empty($this->request->data)) {    
+        if (!empty($this->request->data)) {
             if ($this->Department->save($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true, 'msg' => 'OK'))));
             } else {
