@@ -14,7 +14,7 @@ echo $this->Form->create('GaDepartment', array(
 ));
 //Line 1
 echo $this->Form->input('id', array('id' => 'id'));
-echo $this->Form->input('name', array(
+echo $this->Form->input('Corp.department_id', array(
     'label' => '企业名称',
     'div' => array('class' => 'grid-5-12'),
     'class' => 'easyui-validatebox',
@@ -106,35 +106,34 @@ echo $this->Form->input('Meta.start_date', array(
     'label' => '有效期限（起）',
     'class' => 'easyui-datebox easyui-validatebox',
     'type' => 'text',
-    'data-options' => 'height:"100%",sharedCalendar:"#cc"',
+    'data-options' => 'height:"100%"',
     'div' => array('class' => 'grid-2-12')
 ));
 echo $this->Form->input('Meta.end_date', array(
     'label' => '有效期限（止）',
     'class' => 'easyui-datebox easyui-validatebox',
     'type' => 'text',
-    'data-options' => 'height:"100%", sharedCalendar:"#cc"',
+    'data-options' => 'height:"100%", validType:"abc[\'#MetaStartDate\']"',
     'div' => array('class' => 'grid-2-12')
 ));
 echo $this->Form->input('Meta.issuance_date', array(
     'label' => '颁发日期',
     'class' => 'easyui-datebox',
     'type' => 'text',
-    'data-options' => 'height:"100%",sharedCalendar:"#cc"',
+    'data-options' => 'height:"100%"',
     'div' => array('class' => 'grid-2-12')
 ));
 echo $this->Form->input('Meta.renewal_date', array(
     'label' => '换证日期',
     'class' => 'easyui-datebox',
     'type' => 'text',
-    'data-options' => 'height:"100%",sharedCalendar:"#cc"',
+    'data-options' => 'height:"100%"',
     'div' => array('class' => 'grid-2-12')
 ));
 ?>
 
 <div class="grid-12-12">
 <span class="right">
-<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">复位</a>
 <a href="javascript:void(0)" class="easyui-linkbutton" onclick="history.go(-1)">返回列表</a>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
 </span>
@@ -145,21 +144,6 @@ echo $this->Form->input('Meta.renewal_date', array(
 echo $this->Form->end();
 ?>
 
-<div id="cc" class="easyui-calendar"></div>
-
 <script src="/js/jquery/chosen/chosen.jquery.js" type="text/javascript"></script>
 <script src="/js/jquery/chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
-<script src="/ga/js/department_edit.js" type="text/javascript" charset="utf-8"></script>
-
-<script>
-var sels = "<?=$this->data['Meta']['scope']?>";
-sels = sels.split(',');
-for (var sel in sels) {
-    $("#MetaScope option[value=" + sels[sel] + "]").attr('selected', 'selected');
-}
-$('#MetaScope').trigger('chosen:updated');
-
-$(function(){
-    $('#MetaRegisteredCapitalC').val(Arab2Chinese($('#MetaRegisteredCapital').val()));
-});
-</script>
+<script src="/ga/js/department_add.js" type="text/javascript" charset="utf-8"></script>

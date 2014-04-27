@@ -1,9 +1,9 @@
 <?php
 App::uses('GaAppController', 'Ga.Controller');
 
-class GaDepartmentsController extends GaAppController {
-    public $name = 'GaDepartments';
-    public $uses = array('Ga.GaDepartment','Code');
+class AircraftsController extends GaAppController {
+    public $name = 'Aircrafts';
+    public $uses = array('Ga.Aircraft','Code');
 
     /**
      * 根据条件查询用户JSON数据
@@ -11,24 +11,17 @@ class GaDepartmentsController extends GaAppController {
      * @return JSON
      */
     public function admin_json_data(){
-        $this->findJSON4Grid('id',array('GaDepartment.hierarchy' => 4), 'asc'); //
+        $this->findJSON4Grid('id', null, 'asc'); //
     }
 
     public function admin_index() {
-
-        $parents = $this->GaDepartment->generateTreeList(array('GaDepartment.hierarchy <=' => 2), null, null, '--', null);
-        //$parents = array('' => '无上级部门') + $parents;
-
-        $this->set(compact('parents'));
 
     }
 
 
 
     public function admin_add() {
-        //$this->autoRender = false;
         if (!empty($this->request->data)) {
-            $this->autoRender = false;
             $this->GaDepartment->create();
             $this->request->data['GaDepartment']['hierarchy'] = 4; //企业的级别统一为4
             $this->request->data['Meta']['scope'] = implode(',', $this->request->data['Meta']['scope']);
@@ -38,9 +31,6 @@ class GaDepartmentsController extends GaAppController {
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
             }
         }else{
-            $parents = $this->GaDepartment->generateTreeList(array('GaDepartment.hierarchy <=' => 2), null, null, '..', null);
-            $areas = $this->GaDepartment->generateTreeList(array('GaDepartment.hierarchy =' => 2), null, null, '', null);
-
             $regions = $this->GaDepartment->Region->find('list', array(
                 'conditions' => "Region.id like '__0000'"));
 

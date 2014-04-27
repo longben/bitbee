@@ -39,27 +39,46 @@ class AppModel extends Model {
         return $count;
     }
 
-    public function getMyId($_modelName, $_fatherId, $_category = null,
-        $_fieldName = 'parent_id', $_stepLength = 2, $_totalLength = 10 ){
+    public function getMyId($_modelName, $_fatherId, $_type = 1,
+        $_category = null, $_fieldName = 'parent_id', $_stepLength = 2, $_totalLength = 10 ){
             $id = str_pad(1, $_totalLength, '0'); //初始化ID
             $hierarchy = 0; //初始化级别
             if(!empty($_fatherId)){
-                //取父亲的级别
-                $father = $this->findById($_fatherId);
-                $hierarchy = $father[$_modelName]['hierarchy'];
+                if($_type == 1){
+                    //取父亲的级别
+                    $father = $this->findById($_fatherId);
+                    $hierarchy = $father[$_modelName]['hierarchy'];
 
-                //取该父亲ID下的儿子总数
-                $conditions = array($_modelName.'.'.$_fieldName => $_fatherId);
-                if(!empty($_category)){
-                    $conditions += array($_modelName.'.category' => $_category);
+                    //取该父亲ID下的儿子总数
+                    $conditions = array($_modelName.'.'.$_fieldName => $_fatherId);
+                    if(!empty($_category)){
+                        $conditions += array($_modelName.'.category' => $_category);
+                    }
+                    $count = $this->find('count', array('conditions' => $conditions));
+
+                    //格式化当前儿子序号，主要是左补零
+                    $child = str_pad($count + 1, $_stepLength, '0', STR_PAD_LEFT);
+
+                    //格式化当前ID值：父亲ID + 当前儿子序号右补零
+                    $id = $_fatherId + str_pad($child , $_totalLength - $hierarchy * $_stepLength, '0');
+                }else{
+                    $conditions = array($_modelName.'.'.$_fieldName => $_fatherId);
+                    if(!empty($_category)){
+                        $conditions += array($_modelName.'.category' => $_category);
+                    }
+                    $count = $this->find('first',
+                        array(
+                            'conditions' => $conditions,
+                            'fields' => array('MAX('. $_modelName . '.id) AS max')
+                        )
+                    );
+                    if(empty($count[0]['max'])){
+                        $id = $_fatherId + 1;
+                    }else{
+                        $id = $count[0]['max'] + 1;
+                    }
+                    $hierarchy = 3;
                 }
-                $count = $this->find('count', array('conditions' => $conditions));
-
-                //格式化当前儿子序号，主要是左补零
-                $child = str_pad($count + 1, $_stepLength, '0', STR_PAD_LEFT);
-
-                //格式化当前ID值：父亲ID + 当前儿子序号右补零
-                $id = $_fatherId + str_pad($child , $_totalLength - $hierarchy * $_stepLength, '0');
             }
 
             $my = array('id' => $id);

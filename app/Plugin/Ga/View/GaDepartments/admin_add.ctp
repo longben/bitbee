@@ -14,13 +14,14 @@ echo $this->Form->create('GaDepartment', array(
 ));
 //Line 1
 echo $this->Form->input('id', array('id' => 'id'));
+echo $this->Form->hidden('parent_id', array('value' => $this->Session->read('Auth.User.Meta.department_id')));
 echo $this->Form->input('name', array(
     'label' => '企业名称',
     'div' => array('class' => 'grid-5-12'),
     'class' => 'easyui-validatebox',
     'data-options' => 'required:true'
 ));
-echo $this->Form->input('parent_id', array(
+echo $this->Form->input('Meta.area_id', array(
     'label' => '所属地区',
     'div' => array('class' => 'grid-2-12'),
     'options' => $areas
@@ -134,7 +135,7 @@ echo $this->Form->input('Meta.renewal_date', array(
 
 <div class="grid-12-12">
 <span class="right">
-<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">复位</a>
+<a href="javascript:void(0)" class="easyui-linkbutton" onclick="history.go(-1)">返回列表</a>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
 </span>
 </div>

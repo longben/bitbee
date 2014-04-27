@@ -1,30 +1,27 @@
 <?php
 App::uses('GaAppModel', 'Ga.Model');
 
-class GaDepartment extends GaAppModel {
+class Aircraft extends GaAppModel {
 
-    public $name = 'GaDepartment';
-
-    public $useTable = 'departments';
+    public $name = 'Aircraft';
 
     public $displayField = 'name';
 
     public $actsAs = array('Tree');
 
-    public $virtualFields = array('_parentId' => 'GaDepartment.parent_id');
-
-
     var $hasOne = array(
-        'Meta' => array(
-            'className' => 'GaDepartmentMeta',
-            'foreignKey' => 'id',
-            'dependent' => true,
+        'Corp' => array(
+            'className' => 'CorpAircraft',
+            'foreignKey' => 'aircraft_id',
+            'dependent' => false,
             'conditions' => '',
             'fields' => '',
             'order' => ''
         )
     );
 
+
+    /*
     var $belongsTo = array(
         'Region' => array(
             'className' => 'Region',
@@ -41,7 +38,9 @@ class GaDepartment extends GaAppModel {
             'order' => ''
         )
     );
+     */
 
+    /*
     function beforeSave( $options = array() ) {
         if (empty($this->data[$this->alias]['id'])) {
             if($this->data[$this->alias]['parent_id'] == 1000000000){
@@ -55,4 +54,5 @@ class GaDepartment extends GaAppModel {
         }
         return true;
     }
+     */
 }

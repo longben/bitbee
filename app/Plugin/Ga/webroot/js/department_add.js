@@ -71,7 +71,9 @@ function saveItem(){
             if (result.success){
                 $.messager.confirm('Confirm', '你是否要继续添加企业信息？', function(r){
                     if (r){
-                        window.location = '/admin/ga/ga_departments/add'
+                        window.location = '/admin/ga/ga_departments/add';
+                    }else{
+                        window.location = '/admin/ga/ga_departments/index';
                     }
                 });
             } else {

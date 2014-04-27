@@ -69,9 +69,9 @@ function saveItem(){
         success: function(result){
             var result = eval('('+result+')');
             if (result.success){
-                $.messager.confirm('Confirm', '你是否要继续添加企业信息？', function(r){
+                $.messager.confirm('Confirm', '信息修改成功。是否返回列表？', function(r){
                     if (r){
-                        window.location = '/admin/ga/ga_departments/add'
+                        window.location = '/admin/ga/ga_departments/index'
                     }
                 });
             } else {

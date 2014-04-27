@@ -27,7 +27,7 @@ class UsersController extends AppController {
     public function admin_json_data(){
         $this->findJSON4Grid('id', array('User.id <>' => 1)); //不返回Admin用户
     }
-    
+
 
     /**
      * 后台登陆方法
@@ -56,9 +56,9 @@ class UsersController extends AppController {
         }
 
         if($this->request->is('post')){
-            
+
             if(isset($this->data['User']['captcha']) && $this->Session->read('captcha')!=$this->data['User']['captcha']){
-                    $this->Session->setFlash(__('输入的验证码不正确', true));
+                $this->Session->setFlash(__('输入的验证码不正确', true));
             }else{
                 if($this->Auth->login()){
                     $this->Session->write('id', $this->Session->read('Auth.User.User.id'));
@@ -68,7 +68,7 @@ class UsersController extends AppController {
                     $this->Session->setFlash(__('Username or password is incorrect'), 'default', array(), 'auth');
                 }
             }
-  
+
         }
     }
 
@@ -78,23 +78,23 @@ class UsersController extends AppController {
 
     public function logout(){
         $this->Session->setFlash("你已经安全退出系统！");
-        $this->redirect($this->Auth->logout()); 
+        $this->redirect($this->Auth->logout());
     }
 
 
     public function admin_index($plugin = null){
-		$roles = $this->User->Meta->Role->find('list');
-		$departments = $this->User->Meta->Department->find('list');
+        $roles = $this->User->Meta->Role->find('list');
+        $departments = $this->User->Meta->Department->find('list');
 
         $genders = array('1' => '男', '0' => '女');
 
-		$this->set(compact('roles', 'departments', 'genders', 'plugin'));        
+        $this->set(compact('roles', 'departments', 'genders', 'plugin'));
     }
 
     public function admin_add() {
         $this->autoRender = false;
         if (!empty($this->request->data)) {
-            $this->User->create();  
+            $this->User->create();
             if ($this->User->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {
@@ -106,7 +106,7 @@ class UsersController extends AppController {
     public function admin_edit() {
         $this->autoRender = false;
         if (!empty($this->request->data)) {
-            unset($this->request->data['User']['user_pass']); //修改时不保存密码 
+            unset($this->request->data['User']['user_pass']); //修改时不保存密码
             if ($this->User->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true, 'msg' => 'OK'))));
             } else {
@@ -125,7 +125,7 @@ class UsersController extends AppController {
             }
         }
     }
-    
+
     //重置用户密码
     public function admin_reset_pwd() {
         if($this->request->is('post'))
@@ -151,7 +151,7 @@ class UsersController extends AppController {
             if($hasher->CheckPassword( $old_password, $this->User->field('user_pass')) ){
                 if( $this->User->saveField('user_pass', $new_password) ){
                     $flag = 1;
-                } 
+                }
             }else{
                 $flag = -1; //旧密码不正确
             }
@@ -185,7 +185,7 @@ class UsersController extends AppController {
 
         return new CakeResponse( array('body' => json_encode($data)) );
     }
-	
+
     public function avatar(){
         $this->autoRender = false;
         if($this->Session->check('id')){
@@ -202,7 +202,7 @@ class UsersController extends AppController {
             }
             return new CakeResponse( array('body' => $filename) );
         }
-    }	
+    }
 
     public function site_header(){
         $this->autoRender = false;
@@ -220,8 +220,5 @@ class UsersController extends AppController {
             }
             return new CakeResponse( array('body' => $filename) );
         }
-    }	
-
-
-
+    }
 }
