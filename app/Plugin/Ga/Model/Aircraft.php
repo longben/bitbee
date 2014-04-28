@@ -19,26 +19,7 @@ class Aircraft extends GaAppModel {
             'order' => ''
         )
     );
-
-
-    /*
-    var $belongsTo = array(
-        'Region' => array(
-            'className' => 'Region',
-            'foreignKey' => 'region_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
-        ),
-        'Parent' => array(
-            'className' => 'GaDepartment',
-            'foreignKey' => 'parent_id',
-            'conditions' => 'Parent.id <> GaDepartment.id',
-            'fields' => 'GaDepartment.id, GaDepartment.name',
-            'order' => ''
-        )
-    );
-     */
+    
 
     /*
     function beforeSave( $options = array() ) {

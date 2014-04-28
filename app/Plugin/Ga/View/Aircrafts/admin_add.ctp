@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="/css/chosen/chosen.css">
 
 <?php
-echo $this->Form->create('GaDepartment', array(
+echo $this->Form->create('Aircraft', array(
     'action' => 'add',
     'id' => 'fm',
     'class' => 'formee',

@@ -1,9 +1,9 @@
 <?php
 App::uses('GaAppController', 'Ga.Controller');
 
-class AircraftsController extends GaAppController {
-    public $name = 'Aircrafts';
-    public $uses = array('Ga.Aircraft', 'Ga.CorpAircraft', 'Code', 'Region', 'Department');
+class CorpAircraftsController extends GaAppController {
+    public $name = 'CorpAircrafts';
+    public $uses = array('Ga.Aircraft', 'Ga.CorpAircraft', 'Code', 'Region');
 
     /**
      * 根据条件查询用户JSON数据
@@ -31,9 +31,11 @@ class AircraftsController extends GaAppController {
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
             }
         }else{
-            $departments = $this->Department->find('list', array(
-                'conditions' => "Department.id like '__0000'"));
-            $this->set(compact('departments'));
+            /*
+            $regions = $this->CorpAricraft->Region->find('list', array(
+                'conditions' => "Region.id like '__0000'"));
+            $this->set(compact('regions'));
+             */
         }
     }
 

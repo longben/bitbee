@@ -17,6 +17,13 @@ class CorpAircraft extends GaAppModel {
     );
 
     var $belongsTo = array(
+        'Region' => array(
+            'className' => 'Region',
+            'foreignKey' => 'area_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        ),
         'Department' => array(
             'className' => 'GaDepartment',
             'foreignKey' => 'dependent_id',
