@@ -98,7 +98,7 @@ Structure
 	height: auto;
 	margin: 0.1em 0 0.2em;
 }
-.formee .formee-txt, .formee input[type="text"], .formee input[type="password"], .formee input[type="file"], .formee textarea, .formee select{
+.formee .formee-txt, .formee input[type="text"], .formee input[type="password"], .formee input[type="file"], .formee textarea, .formee select, .formee input[type="number"]{
 	vertical-align: middle;
 	line-height: 1em;
 	width: 100%;

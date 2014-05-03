@@ -33,12 +33,7 @@ $('#dg').datagrid({
     onDblClickCell:editItem,
     columns:[[
         {field:'id',title:'序号',formatter:function(value,row){return row.Aircraft.id},width:50},
-        {field:'region_id',title:'所属地区',formatter:function(value,row){return row.Region.name},width:50},
-        {field:'licence',title:'经营许可证',formatter:function(value,row){return '民航通企字'+ row.Meta.licence + '号'},width:50},
-        {field:'name',title:'企业名称',formatter:function(value,row){return row.GaDepartment.name},width:50},
-        {field:'corporation',title:'法人代表',formatter:function(value,row){return row.Meta.corporation},width:50},
-        {field:'registered_capital',title:'注册资本',formatter:function(value,row){return row.Meta.registered_capital},width:50},
-        {field:'issuing_authority',title:'发证机关',formatter:function(value,row){return row.Meta.issuing_authority},width:50}
+        {field:'department_id',title:'企业名称',formatter:function(value,row){return row.Corp.department_id},width:50},
     ]]
 });
 
@@ -66,7 +61,7 @@ function saveItem(){
 }
 
 function newItem(){
-    url = '/admin/ga/ga_departments/add/';
+    url = '/admin/ga/aircrafts/add/';
     window.location = url;
 }
 

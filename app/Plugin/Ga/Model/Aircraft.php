@@ -5,9 +5,7 @@ class Aircraft extends GaAppModel {
 
     public $name = 'Aircraft';
 
-    public $displayField = 'name';
-
-    public $actsAs = array('Tree');
+    //public $displayField = 'name';
 
     var $hasOne = array(
         'Corp' => array(
@@ -19,7 +17,18 @@ class Aircraft extends GaAppModel {
             'order' => ''
         )
     );
-    
+
+
+    var $belongsTo = array(
+        'Brand' => array(
+            'className' => 'Code',
+            'foreignKey' => 'brand',
+            'conditions' => array('Brand.category' => 'dept_type'),
+            'fields' => 'Brand.id, Brand.name',
+            'order' => ''
+        )
+    );
+
 
     /*
     function beforeSave( $options = array() ) {

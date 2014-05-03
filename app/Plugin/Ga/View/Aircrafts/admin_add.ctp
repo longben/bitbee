@@ -1,134 +1,137 @@
-<style>
-#MetaLicence{ width: 50%;}
-</style>
-
 <link rel="stylesheet" href="/css/chosen/docsupport/prism.css">
 <link rel="stylesheet" href="/css/chosen/chosen.css">
 
 <?php
 echo $this->Form->create('Aircraft', array(
-    'action' => 'add',
     'id' => 'fm',
     'class' => 'formee',
     'inputDefaults' => array('class'=> 'textbox', 'div' => array('class' => 'grid-12-12'))
 ));
 //Line 1
-echo $this->Form->input('id', array('id' => 'id'));
 echo $this->Form->input('Corp.department_id', array(
     'label' => '企业名称',
     'div' => array('class' => 'grid-5-12'),
     'class' => 'easyui-validatebox',
     'data-options' => 'required:true'
 ));
-echo $this->Form->input('Meta.area_id', array(
+echo $this->Form->input('Corp.area_id', array(
     'label' => '所属地区',
     'div' => array('class' => 'grid-2-12'),
     'options' => $areas
 ));
-echo $this->Form->input('Meta.corporation', array(
-    'label' => '法人代表',
-    'div' => array('class' => 'grid-2-12'),
-    'class' => 'easyui-validatebox',
-    'data-options' => 'required:true'
-));
-echo $this->Form->input('Meta.registered_capital_c', array(
-    'label' => '注册资本',
+echo $this->Form->input('Corp.registration_no', array(
+    'label' => '国籍登记证(含临时登记证)编号',
     'div' => array('class' => 'grid-3-12'),
-    'onFocus' => 'change2Arab()',
-    'onBlur' => 'change2Chinese()'
+    'class' => 'easyui-validatebox',
+    'value' => 'NR'
 ));
-echo $this->Form->hidden('Meta.registered_capital');
+echo $this->Form->input('Corp.registration_flag', array(
+    'label' => '国籍和登记标志',
+    'div' => array('class' => 'grid-2-12'),
+    'value' => 'B-'
+));
 
 
 //Line 2
-echo $this->Form->input('region_id', array(
-    'default' => 1,
-    'label' => '省(市)自治区',
+echo $this->Form->input('type', array(
+    'label' => '航空器类型',
     'div' => array('class' => 'grid-2-12 clear'),
-    'onChange' => "showCity(this.value,'#GaDepartmentCityId','/regions/city.xml')"
+    'type' => 'select'
 ));
-echo $this->Form->input('city_id', array(
-    'default' => 1,
-    'label' => '城市',
+echo $this->Form->input('brand', array(
+    'label' => '制造人',
+    'div' => array('class' => 'grid-3-12'),
+    'onChange' => "showChildren(this.value,'#AircraftModel','/codes/children.xml')"
+));
+echo $this->Form->input('model', array(
+    'label' => '型号',
+    'type' => 'select',
     'div' => array('class' => 'grid-2-12')
 ));
-echo $this->Form->input('dept_character_id', array(
-    'default' => 0,
-    'label' => '非民企',
-    'div' => array('class' => 'grid-2-12'),
-    'options' => array( 0 => '否', 1 => '是')
-));
-echo $this->Form->input('Meta.status', array(
-    'default' => 1,
-    'label' => '经营状态',
-    'div' => array('class' => 'grid-2-12'),
-    'options' => array(1 => '运行', 2 => '筹建', 3 => '注销筹建', 4 => '注销经营许可')
-));
-echo $this->Form->input('Meta.airport', array(
-    'label' => '基地机场',
-    'div' => array('class' => 'grid-4-12')
-));
-
-//Line 3
-echo $this->Form->input('dept_type_id', array(
-    'label' => '企业类别(大类)',
-    'options' => $qylb1,
-    'div' => array('class' => 'grid-2-12 clear'),
-    'onChange' => "showChildren(this.value,'#GaDepartmentDeptAttributeId','/codes/children.xml')"
-));
-echo $this->Form->input('dept_attribute_id', array(
-    'options' => $qylb2,
-    'label' => '企业类别(小类)',
-    'div' => array('class' => 'grid-4-12')
-));
-echo $this->Form->input('Meta.licence', array(
-    'required' => true,
-    'label' => '经营许可证号码',
-    'between' => '民航通企字',
-    'after' => '号',
-    'div' => array('class' => 'grid-2-12')
-));
-echo $this->Form->input('Meta.scope', array(
-    'label' => '经营项目与范围',
-    'div' => array('class' => 'grid-4-12'),
+echo $this->Form->input('Corp.purpose', array(
+    'label' => '主要用途',
+    'div' => array('class' => 'grid-5-12'),
     'multiple' => true,
-    'options' => $parents,
+    'options' => $areas,
     'class' => 'chosen-select'
 ));
 
+//Line 3
+echo $this->Form->input('oil_type', array(
+    'label' => '燃油种类',
+    'div' => array('class' => 'grid-2-12 clear'),
+    'options' => array('jet fuel' => '航空煤油', 'avgas' => '航空汽油')
+));
+echo $this->Form->input('netweight', array(
+    'label' => '空重',
+    'div' => array('class' => 'grid-2-12')
+));
+echo $this->Form->input('max_load', array(
+    'label' => '最大起飞全重',
+    'div' => array('class' => 'grid-2-12')
+));
+echo $this->Form->input('kts', array(
+    'label' => '最大巡航速度',
+    'div' => array('class' => 'grid-2-12')
+));
+echo $this->Form->input('maximum_range', array(
+    'label' => '最大航程',
+    'div' => array('class' => 'grid-2-12')
+));
+echo $this->Form->input('passenger_capacity', array(
+    'label' => '载员人数',
+    'div' => array('class' => 'grid-2-12')
+));
+
 //Line 4
-echo $this->Form->input('Meta.issuing_authority', array(
-    'label' => '发证机关',
+echo $this->Form->input('Corp.register_date', array(
+    'label' => '登记日期',
+    'class' => 'easyui-datebox easyui-validatebox',
+    'type' => 'text',
+    'data-options' => 'height:"100%"',
+    'div' => array('class' => 'grid-2-12 clear')
+));
+echo $this->Form->input('Corp.age', array(
+    'label' => '机龄',
+    'div' => array('class' => 'grid-2-12')
+));
+echo $this->Form->input('Corp.procure_method', array(
+    'label' => '获得方式',
+    'div' => array('class' => 'grid-2-12'),
+    'options' => array('1' => '购买', '2' => '租赁', '3' => '代管', '4' => '其他')
+));
+echo $this->Form->input('Corp.procure_date', array(
+    'label' => '获得时间',
+    'class' => 'easyui-datebox easyui-validatebox',
+    'type' => 'text',
+    'data-options' => 'height:"100%"',
+    'div' => array('class' => 'grid-2-12')
+));
+echo $this->Form->input('Corp.status', array(
+    'label' => '使用状态',
+    'div' => array('class' => 'grid-2-12'),
+    'options' => array('1' => '运行', '2' => '暂停', '3' => '终止')
+));
+echo $this->Form->input('Corp.maintenance', array(
+    'label' => '维护情况',
+    'div' => array('class' => 'grid-2-12'),
+    'options' => array('1' => '难', '2' => '中等', '3' => '易')
+));
+//Line6
+echo $this->Form->input('Corp.procure_method', array(
+    'label' => '承担主要飞行种类和任务',
     'div' => array('class' => 'grid-4-12 clear'),
-    'options' => $parents
+    'multiple' => true,
+    'options' => $areas,
+    'class' => 'chosen_procure_method'
 ));
-echo $this->Form->input('Meta.start_date', array(
-    'label' => '有效期限（起）',
-    'class' => 'easyui-datebox easyui-validatebox',
-    'type' => 'text',
-    'data-options' => 'height:"100%"',
-    'div' => array('class' => 'grid-2-12')
+echo $this->Form->input('Corp.zysg_zh_cs', array(
+    'label' => '投入使用以来主要事故或征候次数',
+    'div' => array('class' => 'grid-4-12')
 ));
-echo $this->Form->input('Meta.end_date', array(
-    'label' => '有效期限（止）',
-    'class' => 'easyui-datebox easyui-validatebox',
-    'type' => 'text',
-    'data-options' => 'height:"100%", validType:"abc[\'#MetaStartDate\']"',
-    'div' => array('class' => 'grid-2-12')
-));
-echo $this->Form->input('Meta.issuance_date', array(
-    'label' => '颁发日期',
-    'class' => 'easyui-datebox',
-    'type' => 'text',
-    'data-options' => 'height:"100%"',
-    'div' => array('class' => 'grid-2-12')
-));
-echo $this->Form->input('Meta.renewal_date', array(
-    'label' => '换证日期',
-    'class' => 'easyui-datebox',
-    'type' => 'text',
-    'data-options' => 'height:"100%"',
-    'div' => array('class' => 'grid-2-12')
+echo $this->Form->input('Corp.damaged', array(
+    'label' => '因失事、失踪等原因毁损航空器情况',
+    'div' => array('class' => 'grid-4-12')
 ));
 ?>
 
@@ -146,4 +149,62 @@ echo $this->Form->end();
 
 <script src="/js/jquery/chosen/chosen.jquery.js" type="text/javascript"></script>
 <script src="/js/jquery/chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
-<script src="/ga/js/department_add.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript">
+$('.chosen-select').chosen({
+    placeholder_text_multiple:'请选择主要用途',
+    search_contains:true,
+    no_results_text: "没有匹配的结果："
+});
+
+$('.chosen_procure_method').chosen({
+    placeholder_text_multiple:'请选择承担主要飞行种类或任务',
+    search_contains:true,
+    no_results_text: "没有匹配的结果："
+});
+
+$.extend($.fn.validatebox.defaults.rules, {
+    abc: {
+        validator: function(value,param){
+            return value > $(param[0]).datebox('getValue');
+        },
+        message: '“有效期限（止）” 不能晚于 “有效期限（起）”'
+    }
+});
+
+
+function submitForm(){
+    $('#fm').form('submit');
+}
+function clearForm(){
+    $('#fm').form('reset');
+}
+
+var url;
+function saveItem(){
+    $('#fm').form('submit',{
+        url: '/admin/ga/aircrafts/save',
+        onSubmit: function(){
+            return $(this).form('validate');
+        },
+        success: function(result){
+            var result = eval('('+result+')');
+            if (result.success){
+                $.messager.confirm('Confirm', '你是否要继续添加企业信息？', function(r){
+                    if (r){
+                        window.location = '/admin/ga/aircrafts/add';
+                    }else{
+                        window.location = '/admin/ga/aircrafts/index';
+                    }
+                });
+            } else {
+                $.messager.show({
+                    title: 'Error',
+                    msg: result.msg
+                });
+            }
+        }
+    });
+}
+
+</script>

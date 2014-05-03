@@ -22,52 +22,65 @@ class AircraftsController extends GaAppController {
 
     public function admin_add() {
         if (!empty($this->request->data)) {
-            $this->Aricraft->create();
-            $this->request->data['Aricraft']['hierarchy'] = 4; //企业的级别统一为4
-            $this->request->data['Meta']['scope'] = implode(',', $this->request->data['Meta']['scope']);
-            if ($this->Aricraft->saveAll($this->request->data)) {
+            $this->Aircraft->create();
+            $this->request->data['Corp']['purpose'] = implode(',', $this->request->data['Corp']['purpose']);
+            if ($this->Aircraft->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
             }
         }else{
-            $departments = $this->Department->find('list', array(
-                'conditions' => "Department.id like '__0000'"));
-            $this->set(compact('departments'));
+            $departments = $this->Department->find('list',
+                array('conditions' => array('Department.hierarchy' => 4))
+            );
+            $areas = $this->Department->generateTreeList(array('Department.hierarchy' => 2), null, null, '', null);
+            $types = $this->Code->generateTreeList(null, null, null, '>>>', null);
+
+            $brands = $this->Code->find('list',array(
+                'conditions' => array('Code.category' => 'brand', 'Code.parent_id is NULL')
+            ));
+            $models = $this->Code->find('list',array(
+                'conditions' => array('Code.category' => 'brand', 'Code.parent_id' => key($brands))
+            ));
+
+            $this->set(compact('departments', 'areas', 'types', 'brands', 'models'));
         }
     }
 
 
     public function admin_save() {
-        $this->autoRender = false;
+        //$this->autoRender = false;
         if (!empty($this->request->data)) {
-            $this->Aricraft->create();
+            $this->Aircraft->create();
 
-            if(!empty($this->request->data['Meta']['scope'])){
-                $this->request->data['Meta']['scope'] = implode(',', $this->request->data['Meta']['scope']);
+            if(!empty($this->request->data['Corp']['purpose'])){
+                $this->request->data['Corp']['purpose'] = implode(',', $this->request->data['Corp']['purpose']);
             }
-            if ($this->Aricraft->saveAll($this->request->data)) {
+            if(!empty($this->request->data['Corp']['procure_method'])){
+                $this->request->data['Corp']['procure_method'] = implode(',', $this->request->data['Corp']['procure_method']);
+            }
+            if ($this->Aircraft->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
             } else {
-                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'XXX'))));
             }
         }
     }
 
     public function admin_edit($id) {
 
-        $this->Aricraft->id = $id;
+        $this->Aircraft->id = $id;
 
-        $this->request->data = $this->Aricraft->read(null, $id);
+        $this->request->data = $this->Aircraft->read(null, $id);
 
 
-        $parents = $this->Aricraft->generateTreeList(array('Aricraft.hierarchy <=' => 2), null, null, '..', null);
-        $areas = $this->Aricraft->generateTreeList(array('Aricraft.hierarchy =' => 2), null, null, '', null);
+        $parents = $this->Aircraft->generateTreeList(array('Aircraft.hierarchy <=' => 2), null, null, '..', null);
+        $areas = $this->Aircraft->generateTreeList(array('Aircraft.hierarchy =' => 2), null, null, '', null);
 
-        $regions = $this->Aricraft->Region->find('list', array(
+        $regions = $this->Aircraft->Region->find('list', array(
             'conditions' => "Region.id like '__0000'"));
         $regions = array('' => '--请选择--') + $regions;
-        $cities = $this->Aricraft->Region->find('list', array(
+        $cities = $this->Aircraft->Region->find('list', array(
             'conditions' => "Region.id like '51____' and Region.id <> '510000'"));
 
         $qylb1 = $this->Code->find('list', array(
@@ -75,14 +88,14 @@ class AircraftsController extends GaAppController {
         ));
         $qylb2 = $this->Code->find('list', array(
             'conditions' => array(
-                'Code.category' => 'dept_type', 'Code.parent_id' => $this->request->data['Aricraft']['dept_type_id'])
+                'Code.category' => 'dept_type', 'Code.parent_id' => $this->request->data['Aircraft']['dept_type_id'])
         ));
 
 
         $this->set(compact('parents', 'areas', 'regions', 'cities', 'qylb1', 'qylb2'));
 
         if ($this->request->is('post') || $this->request->is('put')) {
-            if ($this->Aricraft->saveAll($this->request->data)) {
+            if ($this->Aircraft->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true, 'msg' => 'OK'))));
             } else {
                 return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));

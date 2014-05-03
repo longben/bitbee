@@ -1,12 +1,12 @@
 /********************************************************************
 
 Project: Formee - http://www.formeeee.org
-Last Updated: 
+Last Updated:
 Version: 3.1
 Authors: Bernard De Luna - http://www.bernarddeluna.com
          Daniel Araujo - http://www.dnlaraujo.com.br
 		 Marcello Manso - http://www.marcellomanso.com.br
-			 
+
 ********************************************************************
 Style
 ********************************************************************/
@@ -49,7 +49,7 @@ Style
 	font-size:1.2em;
 	line-height: .85em;
 }
-.formee .formee-txt, .formee input[type="text"], .formee input[type="password"], .formee input[type="file"], .formee textarea, .formee select {
+.formee .formee-txt, .formee input[type="text"], .formee input[type="password"], .formee input[type="file"], .formee textarea, .formee select, .formee input[type="number"] {
 	border-color:#c6c6c6 #dadada #eaeaea;
 	background: #fafafa;
 	color:#999;
