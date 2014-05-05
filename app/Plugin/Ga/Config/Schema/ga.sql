@@ -51,3 +51,38 @@ CREATE TABLE `corp_aircrafts`(
     `status`                int(1)              DEFAULT NULL COMMENT '使用状态',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='企业通用航空器表';
+
+DROP TABLE `assignments`;
+CREATE TABLE `assignments`(
+    `id`                    int(10)             NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `assignment_date`       date                DEFAULT NULL COMMENT '作业月份',
+    `department_id`         int(10)             DEFAULT NULL COMMENT '企业名称',
+    `aircraft_id`           int(10)             DEFAULT NULL COMMENT '飞行器型号',
+    `area_id`               int(10)             DEFAULT NULL COMMENT '所属地区',
+    `assignment_type`       varchar(100)        DEFAULT NULL COMMENT '作业类型',
+    `assignment_hour`       varchar(20)         DEFAULT NULL COMMENT '飞行小时量',
+    `assignment_time`       int(10)             DEFAULT NULL COMMENT '飞行架次',
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='通用航空飞行作业量表';
+
+DROP TABLE `airports`;
+CREATE TABLE `airports`(
+    `id`                    int(10)             NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `name`                  varchar(100)        DEFAULT NULL COMMENT '机场名称',
+    `area_id`               int(10)             DEFAULT NULL COMMENT '所属地区',
+    `active_time`           date                DEFAULT NULL COMMENT '启用时间',
+    `investor`              int(1)              DEFAULT NULL COMMENT '投资主体',
+    `airport_type`          int(1)              DEFAULT NULL COMMENT '机场类型',
+    `grade`                 int(1)              DEFAULT NULL COMMENT '机场等级',
+    `coordinate`            varchar(30)         DEFAULT NULL COMMENT '坐标',
+    `elevation`             varchar(30)         DEFAULT NULL COMMENT '标高',
+    `runway_spec`           varchar(200)        DEFAULT NULL COMMENT '跑道规格',
+    `parking_spec`          varchar(200)        DEFAULT NULL COMMENT '停机坪规格及位置',
+    `runway_heading`        varchar(200)        DEFAULT NULL COMMENT '跑道方向',
+    `obstacle_clearance`    varchar(200)        DEFAULT NULL COMMENT '净空条件',
+    `position`              varchar(200)        DEFAULT NULL COMMENT '机场位置',
+    `alternate_airport`     varchar(200)        DEFAULT NULL COMMENT '备降机场',
+    `distance`              varchar(200)        DEFAULT NULL COMMENT '离重要线路（国境线、国道等）距离',
+    `telphone`              varchar(200)        DEFAULT NULL COMMENT '联系电话',
+    PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='通用航空机场信息表';
