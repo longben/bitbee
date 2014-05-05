@@ -22,8 +22,7 @@
 <script type="text/javascript">
 
 $('#dg').datagrid({
-    url:'datagrid_data.json',
-    url:'/admin/ga/aircrafts/json_data.json',
+    url:'/admin/ga/corp_aircrafts/json_data.json',
     fitColumns:true,
     singleSelect:true,
     rownumbers:true,
@@ -32,8 +31,8 @@ $('#dg').datagrid({
     pageSize:15,
     onDblClickCell:editItem,
     columns:[[
-        {field:'id',title:'序号',formatter:function(value,row){return row.Aircraft.id},width:50},
-        {field:'department_id',title:'企业名称',formatter:function(value,row){return row.Corp.department_id},width:50},
+        {field:'id',title:'序号',formatter:function(value,row){return row.CorpAircraft.aircraft_id},width:50},
+        {field:'department_id',title:'企业名称',formatter:function(value,row){return row.Department.name},width:50},
     ]]
 });
 
@@ -68,7 +67,7 @@ function newItem(){
 function editItem(){
     var row = $('#dg').datagrid('getSelected');
 
-    url = '/admin/ga/ga_departments/edit/' + row.GaDepartment.id;
+    url = '/admin/ga/aircrafts/edit/' + row.CorpAircraft.aircraft_id;
     window.location = url;
 }
 

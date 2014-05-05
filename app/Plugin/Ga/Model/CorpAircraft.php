@@ -25,11 +25,11 @@ class CorpAircraft extends GaAppModel {
             'order' => ''
         ),
         'Department' => array(
-            'className' => 'GaDepartment',
-            'foreignKey' => 'dependent_id',
+            'className' => 'Department',
+            'foreignKey' => 'department_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
         )
     );
-
+}
