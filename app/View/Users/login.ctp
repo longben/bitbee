@@ -43,7 +43,7 @@
                             <td></td>
                         </tr>
                         <tr>
-                            <td style="font-size:14px"> </td>
+                            <td style="font-size:14px"><img src="/ga/img/ga.png"/> </td>
                             <td><img src="<?=$this->Html->url('/img/platforms/login/login_top.jpg')?>"/></td>
                             <td></td>
                         </tr>
