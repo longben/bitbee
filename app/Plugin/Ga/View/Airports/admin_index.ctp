@@ -32,7 +32,9 @@ $('#dg').datagrid({
     onDblClickCell:editItem,
     columns:[[
         {field:'id',title:'序号',formatter:function(value,row){return row.Airport.id},width:50},
-        {field:'department_id',title:'机场名称',formatter:function(value,row){return row.Airport.name},width:50},
+        {field:'name',title:'机场名称',formatter:function(value,row){return row.Airport.name},width:50},
+        {field:'area',title:'所属地区',formatter:function(value,row){return row.Area.name},width:50},
+        {field:'active_time',title:'启用时间',formatter:function(value,row){return row.Airport.active_time},width:50},
     ]]
 });
 

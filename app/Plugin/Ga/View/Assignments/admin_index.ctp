@@ -32,6 +32,7 @@ $('#dg').datagrid({
     onDblClickCell:editItem,
     columns:[[
         {field:'id',title:'序号',formatter:function(value,row){return row.Assignment.id},width:50},
+        {field:'assignment_date',title:'作业时间',formatter:function(value,row){return row.Assignment.assignment_date},width:50},
         {field:'name',title:'企业名称',formatter:function(value,row){return row.Department.name},width:50},
     ]]
 });

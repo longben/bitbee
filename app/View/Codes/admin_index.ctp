@@ -1,10 +1,10 @@
 <table id="dg" class="easyui-treegrid" style="width:auto;height:auto"
-    data-options="url:'/admin/codes/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20,idField:'id',treeField:'name'">
+    data-options="url:'/admin/codes/json_data.json<?=!empty($category)?"?type=$category":''?>',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20,idField:'id',treeField:'name'">
     <thead>  
         <tr>
             <th data-options="field:'name'" width="50">名称</th>  
             <th data-options="field:'description'" width="50">描述</th>  
-            <th data-options="field:'icon'" width="50">图标</th>  
+            <th data-options="field:'category'" width="50">类型</th>  
             <th data-options="field:'locale'" width="50">I18N</th>  
         </tr>  
     </thead>  
@@ -27,10 +27,11 @@
     <?php 
     echo $this->Form->create('Code', array('action' => 'add', 'id' => 'fm', 'class' => 'formee', 'type' => 'file'));
     echo $this->Form->input('id', array('id' => 'id'));
-    //echo $this->Form->input('parent_id', array('label' => __('Parent Id'),  'default' => 1, 'required' => true));
+    echo $this->Form->input('parent_id', array('label' => '上级',  'required' => true));
     echo $this->Form->input('name');
-    echo $this->Form->input('description');
-    echo $this->Form->input('file', array('id' => 'file', 'label'=> __('Add Icon'), 'type'=> 'file'));
+    echo $this->Form->hidden('category', array('value' => $category));
+    echo $this->Form->input('description',array('label' => '描述'));
+    //echo $this->Form->input('file', array('id' => 'file', 'label'=> __('Add Icon'), 'type'=> 'file'));
     echo $this->Form->end();
     ?>
 </div>

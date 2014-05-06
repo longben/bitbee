@@ -52,7 +52,7 @@ echo $this->Form->input('Corp.purpose', array(
     'label' => '主要用途',
     'div' => array('class' => 'grid-5-12'),
     'multiple' => true,
-    'options' => $areas,
+    'options' => $scopes,
     'class' => 'chosen-select'
 ));
 
@@ -122,7 +122,7 @@ echo $this->Form->input('Corp.procure_method', array(
     'label' => '承担主要飞行种类和任务',
     'div' => array('class' => 'grid-4-12 clear'),
     'multiple' => true,
-    'options' => $areas,
+    'options' => $scopes,
     'class' => 'chosen_procure_method'
 ));
 echo $this->Form->input('Corp.zysg_zh_cs', array(

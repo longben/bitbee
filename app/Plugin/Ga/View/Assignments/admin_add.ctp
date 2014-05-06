@@ -27,7 +27,7 @@ echo $this->Form->input('area_id', array(
 echo $this->Form->input('assignment_type', array(
     'label' => '作业类型',
     'multiple' => true,
-    'options' => $areas,
+    'options' => $scopes,
     'class' => 'chosen-select'
 ));
 echo $this->Form->input('assignment_hour', array(
@@ -58,24 +58,9 @@ echo $this->Form->end();
 
 <script type="text/javascript">
 $('.chosen-select').chosen({
-    placeholder_text_multiple:'请选择主要用途',
+    placeholder_text_multiple:'请选择作业类型',
     search_contains:true,
     no_results_text: "没有匹配的结果："
-});
-
-$('.chosen_procure_method').chosen({
-    placeholder_text_multiple:'请选择承担主要飞行种类或任务',
-    search_contains:true,
-    no_results_text: "没有匹配的结果："
-});
-
-$.extend($.fn.validatebox.defaults.rules, {
-    abc: {
-        validator: function(value,param){
-            return value > $(param[0]).datebox('getValue');
-        },
-        message: '“有效期限（止）” 不能晚于 “有效期限（起）”'
-    }
 });
 
 

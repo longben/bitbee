@@ -7,9 +7,9 @@ class Airport extends GaAppModel {
 
     var $belongsTo = array(
         'Area' => array(
-            'className' => 'Code',
+            'className' => 'Department',
             'foreignKey' => 'area_id',
-            'conditions' => array('Area.category' => 'dept_type'),
+            //'conditions' => array('Area.category' => 'dept_type'),
             'fields' => 'Area.id, Area.name',
             'order' => ''
         )

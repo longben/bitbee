@@ -14,8 +14,9 @@ class AirportsController extends GaAppController {
     }
 
     private function _form(){
-        $areas = $this->Department->generateTreeList(array('Department.hierarchy' => 2), null, null, '', null);
-        $this->set(compact('areas'));
+        $scopes = $this->Code->generateTreeList(array('Code.category' => 'scope'), null, null, '　', null);
+        $areas = $this->Department->generateTreeList(array('Department.hierarchy' => 2), null, null, '　', null);
+        $this->set(compact('scopes', 'areas'));
     }
 
 

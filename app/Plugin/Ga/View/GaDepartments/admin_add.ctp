@@ -93,7 +93,6 @@ echo $this->Form->input('Meta.scope', array(
     'label' => '经营项目与范围',
     'div' => array('class' => 'grid-4-12'),
     'multiple' => true,
-    'options' => $parents,
     'class' => 'chosen-select'
 ));
 

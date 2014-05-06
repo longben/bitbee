@@ -23,7 +23,10 @@ class AircraftsController extends GaAppController {
             'conditions' => array('Department.hierarchy' => 4))
         );
         $areas = $this->Department->generateTreeList(array('Department.hierarchy' => 2), null, null, '', null);
-        $types = $this->Code->generateTreeList(null, null, null, '>>>', null);
+        
+        $scopes = $this->Code->generateTreeList(array('Code.category' => 'scope'), null, null, '　', null);
+        
+        $types = $this->Code->generateTreeList(array('Code.category' => 'aircraft_type'), null, null, '　', null);
 
         $brands = $this->Code->find('list',array(
             'conditions' => array('Code.category' => 'brand', 'Code.parent_id is NULL')
@@ -32,27 +35,14 @@ class AircraftsController extends GaAppController {
             'conditions' => array('Code.category' => 'brand', 'Code.parent_id' => key($brands))
         ));
 
-        $this->set(compact('departments', 'areas', 'types', 'brands', 'models'));
+        $this->set(compact('departments', 'areas', 'types', 'brands', 'models', 'scopes'));
     }
 
 
 
     public function admin_add() {
         if (empty($this->request->data)) {
-            $departments = $this->Department->find('list',array(
-                'conditions' => array('Department.hierarchy' => 4))
-            );
-            $areas = $this->Department->generateTreeList(array('Department.hierarchy' => 2), null, null, '', null);
-            $types = $this->Code->generateTreeList(null, null, null, '>>>', null);
-
-            $brands = $this->Code->find('list',array(
-                'conditions' => array('Code.category' => 'brand', 'Code.parent_id is NULL')
-            ));
-            $models = $this->Code->find('list',array(
-                'conditions' => array('Code.category' => 'brand', 'Code.parent_id' => key($brands))
-            ));
-
-            $this->set(compact('departments', 'areas', 'types', 'brands', 'models'));
+            $this->_form();
         }
     }
 

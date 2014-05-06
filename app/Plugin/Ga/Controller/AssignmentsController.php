@@ -19,12 +19,13 @@ class AssignmentsController extends GaAppController {
         );
 
         $areas = $this->Department->generateTreeList(array('Department.hierarchy' => 2), null, null, '', null);
+        $scopes = $this->Code->generateTreeList(array('Code.category' => 'scope'), null, null, '　', null);
 
         $types = $this->Code->find('list',array(
             'conditions' => array('Code.category' => 'brand', 'Code.parent_id is NULL')
         ));
 
-        $this->set(compact('departments', 'areas', 'types'));
+        $this->set(compact('departments', 'areas', 'types', 'scopes'));
     }
 
 

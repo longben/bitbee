@@ -28,7 +28,7 @@ echo $this->Form->input('area_id', array(
 echo $this->Form->input('assignment_type', array(
     'label' => '作业类型',
     'multiple' => true,
-    'options' => $areas,
+    'options' => $scopes,
     'class' => 'chosen-select'
 ));
 echo $this->Form->input('assignment_hour', array(
@@ -59,7 +59,7 @@ echo $this->Form->end();
 
 <script type="text/javascript">
 $('.chosen-select').chosen({
-    placeholder_text_multiple:'请选择主要用途',
+    placeholder_text_multiple:'请选择作业类型',
     search_contains:true,
     no_results_text: "没有匹配的结果："
 });

@@ -6,6 +6,9 @@ class Code extends AppModel {
 
     public $displayField = 'name';
 
+    public $virtualFields = array('_parentId' => 'Code.parent_id');
+
+
     function beforeSave($options = array()) {
 
         if(isset($this->data['Code']['file']) && !empty($this->data['Code']['file'])){

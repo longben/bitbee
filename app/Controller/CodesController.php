@@ -25,7 +25,11 @@ class CodesController extends AppController {
      * @return JSON
      */
     public function admin_json_data(){
-        $this->findJSON4Grid('id',null, 'asc'); //
+        if(empty($this->params['url']['type'])){
+            $this->findJSON4Grid('id',null, 'asc'); //
+        }else{
+            $this->findJSON4Grid('id',array('Code.category' => $this->params['url']['type']), 'asc'); //
+        }
     }
 
     /**
@@ -33,7 +37,15 @@ class CodesController extends AppController {
      *
      * @return void
      */
-    public function admin_index() {
+    public function admin_index($category = null) {
+        if(empty($category)){
+            $parents = $this->Code->generateTreeList(null, null, null, '--', null);
+        }else{
+            $parents = $this->Code->generateTreeList(array('Code.category' => $category), null, null, '--', null);
+        }
+        $parents = array('' => '无父系ID') + $parents;
+
+        $this->set(compact('parents', 'category'));
 
     }
 

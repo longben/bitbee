@@ -2,9 +2,9 @@
     data-options="url:'/admin/departments/json_data.json',fitColumns:true,singleSelect:true,rownumbers:true,pagination:true,toolbar:'#toolbar',pageSize:20,idField:'id',treeField:'name'">
     <thead>
         <tr>
-            <th data-options="field:'name'" width="50">班级名称</th>
+            <th data-options="field:'name'" width="50">名称</th>
             <th data-options="field:'telephone'" width="50">联系电话</th>
-            <th data-options="field:'linkman'" width="50">班级老师</th>
+            <th data-options="field:'linkman'" width="50">联系人</th>
         </tr>
     </thead>
 </table>
@@ -16,8 +16,7 @@
     <span style="float:right;white-space:nowrap;clear: none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
-            <div data-options="name:'name',iconCls:'icon-user'">班级名称</div>
-            <div data-options="name:'parent_id',iconCls:'icon-public'">所属学校</div>
+            <div data-options="name:'name',iconCls:'icon-user'">名称</div>
         </div>
     </span>
 </div>
@@ -28,9 +27,9 @@
     echo $this->Form->create('Department', array('action' => 'add', 'id' => 'fm', 'class' => 'formee'));
     echo $this->Form->input('id', array('id' => 'id'));
     echo $this->Form->input('name', array('label' =>  __('Name'), 'class' => 'easyui-validatebox' , 'required' => true));
-    echo $this->Form->input('parent_id', array('label' => __('Parent Id'),  'default' => 1, 'required' => true));
-    echo $this->Form->input('telephone', array('label' => __('Telephone')));
-    echo $this->Form->input('linkman', array('label' => __('Linkman')));
+    echo $this->Form->input('parent_id', array('label' => '所属部门',  'default' => 1, 'required' => true));
+    echo $this->Form->input('telephone', array('label' => '联系电话'));
+    echo $this->Form->input('linkman', array('label' => '联系人'));
     echo $this->Form->end();
     ?>
 </div>
