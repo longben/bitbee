@@ -25,7 +25,7 @@
         ?>
         <table width="100%">
             <tr>
-                <td>所属地区:</td>
+                <td algin="right">所属地区:</td>
                 <td><?=$this->Form->input('area_id', array('options' => $areas))?></td>
                 <td>省份:</td>
                 <td><?=$this->Form->input('region_id')?></td>
@@ -65,10 +65,12 @@ $('#dg').datagrid({
     url:'/admin/ga/ga_departments/json_data.json',
     fitColumns:true,
     singleSelect:true,
+    striped:true,
     rownumbers:true,
     pagination:true,
     toolbar:'#toolbar',
     pageSize:15,
+    pageList:[15,30,45,60],
     onDblClickCell:editItem,
     columns:[[
         {field:'id',title:'序号',formatter:function(value,row){return row.GaDepartment.id},width:50},
@@ -117,7 +119,7 @@ function editItem(){
 }
 
 function searchDialog(){
-    $('#dlg').dialog('open').dialog('setTitle','查询');
+    $('#dlg').dialog('open').dialog('setTitle','通用航空企业基础信息查询');
 }
 
 function search(value, name){
@@ -142,8 +144,6 @@ function complex_query(){
     );
     $('#dlg').dialog('close');		// close the dialog
 }
-
-
 
 </script>
 

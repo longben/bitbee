@@ -66,7 +66,7 @@ class AppController extends Controller {
 
         $this->paginate = array(
             'conditions' => $_conditions,
-            'recursive' => 0, //int
+            'recursive' => 1, //int
             'limit' => $rows, //int
             'page' => $page, //int
             'order' => $this->modelClass. '.' .  $sort . ' ' . $order

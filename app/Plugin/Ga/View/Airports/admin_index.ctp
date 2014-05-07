@@ -3,18 +3,57 @@
 <div id="toolbar">
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="deleteItem()">删除</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',disabled:true, plain:true"  onclick="deleteItem()">删除</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search', plain:true"  onclick="searchDialog()">查询</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', disabled:true, plain:true"  onclick="">导出</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
-            <div data-options="name:'GaDepartment.name',iconCls:'icon-user'">企业名称</div>
-        </div>
-        <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm2',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
-        <div id="mm2" style="width:120px">
-            <div data-options="name:'GaDepartment.name',iconCls:'icon-user'">企业名称</div>
+            <div data-options="name:'Airport.name',iconCls:'icon-user'">机场名称</div>
         </div>
     </span>
+</div>
+
+<div id="dlg" class="easyui-dialog" title="查询"
+    data-options="iconCls:'icon-search',closed:'true'" style="width:780px;height:200px;padding:10px" buttons="#dlg-buttons">
+        <?php echo $this->Form->create('Airport', array(
+            'id' => 'fm',
+            'inputDefaults' => array( 'div' => false, 'label' => false)
+        ));
+        ?>
+        <table width="100%">
+            <tr>
+                <td algin="right">所属地区:</td>
+                <td><?=$this->Form->input('area_id', array('options' => $areas))?></td>
+                <td>机场等级:</td>
+                <td><?=$this->Form->input('grade')?></td>
+                <td>机场类型:</td>
+                <td><?=$this->Form->input('types')?></td>
+            </tr>
+            <tr>
+                <td>启用时间(起):</td>
+                <td><?=$this->Form->input('start_date', array('class' => 'easyui-datebox'))?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>启用时间(止):</td>
+                <td><?=$this->Form->input('end_date', array('class' => 'easyui-datebox'))?></td>
+                <td></td>
+                <td></td>
+                <td>关键字:</td>
+                <td><?=$this->Form->input('keyword')?></td>
+            </tr>
+        </table>
+        <?php echo $this->Form->end();?>
+</div>
+
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="complex_query()">查询</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
 </div>
 
 
@@ -27,8 +66,10 @@ $('#dg').datagrid({
     singleSelect:true,
     rownumbers:true,
     pagination:true,
+    striped:true,
     toolbar:'#toolbar',
     pageSize:15,
+    pageList:[15,30,45,60],
     onDblClickCell:editItem,
     columns:[[
         {field:'id',title:'序号',formatter:function(value,row){return row.Airport.id},width:50},
@@ -80,6 +121,24 @@ function search(value, name){
     );
 }
 
+function searchDialog(){
+    $('#dlg').dialog('open').dialog('setTitle','通用航空机场信息查询');
+}
+
+function complex_query(){
+    $('#dg').datagrid(
+        'load',
+        {
+            area_id:$('#AirportAreaId').val(),
+            grade:$('#AirportGrade').val(),
+            type:$('#AirportType').val(),
+            start_date:$('#AirportStartDate').datebox('getValue'),
+            end_date:$('#AirportEndDate').datebox('getValue'),
+            keyword:$('#AirportKeyword').val()
+        }
+    );
+    $('#dlg').dialog('close');		// close the dialog
+}
 
 </script>
 

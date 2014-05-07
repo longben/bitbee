@@ -17,4 +17,5 @@ class GaDepartmentMeta extends GaAppModel {
             'order' => ''
         )
     );
+
 }
