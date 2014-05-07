@@ -32,34 +32,49 @@ class GaDepartmentsController extends GaAppController {
 
 
     public function admin_json_data(){
-        $this->findJSON4Grid('id',array('GaDepartment.hierarchy' => 4), 'asc'); //
+        $_conditions = array('GaDepartment.hierarchy' => 4);
+        $_data = $this->request->data;
+
+        if(!empty($_data['area_id'])){
+            $_conditions = array_merge($_conditions, array('Meta.area_id' => $_data['area_id']));
+        }
+        if(!empty($_data['region_id'])){
+            $_conditions = array_merge($_conditions, array('GaDepartment.region_id' => $_data['region_id']));
+        }
+        if(!empty($_data['scope'])){
+            $_conditions = array_merge($_conditions, array('Meta.scope LIKE' => '%'.$_data['scope'].'%'));
+        }
+        if(!empty($_data['start_date'])){
+            $_conditions = array_merge($_conditions, array('Meta.start_date >=' => $_data['start_date']));
+        }
+        if(!empty($_data['end_date'])){
+            $_conditions = array_merge($_conditions, array('Meta.end_date <=' => $_data['end_date']));
+        }
+        if(!empty($_data['keyword'])){
+            $_conditions = array_merge($_conditions, array('GaDepartment.name LIKE' => '%'.$_data['keyword'].'%'));
+        }
+
+        $this->findJSON4Grid('id', $_conditions, 'asc'); //
     }
 
     public function admin_index() {
+        $areas = $this->GaDepartment->generateTreeList(array('GaDepartment.hierarchy =' => 2), null, null, '', null);
+        $areas = array('' => '-- 请选择 --') + $areas;
 
-        $this->_form();
+        $scopes = $this->Code->generateTreeList(array('Code.category' => 'scope'), null, null, '　', null);
+        $scopes = array('' => '-- 请选择 --') + $scopes;
 
-        //$parents = $this->GaDepartment->generateTreeList(array('GaDepartment.hierarchy <=' => 2), null, null, '--', null);
-        //$parents = array('' => '无上级部门') + $parents;
-        //$this->set(compact('parents'));
+        $regions = $this->GaDepartment->Region->find('list', array('conditions' => "Region.id like '__0000'"));
+        $regions = array('' => '-- 请选择 --') + $regions;
+
+        $status = array('' => '-- 请选择 --', 1 => '运行', 2 => '筹建', 3 => '注销筹建', 4 => '注销经营许可');
+
+        $this->set(compact('areas', 'scopes', 'regions', 'status'));
     }
 
 
     public function admin_add() {
-        //$this->autoRender = false;
-        if (!empty($this->request->data)) {
-            $this->autoRender = false;
-            $this->GaDepartment->create();
-            $this->request->data['GaDepartment']['hierarchy'] = 4; //企业的级别统一为4
-            $this->request->data['Meta']['scope'] = implode(',', $this->request->data['Meta']['scope']);
-            if ($this->GaDepartment->saveAll($this->request->data)) {
-                return new CakeResponse(array('body' => json_encode(array('success'=>true))));
-            } else {
-                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
-            }
-        }else{
-            $this->_form();
-        }
+        $this->_form();
     }
 
 

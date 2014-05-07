@@ -3,26 +3,22 @@
 <div id="toolbar">
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="deleteItem()">删除</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="searchItem()">查询</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="searchItem()">导出</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',disabled:true, plain:true"  onclick="deleteItem()">删除</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search', plain:true"  onclick="searchDialog()">查询</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', disabled:true, plain:true"  onclick="">导出</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
             <div data-options="name:'GaDepartment.name',iconCls:'icon-user'">企业名称</div>
-        </div>
-        <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm2',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
-        <div id="mm2" style="width:120px">
-            <div data-options="name:'GaDepartment.name',iconCls:'icon-user'">企业名称</div>
+            <div data-options="name:'Meta.corporation',iconCls:'icon-user'">法人代表</div>
         </div>
     </span>
 </div>
 
 <div id="dlg" class="easyui-dialog" title="查询"
-    data-options="iconCls:'icon-save',closed:'true'" style="width:780px;height:200px;padding:10px" buttons="#dlg-buttons">
-        <?php echo $this->Form->create('GaDepartment', array(
-            'action' => 'search',
+    data-options="iconCls:'icon-search',closed:'true'" style="width:780px;height:200px;padding:10px" buttons="#dlg-buttons">
+        <?php echo $this->Form->create('Dept', array(
             'id' => 'fm',
             'inputDefaults' => array( 'div' => false, 'label' => false)
         ));
@@ -38,15 +34,15 @@
             </tr>
             <tr>
                 <td>颁证日期(起):</td>
-                <td><?=$this->Form->input('dd', array('class' => 'easyui-datebox'))?></td>
+                <td><?=$this->Form->input('start_date', array('class' => 'easyui-datebox'))?></td>
                 <td></td>
                 <td></td>
                 <td>经营状态:</td>
-                <td><?=$this->Form->input('Meta.status')?></td>
+                <td><?=$this->Form->input('status', array('options' => $status))?></td>
             </tr>
             <tr>
                 <td>颁证日期(止):</td>
-                <td><?=$this->Form->input('dd2', array('class' => 'easyui-datebox'))?></td>
+                <td><?=$this->Form->input('end_date', array('class' => 'easyui-datebox'))?></td>
                 <td></td>
                 <td></td>
                 <td>关键字:</td>
@@ -57,7 +53,7 @@
 </div>
 
 <div id="dlg-buttons">
-    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveItem()">查询</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="complex_query()">查询</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
 </div>
 
@@ -120,7 +116,7 @@ function editItem(){
     window.location = url;
 }
 
-function searchItem(){
+function searchDialog(){
     $('#dlg').dialog('open').dialog('setTitle','查询');
 }
 
@@ -130,6 +126,22 @@ function search(value, name){
         {q:value, field:name}
     );
 }
+
+function complex_query(){
+    $('#dg').datagrid(
+        'load',
+        {
+            area_id:$('#DeptAreaId').val(),
+            region_id:$('#DeptRegionId').val(),
+            scope:$('#DeptScope').val(),
+            start_date:$('#DeptStartDate').datebox('getValue'),
+            end_date:$('#DeptEndDate').datebox('getValue'),
+            status:$('#DeptStatus').val(),
+            keyword:$('#DeptKeyword').val()
+        }
+    );
+}
+
 
 
 </script>

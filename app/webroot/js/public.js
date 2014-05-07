@@ -104,3 +104,31 @@ function Arab2Chinese(n) { //金额大写转换函数
     }
 }
 
+
+function ConvertFormToJSON(form){
+			var array = $(form).serializeArray();
+			var json = {};
+
+			jQuery.each(array, function() {
+				json[this.name] = this.value || '';
+			});
+
+			return json;
+}
+
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
