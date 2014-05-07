@@ -37,9 +37,11 @@ class GaDepartmentsController extends GaAppController {
 
     public function admin_index() {
 
-        $parents = $this->GaDepartment->generateTreeList(array('GaDepartment.hierarchy <=' => 2), null, null, '--', null);
+        $this->_form();
+
+        //$parents = $this->GaDepartment->generateTreeList(array('GaDepartment.hierarchy <=' => 2), null, null, '--', null);
         //$parents = array('' => '无上级部门') + $parents;
-        $this->set(compact('parents'));
+        //$this->set(compact('parents'));
     }
 
 

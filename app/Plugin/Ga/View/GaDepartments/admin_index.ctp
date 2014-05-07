@@ -5,6 +5,7 @@
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="deleteItem()">删除</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="searchItem()">查询</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="searchItem()">导出</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
@@ -18,33 +19,47 @@
     </span>
 </div>
 
-<div id="dlg" class="easyui-dialog" title="Basic Dialog"
-    data-options="iconCls:'icon-save',closed:'true'" style="width:700px;height:200px;padding:10px">
-    <form id="ff" action="form1_proc.php" method="post">
+<div id="dlg" class="easyui-dialog" title="查询"
+    data-options="iconCls:'icon-save',closed:'true'" style="width:780px;height:200px;padding:10px" buttons="#dlg-buttons">
         <?php echo $this->Form->create('GaDepartment', array(
-            'action' => 'add',
+            'action' => 'search',
             'id' => 'fm',
-            'inputDefaults' => array( 'div' => false, 'lable' => false)
+            'inputDefaults' => array( 'div' => false, 'label' => false)
         ));
         ?>
         <table width="100%">
             <tr>
                 <td>所属地区:</td>
-                <td><?=$this->Form->input('name')?></td>
+                <td><?=$this->Form->input('area_id', array('options' => $areas))?></td>
                 <td>省份:</td>
-                <td><input name="name" type="text"></input></td>
+                <td><?=$this->Form->input('region_id')?></td>
                 <td>经营项目与范围:</td>
-                <td><input name="name" type="text"></input></td>
+                <td><?=$this->Form->input('scope')?></td>
             </tr>
             <tr>
+                <td>颁证日期(起):</td>
+                <td><?=$this->Form->input('dd', array('class' => 'easyui-datebox'))?></td>
                 <td></td>
-                <td><input type="submit" value="Submit"></input></td>
                 <td></td>
+                <td>经营状态:</td>
+                <td><?=$this->Form->input('Meta.status')?></td>
+            </tr>
+            <tr>
+                <td>颁证日期(止):</td>
+                <td><?=$this->Form->input('dd2', array('class' => 'easyui-datebox'))?></td>
+                <td></td>
+                <td></td>
+                <td>关键字:</td>
+                <td><?=$this->Form->input('keyword')?></td>
             </tr>
         </table>
-    </form>
+        <?php echo $this->Form->end();?>
 </div>
 
+<div id="dlg-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="saveItem()">查询</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
+</div>
 
 
 <script type="text/javascript">
