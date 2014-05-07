@@ -140,6 +140,7 @@ function complex_query(){
             keyword:$('#DeptKeyword').val()
         }
     );
+    $('#dlg').dialog('close');		// close the dialog
 }
 
 
