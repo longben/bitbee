@@ -23,7 +23,7 @@ class GaDepartmentsController extends GaAppController {
         ));
 
         $qylb2 = $this->Code->find('list', array(
-            'conditions' => array('Code.category' => 'dept_type', 'Code.parent_id NOT' => NULL)
+            'conditions' => array('Code.category' => 'dept_type', 'Code.parent_id' => key($qylb1))
         ));
 
         $this->set(compact('parents', 'areas', 'regions', 'cities', 'qylb1', 'qylb2','scopes'));

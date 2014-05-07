@@ -4,6 +4,7 @@
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="deleteItem()">删除</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="searchItem()">查询</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
@@ -15,6 +16,33 @@
             <div data-options="name:'GaDepartment.name',iconCls:'icon-user'">企业名称</div>
         </div>
     </span>
+</div>
+
+<div id="dlg" class="easyui-dialog" title="Basic Dialog"
+    data-options="iconCls:'icon-save',closed:'true'" style="width:700px;height:200px;padding:10px">
+    <form id="ff" action="form1_proc.php" method="post">
+        <?php echo $this->Form->create('GaDepartment', array(
+            'action' => 'add',
+            'id' => 'fm',
+            'inputDefaults' => array( 'div' => false, 'lable' => false)
+        ));
+        ?>
+        <table width="100%">
+            <tr>
+                <td>所属地区:</td>
+                <td><?=$this->Form->input('name')?></td>
+                <td>省份:</td>
+                <td><input name="name" type="text"></input></td>
+                <td>经营项目与范围:</td>
+                <td><input name="name" type="text"></input></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td><input type="submit" value="Submit"></input></td>
+                <td></td>
+            </tr>
+        </table>
+    </form>
 </div>
 
 
@@ -75,6 +103,10 @@ function editItem(){
 
     url = '/admin/ga/ga_departments/edit/' + row.GaDepartment.id;
     window.location = url;
+}
+
+function searchItem(){
+    $('#dlg').dialog('open').dialog('setTitle','查询');
 }
 
 function search(value, name){
