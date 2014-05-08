@@ -14,9 +14,9 @@ class Assignment extends GaAppModel {
             'order' => ''
         ),
         'Area' => array(
-            'className' => 'Code',
+            'className' => 'Department',
             'foreignKey' => 'area_id',
-            'conditions' => array('Area.category' => 'dept_type'),
+            'conditions' => '',
             'fields' => 'Area.id, Area.name',
             'order' => ''
         )

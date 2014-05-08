@@ -10,10 +10,6 @@
         <div id="mm" style="width:120px">
             <div data-options="name:'GaDepartment.name',iconCls:'icon-user'">企业名称</div>
         </div>
-        <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm2',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
-        <div id="mm2" style="width:120px">
-            <div data-options="name:'GaDepartment.name',iconCls:'icon-user'">企业名称</div>
-        </div>
     </span>
 </div>
 
@@ -32,8 +28,11 @@ $('#dg').datagrid({
     onDblClickCell:editItem,
     columns:[[
         {field:'id',title:'序号',formatter:function(value,row){return row.Assignment.id},width:50},
-        {field:'assignment_date',title:'作业时间',formatter:function(value,row){return row.Assignment.assignment_date},width:50},
+        {field:'area',title:'所属地区',formatter:function(value,row){return row.Area.name},width:50},
         {field:'name',title:'企业名称',formatter:function(value,row){return row.Department.name},width:50},
+        {field:'assignment_date',title:'作业时间',formatter:function(value,row){return row.Assignment.assignment_date},width:50},
+        {field:'assignment_hour',title:'飞行小时量',formatter:function(value,row){return row.Assignment.assignment_hour},width:50},
+        {field:'assignment_time',title:'飞行架次',formatter:function(value,row){return row.Assignment.assignment_time},width:50},
     ]]
 });
 
