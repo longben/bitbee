@@ -29,6 +29,7 @@ $('#dg').datagrid({
     pagination:true,
     toolbar:'#toolbar',
     pageSize:15,
+    pageList:[15,30,45,60],
     onDblClickCell:editItem,
     columns:[[
         {field:'id',title:'序号',formatter:function(value,row){return row.CorpAircraft.aircraft_id},width:50},

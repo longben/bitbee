@@ -1,5 +1,8 @@
 <table id="dg"></table>
 
+
+<?php echo $this->Html->link('Excel file', array('ext' => 'xlsx'));?>
+
 <div id="toolbar">
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-add', plain:true"  onclick="newItem()">新增</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
@@ -56,6 +59,7 @@
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="complex_query()">查询</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
 </div>
+
 
 
 <script type="text/javascript">

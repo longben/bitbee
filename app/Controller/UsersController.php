@@ -6,7 +6,7 @@
  */
 class UsersController extends AppController {
     public $components = array('Session', 'Captcha');
-
+	
     public function beforeFilter() {
         parent::beforeFilter();
 
@@ -68,7 +68,6 @@ class UsersController extends AppController {
                     $this->Session->setFlash(__('Username or password is incorrect'), 'default', array(), 'auth');
                 }
             }
-
         }
     }
 

@@ -24,7 +24,11 @@ class AppController extends Controller {
      */
     public $components = array(
         'Session',
-        'RequestHandler',
+        'RequestHandler' => array(
+            'viewClassMap' => array(
+                'xlsx' => 'CakeExcel.Excel'
+            )
+        ),		
         'Auth',
     );
 
