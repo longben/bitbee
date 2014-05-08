@@ -14,7 +14,7 @@
         'jquery/easyui/jquery.easyui.min' ,
         'jquery/easyui/locale/easyui-lang-zh_CN',
         'formee/formee',
-        'public.js?version=1.0.1'
+        'public.js?version=1.0.2'
     ));
     echo $scripts_for_layout;
 
