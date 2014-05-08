@@ -72,6 +72,10 @@ class GaDepartmentsController extends GaAppController {
         $this->set(compact('areas', 'scopes', 'regions', 'status'));
     }
 
+    public function admin_export(){
+
+    }
+
 
     public function admin_add() {
         $this->_form();

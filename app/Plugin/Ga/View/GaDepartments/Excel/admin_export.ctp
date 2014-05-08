@@ -1,6 +1,7 @@
 <?php
+$objReader = PHPExcel_IOFactory::createReader('Excel5');
+$this->PhpExcel = $objReader->load(APP.'webroot'. DS ."05featuredemo.xls");
 
-//$this->PhpExcel = PHPExcel_IOFactory::load(APP.'webroot'. DS ."05featuredemo.xlsx");
 
 // Set document properties
 $this->PhpExcel->getProperties()->setCreator("Maarten Balliauw")
@@ -21,11 +22,11 @@ $this->PhpExcel->setActiveSheetIndex(0)
 
 // Miscellaneous glyphs, UTF-8
 $this->PhpExcel->setActiveSheetIndex(0)
-    ->setCellValue('A4', 'Miscellaneous glyphs')
+    ->setCellValue('A4', '成都麦柯系统集成有限公司')
     ->setCellValue('A5', '中文测试');
 
 // Rename worksheet
-$this->PhpExcel->getActiveSheet()->setTitle('Simple');
+$this->PhpExcel->getActiveSheet()->setTitle('生产报表');
 
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
@@ -34,7 +35,7 @@ $this->PhpExcel->setActiveSheetIndex(0);
 
 // Redirect output to a client’s web browser (Excel2007)
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-header('Content-Disposition: attachment;filename="01simple.xlsx"');
+header('Content-Disposition: attachment;filename="通用航空企业基础信息报表.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

@@ -26,7 +26,8 @@ class AppController extends Controller {
         'Session',
         'RequestHandler' => array(
             'viewClassMap' => array(
-                'xlsx' => 'CakeExcel.Excel'
+                'xlsx' => 'CakeExcel.Excel',
+                'xls' => 'CakeExcel.Excel'
             )
         ),		
         'Auth',
