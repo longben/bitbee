@@ -29,7 +29,7 @@ class AppController extends Controller {
                 'xlsx' => 'CakeExcel.Excel',
                 'xls' => 'CakeExcel.Excel'
             )
-        ),		
+        ),
         'Auth',
     );
 
@@ -80,6 +80,40 @@ class AppController extends Controller {
         $this->set('data', $this->paginate($this->modelClass));
 
     }
+
+
+    public function findJSON4GridOne2One($m, $_order_field = 'id', $_conditions = array('1' => '1'), $_order = 'desc'){
+        $q     = isset($_POST['q']) ? $_POST['q'] : '';           //查询关键字
+        $page  = isset($_POST['page']) ? $_POST['page'] : null;   //查询页码
+        $rows  = isset($_POST['rows']) ? $_POST['rows'] : 20;     //每页显示条目数
+        $sort  = isset($_POST['sort'])?$_POST['sort'] : $_order_field;     //排序字段
+        $order = isset($_POST['order'])?$_POST['order'] : $_order; //排序方式
+
+        if(isset($_POST['q'])){
+            if( isset( $_conditions ) ){
+                $_conditions = array_merge( $_conditions, array(
+                    $_POST['field'] . ' LIKE' => '%'.$q.'%' ) );
+            }else{
+                $_conditions = array($_POST['field'] . ' LIKE' => '%'.$q.'%');
+            }
+        }
+
+        $this->paginate = array(
+            'conditions' => $_conditions,
+            'recursive' => 1, //int
+            'limit' => $rows, //int
+            'page' => $page, //int
+            'order' => $m. '.' .  $sort . ' ' . $order
+        );
+
+        $data = $this->paginate($m);
+
+        return $data;
+
+        //$this->set('data', $this->paginate($this->modelClass));
+
+    }
+
 
     /**
      * 判断名称是否存在

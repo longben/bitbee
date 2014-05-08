@@ -17,7 +17,7 @@ echo $this->Form->input('id', array('id' => 'id'));
 echo $this->Form->hidden('parent_id', array('value' => $this->Session->read('Auth.User.Meta.department_id')));
 echo $this->Form->input('name', array(
     'label' => '企业名称',
-    'div' => array('class' => 'grid-5-12'),
+    'div' => array('class' => 'grid-4-12'),
     'class' => 'easyui-validatebox',
     'data-options' => 'required:true'
 ));
@@ -34,7 +34,7 @@ echo $this->Form->input('Meta.corporation', array(
 ));
 echo $this->Form->input('Meta.registered_capital_c', array(
     'label' => '注册资本',
-    'div' => array('class' => 'grid-3-12'),
+    'div' => array('class' => 'grid-4-12'),
     'onFocus' => 'change2Arab()',
     'onBlur' => 'change2Chinese()'
 ));

@@ -63,7 +63,7 @@
 
 $('#dg').datagrid({
     url:'datagrid_data.json',
-    url:'/admin/ga/ga_departments/json_data.json',
+    url:'/admin/ga/ga_department_metas/json_data.json',
     fitColumns:true,
     singleSelect:true,
     striped:true,
@@ -74,13 +74,13 @@ $('#dg').datagrid({
     pageList:[15,30,45,60],
     onDblClickCell:editItem,
     columns:[[
-        {field:'id',title:'序号',formatter:function(value,row){return row.GaDepartment.id},width:50},
-        {field:'region_id',title:'所属地区',formatter:function(value,row){return row.Region.name},width:50},
-        {field:'licence',title:'经营许可证',formatter:function(value,row){return '民航通企字'+ row.Meta.licence + '号'},width:50},
-        {field:'name',title:'企业名称',formatter:function(value,row){return row.GaDepartment.name},width:50},
-        {field:'corporation',title:'法人代表',formatter:function(value,row){return row.Meta.corporation},width:50},
-        {field:'registered_capital',title:'注册资本',formatter:function(value,row){return row.Meta.registered_capital},width:50},
-        {field:'issuing_authority',title:'发证机关',formatter:function(value,row){return row.Meta.issuing_authority},width:50}
+        {field:'id',title:'序号',formatter:function(value,row){return row.Department.id},width:20},
+        {field:'region_id',title:'所属地区',formatter:function(value,row){return row.Area.name},width:20},
+        {field:'licence',title:'经营许可证',formatter:function(value,row){return '民航通企字'+ row.GaDepartmentMeta.licence + '号'},width:30},
+        {field:'name',title:'企业名称',formatter:function(value,row){return row.Department.name},width:60},
+        {field:'corporation',title:'法人代表',formatter:function(value,row){return row.GaDepartmentMeta.corporation},width:20},
+        {field:'registered_capital',title:'注册资本',formatter:formatPrice,width:20},
+        {field:'issuing_authority',title:'发证机关',formatter:function(value,row){return row.Authority.name},width:20}
     ]]
 });
 
@@ -115,7 +115,7 @@ function newItem(){
 function editItem(){
     var row = $('#dg').datagrid('getSelected');
 
-    url = '/admin/ga/ga_departments/edit/' + row.GaDepartment.id;
+    url = '/admin/ga/ga_departments/edit/' + row.Department.id;
     window.location = url;
 }
 
@@ -144,6 +144,10 @@ function complex_query(){
         }
     );
     $('#dlg').dialog('close');		// close the dialog
+}
+
+function formatPrice(val,row){
+    return toMoeny(row.GaDepartmentMeta.registered_capital);
 }
 
 </script>

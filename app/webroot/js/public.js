@@ -132,3 +132,34 @@ $.fn.serializeObject = function()
     });
     return o;
 };
+
+//将数字转为货币格式
+function toMoeny(price, chars) {
+    chars = chars ? chars.toString() : '￥';
+    if(price > 0) {
+        var priceString = price.toString();
+        var priceInt = parseInt(price);
+        var len = priceInt.toString().length;
+        var num = len / 3;
+        var remainder = len % 3;
+        var priceStr = '';
+        for(var i = 1; i <= len; i++) {
+            priceStr += priceString.charAt(i-1);
+            if(i == (remainder) && len > remainder) priceStr += ',';
+            if((i - remainder) % 3 == 0 && i < len && i > remainder) priceStr += ',';
+        }
+        if(priceString.indexOf('.') < 0) {
+            //priceStr = priceStr + '.00';
+            priceStr = priceStr;
+        } else {
+            priceStr += priceString.substr(priceString.indexOf('.'));
+            if(priceString.length - priceString.indexOf('.') - 1  < 2) {
+                priceStr = priceStr + '0';
+            }
+        }
+        return chars + priceStr;
+    }
+    else{
+        return chars + price;
+    }
+}
