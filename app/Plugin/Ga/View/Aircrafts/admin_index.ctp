@@ -33,7 +33,10 @@ $('#dg').datagrid({
     onDblClickCell:editItem,
     columns:[[
         {field:'id',title:'序号',formatter:function(value,row){return row.CorpAircraft.aircraft_id},width:50},
+        {field:'region',title:'所属地区',formatter:function(value,row){return row.Area.name},width:50},
         {field:'department_id',title:'企业名称',formatter:function(value,row){return row.Department.name},width:50},
+        {field:'registration_no',title:'国籍登记证',formatter:function(value,row){return row.CorpAircraft.registration_no},width:50},
+        {field:'registration_flag',title:'国籍和登记标志',formatter:function(value,row){return row.CorpAircraft.registration_flag},width:50},
     ]]
 });
 

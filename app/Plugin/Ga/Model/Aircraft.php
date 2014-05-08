@@ -23,7 +23,7 @@ class Aircraft extends GaAppModel {
         'Brand' => array(
             'className' => 'Code',
             'foreignKey' => 'brand',
-            'conditions' => array('Brand.category' => 'dept_type'),
+            'conditions' => array('Brand.category' => 'brand'),
             'fields' => 'Brand.id, Brand.name',
             'order' => ''
         )
