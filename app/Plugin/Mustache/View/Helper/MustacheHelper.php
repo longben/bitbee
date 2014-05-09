@@ -37,7 +37,8 @@ class MustacheHelper extends AppHelper {
   	public function __construct(View $View, $options = array()) {
   		parent::__construct($View, $options);
       // include the mustache namespace autoloader
-      App::import('Vendor', 'Mustache.mustache/src/Mustache/Autoloader');
+      //App::import('Vendor', 'PhpExcel', array('file' => 'phpoffice' . DS . 'phpexcel' . DS . 'Classes' . DS . 'PHPExcel' . DS . 'IOFactory.php'));
+      App::import('Vendor', 'Mustache', array('file' => 'Mustache.mustache' . DS . 'src' . DS . 'Mustache' . DS . 'Autoloader.php'));
       Mustache_Autoloader::register();
       
       $this->View = $View;

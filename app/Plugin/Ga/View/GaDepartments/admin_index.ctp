@@ -17,7 +17,7 @@
 </div>
 
 <div id="dlg" class="easyui-dialog" title="查询"
-    data-options="iconCls:'icon-search',closed:'true'" style="width:780px;height:200px;padding:10px" buttons="#dlg-buttons">
+    data-options="iconCls:'icon-search',closed:'true',draggable:'false'" style="width:780px;height:200px;padding:10px" buttons="#dlg-buttons">
         <?php echo $this->Form->create('Dept', array(
             'id' => 'fm',
             'inputDefaults' => array( 'div' => false, 'label' => false)
