@@ -33,7 +33,7 @@ class AppController extends Controller {
         'Auth',
     );
 
-    public $helpers = array('Mustache.Mustache');
+    //public $helpers = array('Mustache.Mustache');
 
     public function beforeFilter() {
         if (isset($this->params['admin']) && $this->params['admin']) {

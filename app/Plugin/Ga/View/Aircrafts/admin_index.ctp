@@ -8,15 +8,17 @@
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
         <div id="mm" style="width:120px">
-            <div data-options="name:'GaDepartment.name',iconCls:'icon-user'">企业名称</div>
-        </div>
-        <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm2',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
-        <div id="mm2" style="width:120px">
-            <div data-options="name:'GaDepartment.name',iconCls:'icon-user'">企业名称</div>
+            <div data-options="name:'Aircraft.name',iconCls:'icon-user'">企业名称</div>
         </div>
     </span>
 </div>
 
+
+<div id="dd" data-options="iconCls:'icon-search',closed:'true'" buttons="#dd-buttons"></div>
+<div id="dd-buttons">
+    <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="complex_query()">查询</a>
+    <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dd').dialog('close')">取消</a>
+</div>
 
 
 <script type="text/javascript">
@@ -63,9 +65,20 @@ function saveItem(){
     });
 }
 
-function newItem(){
+function newItem2(){
     url = '/admin/ga/aircrafts/add/';
     window.location = url;
+}
+
+function newItem(){
+    $('#dd').dialog({
+        closed: false,
+        cache: false,
+        href: '/admin/ga/aircrafts/add',
+        modal: true
+    });
+    $('#dd').dialog('open').dialog('setTitle','通用航空企业基础信息');
+    $('#dd').dialog('maximize');
 }
 
 function editItem(){
@@ -81,6 +94,8 @@ function search(value, name){
         {q:value, field:name}
     );
 }
+
+
 
 
 </script>
