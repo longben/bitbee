@@ -120,12 +120,12 @@ echo $this->Form->input('Corp.maintenance', array(
     'options' => array('1' => '难', '2' => '中等', '3' => '易')
 ));
 //Line6
-echo $this->Form->input('Corp.procure_method', array(
+echo $this->Form->input('Corp.use_task', array(
     'label' => '承担主要飞行种类和任务',
     'div' => array('class' => 'grid-4-12 clear'),
     'multiple' => true,
     'options' => $scopes,
-    'class' => 'chosen_procure_method'
+    'class' => 'chosen_use_task'
 ));
 echo $this->Form->input('Corp.zysg_zh_cs', array(
     'label' => '投入使用以来主要事故或征候次数',
@@ -159,11 +159,12 @@ $('.chosen-select').chosen({
     no_results_text: "没有匹配的结果："
 });
 
-$('.chosen_procure_method').chosen({
+$('.chosen_use_task').chosen({
     placeholder_text_multiple:'请选择承担主要飞行种类或任务',
     search_contains:true,
     no_results_text: "没有匹配的结果："
 });
+
 
 $.extend($.fn.validatebox.defaults.rules, {
     abc: {

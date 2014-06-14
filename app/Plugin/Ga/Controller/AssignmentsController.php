@@ -6,11 +6,40 @@ class AssignmentsController extends GaAppController {
     public $uses = array('Ga.Assignment', 'Code', 'Region', 'Department');
 
     public function admin_json_data(){
-        $this->findJSON4Grid('id', null, 'asc'); //
+        $_conditions = array(1 => 1);
+        $_data = $this->request->data;
+        if(!empty($_data['area_id'])){
+            $_conditions = array_merge($_conditions, array('Assignment.area_id' => $_data['area_id']));
+        }
+        if(!empty($_data['scope'])){
+            $_conditions = array_merge($_conditions, array('Assignment.scope LIKE' => '%'.$_data['scope'].'%'));
+        }
+        if(!empty($_data['aircraft_type'])){
+            $_conditions = array_merge($_conditions, array('Assignment.aircraft_type' => $_data['aircraft_type']));
+        }
+        if(!empty($_data['start_date'])){
+            $_conditions = array_merge($_conditions, array('Assignment.assignment_date >=' => $_data['start_date']));
+        }
+        if(!empty($_data['end_date'])){
+            $_conditions = array_merge($_conditions, array('Assignment.assignment_date <=' => $_data['end_date']));
+        }
+        if(!empty($_data['keyword'])){
+            $_conditions = array_merge($_conditions, array('Department.name LIKE' => '%'.$_data['keyword'].'%'));
+        }
+
+        $this->findJSON4Grid('id', $_conditions, 'asc'); //
     }
 
     public function admin_index() {
+        $areas = $this->Department->generateTreeList(array('Department.hierarchy' => 2), null, null, '', null);
+        $areas = array('' => '-- 请选择 --') + $areas;
+        $scopes = $this->Code->generateTreeList(array('Code.category' => 'scope'), null, null, '　', null);
+        $scopes = array('' => '-- 请选择 --') + $scopes;
+        $status = array('' => '-- 请选择 --', '1' => '运行', '2' => '暂停', '3' => '终止');
+        $types = $this->Code->generateTreeList(array('Code.category' => 'aircraft_type'), null, null, '　', null);
+        $types = array('' => '-- 请选择 --') + $types;
 
+        $this->set(compact('areas', 'types', 'scopes', 'status'));
     }
 
     private function _form(){
@@ -29,13 +58,11 @@ class AssignmentsController extends GaAppController {
     }
 
 
-
     public function admin_add() {
         if (empty($this->request->data)) {
             $this->_form();
         }
     }
-
 
     public function admin_save() {
         if (!empty($this->request->data)) {

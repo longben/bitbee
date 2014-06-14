@@ -11,11 +11,40 @@ class AircraftsController extends GaAppController {
      * @return JSON
      */
     public function admin_json_data(){
-        $this->findJSON4Grid('id', null, 'asc'); //
+        $_conditions = array(1 => 1);
+        $_data = $this->request->data;
+
+        if(!empty($_data['area_id'])){
+            $_conditions = array_merge($_conditions, array('CorpAircraft.area_id' => $_data['area_id']));
+        }
+        if(!empty($_data['region_id'])){
+            $_conditions = array_merge($_conditions, array('Department.region_id' => $_data['region_id']));
+        }
+        if(!empty($_data['scope'])){
+            $_conditions = array_merge($_conditions, array('Meta.scope LIKE' => '%'.$_data['scope'].'%'));
+        }
+        if(!empty($_data['start_date'])){
+            $_conditions = array_merge($_conditions, array('Meta.start_date >=' => $_data['start_date']));
+        }
+        if(!empty($_data['end_date'])){
+            $_conditions = array_merge($_conditions, array('Meta.end_date <=' => $_data['end_date']));
+        }
+        if(!empty($_data['keyword'])){
+            $_conditions = array_merge($_conditions, array('Department.name LIKE' => '%'.$_data['keyword'].'%'));
+        }
+
+        $this->findJSON4Grid('id', $_conditions, 'asc'); //
     }
 
     public function admin_index() {
+        $areas = $this->Department->generateTreeList(array('Department.hierarchy' => 2), null, null, '', null);
+        $areas = array('' => '-- 请选择 --') + $areas;
+        $procure_methods = array('' => '-- 请选择 --', '1' => '购买', '2' => '租赁', '3' => '代管', '4' => '其他');
+        $status = array('' => '-- 请选择 --', '1' => '运行', '2' => '暂停', '3' => '终止');
+        $types = $this->Code->generateTreeList(array('Code.category' => 'aircraft_type'), null, null, '　', null);
+        $types = array('' => '-- 请选择 --') + $types;
 
+        $this->set(compact('areas', 'types', 'procure_methods', 'status'));
     }
 
     private function _form(){
@@ -23,10 +52,11 @@ class AircraftsController extends GaAppController {
             'conditions' => array('Department.hierarchy' => 4))
         );
         $areas = $this->Department->generateTreeList(array('Department.hierarchy' => 2), null, null, '', null);
-        
+
         $scopes = $this->Code->generateTreeList(array('Code.category' => 'scope'), null, null, '　', null);
-        
+
         $types = $this->Code->generateTreeList(array('Code.category' => 'aircraft_type'), null, null, '　', null);
+
 
         $brands = $this->Code->find('list',array(
             'conditions' => array('Code.category' => 'brand', 'Code.parent_id is NULL')
@@ -35,7 +65,11 @@ class AircraftsController extends GaAppController {
             'conditions' => array('Code.category' => 'brand', 'Code.parent_id' => key($brands))
         ));
 
-        $this->set(compact('departments', 'areas', 'types', 'brands', 'models', 'scopes'));
+        $procure_methods = array('1' => '购买', '2' => '租赁', '3' => '代管', '4' => '其他');
+
+        $status = array('1' => '运行', '2' => '暂停', '3' => '终止');
+
+        $this->set(compact('departments', 'areas', 'types', 'brands', 'models', 'scopes', 'procure_methods','status'));
     }
 
 
@@ -54,8 +88,8 @@ class AircraftsController extends GaAppController {
             if(!empty($this->request->data['Corp']['purpose'])){
                 $this->request->data['Corp']['purpose'] = implode(',', $this->request->data['Corp']['purpose']);
             }
-            if(!empty($this->request->data['Corp']['procure_method'])){
-                $this->request->data['Corp']['procure_method'] = implode(',', $this->request->data['Corp']['procure_method']);
+            if(!empty($this->request->data['Corp']['use_task'])){
+                $this->request->data['Corp']['use_task'] = implode(',', $this->request->data['Corp']['use_task']);
             }
             if ($this->Aircraft->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));

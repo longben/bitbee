@@ -57,6 +57,7 @@ $.extend($.fn.validatebox.methods, {
     }
 });
 
+
 /**
  * 一般用于Select联动
  * proId: 第一级被选中的SELECT值，一般是父亲ID
