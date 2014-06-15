@@ -26,9 +26,9 @@ echo $this->Form->input('area_id', array(
 ));
 echo $this->Form->input('assignment_type', array(
     'label' => '作业类型',
-    'multiple' => true,
+    //'multiple' => true,
     'options' => $scopes,
-    'class' => 'chosen-select'
+    'class' => 'chosen-select1'
 ));
 echo $this->Form->input('assignment_hour', array(
     'label' => '飞行小时量',
