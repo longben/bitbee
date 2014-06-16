@@ -5,7 +5,7 @@
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-remove',disabled:true, plain:true"  onclick="deleteItem()">删除</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search', plain:true"  onclick="searchDialog()">查询</a>
-    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', disabled:true, plain:true"  onclick="">导出</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true" onclick="exp()">导出</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
@@ -148,6 +148,12 @@ function complex_query(){
 
 function formatPrice(val,row){
     return toMoeny(row.GaDepartmentMeta.registered_capital);
+}
+
+function exp(){
+    //var row = $('#dg').datagrid();
+    url = '/admin/ga/ga_departments/export.xls';
+    window.location = url;
 }
 
 </script>

@@ -1,6 +1,6 @@
 <?php
 $objReader = PHPExcel_IOFactory::createReader('Excel5');
-$this->PhpExcel = $objReader->load(APP.'webroot'. DS ."05featuredemo.xls");
+$this->PhpExcel = $objReader->load(APP.'Plugin'. DS . 'Ga' . DS . 'Config' . DS. 'excel'. DS ."department.xls");
 
 
 // Set document properties
@@ -22,7 +22,7 @@ $this->PhpExcel->setActiveSheetIndex(0)
 
 // Miscellaneous glyphs, UTF-8
 $this->PhpExcel->setActiveSheetIndex(0)
-    ->setCellValue('A4', '成都麦柯系统集成有限公司')
+    ->setCellValue('A4', '')
     ->setCellValue('A5', '中文测试');
 
 // Rename worksheet
