@@ -54,7 +54,9 @@ class AssignmentsController extends GaAppController {
             'conditions' => array('Code.category' => 'brand', 'Code.parent_id is NULL')
         ));
 
-        $this->set(compact('departments', 'areas', 'types', 'scopes'));
+        $aircraft_types = $this->Code->generateTreeList(array('Code.category' => 'aircraft_type'), null, null, '　', null);
+
+        $this->set(compact('departments', 'areas', 'types', 'scopes', 'aircraft_types'));
     }
 
 
@@ -69,8 +71,10 @@ class AssignmentsController extends GaAppController {
             $this->Assignment->create();
 
             if(!empty($this->request->data['Assignment']['assignment_type'])){
+                /*
                 $this->request->data['Assignment']['assignment_type']
-                    = implode(',', $this->request->data['Assignment']['assignment_type']);
+                = implode(',', $this->request->data['Assignment']['assignment_type']);
+                 */
             }
             if ($this->Assignment->saveAll($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));

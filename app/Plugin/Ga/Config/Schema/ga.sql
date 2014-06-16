@@ -86,3 +86,8 @@ CREATE TABLE `airports`(
     `telphone`              varchar(200)        DEFAULT NULL COMMENT '联系电话',
     PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='通用航空机场信息表';
+
+ALTER TABLE ga.assignments
+ ADD aircraft_type INT(10) AFTER aircraft_id,
+ ADD netweight INT(10) AFTER assignment_time;
+

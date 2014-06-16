@@ -24,20 +24,31 @@ echo $this->Form->input('department_id', array(
 echo $this->Form->input('area_id', array(
     'label' => '所属地区'
 ));
+echo $this->Form->input('aircraft_type', array(
+    'label' => '航空器类型',
+    //'multiple' => true,
+    'options' => $aircraft_types,
+    'class' => 'chosen-select1'
+));
 echo $this->Form->input('assignment_type', array(
     'label' => '作业类型',
     //'multiple' => true,
     'options' => $scopes,
     'class' => 'chosen-select1'
 ));
+echo $this->Form->input('netweight', array(
+    'label' => '起飞全重',
+    'div' => array('class' => 'grid-4-12 clear'),
+    'class' => 'easyui-validatebox'
+));
 echo $this->Form->input('assignment_hour', array(
     'label' => '飞行小时量',
-    'div' => array('class' => 'grid-6-12 clear'),
+    'div' => array('class' => 'grid-4-12'),
     'class' => 'easyui-validatebox'
 ));
 echo $this->Form->input('assignment_time', array(
     'label' => '飞行架次',
-    'div' => array('class' => 'grid-6-12')
+    'div' => array('class' => 'grid-4-12')
 ));
 
 ?>
