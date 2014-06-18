@@ -152,8 +152,16 @@ function formatPrice(val,row){
 
 function exp(){
     //var row = $('#dg').datagrid();
+    var queryParams =$('#dg').datagrid('options').queryParams;  
+    alert(JSON.stringify(queryParams));
     url = '/admin/ga/ga_departments/export.xls';
-    window.location = url;
+    //window.location = url;
+    $.post(url, queryParams, function(retData){
+        alert(retData.url);
+        var binUrl = retData.url;
+        window.location = binUrl;
+    });
+
 }
 
 </script>
