@@ -164,3 +164,14 @@ function toMoeny(price, chars) {
         return chars + price;
     }
 }
+
+//将JSON转换成数组
+function json2array(json){
+    var result = [];
+    var keys = Object.keys(json);
+    keys.forEach(function(key){
+        result.push(json[key]);
+    });
+    return result;
+}
+

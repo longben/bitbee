@@ -154,7 +154,7 @@ function formatPrice(val,row){
 
 function exp2(){
     //var row = $('#dg').datagrid();
-    var queryParams =$('#dg').datagrid('options').queryParams;  
+    var queryParams =$('#dg').datagrid('options').queryParams;
     alert(JSON.stringify(queryParams));
     url = '/admin/ga/ga_departments/export.xls';
     //window.location = url;
@@ -169,9 +169,7 @@ function exp2(){
 
 function exp(){
     var _url = '/admin/ga/ga_departments/export.xls';
-    var _queryParams =$('#dg').datagrid('options').queryParams;  
-    
-    alert(JSON.stringify(_queryParams));
+    var _json = $('#dg').datagrid('options').queryParams; //得到datagrid格式为JSON的参数
 
     var _form = $("<form>");   //定义一个form表单
     _form.attr('style','display:none');   //在form表单中添加查询参数
@@ -179,13 +177,19 @@ function exp(){
     _form.attr('method','post');
     _form.attr('action', _url);
 
-    var _input = $('<input>'); 
-    _input.attr(_queryParams);
+    var keys = Object.keys(_json);
+    keys.forEach(function(key){
+        var _input = $('<input>');
+        _input.attr('type','hidden');
+        _input.attr('name', key);
+        _input.attr('value', _json[key]);
+        _form.append(_input);   //将查询参数控件提交到表单上
+    });
 
     $('body').append(_form);  //将表单放置在web中
-    _form.append(_input);   //将查询参数控件提交到表单上
     _form.submit();   //表单提交
 }
+
 
 </script>
 

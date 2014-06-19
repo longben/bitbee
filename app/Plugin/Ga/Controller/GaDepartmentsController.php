@@ -73,7 +73,7 @@ class GaDepartmentsController extends GaAppController {
     }
 
     public function admin_export(){
-
+        $this->admin_json_data();
     }
 
 

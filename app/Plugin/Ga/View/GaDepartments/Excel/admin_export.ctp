@@ -2,7 +2,6 @@
 $objReader = PHPExcel_IOFactory::createReader('Excel5');
 $this->PhpExcel = $objReader->load(APP.'Plugin'. DS . 'Ga' . DS . 'Config' . DS. 'excel'. DS ."department.xls");
 
-
 // Set document properties
 $this->PhpExcel->getProperties()->setCreator("Maarten Balliauw")
 ->setLastModifiedBy("Maarten Balliauw")
@@ -12,18 +11,16 @@ $this->PhpExcel->getProperties()->setCreator("Maarten Balliauw")
 ->setKeywords("office 2007 openxml php")
 ->setCategory("Test result file");
 
-
 // Add some data
-$this->PhpExcel->setActiveSheetIndex(0)
-    ->setCellValue('A1', 'Hello')
-    ->setCellValue('B2', 'world!')
-    ->setCellValue('C1', 'Hello')
-    ->setCellValue('D2', 'world!');
-
-// Miscellaneous glyphs, UTF-8
-$this->PhpExcel->setActiveSheetIndex(0)
-    ->setCellValue('A4', '')
-    ->setCellValue('A5', '中文测试');
+foreach($data as $i => $d){
+    $j = $i + 2;
+    $this->PhpExcel->setActiveSheetIndex(0)
+        ->setCellValue('A' .$j, $d['GaDepartment']['id'])
+        ->setCellValue('B' .$j, $d['Region']['name'])
+        ->setCellValue('C' .$j, '民航通企字'. $d['Meta']['licence'].'号')
+        ->setCellValue('D' .$j, $d['GaDepartment']['name'])
+        ->setCellValue('E' .$j, $d['GaDepartment']['name']);
+}
 
 // Rename worksheet
 $this->PhpExcel->getActiveSheet()->setTitle('生产报表');
