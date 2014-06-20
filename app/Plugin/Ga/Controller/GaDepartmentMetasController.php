@@ -6,7 +6,7 @@ App::uses('GaAppController', 'Ga.Controller');
  */
 class GaDepartmentMetasController extends GaAppController {
     public $name = 'GaDepartmentMetas';
-    public $uses = array('Ga.GaDepartmentMeta','Department');
+    public $uses = array('Ga.GaDepartmentMeta','Department', 'Region');
 
     public function admin_json_data(){
         $_conditions = array('Department.hierarchy' => 4);
@@ -32,6 +32,15 @@ class GaDepartmentMetasController extends GaAppController {
         }
 
         $this->findJSON4Grid('id', $_conditions, 'asc'); //
+    }
+
+    public function admin_export(){
+        $this->admin_json_data();
+    }
+
+    public function findRegion($id){
+        $data = $this->Region->read(null, $id);
+        return $data['Region']['name'];
     }
 
 }

@@ -156,7 +156,7 @@ function exp2(){
     //var row = $('#dg').datagrid();
     var queryParams =$('#dg').datagrid('options').queryParams;
     alert(JSON.stringify(queryParams));
-    url = '/admin/ga/ga_departments/export.xls';
+    url = '/admin/ga/ga_department_metas/export.xls';
     //window.location = url;
     $.post(url, queryParams, function(result){
         var binUrl = result.url;
@@ -168,7 +168,7 @@ function exp2(){
 }
 
 function exp(){
-    var _url = '/admin/ga/ga_departments/export.xls';
+    var _url = '/admin/ga/ga_department_metas/export.xls';
     var _json = $('#dg').datagrid('options').queryParams; //得到datagrid格式为JSON的参数
 
     var _form = $("<form>");   //定义一个form表单

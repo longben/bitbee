@@ -11,6 +11,7 @@ $this->PhpExcel->getProperties()->setCreator("Maarten Balliauw")
 ->setKeywords("office 2007 openxml php")
 ->setCategory("Test result file");
 
+
 // Add some data
 foreach($data as $i => $d){
     $j = $i + 2;
