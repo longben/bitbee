@@ -7,6 +7,45 @@ App::uses('AppController', 'Controller');
  */
 class CodesController extends AppController {
 
+    //For requestAction
+    public function getName($id = null){
+        if(empty($id)){
+            return "";
+        }else{
+            $d = $this->Code->find('first', array(
+                'conditions' => array('Code.id' => $id),
+                'recursive' => 0, //int
+                'fields' => array('Code.name')
+            ));
+            if(sizeof($d) > 0){
+                return $d['Code']['name'];
+            }else{
+                return "";
+            }
+        }
+    }
+
+    public function getNameSet($id = null){
+        if(empty($id)){
+            return "";
+        }else{
+            $data = $this->Code->find('all', array(
+                'conditions' => array("Code.id IN ($id)"),
+                'recursive' => 0, //int
+                'fields' => array('Code.name')
+            ));
+
+            if(sizeof($data) > 0){
+                $set = "";
+                foreach($data as $d){
+                    $set = $set . $d['Code']['name'] . ',';
+                }
+                return $set;
+            }else{
+                return "";
+            }
+        }
+    }
 
     function children(){
         $this->RequestHandler->isXml();

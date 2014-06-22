@@ -5,6 +5,7 @@
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-edit', plain:true"  onclick="editItem()">编辑</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true"  onclick="deleteItem()">删除</a>
     <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-search', plain:true"  onclick="searchDialog()">查询</a>
+    <a href="#" class="easyui-linkbutton" data-options="iconCls:'icon-tip', plain:true" onclick="exp()">导出</a>
 
     <span style="float:right;white-space:nowrap;clear:none;overflow:hidden; page-break-before: always;page-break-after: always;width:300px">
         <input class="easyui-searchbox" data-options="prompt:'请输入查询条件',menu:'#mm',searcher:function(value,name){search(value, name)}" style="width:300px"></input>
@@ -53,7 +54,6 @@
     <a href="#" class="easyui-linkbutton" iconCls="icon-ok" onclick="complex_query()">查询</a>
     <a href="#" class="easyui-linkbutton" iconCls="icon-cancel" onclick="javascript:$('#dlg').dialog('close')">取消</a>
 </div>
-
 
 <script type="text/javascript">
 
@@ -183,5 +183,27 @@ function gridDisplay(){
     });
 }
 
+function exp(){
+    var _url = '/admin/ga/aircrafts/export.xls';
+    var _json = $('#dg').datagrid('options').queryParams; //得到datagrid格式为JSON的参数
+
+    var _form = $("<form>");   //定义一个form表单
+    _form.attr('style','display:none');   //在form表单中添加查询参数
+    _form.attr('target','');
+    _form.attr('method','post');
+    _form.attr('action', _url);
+
+    var keys = Object.keys(_json);
+    keys.forEach(function(key){
+        var _input = $('<input>');
+        _input.attr('type','hidden');
+        _input.attr('name', key);
+        _input.attr('value', _json[key]);
+        _form.append(_input);   //将查询参数控件提交到表单上
+    });
+
+    $('body').append(_form);  //将表单放置在web中
+    _form.submit();   //表单提交
+}
 
 </script>

@@ -5,6 +5,51 @@ class AircraftsController extends GaAppController {
     public $name = 'Aircrafts';
     public $uses = array('Ga.Aircraft', 'Ga.CorpAircraft', 'Code', 'Region', 'Department');
 
+
+    //For requestAction
+    public function getProcureMethod($id=null){
+        switch($id) {
+        case 1:
+            return '购买';
+            break;
+        case 2:
+            return '租赁';
+            break;
+        case 3:
+            return '代管';
+            break;
+        default:
+            return '其他';
+        }
+    }
+
+
+    public function getStatus($id = null) {
+        switch($id){
+        case 1:
+            return '运行';
+            break;
+        case 2:
+            return '暂停';
+            break;
+        default:
+            return '终止';
+        }
+    }
+
+    public function getMaintenance($id = null) {
+        switch($id){
+        case 1:
+            return '难';
+            break;
+        case 2:
+            return '中等';
+            break;
+        default:
+            return '易';
+        }
+    }
+
     /**
      * 根据条件查询用户JSON数据
      *
@@ -34,6 +79,10 @@ class AircraftsController extends GaAppController {
         }
 
         $this->findJSON4Grid('id', $_conditions, 'asc'); //
+    }
+
+    public function admin_export(){
+        $this->admin_json_data();
     }
 
     public function admin_index() {

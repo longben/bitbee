@@ -120,4 +120,23 @@ class GaDepartmentsController extends GaAppController {
     }
 
 
+    //For requestAction
+    public function getName($id = null){
+        if(empty($id)){
+            return "";
+        }else{
+            $d = $this->GaDepartment->find('first', array(
+                'conditions' => array('GaDepartment.id' => $id),
+                'recursive' => 0, //int
+                'fields' => array('GaDepartment.name')
+            ));
+            if(sizeof($d) > 0){
+                return $d['GaDepartment']['name'];
+            }else{
+                return "";
+            }
+        }
+    }
+
+
 }

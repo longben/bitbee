@@ -39,6 +39,7 @@ class AppModel extends Model {
         return $count;
     }
 
+
     public function getMyId($_modelName, $_fatherId, $_type = 1,
         $_category = null, $_fieldName = 'parent_id', $_stepLength = 2, $_totalLength = 10 ){
             $id = str_pad(1, $_totalLength, '0'); //初始化ID
@@ -86,4 +87,6 @@ class AppModel extends Model {
 
             return $my;
         }
+
+
 }

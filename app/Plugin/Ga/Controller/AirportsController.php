@@ -5,6 +5,37 @@ class AirportsController extends GaAppController {
     public $name = 'Airports';
     public $uses = array('Ga.Airport', 'Ga.GaDepartment', 'Code', 'Department');
 
+
+    public function getInvestor($id = null){
+        switch($id){
+        case 1:
+            return '国家';
+            break;
+        case 2:
+            return '地方政府';
+            break;
+        default:
+            return '企业';
+        }
+    }
+
+    public function getGrade($id = null){
+        switch($id){
+        case 1:
+            return '一类通用机场（10-29座）';
+            break;
+        case 2:
+            return '二类通用机场（5-9座）';
+            break;
+        default:
+            return '三类通用机场';
+        }
+    }
+
+    public function admin_export(){
+        $this->admin_json_data();
+    }
+
     public function admin_json_data(){
         $_conditions = array('1' => '1');
         $_data = $this->request->data;

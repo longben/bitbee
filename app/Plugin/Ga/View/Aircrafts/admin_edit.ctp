@@ -62,7 +62,7 @@ echo $this->Form->input('Corp.purpose', array(
 echo $this->Form->input('oil_type', array(
     'label' => '燃油种类',
     'div' => array('class' => 'grid-2-12 clear'),
-    'options' => array('jet fuel' => '航空煤油', 'avgas' => '航空汽油')
+    'options' => array('1' => '航空煤油', '2' => '航空汽油')
 ));
 echo $this->Form->input('netweight', array(
     'label' => '空重',

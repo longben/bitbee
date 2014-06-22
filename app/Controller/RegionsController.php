@@ -7,6 +7,24 @@ App::uses('AppController', 'Controller');
  */
 class RegionsController extends AppController {
 
+    //For requestAction
+    public function getName($id = null){
+        if(empty($id)){
+            return "";
+        }else{
+            $d = $this->Region->find('first', array(
+                'conditions' => array('Region.id' => $id),
+                'recursive' => 0, //int
+                'fields' => array('Region.name')
+            ));
+            if(sizeof($d) > 0){
+                return $d['Region']['name'];
+            }else{
+                return "";
+            }
+        }
+    }
+
     function city(){
         $this->RequestHandler->isXml();
         $params = array(
@@ -56,10 +74,10 @@ class RegionsController extends AppController {
             $this->Code->create();
             if ($this->Code->save($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
-    } else {
-        return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
-    }
-    }
+            } else {
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
     }
 
     public function admin_edit() {
@@ -67,10 +85,10 @@ class RegionsController extends AppController {
         if (!empty($this->request->data)) {
             if ($this->Code->save($this->request->data)) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true, 'msg' => 'OK'))));
-    } else {
-        return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
-    }
-    }
+            } else {
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
     }
 
     public function admin_delete() {
@@ -78,11 +96,10 @@ class RegionsController extends AppController {
             $this->Code->id = $this->data['id'];
             if ($this->Code->delete()) {
                 return new CakeResponse(array('body' => json_encode(array('success'=>true))));
-    }else{
-        return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
-    }
-    }
+            }else{
+                return new CakeResponse(array('body' => json_encode(array('msg'=>'Some errors occured.'))));
+            }
+        }
     }
 
-
-    }
+}
