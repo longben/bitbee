@@ -1,0 +1,57 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 62.5%;
+	font-family: Helvetica, sans-serif;
+	background: url(images/stripe.png) repeat;
+}
+
+p {
+	font-size: 1.3em;
+	margin-bottom: 15px;
+}
+
+#page-wrap {
+	width: 660px;
+	background: white;
+	padding: 20px 50px 20px 50px;
+	margin: 20px auto;
+	min-height: 500px;
+	height: auto !important;
+	height: 500px;
+}
+
+
+#fm input, #fm textarea, #fm select {
+	padding: 5px;
+	width: 471px;
+	font-family: Helvetica, sans-serif;
+	font-size: 1.4em;
+	margin: 0px 0px 10px 0px;
+	border: 2px solid #ccc;
+}
+
+#fm textarea {
+	height: 90px;
+}
+
+#fm textarea:focus, #fm input:focus {
+	border: 2px solid #900;
+}
+
+#fm input.submit-button {
+	width: 100px;
+	float: right;
+}
+
+label {
+	float: left;
+	text-align: right;
+	margin-right: 15px;
+	width: 130px;
+	padding-top: 5px;
+	font-size: 1.4em;
+}
