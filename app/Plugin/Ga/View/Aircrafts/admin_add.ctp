@@ -135,12 +135,11 @@ echo $this->Form->input('Corp.damaged', array(
 ));
 ?>
 
-<div class="grid-12-12">
-<span class="right">
-<a href="javascript:void(0)" class="easyui-linkbutton" onclick="history.go(-1)">返回列表</a>
+<div align="center">
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="history.go(-1)">返回列表</a>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
-</span>
 </div>
+
 
 <?php
 //Line 5
