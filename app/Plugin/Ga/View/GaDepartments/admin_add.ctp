@@ -1,7 +1,3 @@
-<style>
-#MetaLicence{ width: 50%;}
-</style>
-
 <link rel="stylesheet" href="/css/chosen/docsupport/prism.css">
 <link rel="stylesheet" href="/css/chosen/chosen.css">
 
@@ -133,10 +129,9 @@ echo $this->Form->input('Meta.renewal_date', array(
 ?>
 
 <div class="grid-12-12">
-<span class="right">
-<a href="javascript:void(0)" class="easyui-linkbutton" onclick="history.go(-1)">返回列表</a>
+<div align="center">
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
-</span>
+</div>
 </div>
 
 <?php
