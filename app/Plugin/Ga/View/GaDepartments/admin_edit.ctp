@@ -128,11 +128,11 @@ echo $this->Form->input('Meta.renewal_date', array(
 ));
 ?>
 
-<div class="grid-12-12">
-    <div align="center">
-        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
-    </div>
-</div>
+<label>
+    <span>&nbsp;</span> 
+</label>
+<br/>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
 
 <?php
 //Line 5
