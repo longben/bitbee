@@ -74,8 +74,8 @@
 }
 
 .fm select {
-    background: #FFF url('down-arrow.png') no-repeat right;
-    background: #FFF url('down-arrow.png') no-repeat right);
+    background: #FFF url('/img/down-arrow.png') no-repeat right;
+    background: #FFF url('/img/down-arrow.png') no-repeat right);
     appearance:none;
     -webkit-appearance:none;
     -moz-appearance: none;
