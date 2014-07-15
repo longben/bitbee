@@ -1,7 +1,3 @@
-<style>
-#MetaLicence{ width: 50%;}
-</style>
-
 <link rel="stylesheet" href="/css/chosen/docsupport/prism.css">
 <link rel="stylesheet" href="/css/chosen/chosen.css">
 
@@ -86,6 +82,7 @@ echo $this->Form->input('Meta.licence', array(
     'label' => '经营许可证号码',
     'between' => '民航通企字',
     'after' => '号',
+    'class' => 'n',
     'div' => array('class' => 'grid-2-12')
 ));
 echo $this->Form->input('Meta.scope', array(
@@ -132,11 +129,9 @@ echo $this->Form->input('Meta.renewal_date', array(
 ?>
 
 <div class="grid-12-12">
-<span class="right">
-<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">复位</a>
-<a href="javascript:void(0)" class="easyui-linkbutton" onclick="history.go(-1)">返回列表</a>
-<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
-</span>
+    <div align="center">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
+    </div>
 </div>
 
 <?php

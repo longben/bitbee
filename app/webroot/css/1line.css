@@ -33,6 +33,22 @@
 }
 */
 
+#MetaLicence{
+    width:200px;
+    border: 1px solid #DADADA;
+    color: #888;
+    height: 30px;
+    margin-bottom: 16px;
+    margin-right: 6px;
+    margin-top: 2px;
+    outline: 0 none;
+    padding: 3px 3px 3px 5px;
+    font-size: 14px;
+    line-height:15px;
+    box-shadow: inset 0px 1px 4px #ECECEC;
+    -moz-box-shadow: inset 0px 1px 4px #ECECEC;
+    -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
+}
 
 #fm .textbox, #fm textarea, #fm select,#fm text, #fm .easyui-validatebox {
     border: 1px solid #DADADA;
@@ -50,6 +66,7 @@
     -moz-box-shadow: inset 0px 1px 4px #ECECEC;
     -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
 }
+
 
 
 .fm textarea{

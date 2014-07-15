@@ -83,6 +83,7 @@ echo $this->Form->input('Meta.licence', array(
     'label' => '经营许可证号码',
     'between' => '民航通企字',
     'after' => '号',
+    'class' => 'n',
     'div' => array('class' => 'grid-2-12')
 ));
 echo $this->Form->input('Meta.scope', array(
@@ -129,9 +130,9 @@ echo $this->Form->input('Meta.renewal_date', array(
 ?>
 
 <div class="grid-12-12">
-<div align="center">
-<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
-</div>
+    <div align="center">
+        <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
+    </div>
 </div>
 
 <?php
