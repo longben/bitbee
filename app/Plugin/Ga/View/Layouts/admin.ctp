@@ -20,7 +20,7 @@
 
     echo $this->Html->css(array(
         'default',
-        '1line',
+        '1line.css?version=1.0.1',
         'easyui/themes/bitbee/easyui',
         'easyui/themes/icon',
         //'formee/formee-style',
