@@ -48,14 +48,14 @@
     border: 1px solid #DADADA;
     color: #888;
     height: 30px;
-    margin-bottom: 16px;
+    margin-bottom: 3px;
     margin-right: 6px;
     margin-top: 2px;
     outline: 0 none;
-    padding: 3px 3px 3px 5px;
-    width: 70%;
-    font-size: 14px;
-    line-height:15px;
+    //padding: 3px 3px 3px 5px;
+    width: 50%;
+    font-size: 12px;
+    //line-height:15px;
     box-shadow: inset 0px 1px 4px #ECECEC;
     -moz-box-shadow: inset 0px 1px 4px #ECECEC;
     -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
@@ -63,10 +63,9 @@
 
 
 
-.fm textarea{
-    padding: 5px 3px 3px 5px;
-}
 
+
+/*
 .fm select {
     background: #FFF url('/img/down-arrow.png') no-repeat right;
     background: #FFF url('/img/down-arrow.png') no-repeat right);
@@ -75,16 +74,17 @@
     -moz-appearance: none;
     text-indent: 0.01px;
     text-overflow: '';
-    width: 70%;
+    width: 40%;
     height: 35px;
-    line-height: 25px;
+    //line-height: 25px;
 }
+*/
 .fm textarea{
-    height:100px;
+    //height:100px;
 }
 
 #fm textarea:focus, #fm input:focus, #fm select:focus {
-	border: 1px solid #900;
+	//border: 1px solid #900;
 }
 
 #fm .button {
@@ -105,10 +105,33 @@
 label {
     float: left;
     width: 15%;
-    text-align: right;
+    text-align: left;
     padding-right: 10px;
     margin-top: 10px;
     color: #000;
-    font-size: 14px;
+    font-size: 12px;
     line-height:15px;
 }
+
+
+
+.gh_zy_left {
+    float: left;
+    width: 173px;
+}
+
+.gh_zy_left1 {
+    background: url("/ga/img/gh1_tu.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    float: left;
+    height: 199px;
+    width: 173px;
+}
+
+
+.gh_zy_right {
+    float: left;
+    padding-left: 24px;
+    width: 762px;
+    border-left:1px solid #E6E6E6;
+}
+

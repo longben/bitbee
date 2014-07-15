@@ -1,6 +1,13 @@
 <link rel="stylesheet" href="/css/chosen/docsupport/prism.css">
 <link rel="stylesheet" href="/css/chosen/chosen.css">
 
+<div class="gh_zy_left">
+    <div class="gh_zy_left1"></div>
+</div>
+
+
+<div class="gh_zy_contact">
+<div class="gh_zy_right">
 <?php
 echo $this->Form->create('GaDepartment', array(
     'action' => 'add',
@@ -139,6 +146,9 @@ echo $this->Form->input('Meta.renewal_date', array(
 //Line 5
 echo $this->Form->end();
 ?>
+
+</div>
+</div>
 
 <script src="/js/jquery/chosen/chosen.jquery.js" type="text/javascript"></script>
 <script src="/js/jquery/chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
