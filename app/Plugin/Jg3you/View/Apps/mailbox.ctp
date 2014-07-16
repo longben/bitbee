@@ -35,7 +35,7 @@
             </div>
             <div class="comment">
                 <p><?=$g['Guestbook']['content']?></p>
-                <img height="40" width="40" class="avatar" src="/img/avatar.png" alt=""><strong class="commentauthor2">成都四幼</strong>
+                <img height="40" width="40" class="avatar" src="/img/avatar.png" alt=""><strong class="commentauthor2">成都三幼</strong>
                 <span class="commentdate"><a title="" href="#comment-<?=$g['Guestbook']['id']?>"><?=$g['Guestbook']['modified']?></a></span><br/>
                 <?=$g['Guestbook']['reply_content']?>
             </div>
