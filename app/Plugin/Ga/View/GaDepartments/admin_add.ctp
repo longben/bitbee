@@ -139,7 +139,7 @@ echo $this->Form->input('Meta.renewal_date', array(
     <span>&nbsp;</span> 
 </label>
 <br/>
-<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveItem()">保存</a>
 
 
 <?php

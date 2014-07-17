@@ -1,3 +1,7 @@
+body {
+    margin:0;
+    padding:0;
+}
 #page-wrap {
 	width: 660px;
 	background: white;
@@ -46,13 +50,13 @@
 
 #fm .textbox, #fm textarea, #fm select,#fm text, #fm .easyui-validatebox {
     border: 1px solid #DADADA;
-    color: #888;
-    height: 30px;
+    color: #000;
+    height: 25px;
     margin-bottom: 3px;
-    margin-right: 6px;
+    //margin-right: 6px;
     margin-top: 2px;
     outline: 0 none;
-    //padding: 3px 3px 3px 5px;
+    //padding: 3px 3px 3px 3px;
     width: 50%;
     font-size: 12px;
     //line-height:15px;
@@ -61,24 +65,12 @@
     -webkit-box-shadow: inset 0px 1px 4px #ECECEC;
 }
 
-
-
-
-
-/*
-.fm select {
-    background: #FFF url('/img/down-arrow.png') no-repeat right;
-    background: #FFF url('/img/down-arrow.png') no-repeat right);
-    appearance:none;
-    -webkit-appearance:none;
-    -moz-appearance: none;
-    text-indent: 0.01px;
-    text-overflow: '';
-    width: 40%;
-    height: 35px;
-    //line-height: 25px;
+select {
+    width: 50% !important;
 }
-*/
+
+
+
 .fm textarea{
     //height:100px;
 }
@@ -113,6 +105,11 @@ label {
     line-height:15px;
 }
 
+.combo {
+    margin-bottom: 3px;
+    margin-top: 2px;
+}
+
 
 
 .gh_zy_left {
@@ -121,7 +118,7 @@ label {
 }
 
 .gh_zy_left1 {
-    background: url("/ga/img/gh1_tu.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    //background: url("/ga/img/gh1_tu.jpg") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
     float: left;
     height: 199px;
     width: 173px;
