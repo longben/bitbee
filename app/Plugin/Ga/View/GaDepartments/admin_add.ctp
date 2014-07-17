@@ -1,5 +1,4 @@
-<link rel="stylesheet" href="/css/chosen/docsupport/prism.css">
-<link rel="stylesheet" href="/css/chosen/chosen.css">
+<link rel="stylesheet" href="/css/select2/select2.css">
 
 <div class="gh_zy_left">
     <div class="gh_zy_left1"></div>
@@ -97,7 +96,7 @@ echo $this->Form->input('Meta.scope', array(
     'label' => '经营项目与范围',
     'div' => array('class' => 'grid-4-12'),
     'multiple' => true,
-    'class' => 'chosen-select'
+    //'class' => 'chosen-select'
 ));
 
 //Line 4
@@ -136,7 +135,7 @@ echo $this->Form->input('Meta.renewal_date', array(
 ));
 ?>
 <label>
-    <span>&nbsp;</span> 
+    <span>&nbsp;</span>
 </label>
 <br/>
 <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveItem()">保存</a>
@@ -150,6 +149,9 @@ echo $this->Form->end();
 </div>
 </div>
 
-<script src="/js/jquery/chosen/chosen.jquery.js" type="text/javascript"></script>
-<script src="/js/jquery/chosen/docsupport/prism.js" type="text/javascript" charset="utf-8"></script>
+<script src="/js/jquery/select2/select2.js" type="text/javascript"></script>
 <script src="/ga/js/department_add.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+  $(document).ready(function() { $("#MetaScope").select2(); });
+</script>

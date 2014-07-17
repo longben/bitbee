@@ -22,11 +22,13 @@ function showCity(proId,targetSel,http){
     });
 }
 
+/*
 $('.chosen-select').chosen({
     placeholder_text_multiple:'请选择项目与范围',
     search_contains:true,
     no_results_text: "没有匹配的结果："
 });
+*/
 
 $.extend($.fn.validatebox.defaults.rules, {
     abc: {
