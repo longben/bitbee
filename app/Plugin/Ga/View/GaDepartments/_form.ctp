@@ -1,3 +1,12 @@
+<link rel="stylesheet" href="/css/select2/select2.css">
+
+<div class="gh_zy_left">
+    <div class="gh_zy_left1"></div>
+</div>
+
+
+<div class="gh_zy_contact">
+    <div class="gh_zy_right">
 <?php
 echo $this->Form->create('GaDepartment', array(
     'action' => 'add',
@@ -10,7 +19,7 @@ echo $this->Form->input('id', array('id' => 'id'));
 echo $this->Form->hidden('parent_id', array('value' => $this->Session->read('Auth.User.Meta.department_id')));
 echo $this->Form->input('name', array(
     'label' => '企业名称',
-    'div' => array('class' => 'grid-5-12'),
+    'div' => array('class' => 'grid-4-12'),
     'class' => 'easyui-validatebox',
     'data-options' => 'required:true'
 ));
@@ -27,7 +36,7 @@ echo $this->Form->input('Meta.corporation', array(
 ));
 echo $this->Form->input('Meta.registered_capital_c', array(
     'label' => '注册资本',
-    'div' => array('class' => 'grid-3-12'),
+    'div' => array('class' => 'grid-4-12'),
     'onFocus' => 'change2Arab()',
     'onBlur' => 'change2Chinese()'
 ));
@@ -80,14 +89,14 @@ echo $this->Form->input('Meta.licence', array(
     'label' => '经营许可证号码',
     'between' => '民航通企字',
     'after' => '号',
+    'class' => 'n',
     'div' => array('class' => 'grid-2-12')
 ));
 echo $this->Form->input('Meta.scope', array(
     'label' => '经营项目与范围',
     'div' => array('class' => 'grid-4-12'),
     'multiple' => true,
-    'options' => $scopes,
-    'class' => 'chosen-select'
+    //'class' => 'chosen-select'
 ));
 
 //Line 4
@@ -125,15 +134,21 @@ echo $this->Form->input('Meta.renewal_date', array(
     'div' => array('class' => 'grid-2-12')
 ));
 ?>
+<label>
+    <span>&nbsp;</span>
+</label>
+<br/>
+<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save'" onclick="saveItem()">保存</a>
 
-<div class="grid-12-12">
-<span class="right">
-<a href="javascript:void(0)" class="easyui-linkbutton" onclick="history.go(-1)">返回列表</a>
-<a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-save',size:'large'" onclick="saveItem()">保存</a>
-</span>
-</div>
 
 <?php
 //Line 5
 echo $this->Form->end();
 ?>
+
+</div>
+</div>
+
+<script src="/js/jquery/select2/select2.js" type="text/javascript"></script>
+
+<?php echo $this->fetch('js'); ?>
