@@ -11,7 +11,7 @@
 
         echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'zebra_dialog/zebra_dialog'));
 
-        echo $this->Html->css(array('/wczhs/css/style.css?ver=1.0.4', 'zebra_dialog/zebra_dialog'));
+        echo $this->Html->css(array('/wczhs/css/style.css?ver=1.0.5', 'zebra_dialog/zebra_dialog'));
 
         echo $scripts_for_layout;
 
