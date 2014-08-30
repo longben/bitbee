@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="keywords" content="<?=Configure::read('Meta.keywords')?>"/> 
+        <meta name="keywords" content="<?=Configure::read('Meta.keywords')?>"/>
         <meta name="description" content="<?=Configure::read('Meta.description')?>"/>
 		<meta name="baidu-site-verification" content="WiM2aaX1xFfLecCz" />
         <title>五彩智慧树早教机构</title>
@@ -27,7 +27,7 @@
                 <param name="quality" value="high" />
                 <param name="WMODE" value="transparent" />
                 <param name="allowScriptAccess" value="always" />
-                <embed src="/wczhs/img/index.swf" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="1004" height="510" wmode="transparent"></embed>
+                <embed src="/wczhs/img/index.swf?ver=1.0.1" quality="high" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash" width="1004" height="510" wmode="transparent"></embed>
             </object>
         </div>
         <div class="copyright" style="margin-top:8px;"> <a href="/app/aboutus">关于我们</a> | <a href="/app/news">最新资讯</a> | <a href="/app/course">培训课程</a> | <a href="/app/student">学员天地</a> | <a href="/app/english">英语外教</a> | <a href="/app/joinus">加盟五彩智慧树</a> | <a href="/app/contact">联系我们</a> | <a href="/app/member">会员电子档案</a> | <a href="">五彩智慧树博客</a><br />
@@ -50,5 +50,5 @@
  {
 	 window.location="/english"
  }
- 
+
 </script>

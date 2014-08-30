@@ -3,19 +3,19 @@
     <head>
         <?php echo $this->Html->charset(); ?>
 
-        <meta name="keywords" content="<?=Configure::read('Meta.keywords')?>"/> 
-        <meta name="description" content="<?=Configure::read('Meta.description')?>"/> 
+        <meta name="keywords" content="<?=Configure::read('Meta.keywords')?>"/>
+        <meta name="description" content="<?=Configure::read('Meta.description')?>"/>
         <title>五彩智慧树早教机构 - <?php echo $title_for_layout; ?></title>
-        <?php 
+        <?php
         echo $this->Html->meta('icon', '/wczhs/img/favicon.ico');
 
         echo $this->Html->script(array('jquery/jquery-1.8.0.min', 'zebra_dialog/zebra_dialog'));
 
-        echo $this->Html->css(array('/wczhs/css/style.css?ver=1.0.3', 'zebra_dialog/zebra_dialog'));
+        echo $this->Html->css(array('/wczhs/css/style.css?ver=1.0.4', 'zebra_dialog/zebra_dialog'));
 
         echo $scripts_for_layout;
 
-        echo $this->element('google-analytics'); 
+        echo $this->element('google-analytics');
         ?>
 
         <script type="text/javascript">
@@ -43,7 +43,7 @@
         <!--[if IE 6]>
         <script type="text/javascript" src="/js/DD_belatedPNG.js" ></script>
         <script type="text/javascript">
-            $(window).load(function() { 
+            $(window).load(function() {
         DD_belatedPNG.fix('*');
         });
     </script>
