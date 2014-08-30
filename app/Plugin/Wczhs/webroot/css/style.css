@@ -93,7 +93,7 @@ a:hover{color:#ff0000;}
 .leftbottom{width:247px;heigth:11px;clear:both;overflow:hidden;float:left}
 .titleabout{width:93px;height:43px;margin-left:11px;clear:none;overflow:hidden;float:left;background:url(/wczhs/img/title_about.jpg) no-repeat;}
 .titlecontact{width:93px;height:43px;margin-left:11px;clear:none;overflow:hidden;float:left;background:url(/wczhs/img/title_contact.jpg) no-repeat;}
-.titleenglish{width:93px;height:43px;margin-left:11px;clear:none;overflow:hidden;float:left;background:url(/wczhs/img/english_title.jpg) no-repeat;}
+.titleenglish{width:150px;height:43px;margin-left:11px;clear:none;overflow:hidden;float:left;background:url(/wczhs/img/english_title.jpg) no-repeat;}
 .titleuser{width:123px;height:43px;margin-left:11px;clear:none;overflow:hidden;float:left;background:url(/wczhs/img/user_title.jpg) no-repeat;}
 .inpagetitle{width:742px;heigth:45px;clear:both;overflow:hidden;background:url(/wczhs/img/inpagetitle_bg.jpg) repeat-x;margin:0px;}
 .inpagetitle .left{width:742px;height:45px;clear:both;overflow:hidden;background:url(/wczhs/img/inpagetitle_left.jpg) left no-repeat;}

@@ -11,7 +11,7 @@ class AppsController extends WczhsAppController {
 	*/
 
     public function beforeFilter() {
-        parent::beforeFilter(); 
+        parent::beforeFilter();
 
         $this->Auth->loginAction = array('plugin' => 'wczhs', 'controller' => 'apps', 'action' => 'login');    //登陆页面
         $this->Auth->loginRedirect = array('plugin' => 'wczhs', 'controller' => 'apps', 'action' => 'member');    //登陆后默认转向
@@ -19,7 +19,7 @@ class AppsController extends WczhsAppController {
         $this->Auth->authError = '您还未登录，请录入会员用户名及密码进行登录！若忘记用户名或密码，请与智慧树老师联系！';
         $this->Auth->deny('member', 'files');
     }
-	
+
     public function test(){
         $this->autoRender = false;
         if($this->request->is('post')){
@@ -42,7 +42,7 @@ class AppsController extends WczhsAppController {
     //新闻列表
     private function _news($id){
         $this->paginate = array(
-            'conditions' => "Meta.category = $id", 
+            'conditions' => "Meta.category = $id",
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 12
@@ -56,7 +56,7 @@ class AppsController extends WczhsAppController {
         $post = $this->Post->read(null, $id);
 
         $this->set('title_for_layout', $post['Post']['post_title']);
-        $this->set('post', $post);		
+        $this->set('post', $post);
     }
 
     /*
@@ -82,7 +82,7 @@ class AppsController extends WczhsAppController {
 
         //课程介绍(1001)
         $conditions = array(
-            'conditions' => 'Meta.category = 1001', 
+            'conditions' => 'Meta.category = 1001',
             'recursive' => 0, //int
             'order' => 'Meta.elite, Post.post_date desc',
             'limit' => 6
@@ -91,7 +91,7 @@ class AppsController extends WczhsAppController {
 
         //最新活动(图片显示)
         $conditions = array(
-            'conditions' => 'Meta.elite = 1', 
+            'conditions' => 'Meta.elite = 1',
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 6
@@ -100,7 +100,7 @@ class AppsController extends WczhsAppController {
 
         //新闻资讯
         $conditions = array(
-            'conditions' => 'Meta.category IN(401,402,403)', 
+            'conditions' => 'Meta.category IN(401,402,403)',
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 10
@@ -110,7 +110,7 @@ class AppsController extends WczhsAppController {
 
         //宝宝作品(502)
         $conditions = array(
-            'conditions' => 'Meta.category = 502', 
+            'conditions' => 'Meta.category = 502',
             'recursive' => 0, //int
             'order' => 'Meta.elite, Post.post_date desc',
             'limit' => 6
@@ -141,14 +141,14 @@ class AppsController extends WczhsAppController {
         case 304:
             $show_title = "教师风采";
             break;
-        }		
+        }
 
         $this->set('title_for_layout', '关于我们');
         $this->set('aboutus_title_show', $show_title);
 
         if($page == 304){
             $conditions = array(
-                'conditions' => "Meta.category = $page", 
+                'conditions' => "Meta.category = $page",
                 'recursive' => 0, //int
                 'order' => 'Post.post_date',
                 'limit' => 6
@@ -175,7 +175,7 @@ class AppsController extends WczhsAppController {
         $this->set('title_for_layout', '培训课程');
 
         $this->paginate = array(
-            'conditions' => "Meta.category = $page", 
+            'conditions' => "Meta.category = $page",
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 9
@@ -191,7 +191,7 @@ class AppsController extends WczhsAppController {
         $this->set('title_for_layout', '学员天地');
 
         $this->paginate = array(
-            'conditions' => "Meta.category = $page", 
+            'conditions' => "Meta.category = $page",
             'recursive' => 0, //int
             'order' => 'Post.post_date desc',
             'limit' => 9
@@ -207,23 +207,17 @@ class AppsController extends WczhsAppController {
 
         switch ($page) {
         case 601:
-            $show_title = "关于我们";
+            $show_title = "关于蒙台梭利";
             break;
         case 602:
             $show_title = "课程与服务";
             break;
         case 603:
-            $show_title = "教学方法";
+            $show_title = "主题活动";
             break;
         case 604:
-            $show_title = "活动现场";
+            $show_title = "精彩瞬间";
             break;
-        case 605:
-            $show_title = "QQ群";
-            break;
-        case 606:
-            $show_title = "节日文化小专题";
-            break;				
         }
 
         $this->set('title_for_layout', "英语外教");
@@ -253,7 +247,7 @@ class AppsController extends WczhsAppController {
         case 704:
             $show_title = "索取资料";
             break;
-        }		
+        }
         $this->set('title_for_layout', '加盟五彩智慧树');
         $this->set('joinus_title_show', $show_title);
 
@@ -274,11 +268,11 @@ class AppsController extends WczhsAppController {
             $show_title = "申请免费试听";
             break;
         }
-        $this->set('show_title', $show_title);    
+        $this->set('show_title', $show_title);
 
         if('guestbook' == $page){
             $this->paginate = array(
-                'conditions' => array('Guestbook.flag' => 1, 'Guestbook.type_id' => 1), 
+                'conditions' => array('Guestbook.flag' => 1, 'Guestbook.type_id' => 1),
                 'recursive' => 0, //int
                 'order' => 'Guestbook.created desc',
                 'limit' => 11
@@ -337,7 +331,7 @@ class AppsController extends WczhsAppController {
         $this->set('title_for_layout', '博客');
         $this->layout = 'website';
         $this->paginate = array(
-            'conditions' => array('Meta.site_title IS NOT NULL'), 
+            'conditions' => array('Meta.site_title IS NOT NULL'),
             'recursive' => 0, //int
             //'order' => 'Guestbook.created desc',
             'limit' => 11

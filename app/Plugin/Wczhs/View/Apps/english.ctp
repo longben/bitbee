@@ -15,12 +15,10 @@
                 </div>
 
                 <div class="leftmenus">
-                    <a href="/app/english/601">关于我们</a>
+                    <a href="/app/english/601">关于蒙台梭利</a>
                     <a href="/app/english/602">课程与服务</a>
-                    <a href="/app/english/603">教学方法</a>
-                    <a href="/app/english/604">活动现场</a>
-                    <a href="/app/english/605">QQ群</a>
-                    <a href="/app/english/606">节日文化小专题</a>
+                    <a href="/app/english/603">主题活动</a>
+                    <a href="/app/english/604">精彩瞬间</a>
                 </div>
             </div>
             <div class="rightcon">
