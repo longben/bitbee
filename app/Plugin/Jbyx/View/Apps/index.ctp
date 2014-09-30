@@ -26,8 +26,8 @@
       <div class="jobs">
         <ul>
           <?php foreach($news as $p):?>
-          <li class="h33">
-          <span><?=$p['Post']['post_date']?></span>
+          <li class="h33">date("Y/m/d", $tomorrow)
+          <span><?=date("Y-m-d",$p['Post']['post_date'])?></span>
           <div class="h333">
             <a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a>
           </div>
