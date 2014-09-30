@@ -27,7 +27,7 @@
         <ul>
           <?php foreach($news as $p):?>
           <li class="h33">
-          <span>10/28</span>
+          <span><?=$p['Post']['post_date']?></span>
           <div class="h333">
             <a href="/app/content/<?=$p['Post']['id']?>" title="<?=$p['Post']['post_title']?>"  target="_blank"><?=$p['Post']['post_title']?></a>
           </div>
