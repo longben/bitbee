@@ -62,7 +62,7 @@
     </div>
     <div class="topmenu">
         <div class="left"></div>
-        <div class="bg"><a href="/app/main">首页</a><a href="/app/aboutus">关于我们</a><a href="/app/news">最新资讯</a><a href="/app/course">培训课程</a><a href="/app/student">学员天地</a><a href="/app/english">蒙氏早教</a><a href="/app/joinus">加盟五彩智慧树</a><a href="/app/contact">联系我们</a><a href="/app/member">会员电子档案</a><a href="/app/blog">五彩智慧树博客</a></div>
+        <div class="bg"><a href="/app/main">首页</a><a href="/app/aboutus">五彩智慧树简介</a><a href="/app/news">早期教育</a><a href="/app/course">家长沙龙</a><a href="/app/student">新闻与活动</a><a href="/app/english">育儿知识</a><a href="/app/joinus">成长历程</a><a href="/app/contact">联系我们</a><a href="/app/member">会员电子档案</a><a href="/app/blog">五彩智慧树博客</a></div>
         <div class="right"></div>
     </div>
 
