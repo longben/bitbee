@@ -83,7 +83,6 @@
     <?php echo $content_for_layout; ?>
 
     <div class="ct"><img src="/jg3you/img/index_24.png" width="950" height="121" border="0" /></div>
-	<div class="ct"><div align="center"><img src="/jg3you/img/wx.png" border="0" /></div></div>
     <div id="footer">
         <div id="link">
             <form name="form" id="form">
@@ -96,6 +95,7 @@
         </div>
         <div class="jishuqi"><?php echo $counter;?></div>
     </div>
+	<div class="ct"><div align="center"><img src="/jg3you/img/wx.png" width="150px" border="0" /></div></div>
 </body>
 </html>
 
