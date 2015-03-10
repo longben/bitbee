@@ -583,6 +583,20 @@ ul.pagination li a:hover {
     height: 12px;
 }
 
+.sub_nav_11 {
+    background: url(/jg3you/img/xyfm_01.gif) repeat-y;
+    height: 45px;
+    font: 24px/45px "宋体";
+    padding-left: 45px;
+    display: block;
+    color: #666666;
+    font-weight: bold;
+}
+.sub_nav_li_11 {
+    background: url(/jg3you/img/xyfm_01.gif) repeat-y;
+    height: 12px;
+}
+
 a.style1:hover {
     text-decoration: underline;
     color: #697f00;

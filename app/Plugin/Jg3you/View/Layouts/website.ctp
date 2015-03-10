@@ -8,7 +8,7 @@
         <?php
         echo $this->Html->meta('icon', '/jg3you/img/favicon.ico');
         echo $this->Html->script(array('jquery/jquery-1.7.2.min', 'zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min', 'jquery/loopedslider.min', 'jquery/jquery.scrollLoading-min','flash'));
-        echo $this->Html->css(array('/jg3you/css/style.css?ver=1.0.2', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
+        echo $this->Html->css(array('/jg3you/css/style.css?ver=1.0.3', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
 
         echo $scripts_for_layout;
 
