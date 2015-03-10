@@ -8,7 +8,7 @@
         <?php
         echo $this->Html->meta('icon', '/jg3you/img/favicon.ico');
         echo $this->Html->script(array('jquery/jquery-1.7.2.min', 'zebra_dialog/zebra_dialog', 'jquery/jquery.colorbox-min', 'jquery/loopedslider.min', 'jquery/jquery.scrollLoading-min','flash'));
-        echo $this->Html->css(array('/jg3you/css/style.css?ver=1.0.0', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
+        echo $this->Html->css(array('/jg3you/css/style.css?ver=1.0.2', 'zebra_dialog/zebra_dialog', 'colorbox', 'common'));
 
         echo $scripts_for_layout;
 
@@ -66,21 +66,24 @@
 
     <!--横向导航-->
     <div id="nav">
-        <div class="left"><a href="/"><img src="/jg3you/img/index_04.png" width="56" height="83" border="0" /></a></div>
-        <div class="left"><a href="/app/page/3" target="_self"><img src="/jg3you/img/index_05.png" width="88" height="83" border="0" /></a></div>
-        <div class="left"><a href="/app/page/4" target="_self"><img src="/jg3you/img/index_06.png" width="88" height="83" border="0"/></a></div>
-        <div class="left"><a href="/app/page/5" target="_self"><img src="/jg3you/img/index_07.png" width="107" height="83" border="0"/></a></div>
-        <div class="left"><a href="/app/page/6" target="_self"><img src="/jg3you/img/index_08.png" width="89" height="83" border="0"/></a></div>
-        <div class="left"><a href="/app/page/7" target="_self"><img src="/jg3you/img/index_09.png" width="88" height="83" border="0"/></a></div>
-        <div class="left"><a href="/app/page/8" target="_self"><img src="/jg3you/img/index_10.png" width="88" height="83" border="0"/></a></div>
-        <div class="left"><a href="/app/page/9" target="_self"><img src="/jg3you/img/index_11.png" width="88" height="83" border="0"/></a></div>
-    </div>
-
+        <div class="left"><img src="/jg3you/img/nav_01.png" border="0" /></div>
+		<div class="left"><a href="/"><img src="/jg3you/img/nav_02.png" border="0" /></a></div>
+		<div class="left"><a href="/app/page/3"><img src="/jg3you/img/nav_03.png" border="0" /></a></div>
+		<div class="left"><a href="/app/page/4"><img src="/jg3you/img/nav_04.png" border="0" /></a></div>
+		<div class="left"><a href="/app/page/5"><img src="/jg3you/img/nav_05.png" border="0" /></a></div>
+		<div class="left"><a href="/app/page/6"><img src="/jg3you/img/nav_06.png" border="0" /></a></div>
+		<div class="left"><a href="/app/page/7"><img src="/jg3you/img/nav_07.png" border="0" /></a></div>
+		<div class="left"><a href="/app/page/8"><img src="/jg3you/img/nav_08.png" border="0" /></a></div>
+		<div class="left"><a href="/app/page/9"><img src="/jg3you/img/nav_09.png" border="0" /></a></div>
+		<div class="left"><a href="/app/page/11"><img src="/jg3you/img/nav_10.png" border="0" /></a></div>
+    </div>	
+	
 
     <?php echo $this->Session->flash(); ?>
     <?php echo $content_for_layout; ?>
 
     <div class="ct"><img src="/jg3you/img/index_24.png" width="950" height="121" border="0" /></div>
+	<div class="ct"><div align="center"><img src="/jg3you/img/wx.png" border="0" /></div></div>
     <div id="footer">
         <div id="link">
             <form name="form" id="form">

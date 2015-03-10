@@ -34,13 +34,19 @@ form, a, ul,  input {
     margin-left: auto;
 }
 #nav {
-    background: url(/jg3you/img/index_03.png) no-repeat left;
     height: 83px;
-    width: 692px;
+    width: 950px;
     margin-right: auto;
     margin-left: auto;
-    padding-left: 258px;
 }
+
+.wx {
+    height: 83px;
+    width: 950px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
 .left {
     float: left;
 }
