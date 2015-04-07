@@ -7,8 +7,13 @@
         <?php foreach($menus as $m):?>
         <?php if($m['Module']['id'] == $current):?>
         <li class="sub_nav"><?=$m['Module']['name']?></li>
+        <?php elseif(empty($m['Module']['url'])):?>
+        <li class="sub_nav_<?=$module['Module']['id']?>">
+        <a href="/app/page/<?=$module['Module']['id']?>/<?=$m['Module']['id']?>" class="style1"><?=$m['Module']['name']?></a>
+        </li>
         <?php else:?>
-        <li class="sub_nav_<?=$module['Module']['id']?>"><a href="/app/page/<?=$module['Module']['id']?>/<?=$m['Module']['id']?>" class="style1"><?=$m['Module']['name']?></a></li>
+        <li class="sub_nav_<?=$module['Module']['id']?>">
+        <a href="<?=$m['Module']['url']?>" class="style1" target='_blank'><?=$m['Module']['name']?></a>
         <?php endif;?>
         <?php endforeach;?>
 
