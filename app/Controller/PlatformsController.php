@@ -16,7 +16,8 @@ class PlatformsController extends AppController {
             session_id($_GET["PHPSESSID"]);
         }
 
-        $this->log($this->Session->read('Auth.User.User.id'), 'cxf');
+        //$this->log($this->Session->read('Auth.User.User.id'), 'cxf');
+        //$this->log($_GET["u"], 'cxf');
 
 
         App::import('Vendor', '/utils/file');
@@ -26,7 +27,7 @@ class PlatformsController extends AppController {
         if( $this->Session->check('id') ){
             $user_id = $this->Session->read('id');
         }else{
-            $user_id = 1;
+            $user_id = $_GET["u"];
         }
 
         $user_name = '';
