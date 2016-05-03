@@ -117,8 +117,8 @@ class AppsController extends Jg3youAppController {
             $this->paginate = array(
                 'conditions' => array('Meta.site_title IS NOT NULL'),
                 'recursive' => 0, //int
-				'limit' => 30,
-                //'order' => 'Guestbook.created desc',
+                'limit' => 30,
+                'order' => 'Meta.order'
             );
             $this->set('users', $this->paginate('User'));
 
