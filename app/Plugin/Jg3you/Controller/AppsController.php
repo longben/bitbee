@@ -7,7 +7,7 @@ App::uses('Jg3youAppController', 'Jg3you.Controller');
 class AppsController extends Jg3youAppController {
 
 
-    public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'Code', 'Module', 'Setting');
+    public $uses = array('Post', 'User', 'Attachment', 'Guestbook', 'Code', 'Module', 'Setting', 'Booking', 'BookingOrder');
 
     public function beforeFilter() {
         parent::beforeFilter();
@@ -143,6 +143,47 @@ class AppsController extends Jg3youAppController {
         $this->set('post', $post);
         $this->set('title_for_layout', $post['Post']['post_title']);
     }
+
+	public function booking($booking_id = 1){
+        $booking = $this->Booking->read(null, $booking_id);
+        $this->set('booking', $booking);
+
+        if (!empty($this->data)) {
+            //$this->Session->setFlash('TTT');
+
+            if(empty($this->data['BookingOrder']['student'])){
+                $this->Session->setFlash('学生姓名必添！');
+            }elseif(empty($this->data['BookingOrder']['phone'])){
+                $this->Session->setFlash('家长电话号码必须！');
+            }else{
+
+                $count = $this->BookingOrder->find('count', array(
+                    'conditions' => array('BookingOrder.booking_id' => $booking_id, 'BookingOrder.phone' => $this->data['BookingOrder']['phone'] )
+                ));
+
+                if($count > 0){
+                    $this->Session->setFlash('你已经抢票成功，请把机会留给其他小朋友！');
+                }elseif($booking['Booking']['discount']==0){
+                    $this->Session->setFlash('本轮讲座票已抢完，敬请期待下一期讲座。');
+                }else{
+                    $this->BookingOrder->create();
+                    if ($this->BookingOrder->save($this->request->data)) {
+                        $this->Booking->read(null, $booking_id);
+                        $this->Booking->set(array(
+                            'discount' => $booking['Booking']['discount'] - 1
+                        ));
+                        $this->Booking->save();
+                        $this->Session->setFlash('抢票成功！');
+                    } else {
+                        $this->Session->setFlash('抢票失败！');
+                    }
+                }
+
+            }
+
+        }
+        //$this->set('title_for_layout', $post['Post']['post_title']);
+	}
 
 
     public function mailbox(){
